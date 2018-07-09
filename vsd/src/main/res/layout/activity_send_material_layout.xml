@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/includeTitleLayout"
+        layout="@layout/activity_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentTop="true" />
+
+    <RelativeLayout
+        android:id="@+id/topLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_44"
+        android:layout_below="@+id/includeTitleLayout"
+        android:background="@color/gray_EFEFEF">
+
+        <RadioGroup
+            android:id="@+id/materialRdGp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_30"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:layout_marginTop="@dimen/dimen_7"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/workOrderRadio"
+                style="@style/scan_type_style"
+                android:checked="true"
+                android:text="@string/work_order" />
+
+            <RadioButton
+                android:id="@+id/consolidationRadio"
+                style="@style/scan_type_style"
+                android:background="@drawable/select_scan_material_middle_xml"
+                android:text="@string/in_progress_store" />
+
+            <RadioButton
+                android:id="@+id/doneonsolidationRadio"
+                style="@style/scan_type_style"
+                android:background="@drawable/select_scan_material_right_xml"
+                android:text="@string/done_store_material" />
+
+
+        </RadioGroup>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/searchLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_52"
+        android:layout_below="@id/topLayout"
+        android:visibility="gone"
+        android:background="@color/white">
+
+        <EditText
+            android:id="@+id/searchEdit"
+            style="@style/black_big_style"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_43"
+            android:layout_alignBottom="@id/searchBtn"
+            android:layout_alignTop="@id/searchBtn"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:layout_marginRight="@dimen/dimen_5"
+            android:background="@drawable/edit_bg"
+            android:layout_alignParentLeft="true"
+            android:digits="ABCDEFGHIJKLMNUVWXYZabcdefghijklmnuvwxyz0123456789"
+            android:drawableLeft="@drawable/search"
+            android:drawablePadding="@dimen/dimen_7"
+            android:gravity="left|center_vertical"
+            android:hint="@string/input_delivery_code"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:paddingLeft="@dimen/dimen_10" />
+
+        <Button
+            android:id="@+id/searchBtn"
+            style="@style/white_small_style"
+            android:layout_width="@dimen/dimen_50"
+            android:layout_height="@dimen/dimen_43"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/dimen_8"
+            android:layout_toRightOf="@+id/searchEdit"
+            android:background="@drawable/select_btn_sure_xml"
+            android:layout_marginRight="@dimen/dimen_5"
+            android:text="@string/sure" />
+
+        <Button
+            android:id="@+id/btn_cars"
+            style="@style/white_small_style"
+            android:layout_width="@dimen/dimen_50"
+            android:layout_height="@dimen/dimen_43"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/dimen_8"
+            android:layout_toRightOf="@+id/searchBtn"
+            android:background="@drawable/select_btn_sure_xml"
+            android:text="车辆" />
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/searchLayout" />
+
+</RelativeLayout>

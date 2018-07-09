@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_F4F4F4">
+
+    <include
+        android:id="@+id/includeTitleLayout"
+        layout="@layout/activity_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentTop="true" />
+
+
+    <RelativeLayout
+        android:id="@+id/materialIdLayout"
+        android:layout_width="match_parent"
+        android:layout_below="@id/includeTitleLayout"
+        android:layout_height="@dimen/dimen_41">
+
+        <TextView
+            android:id="@+id/materialIdInfoTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/black_middle_style"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:text="@string/material_no"/>
+        <TextView
+            android:id="@+id/materialIdInfoMsgTxt"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0.5"
+        android:layout_below="@+id/materialIdLayout"
+        android:background="@color/gray_C5C5C5"/>
+
+    <RelativeLayout
+        android:id="@+id/materialDscpIdLayout"
+        android:layout_width="match_parent"
+        android:layout_below="@id/line1"
+        android:layout_height="@dimen/dimen_41">
+
+        <TextView
+            android:id="@+id/materialDescpIdInfoTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/black_middle_style"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:text="@string/material_descp"/>
+        <TextView
+            android:id="@+id/materialDescpIdInfoMsgTxt"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0.5"
+        android:layout_below="@+id/materialDscpIdLayout"
+        android:background="@color/gray_C5C5C5"/>
+
+    <RelativeLayout
+        android:id="@+id/materialNumIdLayout"
+        android:layout_below="@id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_41">
+
+        <TextView
+            android:id="@+id/materialNumIdInfoTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/black_middle_style"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:text="@string/send_material_quantity"/>
+        <TextView
+            android:id="@+id/materialIdNumInfoMsgTxt"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/line5"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0.5"
+        android:layout_below="@+id/materialNumIdLayout"
+        android:background="@color/gray_C5C5C5"/>
+
+    <RelativeLayout
+        android:id="@+id/materialStoreLayout"
+        android:layout_below="@id/line5"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_41">
+
+        <TextView
+            android:id="@+id/materialStoreInfoTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/black_middle_style"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:text="@string/library_num"/>
+        <TextView
+            android:id="@+id/materialIdStoreInfoMsgTxt"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/line3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0.5"
+        android:layout_below="@+id/materialStoreLayout"
+        android:background="@color/gray_C5C5C5"/>
+
+    <RelativeLayout
+        android:id="@+id/materialLifeIdLayout"
+        android:layout_below="@id/line3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_41"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/materialLifeIdInfoTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/black_middle_style"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:text="@string/is_life_cycle"/>
+        <TextView
+            android:id="@+id/materialLifeIdInfoMsgTxt"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/line4"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0.5"
+        android:layout_below="@+id/line3"
+        android:background="@color/gray_C5C5C5"/>
+
+    <Button
+        android:id="@+id/sureBtn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_49"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginBottom="@dimen/dimen_10"
+        android:background="@drawable/select_btn_sure_xml"
+        android:text="@string/confrim_send_material"
+        style="@style/white_middle_style"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/mainLayout" />
+
+
+    <ExpandableListView
+        android:id="@+id/sendInfoList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_marginBottom="@dimen/dimen_10"
+        android:divider="@color/gray_F4F4F4"
+        android:layout_above="@id/sureBtn"
+        android:dividerHeight="@dimen/dimen_10"
+        android:layout_below="@+id/line4"/>
+
+
+
+</RelativeLayout>

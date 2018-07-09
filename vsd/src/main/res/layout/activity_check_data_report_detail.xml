@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/gray_F8F8F8"
+    android:orientation="vertical">
+
+    <include
+    android:id="@+id/includeTitleLayout"
+    layout="@layout/activity_title"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/dimen_48"
+    android:layout_alignParentTop="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/stock" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <RelativeLayout style="@style/relative_check_style">
+
+            <TextView
+                style="@style/check_plan_info"
+                android:text="@string/check_time" />
+
+            <TextView
+                android:id="@+id/tv_check_time"
+                style="@style/transfer_combine_info_tvcontent"
+                android:text="@string/default_code" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/stock" />
+
+        <RelativeLayout style="@style/relative_check_style">
+
+            <TextView
+                style="@style/check_plan_info"
+                android:text="@string/material_no" />
+
+
+            <TextView
+                android:id="@+id/tv_material_no"
+                style="@style/transfer_combine_info_tvcontent"
+                android:text="@string/default_code" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/stock" />
+
+        <RelativeLayout style="@style/relative_check_style">
+
+            <TextView
+                style="@style/check_plan_info"
+                android:text="@string/area_code" />
+
+            <TextView
+                android:id="@+id/tv_area_code"
+                style="@style/transfer_combine_info_tvcontent"
+                android:text="@string/default_code" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/stock" />
+
+
+        <RelativeLayout style="@style/relative_check_style">
+
+            <TextView
+                style="@style/check_plan_info"
+                android:text="@string/check_amount" />
+
+            <TextView
+                android:id="@+id/tv_check_amount"
+                style="@style/transfer_combine_info_tvcontent"
+                android:text="xx" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/stock" />
+        <RelativeLayout style="@style/relative_check_style">
+
+            <TextView
+                style="@style/check_plan_info"
+                android:text="@string/store_amount" />
+
+
+            <TextView
+                android:id="@+id/tv_store_amount"
+                style="@style/transfer_combine_info_tvcontent"
+                android:text="@string/default_code" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/stock" />
+
+
+        <RelativeLayout style="@style/relative_check_style">
+
+            <TextView
+                style="@style/check_plan_info"
+                android:text="@string/differ" />
+
+
+            <TextView
+                android:id="@+id/tv_differ"
+                style="@style/transfer_combine_info_tvcontent"
+                android:text="@string/default_code" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/stock" />
+
+        <RelativeLayout style="@style/relative_check_style">
+
+            <TextView
+                style="@style/check_plan_info"
+                android:text="@string/material_descp" />
+
+
+            <TextView
+                android:id="@+id/tv_material_descp"
+                style="@style/transfer_combine_info_tvcontent"
+                android:text="@string/default_code" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/stock" />
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:background="@drawable/bg_scan_unselect"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/line0"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_0.5"
+            android:background="@color/gray_C5C5C5" />
+
+        <RelativeLayout
+            android:id="@+id/actualQuantityLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_41">
+
+            <TextView
+                android:id="@+id/materialInfoTxt"
+                style="@style/black_middle_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:text="@string/actual_quantity" />
+
+            <EditText
+                android:id="@+id/materialInfoMsgTxt"
+                android:layout_width="@dimen/dimen_120"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_10"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="5" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_0.5"
+            android:background="@color/gray_C5C5C5" />
+
+
+        <RelativeLayout
+            android:id="@+id/validityLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_41">
+
+            <TextView
+                android:id="@+id/validityInfoTxt"
+                style="@style/black_middle_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:text="@string/failure_date" />
+
+            <TextView
+                android:id="@+id/validityInfoMsgTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_10" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_0.5"
+            android:background="@color/gray_C5C5C5" />
+
+
+        <RelativeLayout
+            android:id="@+id/materialConfimLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_41">
+
+            <TextView
+                android:id="@+id/materialConfrimInfoTxt"
+                style="@style/black_middle_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:text="@string/material_confirm" />
+
+            <Button
+                android:id="@+id/materialSureBtn"
+                style="@style/white_middle_style"
+                android:layout_width="@dimen/dimen_100"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/dimen_5"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_5"
+                android:layout_toRightOf="@id/materialConfrimInfoTxt"
+                android:background="@drawable/select_material_confirm_xml"
+                android:text="@string/area_confirm"
+                android:textColor="@drawable/color_btn_white_blue_xml" />
+
+            <TextView
+                android:id="@+id/materialConfrimInfoMsgTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_10" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/line3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_0.5"
+            android:background="@color/gray_C5C5C5" />
+
+
+        <RelativeLayout
+            android:id="@+id/areaConfirmLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_41">
+
+            <TextView
+                android:id="@+id/areaConfrmInfoTxt"
+                style="@style/black_middle_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:text="@string/area_confirm" />
+
+            <TextView
+                android:id="@+id/areaConfrimInfoMsgTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_10" />
+
+            <TextView
+                android:id="@+id/areaCheckTxt"
+                style="@style/black_middle_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/area_location_has_confirm"
+                android:textColor="@color/red" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/line4"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_0.5"
+            android:layout_below="@+id/areaConfirmLayout"
+            android:background="@color/gray_C5C5C5" />
+
+    </LinearLayout>
+
+</RelativeLayout>

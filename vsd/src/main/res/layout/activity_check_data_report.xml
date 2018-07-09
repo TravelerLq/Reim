@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/gray_F8F8F8">
+
+
+    <include
+        android:id="@+id/includeTitleLayout"
+        layout="@layout/activity_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentTop="true" />
+
+    <RelativeLayout
+        android:id="@+id/bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_72"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/showIndexTxt"
+            style="@style/middle_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="0/0" />
+
+        <ImageButton
+            android:id="@+id/leftArraowBtn"
+            android:layout_width="@dimen/dimen_42"
+            android:layout_height="@dimen/dimen_42"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_47"
+            android:layout_toLeftOf="@id/showIndexTxt"
+            android:background="@drawable/select_btn_left_right_xml"
+            android:padding="@dimen/dimen_5"
+            android:src="@drawable/left_arrow" />
+
+        <ImageButton
+            android:id="@+id/rightArraowBtn"
+            android:layout_width="@dimen/dimen_42"
+            android:layout_height="@dimen/dimen_42"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_47"
+            android:layout_toRightOf="@id/showIndexTxt"
+            android:background="@drawable/select_btn_left_right_xml"
+            android:padding="@dimen/dimen_5"
+            android:src="@drawable/right_arrow_1" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dimen_10"
+        android:paddingRight="@dimen/dimen_10"
+        android:layout_below="@id/includeTitleLayout"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:background="@drawable/shape_wait_store_material_xml"
+        android:layout_above="@id/bottomLayout"
+        android:padding="@dimen/dimen_1">
+
+        <LinearLayout
+            android:id="@+id/ll_differ"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_25"
+            android:background="@color/blue_1399CE"
+            android:orientation="horizontal">
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_weight="50"
+                android:text="序号"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+
+            <!-- 存入数量-->
+            <TextView
+                android:id="@+id/textView"
+                style="@style/wait_store_style"
+                android:layout_weight="71"
+                android:text="@string/material_no"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+
+            <!-- -->
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_weight="71"
+                android:text="库位号"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_weight="50"
+                android:text="盘数量"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_weight="51"
+                android:text="差数量"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_weight="50"
+                android:text="单位"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+
+
+            <!-- 数量-->
+
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_weight="45"
+                android:text="@string/check_time"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_weight="71"
+                android:text="总库存"
+                android:visibility="gone"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignLeft="@id/layout"
+            android:layout_alignRight="@id/layout"
+            android:layout_below="@id/ll_differ"
+            android:layout_weight="1" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

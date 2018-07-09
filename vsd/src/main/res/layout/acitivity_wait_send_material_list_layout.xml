@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_F8F8F8">
+
+    <include
+        android:id="@+id/includeTitleLayout"
+        layout="@layout/activity_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentTop="true" />
+
+    <RelativeLayout
+        android:id="@+id/hzScroll"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_36"
+        android:background="@color/white"
+        android:layout_below="@id/includeTitleLayout"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginRight="@dimen/dimen_10">
+
+        <TextView
+            android:id="@+id/orderWorkTxt"
+            style="@style/black_middle_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:text="@string/now_work_order" />
+
+        <HorizontalScrollView
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/scrollLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0.5"
+        android:layout_below="@id/hzScroll"
+        android:background="@color/gray_C5C5C5" />
+
+    <TextView
+        android:id="@+id/cardIndexTxt"
+        style="@style/black_middle_style"
+        android:background="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dimen_36"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dimen_20"
+        android:gravity="center_vertical"
+        android:layout_below="@id/line2"
+        android:text="@string/now_car_no" />
+
+    <TextView
+        android:id="@+id/line4"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0.5"
+        android:layout_below="@id/cardIndexTxt"
+        android:background="@color/gray_C5C5C5" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/producttLineLayout"
+        android:layout_below="@id/line4"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_36"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/productNoTxt"
+            android:layout_width="0dp"
+            android:layout_weight="199"
+            android:gravity="center"
+            style="@style/black_super_small_size"
+            android:text="@string/product_line_no"
+            android:layout_height="match_parent" />
+        <TextView
+            android:layout_width="@dimen/dimen_0.5"
+            android:layout_height="match_parent"
+            android:background="@color/gray_C5C5C5" />
+        <TextView
+            android:id="@+id/startDateTxt"
+            android:layout_width="0dp"
+            android:layout_weight="312"
+            android:gravity="center"
+            style="@style/black_super_small_size"
+            android:text="@string/start_date_no"
+            android:layout_height="match_parent" />
+        <TextView
+            android:layout_width="@dimen/dimen_0.5"
+            android:layout_height="match_parent"
+            android:background="@color/gray_C5C5C5" />
+
+        <TextView
+            android:id="@+id/finishProductNoTxt"
+            android:layout_width="0dp"
+            android:layout_weight="208"
+            android:gravity="center"
+            style="@style/black_super_small_size"
+            android:text="@string/finish_product_no"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/line3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0.5"
+        android:layout_below="@id/producttLineLayout"
+        android:background="@color/gray_C5C5C5" />
+
+    <LinearLayout
+        android:id="@+id/bindCarLayout"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_66"
+        android:paddingBottom="@dimen/dimen_10"
+        android:paddingTop="@dimen/dimen_10">
+
+        <Button
+            android:id="@+id/bindCarBtn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="@string/bind_car"
+            android:layout_marginLeft="@dimen/dimen_10"
+            style="@style/white_middle_style"
+            android:background="@drawable/btn_bind_car_xml"/>
+
+        <Button
+            android:id="@+id/bindCarLibraryBtn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="@string/bind_car_and_out"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:layout_marginRight="@dimen/dimen_10"
+            style="@style/white_middle_style"
+            android:background="@drawable/select_btn_sure_xml"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_35"
+        android:layout_above="@id/bindCarLayout">
+
+        <TextView
+            android:id="@+id/showIndexTxt"
+            style="@style/middle_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="1/5" />
+
+        <ImageButton
+            android:id="@+id/leftArraowBtn"
+            android:layout_width="@dimen/dimen_42"
+            android:layout_height="@dimen/dimen_42"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_47"
+            android:layout_toLeftOf="@id/showIndexTxt"
+            android:background="@drawable/select_btn_left_right_xml"
+            android:padding="@dimen/dimen_5"
+            android:src="@drawable/left_arrow"/>
+
+        <ImageButton
+            android:id="@+id/rightArraowBtn"
+            android:layout_width="@dimen/dimen_42"
+            android:layout_height="@dimen/dimen_42"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_47"
+            android:layout_toRightOf="@id/showIndexTxt"
+            android:src="@drawable/right_arrow_1"
+            android:background="@drawable/select_btn_left_right_xml"
+            android:padding="@dimen/dimen_5" />
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:background="@drawable/shape_wait_store_material_xml"
+        android:padding="@dimen/dimen_1"
+        android:layout_below="@id/line3"
+        android:layout_above="@+id/bottomLayout"
+        android:layout_centerHorizontal="true">
+
+        <LinearLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_25"
+            android:background="@color/blue_1399CE"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_weight="80"
+                android:textColor="@color/white"
+                android:layout_height="match_parent"
+                android:text="@string/index_card_no" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_weight="112"
+                android:textColor="@color/white"
+                android:layout_height="match_parent"
+                android:text="@string/material_no" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+            <!-- 区位码-->
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_weight="118"
+                android:textColor="@color/white"
+                android:layout_height="match_parent"
+                android:text="@string/area_code_wait_send_material"
+                android:visibility="gone"/>
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5"
+                android:visibility="gone"/>
+
+            <!-- 数量-->
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_weight="92"
+                android:textColor="@color/white"
+                android:layout_height="match_parent"
+                android:text="@string/wait_store_num" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+
+            <!-- 描述-->
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_weight="195"
+                android:textColor="@color/white"
+                android:layout_height="match_parent"
+                android:text="@string/description" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5"
+                android:visibility="gone"/>
+
+            <!--生命周期-->
+            <TextView
+                style="@style/wait_store_style"
+                android:textColor="@color/white"
+                android:layout_weight="80"
+                android:layout_height="match_parent"
+                android:text="@string/wait_store_unit" />
+
+        </LinearLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignLeft="@id/layout"
+            android:layout_alignRight="@id/layout"
+            android:layout_below="@id/layout"
+            android:layout_weight="1" />
+
+    </RelativeLayout>
+
+
+
+
+
+
+
+</RelativeLayout>

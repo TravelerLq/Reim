@@ -1,0 +1,420 @@
+<resources>
+    <string name="app_name">智税猫</string>
+    <string name="is_loading">正在加载中，请稍等。</string>
+    <string name="login">登录</string>
+    <string name="login_"></string>
+    <string name="please_input_account">请输入账号</string>
+    <string name="please_input_pwd">请输入密码</string>
+    <string name="no_nfc">不支持NFC</string>
+    <string name="open_nfc">打卡NFC</string>
+    <string name="network_timeout">联网超时</string>
+    <string name="socket_exception">服务器连接出错</string>
+    <string name="socket_timeout_exception">服务器连接超时</string>
+    <string name="unknown_host_exception">无法连接到服务器</string>
+    <string name="scan_text">将二维码放入框内, 即可自动扫描</string>
+    <string name="scan_title">扫描</string>
+    <string name="input_title">输入</string>
+    <string name="scan_gun_title">扫描枪</string>
+    <string name="scan_message">连接扫描头异常！</string>
+    <string name="dialog_ok">确定</string>
+    <string name="toolbar_title">WMS</string>
+    <string name="setting">设置</string>
+    <string name="welcome">您好，欢迎登录智税猫系统</string>
+    <string name="input_delivery_code">请输入Delivery码查询</string>
+    <string name="serial_no">序号</string>
+    <string name="sap_title">SAP号</string>
+    <string name="description">描述</string>
+    <string name="wait_store_num">数量</string>
+    <string name="wait_store_unit">单位</string>
+    <string name="wait_store_area">区位</string>
+    <string name="store_combine">库位合并</string>
+    <string name="store_exchange"> 库位对调</string>
+    <string name="original_store">原始库位</string>
+    <string name="material_code">物料编码</string>
+    <string name="area_code">区位编码</string>
+    <string name="current_reserve">当前库存</string>
+    <string name="after_transfer">移库后库存</string>
+    <string name="material_count">实盘数量</string>
+    <string name="target_store">目标库位</string>
+    <string name="confirm_transfer">确定转移</string>
+    <string name="hint_input_material_code">请输入物料编码</string>
+    <string name="hint_input_area_code">请输入区域编码</string>
+    <string name="hint_input_number">请输入数量</string>
+    <string name="transfer_title">主动移库</string>
+    <string name="check_title">主动盘库</string>
+    <string name="check_circle">循环盘点</string>
+    <string name="transfer_application_form">移库申请列表</string>
+    <string name="apply_transfer">申请移库</string>
+    <string name="material_no">物料号</string>
+    <string name="exe_status">执行状态</string>
+    <string name="unexecute">未执行</string>
+    <string name="execute">执行</string>
+    <string name="store_no">库位号</string>
+    <string name="qis_code">QIS编码</string>
+    <string name="transfer_num">移库数量</string>
+    <string name="apply_person">申请人员</string>
+    <string name="receiver">接受人员</string>
+    <string name="hint_input_transfer_num">请输入移库数量</string>
+    <string name="hint_receiver">默认为当前用户，可修改</string>
+    <string name="hint_store_no">请输入库位号</string>
+    <string name="hint_input__qis_code">请输入QIS编码</string>
+    <string name="material_search">物料查询</string>
+    <string name="store_total_amount">库存总数</string>
+    <string name="batch_no">批次号</string>
+    <string name="arrive_material_last_time">上次来料时间</string>
+    <string name="send_material_last_time">上次发料时间</string>
+    <string name="material_plan">物料计划</string>
+    <string name="supplyer">供方名称</string>
+    <string name="store_capacity">库位容量</string>
+    <string name="store_use_rate">库位用率</string>
+    <string name="hint_input_search">输入查询</string>
+    <string name="store_distribution">库存分布</string>
+    <string name="area">区域</string>
+    <string name="store_code_no">库位编号</string>
+    <string name="qad_result">QAD判定结果</string>
+    <string name="eco_search">ECO查询</string>
+    <string name="hint_date">年/月/日</string>
+    <string name="store_amount">存数量</string>
+    <string name="receive_amount">收数量</string>
+    <string name="differ_amount">差数量</string>
+    <string name="receive_date">日期</string>
+    <string name="receive_material_date">收货日期</string>
+    <string name="detail">详情</string>
+    <string name="store_differ_report">存料差异报告</string>
+    <string name="receive_code">收料单编码</string>
+    <string name="store_differ_report_detail">物料存料差异报告</string>
+    <string name="supplyer_name">供应商名称</string>
+    <string name="check_time">时间</string>
+    <string name="differ">差异数</string>
+    <string name="check_data_report">盘点数据报告</string>
+    <string name="check_data_filter">盘点数据筛选</string>
+    <string name="check_data_report_detail">盘点数据报告详情</string>
+    <string name="check_amount">盘点数量</string>
+    <string name="start_time">起始时间</string>
+    <string name="end_time">结束时间</string>
+    <string name="check_type">盘点类型</string>
+    <string name="check_plan">计划盘点</string>
+
+    <string name="ccurent_store">当前库存</string>
+
+    <string-array name="all_status">　　
+        <item>执行</item>　　
+        <item>未执行</item>　　
+    </string-array>
+    <string name="delivery_status_search">发料状态查询</string>
+    <string name="deilivery_status_default">此发料单未完成，待发物料如下：</string>
+    <string name="material_name">物料名称</string>
+    <string name="wait_delivery_amount">待发数量</string>
+    <string name="hint_input_delivery_code">请输入Delivery码查询</string>
+    <string name="input_delivery_code_or_press_btn">输入Delivery码查询或按扫描键</string>
+    <string name="sure">确定</string>
+    <string name="content_info">信息内容</string>
+    <string name="arrive_date">到货日期</string>
+    <string name="arrive_notice">到料提醒</string>
+    <string name="toast_select_time">请选择开始或是截止日期</string>
+
+    <string name="input_delivery_code_fuhao">请输入Delivery码查询：</string>
+    <string name="store_material_scan_done">村料单扫描或输入完成</string>
+    <string name="revenue_success_result">收料成功</string>
+    <string name="go_scan_revenue_material_or_input">继续扫描或输入还是返回主界面</string>
+    <string name="go_scan_or_input">继续扫描或输入还是开始存料</string>
+    <string name="go_scan_or_copy">继续扫描或录入</string>
+    <string name="start_store_material">扫描完成后开始存料</string>
+    <string name="delivery_code_not_null">请输入Delivery号</string>
+    <string name="revenue">收料</string>
+    <string name="store_material">存料</string>
+    <string name="notice">提示</string>
+    <string name="quit_store_material_msg">请确认是否放弃存料！</string>
+    <string name="quit_current_activity">确认退出当前页面！</string>
+    <string name="search">查询</string>
+    <string name="wait_store_material_list">待存料列表</string>
+    <string name="cancel">取消</string>
+    <string name="receipt_not_done_title">存料单未完成</string>
+    <string name="delivery_code">Delivery 编号</string>
+    <string name="material_code_title">物料号</string>
+    <string name="material_descp">物料描述</string>
+    <string name="inventory_quantity">当前库存数量</string>
+    <string name="remarks">备注</string>
+    <string name="lift_cycle">是否有生命周期</string>
+    <string name="default_receipt_quantity">默认收货数量</string>
+    <string name="expiration_date">失效日期</string>
+    <string name="actual_stock_quantity">实际存货数量</string>
+    <string name="location_confirmation">库位确认</string>
+    <string name="input_date">请选择 年/月/日</string>
+    <string name="input_quantity">请输入数量</string>
+    <string name="save">保存</string>
+    <string name="location_confirm">库位确认</string>
+    <string name="location_confirm_fail">库位确认失败，请核实</string>
+    <string name="send_material_list">发料单列表</string>
+    <string name="send_material">发料</string>
+    <string name="selecct">选择</string>
+    <string name="order_id">单号</string>
+    <string name="spa_no">SPA数量</string>
+    <string name="date">日期</string>
+    <string name="product_line">产线</string>
+    <string name="product_type">类型</string>
+    <string name="product_num">成品号</string>
+    <string name="product_status">状态</string>
+    <string name="apply_start_time">申请开始时间</string>
+    <string name="apply_end_time">申请结束时间</string>
+    <string name="all">全部</string>
+    <string name="hint_input_code">请输入编号</string>
+    <string name="hint_input_amount">请输入数量</string>
+    <string name="exe_transfer_filter">执行移库筛选</string>
+    <string name="exe_transfer">执行移库</string>
+    <string name="default_code"></string>
+    <string name="store_code">库位编码</string>
+    <string name="material_code_verfity">物料编码验证</string>
+    <string name="store_code_vertify">库位编码验证</string>
+    <string name="pass">通过</string>
+    <string name="wait_send_list">待发料列表</string>
+    <string name="material_are">物料区</string>
+    <string name="area_code_wait_send_material">区位号</string>
+    <string name="lift_cycle_wait_send_material">生命周期</string>
+    <string name="send_material_info">发料详情</string>
+    <string name="actual_quantity">实际发料数量</string>
+    <string name="failure_date">失效日期</string>
+    <string name="material_confirm">物料确认</string>
+    <string name="area_confirm">区位确认</string>
+    <string name="confrim_material">验证物料</string>
+    <string name="send_material_quantity">发料数量</string>
+    <string name="is_life_cycle">是否为生命周期</string>
+    <string name="confrim_send_material">确认发料</string>
+    <string name="login_title">JCAC-MPD智能移动终端</string>
+    <string name="user_id">用户ID：</string>
+    <string name="card_id">卡号：</string>
+    <string name="please_input_card_id">请扫描或输入卡号</string>
+    <string name="card_bind_title">绑卡</string>
+    <string name="bind_card_success">绑卡成功！</string>
+    <string name="person_info_center">个人中心</string>
+    <string name="now_user_title">当前账号</string>
+    <string name="now_app_version">当前版本</string>
+    <string name="modify_pwd">修改密码</string>
+    <string name="unregister_login">注销登录</string>
+    <string name="please_input_old_pwd">请输入原始密码</string>
+    <string name="please_input_new_pwd">请输入新密码</string>
+    <string name="please_input_new_pwd_again">请再次输入新密码</string>
+    <string name="input_old_pwd">输入原始密码</string>
+    <string name="input_new_pwd">输入新密码</string>
+    <string name="input_new_pwd_again">再次输入新密码</string>
+    <string name="feed_back_detail">反馈详情</string>
+    <string name="my_feed_back">我的反馈</string>
+    <string name="wait_response">待回复</string>
+    <string name="haise_response">已回复</string>
+    <string name="me_feed_back">我要反馈</string>
+    <string name="input_feed_back_msg">请输入反馈内容</string>
+    <string name="submit">提交</string>
+    <string name="feed_back_big_pic">反馈大图</string>
+    <string name="connect_email">联系邮箱</string>
+    <string name="pwd_not_same">新密码不一致，请重新输入</string>
+    <string name="revenue_material_repeat">此存料单已完成存料，不可重复</string>
+    <string name="back">返回</string>
+    <string name="revenue_has_done">收料单已完成</string>
+    <string name="revenue_welcome">欢迎：%1$s</string>
+    <string name="revenue_login_time">登录时间：%1$s</string>
+    <string name="appointment_number">预约编号：%1$s</string>
+    <string name="supplier">供应商：%1$s</string>
+    <string name="delivery_date">送货日期：%1$s</string>
+    <string name="delivery_time">送货时间段：%1$s</string>
+    <string name="delivery_type">送货类型：%1$s</string>
+    <string name="order_type">订单类别：%1$s</string>
+    <string name="actual_number">实际送货量</string>
+    <string name="spa_number">spa数量</string>
+    <string name="operator">操作</string>
+    <string name="update">更改</string>
+    <string name="wait_revenue_material_lsit">待收料列表</string>
+    <string name="update_pwd_success">密码修改成功，请重新登录</string>
+    <string name="spa_id">Spa号</string>
+    <string name="please_input_spa_id">请输入Sap号</string>
+    <string name="please_input_spa_num">请输入Sap数量</string>
+    <string name="please_input_actual_num">请输入实际送货数量</string>
+    <string name="revenue_material_info_modify">收料信息修改</string>
+    <string name="scan_fail">扫描失败,请重试</string>
+    <string name="quit_revenue_material">请确认是否放弃收料操作</string>
+    <string name="back_main_ui">回到主界面</string>
+    <string name="wait_store_material_order_list">待存料单列表</string>
+    <string name="revenue_material_fail">收料失败，请重试！</string>
+    <string name="store_material_area_code_check">请按扫描件键或确认按钮进行物料库位确认</string>
+    <string name="please_input_store_material_num">请输入存货数量</string>
+    <string name="please_nput_dead_time">请输入失效日期</string>
+    <string name="check_store_material_area_right">库位确认成功</string>
+    <string name="check_store_material_area_fail">库位确认失败</string>
+    <string name="store_material_success">存料成功</string>
+    <string name="store_material_fail">存料失败</string>
+    <string name="pleases_input_spa">请输入SPA号</string>
+    <string name="delivery_store_code">编号</string>
+    <string name="order_owner">订货人</string>
+    <string name="order_time">时间</string>
+    <string name="vendor_name">供应商</string>
+    <string name="store_order_status">状态</string>
+    <string name="wait_store">待存</string>
+    <string name="hasied_store">已存</string>
+    <string name="in_progress_store">进行中</string>
+    <string name="temp_no_data">暂无数据</string>
+    <string name="work_order">工单</string>
+    <string name="consolidation_materials">合并发料</string>
+    <string name="find_new_version">发现新版本</string>
+    <string name="now_version">当前版本 ：</string>
+    <string name="update_version">升级版本 ：</string>
+    <string name="file_size">文件大小</string>
+    <string name="now_update">立即升级</string>
+    <string name="not_update">暂不升级</string>
+    <string name="notice_content">连着更文的那段时间，对文章中经常涉及的“人性”和“故事”在某种程度上产生过严重的分歧。短篇小说在创作过程中，
+        是否需要刻意的去捏造我们经常挂在嘴边的“灵魂”？有灵魂的故事是好故事，那么刻意捏造出来的灵魂呢？这是这段时间一直考虑的问题之一，后来和茶哥聊过，他的话让我豁然开朗，我算是从这个瓶颈期走出来了</string>
+    <string name="please_input_feed_msg">请输入反馈内容</string>
+    <string name="please_input_feed_theme">请输入反馈标题</string>
+    <string name="feed_back_theme_msg">反馈标题：</string>
+    <string name="no_feed_back_msg">没有反馈内容</string>
+    <string name="feed_back_ask_msg">提问：%1$s</string>
+    <string name="feed_back_answer_msg">回答：%1$s</string>
+    <string name="feed_back_reply">回复反馈</string>
+    <string name="feed_back_question">反馈问题：</string>
+    <string name="input_feed_back_reply_msg">请输入回复内容</string>
+    <string name="reply">回复</string>
+    <string name="scan_msg_error">扫描内容错误，请核实数据后，重试！</string>
+    <string name="big_img">大图展示</string>
+    <string name="illegal_date">结束日期不合法</string>
+    <string name="no_data">没有数据</string>
+    <string-array name="eco_array">
+        <item>物料号</item>
+        <item>处理意见</item>
+        <item>机型</item>
+        <item>更改内容</item>
+        <item>生效日期</item>
+        <item>QA判定</item>
+        <item>EC发起人</item>
+        <item>ECO申请人</item>
+        <item>ECO编号</item>
+        <item>EC编号</item>
+        <item>产品类别</item>
+        <item>备注</item>
+    </string-array>
+
+    <string name="done_consolidation_materials">完成合并发料</string>
+    <string name="finish_product_number">成品号</string>
+    <string name="send_material_type">发料类型</string>
+    <string name="location_info">库位信息</string>
+    <string name="please_select">请选择</string>
+    <string name="receive_material_list">待收料列表</string>
+    <string name="alter">更改</string>
+
+    <string name="order_no">预约编号：</string>
+    <string name="supplyer_title">供应商：</string>
+    <string name="send_time">送货日期：</string>
+    <string name="send_during">送货时段：</string>
+    <string name="send_type">送货类型：</string>
+    <string name="send_material_list_title">已发放物料清单</string>
+
+    <string name="check_prodcut_code">成品号不一致</string>
+    <string name="check_prodcut_line">产线不一致</string>
+    <string name="check_start_date">开工日期不一致</string>
+    <string name="workd_no">工单号：%1$s,所需数量：%2$s</string>
+    <string name="input_num_large_error">输入数量大于库存量</string>
+    <string name="check_mo_send_num_fail">工单号：%1$s，发料数量错误，请核实！</string>
+    <string name="check_mo_send_num_large_store_num_fail">工单号：%1$s，发料数量大于库存量，请核实！</string>
+    <string name="please_check_all_area_location">请完成所有物料的区位确认</string>
+    <string name="area_location_has_confirm">区位已确认</string>
+    <string name="pls_input_area">手输区位</string>
+    <string name="wait_out_library">待出库</string>
+    <string name="send_materail_order_index">发料单号：%1$s</string>
+    <string name="card_no">"车辆码"</string>
+    <string name="location_no">位置码</string>
+    <string name="please_input_card_no">请输入车号</string>
+    <string name="please_input_location_no">请输入位置</string>
+    <string name="bind_car">绑定小车</string>
+    <string name="feed_back_time">时间：%1$s</string>
+    <string name="send_transfer_filter">发料筛选</string>
+    <string name="material_code_null">物料号为空</string>
+    <string name="location_area_code_null">区位码为空</string>
+    <string name="mateirla_default_num">没有获取到该物料的库存量，请重新扫描！</string>
+    <string name="mateirla_input_num">请输入实际存入的数量！</string>
+    <string name="principal">负责人</string>
+    <string name="double_click_to_back">再按一次返回键即可退出</string>
+    <string name="bind_car_operator">帮车</string>
+    <string name="area_select_title">选择区域</string>
+    <string name="now_work_order">当前工单号</string>
+    <string name="scan_code_bind_card_to_out">扫码绑车出库</string>
+    <string name="index_card_no">序号</string>
+    <string name="create_person">创建人</string>
+    <string name="car_status">状态</string>
+    <string name="bind_car_and_out">绑定及出库</string>
+    <string name="add_car">添加</string>
+    <string name="delete_car">删除</string>
+    <string name="scan_car_no_title">请通过设备按住两侧任意一个黄色按钮进行扫描小车上车码</string>
+    <string name="scan_card_no_notice">扫描车号提示</string>
+    <string name="product_line_no">产线号:%1$s</string>
+    <string name="start_date_no">开工日期:%1$s</string>
+    <string name="finish_product_no">成品号:%1$s</string>
+    <string name="eco_result">ECN查询详情</string>
+
+    <string-array name="ecn_result_array">
+        <item>ECN编号</item>
+        <item>更改内容</item>
+        <item>处理意见</item>
+        <item>生效日期</item>
+        <item>QAD判别结果</item>
+    </string-array>
+
+    <string name="close_dialog">关闭</string>
+    <string name="bind_connect">绑定</string>
+    <string name="bind_car_success">帮车成功，请通知AGV拉货</string>
+    <string name="please_select_area">请选择区域</string>
+    <string name="now_car_no">"当前小车号     "%1$s</string>
+    <string name="notice_not_done">未通知</string>
+    <string name="notice_done">已通知</string>
+    <string name="product_line_info_no">"产线     "%1$s</string>
+    <string name="input_area_msg">请输入区位号</string>
+    <string name="wait_store_material">待存</string>
+    <string name="progress_store_material">进行中</string>
+    <string name="done_store_material">已完成</string>
+    <string name="done_store_material_order_detail">已完成存料单详情</string>
+    <string name="chuku_msg">小车列表</string>
+    <string name="add_car_repeat">该小车已经存在</string>
+    <string name="car_list_info">车辆</string>
+    <string name="send_actual_num">发数量</string>
+    <string name="done_send_list">已发送物料列表</string>
+    <string name="work_order_no">请输入工单号</string>
+    <string name="actual_send_no">实发数量</string>
+    <string name="has_store_done">物料已存处</string>
+    <string name="actual_send_num_error">实际发料数量大于库存数量，请修改</string>
+    <string name="bind_person_to_card">绑卡</string>
+    <string name="repeat_bind_persion_to_card">重新绑卡</string>
+    <string name="out_library">出库</string>
+    <string name="library_num">库存数量</string>
+    <string name="actual_store_num_error">实际存料数量小于默认数量，请修改</string>
+    <string name="auto_scan">扫描</string>
+    <string name="hand_input">手输</string>
+    <string name="register">没有帐号？%1$去注册</string>
+    <string name="str_register"><Data><![CDATA[还没有帐号？<font color="#ff0000">%3$s</font>]]></Data></string>
+    <string name="agreement">已阅读并同意注册协议</string>
+
+    <string-array name="approval_no">　
+        <item>1</item>　
+        <item>2</item>　　
+        <item>3</item>　　
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+    <!--（销售 采购 劳动用工（没有公司客户基本信息））、-->
+
+
+    <!--合同类型-->
+    <string-array name="contract_type">　
+        <item>销售合同</item>　
+        <item>采购合同</item>　　
+        <item>劳动用工合同</item>　　
+    </string-array>
+    <!--发票类型（4类 不开票、专票、普票、电子票）、-->
+    <string-array name="invoicing_type">　
+        <item>不开票</item>　
+        <item>专票</item>　　
+        <item>普票</item>　　
+        <item>电子票</item>　　
+    </string-array>
+    <!--付款方式（现金、银行转账），-->
+    <string-array name="pay_way">　
+        <item>现金支付</item>　
+        <item>银行转账支付</item>　　
+    </string-array>
+
+</resources>

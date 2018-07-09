@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/includeTitleLayout"
+        layout="@layout/activity_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentTop="true" />
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_above="@+id/btn_sure"
+        android:layout_below="@+id/includeTitleLayout"
+        android:layout_marginLeft="@dimen/dimen_5"
+        android:layout_marginRight="@dimen/dimen_5"
+        android:layout_marginTop="@dimen/dimen_5"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/dimen_5"
+            android:background="@color/stock"
+            android:minHeight="@dimen/dimen_220"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_10">
+
+            <!--合同类型-->
+
+            <LinearLayout style="@style/contract_add_linear">
+
+                <TextView
+                    style="@style/contract_text_style"
+                    android:text="合同类型" />
+
+                <TextView
+                    android:id="@+id/tv_contract_type"
+                    style="@style/contract_txt_content_style"
+                    android:hint="请选择合同类型" />
+            </LinearLayout>
+
+
+            <!--发票方式-->
+
+            <LinearLayout style="@style/contract_add_linear">
+
+                <TextView
+                    style="@style/contract_text_style"
+                    android:text="发票方式" />
+
+                <TextView
+                    android:id="@+id/tv_invocing_way"
+                    style="@style/contract_txt_content_style"
+                    android:hint="请选择发票方式" />
+            </LinearLayout>
+
+
+            <!--付款方式-->
+
+            <LinearLayout style="@style/contract_add_linear">
+
+                <TextView
+                    style="@style/contract_text_style"
+                    android:text="付款方式" />
+
+                <TextView
+                    android:id="@+id/tv_pay_way"
+                    style="@style/contract_txt_content_style"
+                    android:hint="请选择付款方式" />
+            </LinearLayout>
+            <!--付款进度-->
+            <LinearLayout style="@style/contract_add_linear">
+
+                <TextView
+                    style="@style/contract_text_style"
+                    android:text="付款进度" />
+
+                <EditText
+                    android:id="@+id/edt_pay_progress"
+                    style="@style/contract_edt_style"
+                    android:background="@null"
+                    android:hint="请填写付款进度" />
+            </LinearLayout>
+
+            <!--签订时间-->
+            <LinearLayout style="@style/contract_add_linear">
+
+                <TextView
+                    style="@style/contract_text_style"
+                    android:text="签订时间" />
+
+                <TextView
+                    android:id="@+id/tv_contract_start_time"
+                    style="@style/contract_txt_content_style"
+                    android:hint="请选择合同签约时间" />
+            </LinearLayout>
+
+            <!--到期时间-->
+            <LinearLayout style="@style/contract_add_linear">
+
+                <TextView
+                    style="@style/contract_text_style"
+                    android:text="到期时间" />
+
+                <TextView
+                    android:id="@+id/tv_contract_end_time"
+                    style="@style/contract_txt_content_style"
+                    android:hint="请选择合同到期时间" />
+            </LinearLayout>
+            <!--合同原件照片-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:gravity="center_vertical"
+                    android:text="合同原件照片："
+                    android:textSize="16sp" />
+
+                <com.jci.vsd.view.widget.ScrollGridView
+                    android:id="@+id/scroll_grid"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_440"
+                    android:numColumns="3"
+                    android:stretchMode="columnWidth"
+                    >
+
+                </com.jci.vsd.view.widget.ScrollGridView>
+            </LinearLayout>
+
+            <!--<LinearLayout-->
+            <!--style="@style/contract_add_linear"-->
+            <!--android:orientation="vertical"-->
+            <!--android:visibility="visible">-->
+
+            <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="@dimen/dimen_10"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:text="合同原件照片："-->
+            <!--android:textSize="16sp" />-->
+
+            <!--<com.jci.vsd.view.widget.ScrollGridView-->
+            <!--android:id="@+id/grid_contract_pic"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="@dimen/dimen_10"-->
+            <!--android:layout_marginLeft="@dimen/dimen_10"></>-->
+            <!--</LinearLayout>-->
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/tv_sure"
+        style="@style/btn_sure"
+        android:layout_alignParentBottom="true" />
+
+</LinearLayout>

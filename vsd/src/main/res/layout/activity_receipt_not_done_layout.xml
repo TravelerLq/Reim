@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_F8F8F8">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/includeTitleLayout"
+            layout="@layout/activity_title"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/dimen_48"
+            android:layout_alignParentTop="true" />
+        <!-- Delivery 编号-->
+        <RelativeLayout
+            android:id="@+id/deliveryLayout"
+            style="@style/receipt_not_done"
+            android:layout_below="@id/includeTitleLayout">
+
+            <TextView
+                style="@style/black_middle_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:text="@string/delivery_code" />
+
+            <TextView
+                android:id="@+id/deliveryMsgTxt"
+                style="@style/black_middle_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_10" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_0.5"
+            android:layout_below="@id/deliveryLayout"
+            android:background="@color/gray_C5C5C5" />
+
+        <!-- 物料编号-->
+        <RelativeLayout
+            android:id="@+id/materialCodeLayout"
+            style="@style/receipt_not_done"
+            android:layout_below="@id/line1">
+
+            <TextView
+                style="@style/black_middle_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:text="@string/material_code_title" />
+
+            <TextView
+                android:id="@+id/materialCodeMsgTxt"
+                style="@style/black_middle_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_10" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_0.5"
+            android:layout_below="@id/materialCodeLayout"
+            android:background="@color/gray_C5C5C5" />
+
+        <!--物料描述-->
+        <RelativeLayout
+            android:id="@+id/materialDescpLayout"
+            style="@style/receipt_not_done"
+            android:layout_below="@id/line2">
+
+            <TextView
+                android:id="@+id/descrpTitle"
+                style="@style/black_middle_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:text="@string/material_descp" />
+
+            <TextView
+                android:id="@+id/materialDescpMsgTxt"
+                style="@style/black_middle_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_toRightOf="@id/descrpTitle"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_10"
+                android:layout_marginLeft="@dimen/dimen_10" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/line3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_0.5"
+            android:layout_below="@id/materialDescpLayout"
+            android:background="@color/gray_C5C5C5" />
+
+        <!-- 当前库存数量-->
+        <RelativeLayout
+            android:id="@+id/locationNumLayout"
+            style="@style/receipt_not_done"
+            android:layout_below="@id/line3">
+
+            <TextView
+                style="@style/black_middle_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:text="@string/inventory_quantity" />
+
+            <TextView
+                android:id="@+id/numMsgTxt"
+                style="@style/black_middle_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_10" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/line4"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_0.5"
+            android:layout_below="@id/locationNumLayout"
+            android:background="@color/gray_C5C5C5" />
+
+        <!-- 区位-->
+        <RelativeLayout
+            android:id="@+id/areaSeatLayout"
+            style="@style/receipt_not_done"
+            android:layout_below="@id/line4">
+
+            <TextView
+                style="@style/black_middle_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:text="@string/wait_store_area" />
+
+            <TextView
+                android:id="@+id/areaSeatMsgTxt"
+                style="@style/black_middle_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_10" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/line5"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_0.5"
+            android:layout_below="@id/areaSeatLayout"
+            android:background="@color/gray_C5C5C5" />
+
+        <!-- 备注-->
+        <RelativeLayout
+            android:id="@+id/remarksLayout"
+            style="@style/receipt_not_done"
+            android:layout_below="@id/line5">
+
+            <TextView
+                style="@style/black_middle_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:text="@string/remarks" />
+
+            <TextView
+                android:id="@+id/remarksMsgTxt"
+                style="@style/black_middle_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_10" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/line6"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_0.5"
+            android:layout_below="@id/remarksLayout"
+            android:background="@color/gray_C5C5C5" />
+
+        <!-- 是否有生命周期-->
+        <RelativeLayout
+            android:id="@+id/lifeCycleLayout"
+            style="@style/receipt_not_done"
+            android:layout_below="@id/line6">
+
+            <TextView
+                style="@style/black_middle_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:text="@string/lift_cycle" />
+
+            <TextView
+                android:id="@+id/lifeCycleMsgTxt"
+                style="@style/black_middle_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_10" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/line7"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_0.5"
+            android:layout_below="@id/lifeCycleLayout"
+            android:background="@color/gray_C5C5C5" />
+
+        <!-- 默认收货数量-->
+        <RelativeLayout
+            android:id="@+id/receiptQuantityLayout"
+            style="@style/receipt_not_done"
+            android:layout_below="@id/line7">
+
+            <TextView
+                style="@style/black_middle_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:text="@string/default_receipt_quantity" />
+
+            <TextView
+                android:id="@+id/receiptQuantityMsgTxt"
+                style="@style/black_middle_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_10" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/line8"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_0.5"
+            android:layout_below="@id/receiptQuantityLayout"
+            android:background="@color/gray_C5C5C5" />
+
+        <TextView
+            android:id="@+id/line9"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_0.5"
+            android:layout_below="@id/line8"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:background="@color/gray_C5C5C5" />
+
+        <!-- 失效日期-->
+        <RelativeLayout
+            android:id="@+id/expirationDateLayout"
+            style="@style/receipt_not_done"
+            android:layout_below="@id/line9">
+
+            <TextView
+                style="@style/black_middle_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:text="@string/expiration_date" />
+
+            <EditText
+                android:id="@+id/expirationDateMsgEdit"
+                style="@style/black_middle_style"
+                android:layout_width="@dimen/dimen_115"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@color/white"
+                android:hint="@string/input_date"
+                android:gravity="right|center_vertical"
+                android:focusable="false"
+                android:layout_marginRight="@dimen/dimen_10" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/line10"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_0.5"
+            android:layout_below="@id/expirationDateLayout"
+            android:background="@color/gray_C5C5C5" />
+
+        <!-- 实际存货数量-->
+        <RelativeLayout
+            android:id="@+id/actualStockQuantityLayout"
+            style="@style/receipt_not_done"
+            android:layout_below="@id/line10">
+
+            <TextView
+                style="@style/black_middle_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:text="@string/actual_stock_quantity" />
+
+            <EditText
+                android:id="@+id/actualStockQuantityMsgEdit"
+                style="@style/black_middle_style"
+                android:layout_width="@dimen/dimen_115"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@color/white"
+                android:hint="@string/input_quantity"
+                android:gravity="left|center_vertical"
+                android:inputType="number"
+                android:imeOptions="actionDone"
+                android:layout_marginRight="@dimen/dimen_10" />
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/line11"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_0.5"
+            android:layout_below="@id/actualStockQuantityLayout"
+            android:background="@color/gray_C5C5C5" />
+
+        <!-- 库位确认-->
+        <RelativeLayout
+            android:id="@+id/locationConfirmationLayout"
+            style="@style/receipt_not_done"
+            android:layout_below="@id/line11">
+
+            <TextView
+                style="@style/black_middle_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:text="@string/location_confirm" />
+
+            <EditText
+                android:id="@+id/areaNoEdit"
+                android:layout_width="@dimen/dimen_115"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:hint="@string/input_area_msg"
+                android:layout_alignParentRight="true"
+                style="@style/black_middle_style"
+                android:imeOptions="actionDone"
+                android:layout_marginRight="@dimen/dimen_10"
+                android:gravity="left|center_vertical"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_49"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:layout_below="@id/locationConfirmationLayout"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/locationSureBtn"
+                style="@style/location_btn_style"
+                android:background="@drawable/select_btn_location_sure_xml"
+                android:text="@string/location_confirmation"/>
+
+            <Button
+                android:id="@+id/sureBtn"
+                style="@style/location_btn_style"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:background="@drawable/select_btn_sure_xml"
+                android:text="@string/save"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/activity_title"></include>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_25"
+        android:background="@color/white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_55"
+
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dimen_10">
+
+        <TextView
+            android:id="@+id/textVi23ewer28"
+            style="@style/new_depart_text_style"
+            android:text="审批名称:" />
+
+        <EditText
+            android:id="@+id/edt_producer_name"
+            style="@style/new_depart_edit_style"
+            android:hint="请输入审批名称" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_producer_department"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_55"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dimen_10">
+
+        <TextView
+            style="@style/new_depart_text_style"
+
+            android:text="审批部门" />
+
+        <TextView
+            android:id="@+id/tv_producer_department"
+            style="@style/new_depart_edit_style"
+            android:layout_weight="2.5"
+            android:drawableRight="@drawable/ic_more"
+            android:text="请选择"
+            android:textColor="@color/grey_b5b5" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_producer_level"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_55"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        android:paddingLeft="@dimen/dimen_10">
+
+        <TextView
+            style="@style/new_depart_text_style"
+            android:text="审批流程" />
+
+        <TextView
+            android:id="@+id/tv_producer_order"
+            style="@style/new_depart_edit_style"
+            android:layout_weight="2.5"
+            android:drawableRight="@drawable/ic_more"
+            android:text="请选择"
+            android:textColor="@color/grey_b5b5" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_producer_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_55"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dimen_10">
+
+        <TextView
+            android:id="@+id/text3View28"
+            style="@style/new_depart_text_style"
+            android:text="审批人" />
+
+        <TextView
+            android:id="@+id/tv_producer_person"
+            style="@style/new_depart_edit_style"
+            android:layout_weight="2.5"
+            android:drawableRight="@drawable/ic_more"
+            android:text="请选择"
+            android:textColor="@color/grey_b5b5" />
+
+
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_sure"
+        style="@style/btn_sure"
+        android:text="@string/sure"
+        android:textColor="@color/white" />
+
+</LinearLayout>
+
+

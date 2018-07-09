@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <drawable name="white">#FFFFFF</drawable>
+    <drawable name="blue_1691C8">#1691C8</drawable>
+    <drawable name="colorPrimary">#993531</drawable>
+    <drawable name="colorPrimaryDark">#903430</drawable>
+    <drawable name="gray_333333">#333333</drawable>
+    <drawable name="gray_F8F8F8">#F8F8F8</drawable>
+    <drawable name="blue_DFF3FD">#DFF3FD</drawable>
+    <drawable name="red_C5336">#C53336</drawable>
+    <drawable name="red_66C5336">#88C53336</drawable>
+</resources>

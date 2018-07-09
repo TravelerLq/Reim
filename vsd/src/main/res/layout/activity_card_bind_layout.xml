@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <include
+        android:id="@+id/includeTitleLayout"
+        layout="@layout/activity_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentTop="true" />
+
+    <RelativeLayout
+        android:id="@+id/userIdLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_60"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:visibility="gone"
+        android:layout_below="@id/includeTitleLayout">
+        <TextView
+            android:text="@string/user_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/big_text_style"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/userIdTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/big_text_style"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/cardIdLayout"
+        android:layout_below="@id/userIdLayout"
+        android:layout_alignLeft="@id/userIdLayout"
+        android:layout_alignRight="@id/userIdLayout"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="@dimen/dimen_60"
+        android:layout_marginTop="@dimen/dimen_20">
+        <TextView
+            android:id="@+id/cardTitleTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            style="@style/big_text_style"
+            android:text="@string/card_id"/>
+
+        <EditText
+            android:id="@+id/cardIdEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical|right"
+            android:hint="@string/please_input_card_id"
+            android:layout_toRightOf="@id/cardTitleTxt"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:background="@color/white"
+            style="@style/small_text_style" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/nextBtn"
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        android:text="@string/card_bind_title"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:layout_below="@+id/cardIdLayout"
+        android:background="@drawable/logint_btn_xml"
+        android:layout_alignLeft="@id/userIdLayout"
+        android:layout_alignRight="@id/userIdLayout"
+        style="@style/white_big_style"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/includeTitleLayout">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/machine"
+            android:layout_centerInParent="true"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/card"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

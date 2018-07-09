@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/stock"
+        android:orientation="vertical">
+
+        <RadioGroup
+            android:id="@+id/rg_billing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <RadioButton
+                android:id="@+id/rb_all"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_top_line"
+                android:button="@null"
+                android:checked="true"
+                android:drawablePadding="5dp"
+                android:drawableStart="@drawable/icon_checked"
+                android:text="全部"
+                android:padding="16dp"
+                android:textColor="@drawable/area_type_change_text_color"/>
+
+            <RadioButton
+                android:id="@+id/rb_contract"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_top_line"
+                android:button="@null"
+                android:drawablePadding="5dp"
+                android:padding="16dp"
+                android:text="有合同开票"
+                android:textColor="@drawable/area_type_change_text_color"/>
+
+            <RadioButton
+                android:id="@+id/rb_no_contract"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_top_line"
+                android:button="@null"
+                android:drawablePadding="5dp"
+                android:padding="16dp"
+                android:text="无合同开票"
+                android:textColor="@drawable/area_type_change_text_color"
+                />
+        </RadioGroup>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:src="@drawable/icon_bottom_dot"/>
+    </LinearLayout>
+
+
+</LinearLayout>

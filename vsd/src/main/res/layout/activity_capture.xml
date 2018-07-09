@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/gray_F8F8F8">
+
+    <include
+    android:id="@+id/includeTitleLayout"
+    layout="@layout/activity_title"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/dimen_48"
+    android:layout_alignParentTop="true" />
+
+    <RelativeLayout
+        android:id="@+id/topLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_44"
+        android:background="@color/gray_EFEFEF"
+        android:layout_below="@+id/includeTitleLayout">
+
+        <RadioGroup
+            android:id="@+id/materialRdGp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_30"
+            android:layout_marginTop="@dimen/dimen_7"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/scanGunRadio"
+                style="@style/scan_type_style"
+                android:text="@string/scan_gun_title"
+                android:checked="true"/>
+
+            <RadioButton
+                android:id="@+id/scanRadio"
+                style="@style/scan_type_style"
+                android:background="@drawable/select_scan_material_right_xml"
+                android:text="@string/scan_title"/>
+            <RadioButton
+                android:id="@+id/handInputRadio"
+                style="@style/scan_type_style"
+                android:text="@string/input_title"
+                android:visibility="gone"/>
+
+
+        </RadioGroup>
+
+    </RelativeLayout>
+
+
+    <FrameLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/topLayout"/>
+</RelativeLayout>

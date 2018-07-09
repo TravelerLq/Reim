@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/dimen_52"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/dimen_0.5"
+            android:layout_height="match_parent"
+            android:background="@color/gray_C5C5C5" />
+
+        <TextView
+            android:id="@+id/tv_order_no"
+            style="@style/wait_store_style"
+            android:layout_weight="100"
+            android:text="@string/order_id" />
+
+        <TextView
+            android:layout_width="@dimen/dimen_0.5"
+            android:layout_height="match_parent"
+            android:background="@color/gray_C5C5C5" />
+
+        <TextView
+            android:id="@+id/tv_material_no"
+            style="@style/wait_store_style"
+            android:layout_weight="90"
+            android:text="@string/material_no" />
+
+        <TextView
+            android:layout_width="@dimen/dimen_0.5"
+            android:layout_height="match_parent"
+            android:background="@color/gray_C5C5C5" />
+        <!-- 存入数量-->
+        <TextView
+            android:id="@+id/store_amount"
+            style="@style/wait_store_style"
+            android:layout_weight="80"
+            android:visibility="gone"
+            android:text="@string/store_amount" />
+
+        <TextView
+            android:layout_width="@dimen/dimen_0.5"
+            android:layout_height="match_parent"
+            android:background="@color/gray_C5C5C5" />
+
+        <!-- -->
+        <TextView
+            android:id="@+id/tv_receive_amount"
+            style="@style/wait_store_style"
+            android:layout_weight="80"
+            android:visibility="gone"
+            android:text="905828urncurtomdowtgtvmor" />
+
+        <TextView
+            android:layout_width="@dimen/dimen_0.5"
+            android:layout_height="match_parent"
+            android:background="@color/gray_C5C5C5" />
+
+        <!-- 单位-->
+        <TextView
+            android:id="@+id/tv_differ_amount"
+            style="@style/wait_store_style"
+            android:layout_weight="80"
+            android:text="@string/differ_amount" />
+
+        <TextView
+            android:layout_width="@dimen/dimen_0.5"
+            android:layout_height="match_parent"
+            android:background="@color/gray_C5C5C5" />
+
+
+        <TextView
+            android:id="@+id/tv_unit_amount"
+            style="@style/wait_store_style"
+            android:visibility="gone"
+            android:layout_weight="60" />
+
+        <TextView
+            android:layout_width="@dimen/dimen_0.5"
+            android:layout_height="match_parent"
+            android:background="@color/gray_C5C5C5" />
+
+        <!-- 单位-->
+        <TextView
+            android:id="@+id/tv_receive_date"
+            style="@style/wait_store_style"
+            android:layout_weight="100"
+            android:text="@string/receive_date" />
+
+        <TextView
+            android:layout_width="@dimen/dimen_0.5"
+            android:layout_height="match_parent"
+            android:background="@color/gray_C5C5C5" />
+
+        <!-- 详情-->
+        <TextView
+
+            style="@style/wait_store_style"
+            android:layout_weight="10" />
+
+        <Button
+            android:id="@+id/btn_detail"
+            style="@style/wait_store_style"
+            android:layout_marginBottom="@dimen/dimen_2"
+            android:layout_marginTop="@dimen/dimen_2"
+            android:layout_weight="68"
+            android:background="@color/green_1EC6A0"
+            android:text="@string/detail"
+            android:textColor="@color/white" />
+
+        <TextView
+            style="@style/wait_store_style"
+            android:layout_weight="10" />
+
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/gray_C5C5C5"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/stock" />
+
+</LinearLayout>
+
+

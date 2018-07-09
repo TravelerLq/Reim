@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="@dimen/dimen_51"
+    android:background="@drawable/select_btn_item_click_1_xml"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        style="@style/wait_store_style"
+        android:layout_weight="1">
+,        <CheckBox
+            android:id="@+id/checkbox_receiver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/select_send_check_box_xml"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+    <!-- 单号-->
+    <TextView
+        android:id="@+id/tv_name"
+        style="@style/wait_store_style"
+        android:layout_weight="4"
+        android:text="人员名" />
+</LinearLayout>

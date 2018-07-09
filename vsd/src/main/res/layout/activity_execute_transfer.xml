@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/gray_F8F8F8">
+    <include
+        android:id="@+id/includeTitleLayout"
+        layout="@layout/activity_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentTop="true" />
+
+
+    <RelativeLayout
+        android:id="@+id/bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_72"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/exe_indext_txt"
+            style="@style/middle_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="1/5" />
+
+        <ImageButton
+            android:id="@+id/exe_pre_page"
+            android:layout_width="@dimen/dimen_42"
+            android:layout_height="@dimen/dimen_42"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_47"
+            android:layout_toLeftOf="@id/exe_indext_txt"
+            android:background="@drawable/select_btn_left_right_xml"
+            android:padding="@dimen/dimen_5"
+            android:src="@drawable/left_arrow"/>
+
+        <ImageButton
+            android:id="@+id/exe_next_page"
+            android:layout_width="@dimen/dimen_42"
+            android:layout_height="@dimen/dimen_42"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_47"
+            android:layout_toRightOf="@id/exe_indext_txt"
+            android:src="@drawable/right_arrow_1"
+            android:background="@drawable/select_btn_left_right_xml"
+            android:padding="@dimen/dimen_5" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottomLayout"
+        android:layout_alignLeft="@id/topLayout"
+        android:layout_alignRight="@id/topLayout"
+        android:layout_below="@+id/includeTitleLayout"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:background="@drawable/shape_wait_store_material_xml"
+        android:padding="@dimen/dimen_1"
+        android:layout_marginTop="@dimen/dimen_15">
+
+        <LinearLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_25"
+            android:background="@color/blue_1399CE"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_weight="70"
+                android:textColor="@color/white"
+                android:text="@string/serial_no" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+            <!-- SAP-->
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_weight="102"
+                android:textColor="@color/white"
+                android:text="@string/material_no" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+
+            <!-- 描述-->
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_weight="130"
+                android:textColor="@color/white"
+                android:text="@string/qis_code"
+                android:visibility="gone"/>
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5"
+                android:visibility="gone"/>
+
+            <!-- 数量-->
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_weight="130"
+                android:textColor="@color/white"
+                android:text="@string/store_no" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+
+            <!-- 单位-->
+            <TextView
+                style="@style/wait_store_style"
+                android:textColor="@color/white"
+                android:layout_weight="80"
+                android:text="@string/transfer_num" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+
+            <!-- 区位-->
+            <TextView
+                style="@style/wait_store_style"
+                android:textColor="@color/white"
+                android:layout_weight="80"
+                android:text="@string/exe_status" />
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5"
+                android:visibility="gone" />
+
+
+        </LinearLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_exe"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignLeft="@id/layout"
+            android:layout_alignRight="@id/layout"
+            android:layout_below="@id/layout"
+            android:layout_weight="1" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

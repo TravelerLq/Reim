@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/titleTxt"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_40"
+        android:layout_centerHorizontal="true"
+        android:text="@string/eco_result"
+        android:background="@drawable/colorPrimary"
+        android:textColor="@color/white"
+        android:gravity="center"
+        style="@style/black_middle_style"/>
+
+    <TextView
+        android:id="@+id/nameDeleteBtn"
+        android:layout_width="@dimen/dimen_50"
+        android:layout_height="@dimen/dimen_40"
+        android:background="@drawable/select_btn_back_click_xml"
+        android:text="@string/close_dialog"
+        style="@style/white_middle_style"
+        android:gravity="center"
+        android:layout_alignParentRight="true" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_below="@id/titleTxt"
+        android:divider="@color/gray_C5C5C5"
+        android:dividerHeight="@dimen/dimen_0.5"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_marginLeft="@dimen/dimen_10"/>
+
+</RelativeLayout>

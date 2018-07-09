@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_dialog"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialog_certificate_choose_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/title_certificate_choose"
+        android:textColor="@color/lightblack"
+        android:textSize="@dimen/text_size_button" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@drawable/rule_default" />
+
+    <ListView
+        android:id="@+id/certificate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_weight="1"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/nocertificate"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="加载中"
+        android:textSize="20dp"></TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@drawable/rule_default" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/rule_default"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/dialog_certificate_choose_cancel"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_cancel"
+            android:text="@string/button_cancel"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            android:textSize="@dimen/text_size_normal" />
+        <!--<Button android:layout_width="100dp" android:layout_height="30dp"-->
+        <!--android:textSize="@dimen/text_size_normal" android:textColor="@color/white"-->
+        <!--android:text="@string/button_refresh" android:id="@+id/dialog_certificate_choose_refresh"-->
+        <!--android:background="@drawable/button_reg_reg"   android:layout_weight="1"-->
+        <!--android:layout_margin="15dp"/>-->
+    </LinearLayout>
+</LinearLayout>

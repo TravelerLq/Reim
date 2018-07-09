@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:minHeight="@dimen/dimen_50">
+
+    <TextView
+        android:id="@+id/serialNoTxt"
+        style="@style/revenue_txt_style"
+        android:layout_weight="88"
+        android:gravity="center"
+        android:text="@string/serial_no"/>
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5"/>
+    <TextView
+        android:id="@+id/spaNoTxt"
+        style="@style/revenue_txt_style"
+        android:layout_weight="147"
+        android:gravity="center"
+        android:text="@string/spa_no"/>
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5"/>
+    <TextView
+        android:id="@+id/actualNumTxt"
+        style="@style/revenue_txt_style"
+        android:layout_weight="207"
+        android:gravity="center"
+        android:text="@string/actual_number"/>
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5"/>
+    <TextView
+        android:id="@+id/spaNumTxt"
+        style="@style/revenue_txt_style"
+        android:layout_weight="140"
+        android:gravity="center"
+        android:text="@string/spa_number"/>
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5"/>
+    <TextView
+        android:id="@+id/updateTxt"
+        style="@style/revenue_txt_style"
+        android:layout_weight="93"
+        android:gravity="center"
+        android:text="@string/update"/>
+
+</LinearLayout>

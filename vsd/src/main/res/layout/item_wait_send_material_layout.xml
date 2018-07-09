@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:minHeight="@dimen/dimen_53"
+    android:descendantFocusability="blocksDescendants"
+    android:background="@drawable/select_btn_back_click_xml">
+
+    <TextView
+        android:id="@+id/materialIndexTxt"
+        style="@style/wait_store_style"
+        android:layout_height="match_parent"
+        android:layout_weight="80"/>
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+
+
+    <TextView
+        android:id="@+id/materialCodeTxt"
+        style="@style/wait_store_style"
+        android:layout_height="match_parent"
+        android:layout_weight="112"/>
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+    <!-- 区位码-->
+    <TextView
+        android:id="@+id/areaCodeTxt"
+        style="@style/wait_store_style"
+        android:layout_height="match_parent"
+        android:layout_weight="118"
+        android:visibility="gone"/>
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5"
+        android:visibility="gone"/>
+
+    <!-- 数量-->
+    <TextView
+        android:id="@+id/numTxt"
+        style="@style/wait_store_style"
+        android:layout_height="match_parent"
+        android:layout_weight="80" />
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+
+    <!-- 描述-->
+    <TextView
+        android:id="@+id/descrpTxt"
+        style="@style/wait_store_style"
+        android:layout_height="match_parent"
+        android:layout_weight="195"/>
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+
+    <!--生命周期-->
+    <TextView
+        android:id="@+id/materialUnitTxt"
+        style="@style/wait_store_style"
+        android:layout_height="match_parent"
+        android:layout_weight="80" />
+
+
+
+
+</LinearLayout>

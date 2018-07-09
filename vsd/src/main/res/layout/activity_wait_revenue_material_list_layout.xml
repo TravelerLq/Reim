@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/includeTitleLayout"
+        layout="@layout/activity_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentTop="true" />
+
+    <RelativeLayout
+        android:id="@+id/titleLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_40"
+        android:layout_below="@id/includeTitleLayout"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginRight="@dimen/dimen_10">
+
+        <TextView
+            android:id="@+id/welcomeTxt"
+            style="@style/black_middle_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/revenue_welcome" />
+
+        <TextView
+            android:id="@+id/loginTimeTxt"
+            style="@style/black_middle_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="@string/revenue_login_time" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0.5"
+        android:layout_below="@id/titleLayout"
+        android:background="@color/gray_C5C5C5" />
+
+    <LinearLayout
+        android:id="@+id/appointmentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_40"
+        android:layout_below="@id/line1"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/appointmentTxt"
+            style="@style/revenue_txt_style"
+            android:text="@string/appointment_number" />
+
+        <TextView
+            android:id="@+id/supplierTxt"
+            style="@style/revenue_txt_style"
+            android:gravity="right|center_vertical"
+            android:text="@string/supplier" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/dateLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_40"
+        android:layout_below="@id/appointmentLayout"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/deliveryDateTxt"
+            style="@style/revenue_txt_style"
+            android:text="@string/delivery_date" />
+
+        <TextView
+            android:id="@+id/deliveryTimeTxt"
+            style="@style/revenue_txt_style"
+            android:gravity="center_vertical|right"
+            android:text="@string/delivery_time" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/deliveryTypeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_40"
+        android:layout_below="@id/dateLayout"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/deliveryTypeTxt"
+            style="@style/revenue_txt_style"
+            android:text="@string/delivery_type" />
+
+        <TextView
+            android:id="@+id/orderTypeTxt"
+            style="@style/revenue_txt_style"
+            android:gravity="right|center_vertical"
+            android:text="@string/order_type" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/deliveryTypeLayout"
+        android:layout_alignRight="@id/deliveryTypeLayout"
+        android:layout_below="@id/deliveryTypeLayout"
+        android:background="@drawable/shape_wait_store_material_xml"
+        android:layout_marginTop="@dimen/dimen_19">
+
+        <LinearLayout
+            android:id="@+id/listTitleLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_40">
+
+            <TextView
+                style="@style/revenue_txt_style"
+                android:layout_weight="88"
+                android:gravity="center"
+                android:text="@string/serial_no" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+
+            <TextView
+                style="@style/revenue_txt_style"
+                android:layout_weight="147"
+                android:gravity="center"
+                android:text="@string/spa_no" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+
+            <TextView
+                style="@style/revenue_txt_style"
+                android:layout_weight="207"
+                android:gravity="center"
+                android:text="@string/actual_number" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+
+            <TextView
+                style="@style/revenue_txt_style"
+                android:layout_weight="140"
+                android:gravity="center"
+                android:text="@string/spa_number" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+
+            <TextView
+                style="@style/revenue_txt_style"
+                android:layout_weight="93"
+                android:gravity="center"
+                android:text="@string/operator" />
+        </LinearLayout>
+
+        <com.handmark.pulltorefresh.library.PullToRefreshListView
+            android:id="@+id/materialListView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignLeft="@id/listTitleLayout"
+            android:layout_alignRight="@id/listTitleLayout"
+            android:layout_marginLeft="@dimen/dimen_0.5"
+            android:layout_marginRight="@dimen/dimen_0.5"
+            android:layout_below="@id/listTitleLayout" />
+    </RelativeLayout>
+
+</RelativeLayout>

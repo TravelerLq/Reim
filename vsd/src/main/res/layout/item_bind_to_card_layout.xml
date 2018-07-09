@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="@dimen/dimen_50">
+    <!--索引-->
+    <TextView
+        android:id="@+id/indexTxt"
+        style="@style/wait_store_style"
+        android:layout_height="match_parent"
+        android:layout_weight="76" />
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+    <!-- 车辆码-->
+    <TextView
+        android:id="@+id/cardNoTxt"
+        style="@style/wait_store_style"
+        android:layout_height="match_parent"
+        android:layout_weight="114" />
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+
+    <!-- 地址码-->
+    <TextView
+        android:id="@+id/locationNoTxt"
+        style="@style/wait_store_style"
+        android:layout_height="match_parent"
+        android:layout_weight="114" />
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+
+    <!-- 创建人-->
+    <TextView
+        android:id="@+id/createPersonTxt"
+        style="@style/wait_store_style"
+        android:layout_height="match_parent"
+        android:layout_weight="72" />
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+
+    <!--状态-->
+    <TextView
+        android:id="@+id/statusTxt"
+        style="@style/wait_store_style"
+        android:layout_height="match_parent"
+        android:layout_weight="73" />
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+
+    <!-- 操作-->
+    <RelativeLayout
+        android:layout_weight="88"
+        style="@style/wait_store_style"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/operatBtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dimen_5"
+            android:layout_marginLeft="@dimen/dimen_8"
+            android:layout_marginRight="@dimen/dimen_8"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:layout_centerInParent="true"
+            android:background="@drawable/btn_delete_car_xml"
+            android:text="@string/delete_car"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+
+</LinearLayout>

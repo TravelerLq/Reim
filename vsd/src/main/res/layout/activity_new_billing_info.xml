@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/includeTitleLayout"
+        layout="@layout/activity_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentTop="true" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--公司名称-->
+            <LinearLayout style="@style/billing_new_linear">
+
+                <TextView
+                    style="@style/billing_new_text_style"
+                    android:text="公司名称:" />
+
+                <EditText
+                    android:id="@+id/edt_company_name"
+                    style="@style/new_depart_edit_style"
+                    android:hint="请填公司名称" />
+            </LinearLayout>
+
+            <!--公司税号-->
+            <LinearLayout style="@style/billing_new_linear">
+
+                <TextView
+                    style="@style/billing_new_text_style"
+                    android:text="公司税号:" />
+
+                <EditText
+                    android:id="@+id/edt_comany_tax_no"
+                    style="@style/new_depart_edit_style"
+                    android:hint="请填公司税号" />
+            </LinearLayout>
+            <!--公司银行帐号-->
+
+            <LinearLayout style="@style/billing_new_linear">
+
+                <TextView
+                    style="@style/billing_new_text_style"
+                    android:text="公司银行帐号:" />
+
+                <EditText
+                    android:id="@+id/edt_comany_bank_no"
+                    style="@style/new_depart_edit_style"
+                    android:hint="请填公司银行帐号" />
+            </LinearLayout>
+
+
+            <!--公司地址-->
+            <LinearLayout style="@style/billing_new_linear">
+
+                <TextView
+                    style="@style/billing_new_text_style"
+                    android:text="公司地址:" />
+
+                <EditText
+                    android:id="@+id/edt_company_address"
+                    style="@style/new_depart_edit_style"
+                    android:hint="请填公司地址" />
+            </LinearLayout>
+            <!--公司电话-->
+
+            <LinearLayout style="@style/billing_new_linear">
+
+                <TextView
+                    style="@style/billing_new_text_style"
+                    android:text="公司电话:" />
+
+                <EditText
+                    android:id="@+id/edt_company_tel"
+                    style="@style/new_depart_edit_style"
+                    android:hint="请填公司电话" />
+            </LinearLayout>
+            <!--开票名称-->
+
+
+            <LinearLayout style="@style/billing_new_linear">
+
+                <TextView
+                    style="@style/billing_new_text_style"
+                    android:text="开票名称:" />
+
+                <EditText
+                    android:id="@+id/edt_billing_name"
+                    style="@style/new_depart_edit_style"
+                    android:hint="请填开票名称" />
+            </LinearLayout>
+            <!--开票金额-->
+            <LinearLayout style="@style/billing_new_linear">
+
+                <TextView
+                    style="@style/billing_new_text_style"
+                    android:text="开票金额:" />
+
+                <EditText
+                    android:id="@+id/edt_billing_moeny"
+                    style="@style/new_depart_edit_style"
+                    android:hint="请填开票金额" />
+            </LinearLayout>
+            <!--商品名称-->
+            <LinearLayout style="@style/billing_new_linear">
+
+                <TextView
+                    style="@style/billing_new_text_style"
+                    android:text="商品名称:" />
+
+                <EditText
+                    android:id="@+id/edt_product_name"
+                    style="@style/new_depart_edit_style"
+                    android:hint="请填商品名称" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/tv_sure"
+        style="@style/btn_sure"
+        android:layout_alignParentBottom="true" />
+
+</LinearLayout>

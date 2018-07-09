@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_F8F8F8">
+
+    <include
+        android:id="@+id/includeTitleLayout"
+        layout="@layout/activity_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentTop="true" />
+
+    <!--
+
+    <TextView
+        android:id="@+id/feedBackTimeTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/black_middle_style"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_below="@id/includeTitleLayout"
+        android:text="提问XXXX"/>
+
+    <EditText
+        android:id="@+id/feedBackEdit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_190"
+        android:gravity="left"
+        android:paddingLeft="@dimen/dimen_10"
+        android:hint="@string/input_feed_back_msg"
+        android:layout_below="@id/feedBackTimeTxt"
+        android:layout_alignLeft="@id/feedBackTimeTxt"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:focusable="false"
+        android:background="@drawable/shape_feed_back_cornor_rectangle"/>
+
+    <Button
+        android:id="@+id/submitBtn"
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        android:text="@string/submit"
+        android:layout_marginBottom="@dimen/dimen_10"
+        android:layout_below="@+id/layout"
+        android:background="@drawable/logint_btn_xml"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:visibility="gone"
+        style="@style/white_big_style"/>
+
+    <TextView
+        android:id="@+id/tv_reply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/black_middle_style"
+        android:text="回答XXXX"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_marginBottom="@dimen/dimen_10"
+        android:layout_alignLeft="@id/feedBackEdit"
+        android:layout_alignRight="@id/feedBackEdit"
+        android:layout_below="@id/feedBackEdit" />
+    <EditText
+        android:id="@+id/edt_reply_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_190"
+        android:gravity="left"
+        android:paddingLeft="@dimen/dimen_10"
+        android:hint="@string/no_feed_back_msg"
+        android:layout_below="@+id/tv_reply"
+        android:layout_alignLeft="@id/feedBackTimeTxt"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:focusable="false"
+        android:background="@drawable/shape_feed_back_cornor_rectangle"/>
+-->
+    <com.jci.vsd.view.widget.MyListview
+        android:id="@+id/feedBackDetailList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_below="@id/includeTitleLayout"/>
+
+
+</RelativeLayout>

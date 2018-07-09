@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/activity_title"></include>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_55"
+        android:background="@color/white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_55"
+
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dimen_10">
+
+        <TextView
+            android:id="@+id/textVi23ewer28"
+            style="@style/new_depart_text_style"
+            android:text="部门名称:" />
+
+        <EditText
+            android:id="@+id/edt_depart_name"
+            style="@style/new_depart_edit_style"
+            android:hint="请输入部门名称" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1"
+        android:background="@color/stock"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_55"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dimen_10">
+
+        <TextView
+            android:id="@+id/textVi23ew28"
+            style="@style/new_depart_text_style"
+            android:text="报销限额" />
+
+        <EditText
+            android:id="@+id/edt_limit"
+            style="@style/new_depart_edit_style"
+            android:hint="请输入报销限额"
+            android:inputType="numberDecimal" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1"
+        android:background="@color/stock"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/ll_expense_authority"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_55"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dimen_10">
+
+        <TextView
+            style="@style/new_depart_text_style"
+
+            android:text="报销权限" />
+
+        <TextView
+            android:id="@+id/tv_reim_authority"
+            style="@style/new_depart_edit_style"
+            android:layout_weight="2.5"
+            android:drawableRight="@drawable/ic_more"
+            android:text="请选择"
+            android:textColor="@color/grey_b5b5" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_55"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dimen_10">
+
+        <TextView
+            android:id="@+id/text3View28"
+            style="@style/new_depart_text_style"
+            android:text="部门主管" />
+
+        <TextView
+            android:id="@+id/tv_depart_leader"
+            style="@style/new_depart_edit_style"
+            android:layout_weight="2.5"
+            android:drawableRight="@drawable/ic_more"
+            android:text="请选择"
+            android:textColor="@color/grey_b5b5" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_add"
+        style="@style/btn_sure"
+        android:text="@string/sure"
+        android:textColor="@color/white" />
+
+</LinearLayout>
+
+

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_72"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/showIndexTxt"
+            style="@style/middle_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="0/0" />
+
+        <ImageButton
+            android:id="@+id/leftArraowBtn"
+            android:layout_width="@dimen/dimen_42"
+            android:layout_height="@dimen/dimen_42"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_47"
+            android:layout_toLeftOf="@id/showIndexTxt"
+            android:background="@drawable/select_btn_left_right_xml"
+            android:padding="@dimen/dimen_5"
+            android:src="@drawable/left_arrow" />
+
+        <ImageButton
+            android:id="@+id/rightArraowBtn"
+            android:layout_width="@dimen/dimen_42"
+            android:layout_height="@dimen/dimen_42"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_47"
+            android:layout_toRightOf="@id/showIndexTxt"
+            android:background="@drawable/select_btn_left_right_xml"
+            android:padding="@dimen/dimen_5"
+            android:src="@drawable/right_arrow_1" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottomLayout"
+        android:layout_alignLeft="@id/topLayout"
+        android:layout_alignRight="@id/topLayout"
+        android:layout_below="@id/topLayout"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:background="@drawable/shape_wait_store_material_xml"
+        android:padding="@dimen/dimen_1"
+        android:layout_marginTop="@dimen/dimen_15">
+
+        <LinearLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_25"
+            android:background="@color/blue_1399CE"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_weight="80"
+                android:textColor="@color/white"
+                android:text="@string/serial_no" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+            <!-- SAP-->
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_weight="100"
+                android:textColor="@color/white"
+                android:text="@string/delivery_store_code" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+
+            <!-- 描述-->
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_weight="100"
+                android:textColor="@color/white"
+                android:text="@string/order_owner" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+
+            <!-- 收货人-->
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_weight="120"
+                android:textColor="@color/white"
+                android:text="@string/order_time" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+
+            <!-- 供应商-->
+            <TextView
+                style="@style/wait_store_style"
+                android:textColor="@color/white"
+                android:layout_weight="100"
+                android:text="@string/vendor_name" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+
+            <!-- 状态-->
+            <TextView
+                style="@style/wait_store_style"
+                android:textColor="@color/white"
+                android:layout_weight="100"
+                android:text="@string/store_order_status" />
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5"
+                android:visibility="gone" />
+
+
+        </LinearLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignLeft="@id/layout"
+            android:layout_alignRight="@id/layout"
+            android:layout_below="@id/layout"
+            android:layout_weight="1" />
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <include
+        android:id="@+id/includeTitleLayout"
+        layout="@layout/activity_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentTop="true" />
+
+    <RelativeLayout
+        android:id="@+id/searchLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_52"
+        android:layout_below="@+id/includeTitleLayout"
+        android:background="@color/white">
+
+        <Button
+            android:id="@+id/searchBtn"
+            style="@style/white_small_style"
+            android:layout_width="@dimen/dimen_50"
+            android:layout_height="@dimen/dimen_43"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:layout_marginTop="@dimen/dimen_8"
+            android:background="@drawable/select_btn_sure_xml"
+            android:text="@string/search" />
+
+        <EditText
+            android:id="@+id/searchEdit"
+            style="@style/gray_noraml_small_style"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_43"
+            android:layout_alignBaseline="@+id/searchBtn"
+            android:layout_alignBottom="@+id/searchBtn"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:layout_marginRight="@dimen/dimen_5"
+            android:layout_toStartOf="@+id/searchBtn"
+            android:background="@drawable/edit_bg"
+            android:drawableLeft="@drawable/search"
+            android:drawablePadding="@dimen/dimen_7"
+            android:gravity="left|center_vertical"
+            android:hint="@string/hint_input_search"
+            android:imeOptions="actionDone"
+            android:paddingLeft="@dimen/dimen_10" />
+
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/sureBtn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_49"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginBottom="@dimen/dimen_10"
+        android:background="@drawable/select_btn_sure_xml"
+        android:text="@string/sure"
+        style="@style/white_small_style"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/mainLayout" />
+
+
+
+    <RelativeLayout
+        android:id="@+id/bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_30"
+        android:layout_above="@+id/sureBtn"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/showIndexTxt"
+            style="@style/middle_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="1/5" />
+
+        <ImageButton
+            android:id="@+id/leftArraowBtn"
+            android:layout_width="@dimen/dimen_42"
+            android:layout_height="@dimen/dimen_42"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_47"
+            android:layout_toLeftOf="@id/showIndexTxt"
+            android:background="@drawable/select_btn_left_right_xml"
+            android:padding="@dimen/dimen_5"
+            android:src="@drawable/left_arrow"/>
+
+        <ImageButton
+            android:id="@+id/rightArraowBtn"
+            android:layout_width="@dimen/dimen_42"
+            android:layout_height="@dimen/dimen_42"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_47"
+            android:layout_toRightOf="@id/showIndexTxt"
+            android:src="@drawable/right_arrow_1"
+            android:background="@drawable/select_btn_left_right_xml"
+            android:padding="@dimen/dimen_5" />
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottomLayout"
+        android:layout_below="@id/searchLayout"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:background="@drawable/shape_wait_store_material_xml"
+        android:padding="@dimen/dimen_1"
+        android:layout_marginTop="@dimen/dimen_15">
+
+        <LinearLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_25"
+            android:background="@color/blue_1399CE"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:text="@string/selecct" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+            <!-- 单号-->
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_weight="3"
+                android:textColor="@color/white"
+                android:text="@string/order_id" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/list_receivers"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_below="@id/layout" />
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

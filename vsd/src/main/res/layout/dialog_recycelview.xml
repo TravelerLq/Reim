@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_35"
+        android:layout_gravity="center_vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/dimen_12"
+            android:text="@string/store_distribution"/>
+        <ImageButton
+            android:id="@+id/img_close"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:paddingRight="@dimen/dimen_8"
+            android:src="@drawable/ic_close"
+            android:background="@android:color/transparent"
+            android:text="@string/store_distribution"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_25"
+        android:background="@color/blue_1399CE"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/wait_store_style"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:text="@string/area" />
+
+        <TextView
+            android:id="@+id/tv_distribution_area"
+            android:layout_width="@dimen/dimen_0.5"
+            android:layout_height="match_parent"
+            android:background="@color/gray_C5C5C5" />
+        <!-- 库位编号-->
+        <TextView
+            style="@style/wait_store_style"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:text="@string/store_code_no" />
+
+        <TextView
+            android:id="@+id/tv_distribution_store_no"
+            android:layout_width="@dimen/dimen_0.5"
+            android:layout_height="match_parent"
+            android:background="@color/gray_C5C5C5" />
+        <TextView
+            style="@style/wait_store_style"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:text="利用率" />
+
+        <TextView
+            android:id="@+id/tv_usage"
+            android:layout_width="@dimen/dimen_0.5"
+            android:layout_height="match_parent"
+            android:background="@color/gray_C5C5C5" />
+
+        <!-- 数量-->
+        <TextView
+            style="@style/wait_store_style"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:text="@string/wait_store_num" />
+
+        <TextView
+            android:id="@+id/tv_distribution_num"
+            android:layout_width="@dimen/dimen_0.5"
+            android:layout_height="match_parent"
+            android:background="@color/gray_C5C5C5" />
+
+    </LinearLayout>
+    <ListView
+        android:id="@+id/rl_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginBottom="@dimen/dimen_5"></ListView>
+</LinearLayout>

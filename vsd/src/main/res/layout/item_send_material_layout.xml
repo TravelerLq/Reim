@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="@dimen/dimen_51"
+    android:background="@drawable/select_btn_item_click_1_xml"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        style="@style/wait_store_style"
+        android:layout_height="match_parent"
+        android:layout_weight="70">
+,        <CheckBox
+            android:id="@+id/sendSelectCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/select_send_check_box_xml"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+    <!-- 单号-->
+    <TextView
+        android:id="@+id/sendOrderIdTxt"
+        style="@style/wait_store_style"
+        android:layout_weight="120"
+        android:layout_height="match_parent"
+        android:text="@string/order_id" />
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+
+    <!-- SPA数量-->
+    <TextView
+        android:id="@+id/spaNumTxt"
+        style="@style/wait_store_style"
+        android:layout_weight="70"
+        android:layout_height="match_parent"
+        android:text="@string/spa_no" />
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+
+    <!-- 日期-->
+    <TextView
+        android:id="@+id/dateTxt"
+        style="@style/wait_store_style"
+        android:layout_weight="100"
+        android:layout_height="match_parent"
+        android:text="@string/date" />
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+
+    <!--产线-->
+    <TextView
+        android:id="@+id/productLineTxt"
+        style="@style/wait_store_style"
+        android:layout_height="match_parent"
+        android:layout_weight="73"
+        android:text="@string/product_line" />
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+
+    <!-- 类型-->
+    <TextView
+        android:id="@+id/productTypeTxt"
+        style="@style/wait_store_style"
+        android:layout_weight="88"
+        android:layout_height="match_parent"
+        android:text="@string/product_type" />
+
+    <TextView
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5"
+        android:visibility="gone"/>
+
+    <!-- 状态-->
+    <TextView
+        android:id="@+id/statusTxt"
+        style="@style/wait_store_style"
+        android:layout_weight="70"
+        android:layout_height="match_parent"
+        android:text="@string/product_status"
+        android:visibility="gone"/>
+
+
+
+
+</LinearLayout>

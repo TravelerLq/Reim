@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_item_check"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/dimen_50"
+    android:orientation="horizontal">
+    <!-- 存入数量-->
+    <TextView
+        android:id="@+id/tv_no"
+        style="@style/wait_store_style"
+        android:layout_weight="50"
+        android:text="序号" />
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+
+    <!-- 存入数量-->
+    <TextView
+        android:id="@+id/tv_material_no"
+        style="@style/wait_store_style"
+        android:layout_weight="71"
+        android:text="物料号" />
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+
+    <!-- -->
+    <TextView
+        android:id="@+id/tv_area_code"
+        style="@style/wait_store_style"
+        android:layout_weight="71"
+        android:text="库位号" />
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+
+    <TextView
+        android:id="@+id/tv_check_amount"
+        style="@style/wait_store_style"
+        android:layout_weight="50"
+        android:text="盘点数量" />
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+
+    <TextView
+        android:id="@+id/diffNumTxt"
+        style="@style/wait_store_style"
+        android:layout_weight="50"
+        android:text="差异数量" />
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+
+    <TextView
+        android:id="@+id/diffUnitTxt"
+        style="@style/wait_store_style"
+        android:layout_weight="50" />
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+
+    <TextView
+        android:id="@+id/tv_check_time"
+        style="@style/wait_store_style"
+        android:layout_weight="45"
+        android:text="@string/check_time" />
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+
+    <!-- chayi-->
+    <TextView
+        android:id="@+id/tv_store_amount"
+        style="@style/wait_store_style"
+        android:layout_weight="71"
+        android:text="总库存"
+        android:visibility="gone" />
+</LinearLayout>
+
+
+

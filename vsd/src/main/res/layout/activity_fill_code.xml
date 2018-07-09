@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/includeTitleLayout"
+        layout="@layout/activity_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentTop="true" />
+
+
+
+    <TextView
+        android:id="@+id/tv_code_title"
+        android:layout_width="@dimen/dimen_200"
+        android:layout_height="@dimen/dimen_30"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:text="@string/verify_code" />
+
+    <EditText
+        android:id="@+id/edt_verify_code"
+        style="@style/gray_noraml_small_style"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_50"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tv_code_title"
+        android:layout_marginStart="@dimen/dimen_60"
+        android:layout_marginEnd="@dimen/dimen_50"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/btn_red_rectangle"
+        android:gravity="center"
+        android:hint="@string/hint_input_code" />
+    <Button
+        android:id="@+id/btn_sure_code"
+        style="@style/white_middle_style"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_50"
+        android:layout_marginStart="@dimen/dimen_50"
+        android:layout_marginEnd="@dimen/dimen_50"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dimen_10"
+        android:background="@drawable/btn_red"
+        android:text="@string/sure"
+        android:textColor="@color/white" />
+
+
+</RelativeLayout>

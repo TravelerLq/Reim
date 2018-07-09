@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:minHeight="@dimen/dimen_105"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/dimen_10"
+    android:paddingRight="@dimen/dimen_10"
+    android:layout_marginLeft="@dimen/dimen_10"
+    android:layout_marginRight="@dimen/dimen_5"
+    android:background="@drawable/bg_red__rounded_rectangle">
+
+    <TextView
+        android:id="@+id/tv_contract_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="@dimen/dimen_15"
+        android:layout_marginBottom="@dimen/dimen_15"
+        android:text="xx商务合同" />
+
+    <TextView
+        android:id="@+id/tv_contract_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_contract_title"
+        android:text="关于CA认证的商务合同，即日起。。。" />
+
+    <TextView
+        android:id="@+id/tv_contract_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+      android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:text="15:30 PM" />
+
+</RelativeLayout>

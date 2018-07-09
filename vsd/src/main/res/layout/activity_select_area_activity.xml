@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/gray_F8F8F8">
+
+    <include
+        android:id="@+id/includeTitleLayout"
+        layout="@layout/activity_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentTop="true" />
+
+    <Button
+        android:id="@+id/sureBtn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_49"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginBottom="@dimen/dimen_10"
+        android:background="@drawable/select_btn_sure_xml"
+        android:text="@string/sure"
+        style="@style/white_middle_style"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/mainLayout" />
+
+    <GridView
+        android:id="@+id/areaLocationGridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/sureBtn"
+        android:layout_margin="@dimen/dimen_10"
+        android:horizontalSpacing="@dimen/dimen_5"
+        android:verticalSpacing="@dimen/dimen_5"
+        android:numColumns="3"
+        android:listSelector="@null"
+        android:cacheColorHint="@android:color/transparent"
+        android:background="@color/gray_F8F8F8"
+        android:layout_below="@id/includeTitleLayout"/>
+
+</RelativeLayout>

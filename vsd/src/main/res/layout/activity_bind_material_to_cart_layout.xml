@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_F8F8F8"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/includeTitleLayout"
+        layout="@layout/activity_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentTop="true" />
+
+    <RelativeLayout
+        android:id="@+id/hzScroll"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_36"
+        android:background="@color/white"
+        android:layout_below="@id/includeTitleLayout"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginRight="@dimen/dimen_10">
+
+        <TextView
+            android:id="@+id/orderWorkTxt"
+            style="@style/black_middle_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:text="@string/now_work_order" />
+
+        <HorizontalScrollView
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/scrollLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0.5"
+        android:layout_below="@id/hzScroll"
+        android:background="@color/gray_C5C5C5" />
+
+    <RelativeLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottomLayout"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_marginTop="@dimen/dimen_15"
+        android:layout_below="@id/line1"
+        android:background="@drawable/shape_wait_store_material_xml"
+        android:padding="@dimen/dimen_1">
+
+
+        <LinearLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_25"
+            android:background="@color/blue_1399CE"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_height="match_parent"
+                android:layout_weight="76"
+                android:text="@string/index_card_no"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+            <!-- 车辆码-->
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_height="match_parent"
+                android:layout_weight="114"
+                android:text="@string/card_no"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+
+            <!-- 地址码-->
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_height="match_parent"
+                android:layout_weight="114"
+                android:text="@string/location_no"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+
+            <!-- 创建人-->
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_height="match_parent"
+                android:layout_weight="72"
+                android:text="@string/create_person"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+
+            <!--状态-->
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_height="match_parent"
+                android:layout_weight="73"
+                android:text="@string/car_status"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+
+            <!-- 操作-->
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_height="match_parent"
+                android:layout_weight="88"
+                android:text="@string/operator"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/carListView"
+            android:layout_below="@id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

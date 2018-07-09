@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:visibility="gone"
+        app:elevation="0dp">
+
+        <include layout="@layout/toolbar_base" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <TextView
+        android:id="@+id/tv_welcome"
+        style="@style/white_smaller_style"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="50"
+        android:background="@color/bg_welcome"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+
+        android:text="@string/welcome" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="350"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="350">
+
+            <ImageView
+                android:id="@+id/iv_reim"
+                android:layout_width="@dimen/dimen_120"
+                android:layout_height="@dimen/dimen_120"
+                android:layout_centerInParent="true"
+                android:src="@drawable/bg_round_grey_xml" />
+
+            <TextView
+                android:id="@+id/tv_reim_title"
+                android:layout_width="@dimen/dimen_180"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_reim"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_60"
+                android:gravity="center"
+                android:text="云智税单据" />
+
+            <ImageView
+                android:layout_width="@dimen/dimen_180"
+                android:layout_height="@dimen/dimen_10"
+                android:layout_below="@+id/tv_reim_title"
+                android:src="@color/light_blue" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="@dimen/dimen_10"
+            android:layout_height="@dimen/dimen_120"
+            android:layout_marginLeft="@dimen/dimen_20"
+            android:layout_marginRight="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_50"
+            android:src="@color/green_1EC6A0" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="350">
+
+            <ImageView
+                android:id="@+id/iv_contract"
+                android:layout_width="@dimen/dimen_120"
+                android:layout_height="@dimen/dimen_120"
+                android:layout_centerInParent="true"
+                android:src="@drawable/bg_round_grey_xml" />
+
+            <TextView
+                android:id="@+id/tv_contract_title"
+                android:layout_width="@dimen/dimen_180"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_contract"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_60"
+                android:gravity="center"
+                android:text="云智税单据" />
+
+            <ImageView
+                android:layout_width="@dimen/dimen_180"
+                android:layout_height="@dimen/dimen_10"
+                android:layout_below="@+id/tv_contract_title"
+                android:src="@color/light_blue" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="350"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="350">
+
+            <ImageView
+                android:id="@+id/iv_invoicing"
+                android:layout_width="@dimen/dimen_120"
+                android:layout_height="@dimen/dimen_120"
+                android:layout_centerInParent="true"
+                android:src="@drawable/bg_round_grey_xml" />
+
+            <TextView
+                android:id="@+id/tv_invoicing_title"
+                android:layout_width="@dimen/dimen_180"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_invoicing"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_60"
+                android:gravity="center"
+                android:text="远程开票" />
+
+            <ImageView
+                android:layout_width="@dimen/dimen_180"
+                android:layout_height="@dimen/dimen_10"
+                android:layout_below="@+id/tv_invoicing_title"
+                android:src="@color/light_blue" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="@dimen/dimen_10"
+            android:layout_height="@dimen/dimen_120"
+            android:layout_marginLeft="@dimen/dimen_20"
+            android:layout_marginRight="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_50"
+            android:src="@color/green_1EC6A0" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="350">
+
+            <ImageView
+                android:id="@+id/iv_budget"
+                android:layout_width="@dimen/dimen_120"
+                android:layout_height="@dimen/dimen_120"
+                android:layout_centerInParent="true"
+                android:src="@drawable/bg_round_grey_xml" />
+
+            <TextView
+                android:id="@+id/tv_budget_title"
+                android:layout_width="@dimen/dimen_180"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_budget"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_60"
+                android:gravity="center"
+                android:text="预算管理" />
+
+            <ImageView
+                android:layout_width="@dimen/dimen_180"
+                android:layout_height="@dimen/dimen_10"
+                android:layout_below="@+id/tv_budget_title"
+                android:src="@color/light_blue" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

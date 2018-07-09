@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_F8F8F8">
+
+    <include
+        android:id="@+id/includeTitleLayout"
+        layout="@layout/activity_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:id="@+id/feedBackTimeTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/black_middle_style"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_below="@id/includeTitleLayout"
+        android:text="时间：2017-11-15"/>
+
+    <TextView
+        android:id="@+id/feedBackThemeTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/black_middle_style"
+        android:layout_alignLeft="@id/feedBackTimeTxt"
+        android:layout_below="@id/feedBackTimeTxt"
+        android:text="@string/feed_back_question"/>
+
+    <EditText
+        android:id="@+id/feedBackThemeEdit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_30"
+        android:layout_toRightOf="@id/feedBackThemeTxt"
+        android:layout_alignBaseline="@id/feedBackThemeTxt"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:hint="@string/please_input_feed_theme"
+        android:maxLength="12"
+        android:imeOptions="actionDone"
+        android:focusable="false"
+        android:background="@drawable/shape_feed_back_cornor_rectangle"/>
+
+    <EditText
+        android:id="@+id/feedBackEdit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_190"
+        android:gravity="left"
+        android:paddingLeft="@dimen/dimen_10"
+        android:hint="@string/input_feed_back_reply_msg"
+        android:layout_below="@id/feedBackThemeTxt"
+        android:layout_alignLeft="@id/feedBackTimeTxt"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:background="@drawable/shape_feed_back_cornor_rectangle"/>
+
+    <Button
+        android:id="@+id/submitBtn"
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        android:text="@string/submit"
+        android:layout_marginBottom="@dimen/dimen_10"
+        android:layout_below="@+id/layout"
+        android:background="@drawable/logint_btn_xml"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_marginLeft="@dimen/dimen_10"
+        style="@style/white_big_style"/>
+
+    <GridView
+        android:id="@+id/picGridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/submitBtn"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_marginBottom="@dimen/dimen_10"
+        android:layout_alignLeft="@id/feedBackEdit"
+        android:layout_alignRight="@id/feedBackEdit"
+        android:layout_below="@id/feedBackEdit"
+        android:numColumns="3"
+        android:horizontalSpacing="@dimen/dimen_5"
+        android:verticalSpacing="@dimen/dimen_5"/>
+
+</RelativeLayout>

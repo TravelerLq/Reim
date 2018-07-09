@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
+    android:paddingLeft="@dimen/dimen_10"
+    android:paddingRight="@dimen/dimen_10">
+
+    <TextView
+        android:id="@+id/deliverTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gray_757575"
+        style="@style/white_middle_style"
+        android:layout_marginTop="@dimen/dimen_7"
+        android:text="@string/input_delivery_code_fuhao"/>
+    
+    <EditText
+        android:id="@+id/deliveryEdit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_43"
+        android:textColorHint="@color/gray_B3B3B3"
+        android:layout_below="@id/deliverTxt"
+        android:layout_marginTop="@dimen/dimen_7"
+        android:background="@drawable/edit_bg"
+        android:hint="@string/input_delivery_code_or_press_btn"/>
+
+    <Button
+        android:id="@+id/scanSureBtn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_49"
+        android:layout_below="@id/deliveryEdit"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:background="@drawable/select_btn_sure_xml"
+        style="@style/white_middle_style"
+        android:text="@string/sure"/>
+
+
+
+</RelativeLayout>

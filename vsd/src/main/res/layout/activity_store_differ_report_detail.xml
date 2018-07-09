@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/gray_F8F8F8"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/includeTitleLayout"
+        layout="@layout/activity_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/stock" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:background="@color/gray_F8F8F8"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dimen_8"
+        android:paddingRight="@dimen/dimen_8">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/item_bg_green"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/store_differ_report_detail"
+                android:layout_weight="280"
+                android:text="@string/material_no" />
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/stock" />
+
+            <TextView
+                android:id="@+id/tv_detail_material_no"
+                style="@style/store_differ_report_detail"
+                android:layout_weight="402"
+                android:text="@string/default_code" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/stock" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/store_differ_report_detail"
+                android:layout_weight="280"
+                android:text="@string/area_code" />
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/stock" />
+
+            <TextView
+                android:id="@+id/tv_area_code"
+                style="@style/store_differ_report_detail"
+                android:layout_weight="402"
+                android:text="@string/default_code" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/stock" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/item_bg_green"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/store_differ_report_detail"
+                android:layout_weight="280"
+                android:text="@string/store_amount" />
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/stock" />
+
+            <TextView
+                android:id="@+id/tv_store_amount"
+                style="@style/store_differ_report_detail"
+                android:layout_weight="402"
+                android:text="@string/default_code" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/stock" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/store_differ_report_detail"
+                android:layout_weight="280"
+                android:text="@string/receive_amount" />
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/stock" />
+
+            <TextView
+                android:id="@+id/tv_receive_amount"
+                style="@style/store_differ_report_detail"
+                android:layout_weight="402"
+                android:text="@string/default_code" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/stock" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/item_bg_green"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/store_differ_report_detail"
+                android:layout_weight="280"
+                android:text="@string/differ_amount" />
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/stock" />
+
+            <TextView
+                android:id="@+id/tv_differ_amount"
+                style="@style/store_differ_report_detail"
+                android:layout_weight="402"
+                android:text="@string/default_code" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/stock" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/store_differ_report_detail"
+                android:layout_weight="280"
+                android:text="@string/material_descp" />
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/stock" />
+
+            <TextView
+                android:id="@+id/tv_material_descp"
+                style="@style/store_differ_report_detail"
+                android:layout_weight="402"
+                android:text="@string/default_code" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/stock" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/item_bg_green"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/store_differ_report_detail"
+                android:layout_weight="280"
+                android:text="@string/receive_code" />
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/stock" />
+
+            <TextView
+                android:id="@+id/tv_receive_code"
+                style="@style/store_differ_report_detail"
+                android:layout_weight="402"
+                android:text="@string/default_code" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/stock" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/store_differ_report_detail"
+                android:layout_weight="280"
+                android:text="@string/supplyer_name" />
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/stock" />
+
+            <TextView
+                android:id="@+id/tv_supplyer_name"
+                style="@style/store_differ_report_detail"
+                android:layout_weight="402"
+                android:text="@string/default_code" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/stock" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/item_bg_green"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/store_differ_report_detail"
+                android:layout_weight="280"
+                android:text="@string/receive_material_date" />
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/stock" />
+
+            <TextView
+                android:id="@+id/tv_receive_material_date"
+                style="@style/store_differ_report_detail"
+                android:layout_weight="402"
+                android:text="@string/default_code" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/stock" />
+
+
+    </LinearLayout>
+</LinearLayout>

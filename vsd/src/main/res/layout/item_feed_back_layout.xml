@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/color_btn_white_gray_f8f8f8_xml"
+    android:descendantFocusability="blocksDescendants"
+    android:minHeight="@dimen/dimen_51">
+    
+    <Button
+        android:id="@+id/responseBtn"
+        android:layout_width="@dimen/dimen_74"
+        android:layout_height="match_parent"
+        android:background="@drawable/color_btn_white_gray_f8f8f8_xml"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:singleLine="true"
+        android:layout_centerVertical="true"
+        android:text="@string/wait_response"/>
+
+    <TextView
+        android:id="@+id/line"
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="@dimen/dimen_45"
+        android:layout_marginTop="@dimen/dimen_5"
+        android:layout_marginBottom="@dimen/dimen_5"
+        android:background="@color/gray_C5C5C5"
+        android:layout_toLeftOf="@id/responseBtn"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@id/line"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dimen_7">
+
+        <TextView
+            android:id="@+id/feedTitleTxt"
+            style="@style/black_middle_style"
+            android:layout_width="@dimen/dimen_216"
+            android:layout_height="wrap_content"
+            android:text="反馈Title1"
+            android:layout_marginTop="@dimen/dimen_2" />
+
+        <TextView
+            android:id="@+id/feedTimeTxt"
+            style="@style/black_small_style"
+            android:textColor="@color/gray_C5C5C5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/feedTitleTxt"
+            android:layout_alignParentRight="true"
+            android:text="2017-11-15"/>
+
+        <TextView
+            android:id="@+id/feedMsgTxt"
+            style="@style/black_super_small_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/feedTitleTxt"
+            android:layout_below="@id/feedTitleTxt"
+            android:singleLine="true"
+            android:textColor="@color/gray_C5C5C5"
+            android:text="反馈内容....................................................................dsd...................................."
+            android:layout_marginTop="@dimen/dimen_5" />
+    </RelativeLayout>
+
+</RelativeLayout>

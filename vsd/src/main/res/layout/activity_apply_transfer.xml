@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <include
+        android:id="@+id/includeTitleLayout"
+        layout="@layout/activity_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentTop="true" />
+
+    <RelativeLayout style="@style/relative_check_style">
+
+        <TextView
+            android:id="@+id/tv_apply_material_title"
+            style="@style/check_plan_info"
+            android:text="@string/material_code" />
+
+        <TextView
+            android:id="@+id/tv_apply_scan_material_code"
+            style="@style/scan_select"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:layout_toRightOf="@+id/tv_apply_material_title" />
+
+        <EditText
+            android:id="@+id/edt_apply_material_code"
+            style="@style/transfer_combine_info_edtcontent"
+            android:textColor="@color/grey_hint_text_color"
+            android:textAlignment="textEnd"
+            android:focusable="true"
+            android:inputType="number"
+            android:digits="0123456789-"
+            android:hint="@string/hint_input_material_code" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/stock" />
+
+    <RelativeLayout style="@style/relative_check_style">
+
+        <TextView
+            style="@style/check_plan_info"
+            android:text="@string/store_no" />
+
+        <EditText
+            android:id="@+id/edt_input_store_no"
+            style="@style/transfer_combine_info_edtcontent"
+            android:inputType="number"
+            android:digits="0123456789-"
+            android:hint="@string/hint_store_no" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/stock" />
+
+    <RelativeLayout style="@style/relative_check_style">
+
+        <TextView
+            android:id="@+id/tv_apply_qis_code_title"
+            style="@style/check_plan_info"
+            android:text="@string/qis_code" />
+
+        <TextView
+            android:id="@+id/tv_apply_scan_qis_code"
+            style="@style/scan_select"
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:layout_toRightOf="@+id/tv_apply_qis_code_title" />
+
+        <EditText
+            android:id="@+id/edt_apply_qis_code"
+            style="@style/transfer_combine_info_edtcontent"
+            android:textColor="@color/grey_hint_text_color"
+            android:textAlignment="textEnd"
+            android:focusable="true"
+            android:hint="@string/hint_input__qis_code" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/stock" />
+
+    <RelativeLayout style="@style/relative_check_style">
+
+        <TextView
+            style="@style/check_plan_info"
+            android:text="@string/transfer_num" />
+
+        <EditText
+            android:id="@+id/edt_input_transfer_amount"
+            style="@style/transfer_combine_info_edtcontent"
+            android:textAlignment="textEnd"
+            android:inputType="number"
+            android:hint="@string/hint_input_transfer_num" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/stock" />
+
+    <RelativeLayout style="@style/relative_check_style">
+
+        <TextView
+            style="@style/check_plan_info"
+            android:text="@string/apply_person" />
+
+        <TextView
+            android:id="@+id/tv_applicant"
+            style="@style/transfer_combine_info_tvcontent"
+            android:drawablePadding="@dimen/dimen_10"
+            android:drawableRight="@drawable/ic_more"
+            android:text=""
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/stock" />
+    <RelativeLayout style="@style/relative_check_style">
+
+        <TextView
+            style="@style/check_plan_info"
+            android:text="@string/receiver" />
+
+        <TextView
+            android:id="@+id/tv_receiver"
+            style="@style/transfer_combine_info_tvcontent"
+            android:drawablePadding="@dimen/dimen_10"
+            android:drawableRight="@drawable/ic_more"
+            android:text="" />
+
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/stock" />
+    <Button
+        android:id="@+id/btn_sure"
+        style="@style/btn_sure"
+        android:text="@string/confirm_transfer" />
+</LinearLayout>

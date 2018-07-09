@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_delivery_status_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/dimen_51"
+    android:orientation="horizontal">
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+
+    <TextView
+        android:id="@+id/tv_content_info"
+        style="@style/wait_store_style"
+        android:layout_gravity="center_vertical"
+        android:layout_height="match_parent"
+        android:layout_weight="496"
+        android:text="@string/content_info" />
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+    <!-- dai fa数量-->
+    <TextView
+        android:id="@+id/tv_arrive_date"
+        style="@style/wait_store_style"
+        android:layout_weight="250"
+        android:layout_height="match_parent"
+        android:text="@string/arrive_date" />
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+</LinearLayout>
+

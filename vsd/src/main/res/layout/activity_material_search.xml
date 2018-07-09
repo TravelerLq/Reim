@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/gray_F8F8F8"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/includeTitleLayout"
+        layout="@layout/activity_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentTop="true" />
+
+    <RelativeLayout
+        android:id="@+id/topLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_52"
+        android:background="@color/white">
+
+        <Button
+            android:id="@+id/searchBtn"
+            style="@style/white_small_style"
+            android:layout_width="@dimen/dimen_50"
+            android:layout_height="@dimen/dimen_43"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:layout_marginTop="@dimen/dimen_8"
+            android:background="@drawable/select_btn_sure_xml"
+            android:text="@string/search" />
+
+        <EditText
+            android:id="@+id/searchEdit"
+            style="@style/gray_noraml_small_style"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_43"
+            android:layout_alignBaseline="@+id/searchBtn"
+            android:layout_alignBottom="@+id/searchBtn"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:layout_marginRight="@dimen/dimen_5"
+            android:layout_toStartOf="@+id/searchBtn"
+            android:background="@drawable/edit_bg"
+            android:drawableLeft="@drawable/search"
+            android:drawablePadding="@dimen/dimen_7"
+            android:gravity="left|center_vertical"
+            android:hint="@string/hint_input_search"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:paddingLeft="@dimen/dimen_10" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/stock" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_10">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+
+            <RelativeLayout style="@style/relative_check_style">
+
+                <TextView
+                    style="@style/check_plan_info"
+                    android:text="@string/material_no" />
+
+
+                <TextView
+                    android:id="@+id/tv_material_no"
+                    style="@style/transfer_combine_info_tvcontent"
+                    android:text="3697" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/stock" />
+
+            <RelativeLayout style="@style/relative_check_style">
+
+                <TextView
+
+                    style="@style/check_plan_info"
+                    android:text="@string/area_code" />
+
+                <TextView
+                    android:id="@+id/tv_area_code"
+                    style="@style/transfer_combine_info_tvcontent"
+                    android:text="1-13-4-01" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/stock" />
+
+
+            <RelativeLayout style="@style/relative_check_style">
+
+                <TextView
+                    style="@style/check_plan_info"
+                    android:text="@string/store_total_amount" />
+
+                <TextView
+                    android:id="@+id/tv_store_total"
+                    style="@style/transfer_combine_info_tvcontent"
+                    android:text="90"
+                    android:drawableRight="@drawable/ic_more"
+                    android:drawablePadding="@dimen/dimen_5"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/stock" />
+
+
+            <RelativeLayout style="@style/relative_check_style">
+
+                <TextView
+                    style="@style/check_plan_info"
+                    android:text="@string/material_descp" />
+
+
+                <TextView
+                    android:id="@+id/tv_material_descp"
+                    style="@style/transfer_combine_info_tvcontent"
+                    android:text="电磁阀线圈" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/stock" />
+
+
+            <RelativeLayout style="@style/relative_check_style">
+
+                <TextView
+                    style="@style/check_plan_info"
+                    android:text="@string/batch_no" />
+
+
+                <TextView
+                    android:id="@+id/tv_batch_no"
+                    style="@style/transfer_combine_info_tvcontent"
+                    android:text="120980" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/stock" />
+
+
+            <RelativeLayout style="@style/relative_check_style">
+
+                <TextView
+                    style="@style/check_plan_info"
+                    android:text="@string/expiration_date" />
+
+
+                <TextView
+                    android:id="@+id/tv_expiration_time"
+                    style="@style/transfer_combine_info_tvcontent"
+                    android:text="2017-12-10" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/stock" />
+
+
+            <RelativeLayout style="@style/relative_check_style">
+
+                <TextView
+                    style="@style/check_plan_info"
+                    android:text="@string/arrive_material_last_time" />
+
+
+                <TextView
+                    android:id="@+id/tv_arrive_time"
+                    style="@style/transfer_combine_info_tvcontent"
+                    android:text="2017-10-10" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/stock" />
+
+
+            <RelativeLayout style="@style/relative_check_style">
+
+                <TextView
+                    style="@style/check_plan_info"
+                    android:text="@string/send_material_last_time" />
+
+
+                <TextView
+                    android:id="@+id/tv_send_time"
+                    style="@style/transfer_combine_info_tvcontent"
+                    android:text="2017-10-12" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/stock" />
+
+
+            <RelativeLayout style="@style/relative_check_style">
+
+                <TextView
+                    style="@style/check_plan_info"
+                    android:text="@string/material_plan" />
+
+                <TextView
+                    android:id="@+id/tv_material_plan"
+                    style="@style/transfer_combine_info_tvcontent"
+                    android:text="待定" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/stock" />
+
+
+            <RelativeLayout style="@style/relative_check_style">
+
+                <TextView
+                    style="@style/check_plan_info"
+                    android:text="@string/supplyer" />
+
+                <TextView
+                    android:id="@+id/tv_supplyer"
+                    style="@style/transfer_combine_info_tvcontent"
+                    android:text="杭州创收科技" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/stock" />
+
+            <RelativeLayout style="@style/relative_check_style">
+
+                <TextView
+                    style="@style/check_plan_info"
+                    android:text="@string/store_capacity" />
+
+
+                <TextView
+                    android:id="@+id/tv_strore_capacity"
+                    style="@style/transfer_combine_info_tvcontent"
+                    android:text="20" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/stock" />
+            <RelativeLayout style="@style/relative_check_style">
+
+                <TextView
+                    style="@style/check_plan_info"
+                    android:text="@string/store_use_rate" />
+
+
+                <TextView
+                    android:id="@+id/tv_strore_use_rate"
+                    style="@style/transfer_combine_info_tvcontent"
+                    android:text="80%" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/stock" />
+
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/activity_title"></include>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout style="@style/reim_item_linear">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_30"
+                    android:layout_height="@dimen/dimen_30"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:src="@drawable/ic_rmb_blue" />
+
+                <EditText
+                    android:id="@+id/edt_money"
+                    style="@style/gray_hint_middle_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_65"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="报销金额"
+                    android:inputType="number|numberDecimal"
+                    android:paddingLeft="@dimen/dimen_10" />
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1"
+                android:background="@color/stock" />
+
+            <LinearLayout
+                android:id="@+id/ll_reim_type"
+                style="@style/reim_item_linear"
+                android:paddingLeft="@dimen/dimen_20">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_30"
+                    android:layout_height="@dimen/dimen_30"
+                    android:src="@drawable/ic_expense_type" />
+
+                <TextView
+                    android:id="@+id/tv_money"
+                    style="@style/gray_hint_middle_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimen_65"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/dimen_10"
+                    android:paddingRight="@dimen/dimen_10"
+                    android:text="报销类型" />
+
+                <RelativeLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="horizontal">
+
+                    <com.warmtel.expandtab.ExpandPopTabView
+                        android:id="@+id/expandable_list_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dimen_10"
+                        android:src="@drawable/ic_more" />
+
+
+                </RelativeLayout>
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1"
+                android:background="@color/stock" />
+
+
+            <LinearLayout
+                android:id="@+id/rl_pick_date"
+                style="@style/reim_item_linear"
+                android:paddingLeft="@dimen/dimen_20"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/iv_time"
+                    android:layout_width="@dimen/dimen_30"
+                    android:layout_height="@dimen/dimen_30"
+                    android:src="@drawable/ic_calendar" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edt_start_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_regtangle_grey_xml"
+                        android:hint="开始时间"
+                        android:padding="@dimen/dimen_10"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/edt_start_time"
+                        android:layout_alignBottom="@+id/edt_start_time"
+                        android:layout_marginStart="32dp"
+                        android:layout_toEndOf="@+id/edt_start_time"
+                        android:text="-------" />
+
+                    <EditText
+                        android:id="@+id/edt_end_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/edt_start_time"
+                        android:layout_alignBottom="@+id/edt_start_time"
+                        android:layout_marginStart="29dp"
+                        android:layout_toEndOf="@+id/textView3"
+                        android:background="@drawable/bg_regtangle_grey_xml"
+                        android:hint="结束时间"
+                        android:padding="@dimen/dimen_10"
+                        android:textSize="@dimen/text_size_small" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1"
+                android:background="@color/stock" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1"
+                android:background="@color/stock" />
+
+            <LinearLayout
+                android:id="@+id/rl_location"
+                style="@style/reim_item_linear"
+                android:paddingLeft="@dimen/dimen_20"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/iv_location"
+                    android:layout_width="@dimen/dimen_30"
+                    android:layout_height="@dimen/dimen_30"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_location" />
+
+                <EditText
+                    android:id="@+id/edt_start_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_toEndOf="@+id/iv_location"
+                    android:background="@drawable/bg_regtangle_grey_xml"
+                    android:hint="开始地点"
+                    android:padding="@dimen/dimen_10"
+                    android:textSize="@dimen/text_size_small" />
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/edt_start_location"
+                    android:layout_alignBottom="@+id/edt_start_location"
+                    android:layout_marginStart="32dp"
+                    android:layout_toEndOf="@+id/edt_start_location"
+                    android:text="-------" />
+
+                <EditText
+                    android:id="@+id/edt_end_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/edt_start_location"
+                    android:layout_alignBottom="@+id/edt_start_location"
+                    android:layout_marginStart="29dp"
+                    android:layout_toEndOf="@+id/textView13"
+                    android:background="@drawable/bg_regtangle_grey_xml"
+                    android:hint="结束地点"
+                    android:padding="@dimen/dimen_10"
+                    android:textSize="@dimen/text_size_small" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1"
+                android:background="@color/stock" />
+
+            <LinearLayout
+                style="@style/reim_item_linear"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen_20">
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pic_title" />
+
+                <ImageView
+                    android:id="@+id/iv_reim_pic"
+                    android:layout_width="@dimen/dimen_100"
+                    android:layout_height="@dimen/dimen_50"
+                    android:layout_marginStart="23dp"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_add_blue" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1"
+                android:background="@color/stock" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_120"
+                android:paddingLeft="@dimen/dimen_20">
+
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_15"
+                    android:text="说明" />
+
+
+                <com.jci.vsd.view.widget.CountEditText
+                    android:id="@+id/edt_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginRight="@dimen/dimen_10"
+                    android:layout_marginTop="11dp"
+                    android:layout_toRightOf="@+id/textView9"></com.jci.vsd.view.widget.CountEditText>
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_add"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50"
+                android:layout_marginLeft="@dimen/dimen_20"
+                android:layout_marginRight="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:background="@drawable/btn_red"
+                android:gravity="center"
+                android:text="@string/sure"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

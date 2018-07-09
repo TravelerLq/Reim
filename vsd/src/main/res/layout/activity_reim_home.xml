@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/activity_title"
+        android:visibility="visible"></include>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/dimen_5"
+        android:layout_marginRight="@dimen/dimen_5"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_weight="470"
+        android:background="@drawable/bg_grey_rectangle_fill"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dimen_1"
+        android:visibility="visible">
+
+        <LinearLayout
+
+            style="@style/reim_home_top_parent">
+
+            <ImageView
+                android:id="@+id/iv_home_pic"
+                style="@style/reim_home_top_image"
+                android:src="@drawable/ic_camera" />
+
+            <TextView
+                style="@style/reim_home_top_image_title"
+                android:text="发票拍照" />
+        </LinearLayout>
+
+
+        <LinearLayout style="@style/reim_home_top_parent">
+
+            <ImageView
+                android:id="@+id/iv_invoicing_verify"
+                style="@style/reim_home_top_image"
+                android:src="@drawable/ic_head" />
+
+            <TextView
+                style="@style/reim_home_top_image_title"
+                android:text="发票查验" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/reim_home_top_parent">
+
+            <ImageView
+                android:id="@+id/iv_add_expense"
+                style="@style/reim_home_top_image"
+                android:src="@drawable/ic_add_blue" />
+
+            <TextView
+                style="@style/reim_home_top_image_title"
+                android:text="新建报销" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="670"
+
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_my_approval"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_37">
+
+            <ImageView
+                android:id="@+id/iv_my_approval"
+                android:layout_width="@dimen/dimen_80"
+                android:layout_height="@dimen/dimen_55"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/bg_round_green_shape"
+                android:src="@drawable/ic_my_expense" />
+
+            <TextView
+                android:id="@+id/tv_my_approval"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_20"
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@+id/iv_my_approval"
+                android:text="@string/my_approval" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/tv_my_approval"
+                android:layout_below="@+id/tv_my_approval"
+                android:layout_marginTop="12dp"
+                android:paddingLeft="@dimen/dimen_10"
+                android:paddingRight="@dimen/dimen_10"
+                android:text="@string/no_data"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_1"
+            android:background="@color/stock" />
+
+        <RelativeLayout
+            android:id="@+id/rl_my_expense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/dimen_30"
+            android:padding="@dimen/dimen_37">
+
+            <ImageView
+                android:id="@+id/iv_my_expense"
+                android:layout_width="@dimen/dimen_80"
+                android:layout_height="@dimen/dimen_55"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/bg_round_orange_shape"
+                android:src="@drawable/ic_my_expense" />
+
+            <TextView
+                android:id="@+id/tv_my_expense_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_20"
+                android:layout_marginTop="20dp"
+                android:layout_toRightOf="@+id/iv_my_expense"
+                android:text="@string/my_expense" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/tv_my_expense_title"
+                android:layout_below="@+id/tv_my_expense_title"
+                android:layout_marginTop="12dp"
+                android:paddingLeft="@dimen/dimen_10"
+                android:paddingRight="@dimen/dimen_10"
+                android:text="@string/no_data"
+
+                android:visibility="gone" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
+

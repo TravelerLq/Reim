@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:minHeight="@dimen/dimen_50"
+    android:background="@drawable/select_btn_item_click_1_xml"
+    android:descendantFocusability="blocksDescendants">
+    <TextView
+        android:id="@+id/materialSerailTxt"
+        style="@style/wait_store_style"
+        android:textSize="@dimen/super_small_textsize"
+        android:layout_weight="112"
+        android:text="@string/serial_no"/>
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5"/>
+    <!-- SAP-->
+    <TextView
+        android:id="@+id/materialSapTxt"
+        style="@style/wait_store_style"
+        android:layout_weight="112"
+        android:textSize="@dimen/super_small_textsize"
+        android:text="@string/sap_title"/>
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5"/>
+
+    <!-- 描述-->
+    <TextView
+        android:id="@+id/materialDescpTxt"
+        style="@style/wait_store_style"
+        android:layout_weight="191"
+        android:textSize="@dimen/super_small_textsize"
+        android:text="@string/description"/>
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5"/>
+
+    <!-- 数量-->
+    <TextView
+        android:id="@+id/materialNumberTxt"
+        style="@style/wait_store_style"
+        android:layout_weight="73"
+        android:textSize="@dimen/super_small_textsize"
+        android:text="@string/wait_store_num"/>
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5"/>
+
+    <!-- 单位-->
+    <TextView
+        android:id="@+id/materialUnitTxt"
+        style="@style/wait_store_style"
+        android:layout_weight="58"
+        android:textSize="@dimen/super_small_textsize"
+        android:text="@string/wait_store_unit"/>
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5"/>
+
+    <!-- 区位-->
+    <TextView
+        android:id="@+id/materialAreaSeatTxt"
+        style="@style/wait_store_style"
+        android:layout_weight="130"
+        android:textSize="@dimen/super_small_textsize"
+        android:text="@string/wait_store_area"/>
+
+    <TextView
+        android:visibility="gone"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5"/>
+
+
+</LinearLayout>

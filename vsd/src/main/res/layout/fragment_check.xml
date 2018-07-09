@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <RelativeLayout style="@style/relative_check_style">
+
+        <TextView
+            android:id="@+id/tv_check_material_title"
+            style="@style/check_plan_info"
+            android:text="@string/material_code" />
+
+        <TextView
+            android:id="@+id/tv_check_scan_material_code"
+            style="@style/scan_select"
+            android:layout_toRightOf="@+id/tv_check_material_title" />
+
+        <EditText
+            android:id="@+id/edt_material_code"
+            style="@style/transfer_combine_info_edtcontent"
+            android:focusable="true"
+            android:hint="@string/hint_input_material_code"
+            android:textAlignment="textEnd"
+            android:inputType="number"
+            android:digits="0123456789-"
+            android:textColor="@color/grey_hint_text_color" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/stock" />
+
+    <RelativeLayout style="@style/relative_check_style">
+
+        <TextView
+            android:id="@+id/tv_check_area_code"
+            style="@style/check_plan_info"
+            android:text="@string/area_code" />
+
+        <TextView
+            android:id="@+id/tv_check_scan_area_code"
+            style="@style/scan_select"
+            android:layout_toRightOf="@+id/tv_check_area_code"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/edt_area_code"
+            style="@style/transfer_combine_info_edtcontent"
+            android:focusable="true"
+            android:hint="@string/hint_input_area_code"
+            android:textAlignment="textEnd"
+            android:inputType="number"
+            android:digits="0123456789-"
+            android:textColor="@color/grey_hint_text_color" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/stock" />
+
+    <RelativeLayout style="@style/relative_check_style">
+
+        <TextView
+            style="@style/check_plan_info"
+            android:text="@string/material_count" />
+
+        <EditText
+            android:id="@+id/edt_input_num"
+            style="@style/transfer_combine_info_edtcontent"
+            android:inputType="number"
+            android:hint="@string/hint_input_number" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/stock" />
+
+    <RelativeLayout
+        android:id="@+id/rl_current_num"
+        style="@style/relative_check_style"
+        android:visibility="gone">
+
+        <TextView
+            style="@style/check_plan_info"
+            android:text="@string/current_reserve" />
+
+        <TextView
+            android:id="@+id/tv_current_num"
+            style="@style/transfer_combine_info_edtcontent"
+            android:text="" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/stock" />
+
+    <Button
+        android:id="@+id/btn_sure"
+        style="@style/btn_sure"
+        android:text="确定" />
+</LinearLayout>

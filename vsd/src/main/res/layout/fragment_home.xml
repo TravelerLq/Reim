@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:visibility="gone"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
+
+        <include layout="@layout/toolbar_base" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <TextView
+        android:id="@+id/tv_welcome"
+        style="@style/white_smaller_style"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="50"
+        android:background="@color/bg_welcome"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+
+        android:text="@string/welcome" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="125" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="350"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_reim"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="350">
+
+            <ImageView
+                android:id="@+id/iv_reim"
+                style="@style/home_round"
+                android:src="@drawable/bg_round_grey_xml" />
+
+            <TextView
+                android:id="@+id/tv_reim_title"
+                style="@style/home_round_title"
+                android:layout_below="@+id/iv_reim"
+                android:text="云智税单据" />
+
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="@dimen/dimen_10"
+            android:layout_height="@dimen/dimen_100"
+            android:layout_marginLeft="@dimen/dimen_20"
+            android:layout_marginRight="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_50"
+            android:src="@color/green_1EC6A0" />
+
+        <RelativeLayout
+            android:id="@+id/rl_contract"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="350">
+
+            <ImageView
+                android:id="@+id/iv_contract"
+                style="@style/home_round"
+                android:src="@drawable/bg_round_grey_xml" />
+
+            <TextView
+                android:id="@+id/tv_contract_title"
+                style="@style/home_round_title"
+                android:layout_below="@+id/iv_contract"
+                android:text="智能合约" />
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:layout_weight="20"
+        android:orientation="horizontal">
+
+        <ImageView
+            style="@style/home_bottom_image"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/dimen_12"
+            android:src="@color/light_blue" />
+
+        <ImageView
+            style="@style/home_bottom_image"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dimen_20"
+
+            android:src="@color/light_blue" />
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="40"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="350"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_invoicing"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="350">
+
+            <ImageView
+                android:id="@+id/iv_invoicing"
+                style="@style/home_round"
+                android:src="@drawable/bg_round_grey_xml" />
+
+            <TextView
+                android:id="@+id/tv_invoicing_title"
+                style="@style/home_round_title"
+                android:layout_below="@+id/iv_invoicing"
+                android:text="远程开票" />
+
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="@dimen/dimen_10"
+            android:layout_height="@dimen/dimen_100"
+            android:layout_marginLeft="@dimen/dimen_20"
+            android:layout_marginRight="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_50"
+            android:src="@color/green_1EC6A0" />
+
+        <RelativeLayout
+            android:id="@+id/rl_budget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="350">
+
+            <ImageView
+                android:id="@+id/iv_budget"
+                style="@style/home_round"
+                android:src="@drawable/bg_round_grey_xml" />
+
+            <TextView
+                android:id="@+id/tv_budget_title"
+                style="@style/home_round_title"
+                android:layout_below="@+id/iv_budget"
+                android:text="预算管理" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="105" />
+</LinearLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/dimen_48"
+    android:background="@color/colorPrimary">
+
+    <ImageButton
+        android:id="@+id/button_back"
+        android:layout_width="@dimen/dimen_35"
+        android:text="返回"
+        android:background="@drawable/select_btn_back_click_xml"
+        android:src="@drawable/back"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/tv_header"
+        style="@style/white_big_style"
+        android:layout_width="@dimen/dimen_30"
+        android:layout_height="@dimen/dimen_30"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/ic_head"
+        android:visibility="gone"
+       android:layout_centerVertical="true" />
+
+    <TextView
+        android:id="@+id/textview_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        style="@style/white_big_style" />
+
+    <ImageButton
+        android:id="@+id/rightFucBtn"
+        android:layout_width="@dimen/dimen_25"
+        android:layout_height="@dimen/dimen_25"
+        android:background="@drawable/select_btn_back_click_xml"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/add_feed_back"
+        android:visibility="gone"/>
+    <TextView
+        android:id="@+id/rightFucTxt"
+        android:layout_width="@dimen/dimen_45"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        style="@style/white_big_style"
+        android:gravity="center"
+        android:text="+"
+        android:visibility="gone"/>
+
+</RelativeLayout>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_F8F8F8">
+
+    <include
+        android:id="@+id/includeTitleLayout"
+        layout="@layout/activity_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentTop="true" />
+
+
+    <LinearLayout
+        android:id="@+id/bindCarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_66"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dimen_10"
+        android:paddingTop="@dimen/dimen_10"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/bindCarBtn"
+            style="@style/white_middle_style"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:layout_weight="1"
+            android:background="@drawable/btn_bind_car_xml"
+            android:text="@string/bind_car" />
+
+        <Button
+            android:id="@+id/bindCarLibraryBtn"
+            style="@style/white_middle_style"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:layout_weight="1"
+            android:background="@drawable/select_btn_sure_xml"
+            android:text="@string/bind_car_and_out" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_35"
+        android:layout_above="@id/bindCarLayout"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/showIndexTxt"
+            style="@style/middle_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="1/5" />
+
+        <ImageButton
+            android:id="@+id/leftArraowBtn"
+            android:layout_width="@dimen/dimen_42"
+            android:layout_height="@dimen/dimen_42"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_47"
+            android:layout_toLeftOf="@id/showIndexTxt"
+            android:background="@drawable/select_btn_left_right_xml"
+            android:padding="@dimen/dimen_5"
+            android:src="@drawable/left_arrow" />
+
+        <ImageButton
+            android:id="@+id/rightArraowBtn"
+            android:layout_width="@dimen/dimen_42"
+            android:layout_height="@dimen/dimen_42"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_47"
+            android:layout_toRightOf="@id/showIndexTxt"
+            android:background="@drawable/select_btn_left_right_xml"
+            android:padding="@dimen/dimen_5"
+            android:src="@drawable/right_arrow_1" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottomLayout"
+        android:layout_below="@id/includeTitleLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:background="@drawable/shape_wait_store_material_xml"
+        android:padding="@dimen/dimen_1">
+
+        <LinearLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_25"
+            android:background="@color/blue_1399CE"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_height="match_parent"
+                android:layout_weight="112"
+                android:text="@string/material_no"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+            <!-- 区位码-->
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_height="match_parent"
+                android:layout_weight="118"
+                android:text="@string/area_code_wait_send_material"
+                android:textColor="@color/white"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5"
+                android:visibility="gone" />
+
+            <!-- 数量-->
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_height="match_parent"
+                android:layout_weight="92"
+                android:text="@string/wait_store_num"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+
+            <!-- 实发数量-->
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_height="match_parent"
+                android:layout_weight="92"
+                android:text="@string/actual_send_no"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5" />
+
+            <!-- 描述-->
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_height="match_parent"
+                android:layout_weight="195"
+                android:text="@string/description"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="@dimen/dimen_0.5"
+                android:layout_height="match_parent"
+                android:background="@color/gray_C5C5C5"
+                android:visibility="gone" />
+
+            <!--生命周期-->
+            <TextView
+                style="@style/wait_store_style"
+                android:layout_height="match_parent"
+                android:layout_weight="149"
+                android:text="@string/lift_cycle_wait_send_material"
+                android:textColor="@color/white"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignLeft="@id/layout"
+            android:layout_alignRight="@id/layout"
+            android:layout_below="@id/layout" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

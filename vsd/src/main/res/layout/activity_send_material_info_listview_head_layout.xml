@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_F8F8F8">
+
+    <RelativeLayout
+        android:id="@+id/materialIdLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_41">
+
+        <TextView
+            android:id="@+id/materialIdInfoTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/black_middle_style"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:text="@string/actual_quantity"/>
+        <TextView
+            android:id="@+id/materialIdInfoMsgTxt"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0.5"
+        android:layout_below="@+id/materialIdLayout"
+        android:background="@color/gray_C5C5C5"/>
+
+    <RelativeLayout
+        android:id="@+id/materialDscpIdLayout"
+        android:layout_width="match_parent"
+        android:layout_below="@id/line1"
+        android:layout_height="@dimen/dimen_41">
+
+        <TextView
+            android:id="@+id/materialDescpIdInfoTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/black_middle_style"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:text="@string/actual_quantity"/>
+        <TextView
+            android:id="@+id/materialDescpIdInfoMsgTxt"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0.5"
+        android:layout_below="@+id/materialDscpIdLayout"
+        android:background="@color/gray_C5C5C5"/>
+
+    <RelativeLayout
+        android:id="@+id/materialNumIdLayout"
+        android:layout_below="@id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_41">
+
+        <TextView
+            android:id="@+id/materialNumIdInfoTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/black_middle_style"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:text="@string/actual_quantity"/>
+        <TextView
+            android:id="@+id/materialIdNumInfoMsgTxt"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/line3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0.5"
+        android:layout_below="@+id/materialNumIdLayout"
+        android:background="@color/gray_C5C5C5"/>
+
+    <RelativeLayout
+        android:id="@+id/materialLifeIdLayout"
+        android:layout_below="@id/line3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_41">
+
+        <TextView
+            android:id="@+id/materialLifeIdInfoTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/black_middle_style"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:text="@string/actual_quantity"/>
+        <TextView
+            android:id="@+id/materialLifeIdInfoMsgTxt"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

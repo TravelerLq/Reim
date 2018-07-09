@@ -1,0 +1,34 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/grey_b5b5"
+    android:orientation="vertical"
+    android:padding="@dimen/dimen_1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_contract_selection"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_45"
+            android:gravity="center"
+            android:text="合同开票"
+            android:textColor="@color/black_333333" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/stock" />
+
+        <TextView
+            android:id="@+id/tv_no_contract_selection"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:text="无合同开票"
+            android:textColor="@color/black_333333" />
+    </LinearLayout>
+</LinearLayout>

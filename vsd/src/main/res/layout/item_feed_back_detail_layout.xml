@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_F8F8F8"
+    android:minHeight="@dimen/dimen_50">
+
+    <TextView
+        android:id="@+id/askQuestTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:singleLine="true"
+        style="@style/black_middle_style"/>
+
+    <TextView
+        android:id="@+id/askQuestMsgTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/black_middle_style"
+        android:layout_below="@id/askQuestTxt"
+        android:layout_alignLeft="@id/askQuestTxt"
+        android:layout_alignRight="@id/askQuestTxt"
+        android:text="看看电视快速打开"
+        android:minHeight="@dimen/dimen_20"
+        android:background="@drawable/shape_feed_back_cornor_rectangle"/>
+
+    <com.jci.vsd.view.widget.HorizontalListView
+        android:id="@+id/hzListView"
+        android:layout_below="@id/askQuestMsgTxt"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"/>
+
+</RelativeLayout>
+

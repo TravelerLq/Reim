@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:minHeight="@dimen/dimen_50"
+    android:background="@drawable/select_btn_item_click_1_xml"
+    android:descendantFocusability="blocksDescendants">
+    <TextView
+        android:id="@+id/exe_serial_no"
+        style="@style/wait_store_style"
+        android:layout_weight="70"
+        android:text="@string/serial_no" />
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+    <!-- SAP-->
+    <TextView
+        android:id="@+id/exe_material_no"
+        style="@style/wait_store_style"
+        android:layout_weight="102"
+        android:text="@string/material_no" />
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+
+    <!-- 描述-->
+    <TextView
+        android:id="@+id/exe_qis_no"
+        style="@style/wait_store_style"
+        android:layout_weight="130"
+        android:text="@string/qis_code"
+        android:visibility="gone"/>
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5"
+        android:visibility="gone"/>
+
+    <!-- 数量-->
+    <TextView
+        android:id="@+id/exe_store_no"
+        style="@style/wait_store_style"
+        android:layout_weight="130"
+        android:text="@string/store_no" />
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+
+    <!-- 移库数量-->
+    <TextView
+        android:id="@+id/exe_transfer_num"
+        style="@style/wait_store_style"
+        android:layout_weight="80"
+        android:text="@string/transfer_num" />
+
+    <TextView
+        android:layout_width="@dimen/dimen_0.5"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5" />
+
+    <!-- 执行状态-->
+    <TextView
+         android:id="@+id/exe_status"
+        style="@style/wait_store_style"
+        android:layout_weight="80"
+        android:text="@string/exe_status" />
+
+    <TextView
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/gray_C5C5C5"
+        android:visibility="gone" />
+
+
+</LinearLayout>

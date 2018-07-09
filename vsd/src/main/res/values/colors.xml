@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#913531</color>
+    <color name="colorPrimaryDark">#903430</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="white">#fefefe</color>
+    <color name="hint_gray">#a6a6a6</color>
+    <color name="normal_gray">#a0a0a0</color>
+    <color name="green_1EC6A0">#1EC6A0</color>
+    <color name="green_661EC6A0">#661EC6A0</color>
+    <color name="gray_F5F5F5">#F5F5F5</color>
+    <color name="red">#FC5050</color>
+    <color name="red_ff4a57">#ff4a57</color>
+    <color name="item_bg_green">#def4fc</color>
+    <color name="grey_title">#999999</color>
+    <color name="grey_hint_text_color">#b6b6b6</color>
+    <color name="name">#20b7e6</color>
+    <color name="result_view">#b0000000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="possible_result_points">#c0ffff00</color>
+    <color name="blue_1399CE">#1399CE</color>
+    <color name="gray_C5C5C5">#C5C5C5</color>
+    <color name="bg_welcome">#8f8f8f</color>
+    <color name="orange">#f68e3d</color>
+    <color name="light_blue">#27b0f1</color>
+    <color name="green">#35c25d</color>
+    <color name="blue">#687bf7</color>
+    <color name="purple">#9a63e0</color>
+    <color name="yellow">#fdc516</color>
+    <color name="dark_green">#88bd20</color>
+    <color name="dark_orange">#fd943e</color>
+    <color name="light_green">#1dc9c6</color>
+    <color name="red_rose">#fb5fbd</color>
+    <color name="grey">#9a9a9a</color>
+    <color name="blue_0D65AD">#0D65AD</color>
+    <color name="bg_tab_grey">#efefef</color>
+    <color name="bg_tab_select_blue">#139acd</color>
+    <color name="stock">#dfdfdf</color>
+    <color name="transfer_grey">#f8f8f8</color>
+    <color name="gray_EFEFEF">#EFEFEF</color>
+    <color name="gray_F8F8F8">#F8F8F8</color>
+    <color name="gray_757575">#757575</color>
+    <color name="gray_B3B3B3">#B3B3B3</color>
+    <color name="black_333333">#333333</color>
+    <color name="pass_color">#00d548</color>
+    <color name="gray_F4F4F4">#F4F4F4</color>
+    <color name="gray_DFDFDF">#DFDFDF</color>
+    <color name="black_font">#010102</color>
+    <color name="gray_c4c4c4">#C4C4C4</color>
+    <color name="grey_b5b5">#b5b5b5</color>
+
+    <color name="gray_read_details">#f7f7f7</color>
+
+    <color name="red_bc4843">#bc4843</color>
+
+    <color name="red_deep_btn">#761c17</color>
+    <color name="red_rec_">#7a2e2b</color>
+
+    <color name="grey_bg">#ebebeb</color>
+    <color name="bg_recycle">#f5f5f5</color>
+
+    <color name="listitem_white">#fff6f4f7</color>
+    <!--背景紫色-->
+    <color name="purple_deep">#514867</color>
+    <color name="purple_default_text">#8D83A8</color>
+</resources>

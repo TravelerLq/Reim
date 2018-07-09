@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_F8F8F8">
+    
+    <RelativeLayout
+        android:id="@+id/topLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_220"
+        android:background="@color/white"
+        android:gravity="center">
+        <ImageView
+            android:id="@+id/noticImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/revenue_not_done"/>
+        <TextView
+            android:id="@+id/noticeTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/black_middle_style"
+            android:text="@string/revenue_material_repeat"
+            android:layout_marginTop="@dimen/dimen_15"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/noticImg"/>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/sureBtn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_45"
+        android:layout_below="@id/topLayout"
+        android:layout_marginTop="@dimen/dimen_27"
+        android:layout_marginLeft="@dimen/dimen_19"
+        android:layout_marginRight="@dimen/dimen_19"
+        android:background="@drawable/select_btn_go_scan_xml"
+        android:text="@string/back"/>
+
+</RelativeLayout>

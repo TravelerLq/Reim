@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/includeTitleLayout"
+        layout="@layout/activity_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentTop="true" />
+
+
+    <RelativeLayout style="@style/relative_check_style">
+
+        <TextView
+            android:id="@+id/tv_apply_start_time"
+            style="@style/check_plan_info"
+            android:text="@string/apply_start_time" />
+
+
+        <EditText
+            android:id="@+id/edt_input_start_time"
+            style="@style/transfer_combine_info_edtcontent"
+            android:focusable="false"
+            android:hint="@string/input_date" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0.5"
+        android:background="@color/stock" />
+
+    <RelativeLayout style="@style/relative_check_style">
+
+        <TextView
+            android:id="@+id/tv_apply_end_time"
+            style="@style/check_plan_info"
+            android:text="@string/apply_end_time" />
+
+
+        <EditText
+            android:id="@+id/edt_input_end_time"
+            style="@style/transfer_combine_info_edtcontent"
+            android:focusable="false"
+            android:hint="@string/input_date" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0.5"
+        android:background="@color/stock" />
+
+    <RelativeLayout style="@style/relative_check_style">
+
+        <TextView
+            android:id="@+id/productLineTxt"
+            style="@style/check_plan_info"
+            android:text="@string/product_line" />
+
+        <TextView
+            android:id="@+id/productLineMsgTxt"
+            android:drawablePadding="@dimen/dimen_10"
+            android:layout_width="match_parent"
+            android:gravity="right"
+            android:layout_toRightOf="@id/productLineTxt"
+            android:drawableRight="@drawable/ic_more"
+            style="@style/transfer_combine_info_edtcontent"
+            android:text="@string/please_select" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0.5"
+        android:background="@color/stock" />
+
+    <RelativeLayout style="@style/relative_check_style"
+        android:id="@+id/rl_execute_status">
+
+        <TextView
+            android:id="@+id/sendMaterialTypeTxt"
+            style="@style/check_plan_info"
+            android:text="@string/send_material_type" />
+
+        <TextView
+            android:id="@+id/tv_execute_status"
+            android:layout_width="match_parent"
+            android:gravity="right"
+            android:layout_toRightOf="@id/sendMaterialTypeTxt"
+            style="@style/transfer_combine_info_tvcontent"
+            android:drawablePadding="@dimen/dimen_10"
+            android:drawableRight="@drawable/ic_more"
+            android:text="@string/please_select" />
+
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0.5"
+        android:background="@color/stock" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_12" />
+
+    <Button
+        android:id="@+id/btn_sure"
+        style="@style/btn_sure"
+        android:text="@string/sure" />
+</LinearLayout>

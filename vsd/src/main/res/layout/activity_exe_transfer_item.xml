@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/includeTitleLayout"
+        layout="@layout/activity_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentTop="true" />
+
+    <RelativeLayout style="@style/relative_check_style">
+
+        <TextView
+            android:id="@+id/tv_exe_item_material_code_title"
+            style="@style/check_plan_info"
+            android:text="@string/material_code" />
+
+
+        <TextView
+            android:id="@+id/tv_exe_item_material_code"
+            style="@style/transfer_combine_info_tvcontent"
+            android:text="@string/default_code" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/stock" />
+
+    <RelativeLayout style="@style/relative_check_style">
+
+        <TextView
+            android:id="@+id/tv_exe_item_store_code_title"
+            style="@style/check_plan_info"
+            android:text="@string/store_code" />
+
+
+        <TextView
+            android:id="@+id/tv_exe_item_store_code"
+            style="@style/transfer_combine_info_tvcontent"
+            android:text="@string/default_code" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/stock" />
+
+    <RelativeLayout style="@style/relative_check_style">
+
+        <TextView
+            style="@style/check_plan_info"
+            android:text="@string/qis_code" />
+
+        <TextView
+            android:id="@+id/tv_qis_code"
+            style="@style/transfer_combine_info_tvcontent"
+            android:text="@string/default_code" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/stock" />
+
+    <RelativeLayout style="@style/relative_check_style">
+
+        <TextView
+            style="@style/check_plan_info"
+            android:text="@string/transfer_num" />
+
+        <TextView
+            android:id="@+id/tv_transfer_amount"
+            style="@style/transfer_combine_info_tvcontent"
+            android:text="@string/default_code" />
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/stock" />
+
+    <RelativeLayout style="@style/relative_check_style"
+        android:visibility="gone"
+        android:id="@+id/rl_scan_sap">
+
+        <TextView
+            style="@style/check_plan_info"
+            android:text="目标物料编码" />
+
+        <EditText
+            android:id="@+id/edt_scan_sap"
+            style="@style/transfer_combine_info_edtcontent"
+            android:hint="请扫码" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:visibility="gone"
+        android:background="@color/stock" />
+
+    <RelativeLayout style="@style/relative_check_style"
+        android:visibility="visible"
+        android:id="@+id/rl_scan_store">
+
+        <TextView
+            style="@style/check_plan_info"
+            android:text="目标库位编码" />
+
+
+        <EditText
+            android:id="@+id/edt_scan_store"
+            style="@style/transfer_combine_info_edtcontent"
+            android:hint="请扫码" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/stock" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_12" />
+
+    <Button
+        android:id="@+id/btn_sure"
+        style="@style/btn_sure"
+        android:text="@string/confirm_transfer" />
+</LinearLayout>

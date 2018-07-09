@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/includeTitleLayout"
+        layout="@layout/activity_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentTop="true" />
+
+    <ImageView
+        android:id="@+id/iv_reim_doc"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_200"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/ic_launcher" />
+
+    <Button
+        android:id="@+id/btn_reim_submit"
+        style="@style/btn_sure"
+        android:layout_alignParentBottom="true"
+        android:text="单据提交" />
+
+
+</RelativeLayout>

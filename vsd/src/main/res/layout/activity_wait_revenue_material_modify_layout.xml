@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_F8F8F8">
+
+    <include
+        android:id="@+id/includeTitleLayout"
+        layout="@layout/activity_title"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentTop="true" />
+
+    <RelativeLayout
+        android:id="@+id/spaIdLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_45"
+        android:background="@color/white"
+        android:layout_below="@id/includeTitleLayout">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/black_middle_style"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:text="@string/spa_id"/>
+
+        <EditText
+            android:layout_width="@dimen/dimen_216"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="right|center_vertical"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:hint="@string/please_input_spa_id"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0.5"
+        android:background="@color/gray_C5C5C5"
+        android:layout_below="@id/spaIdLayout"/>
+
+    <RelativeLayout
+        android:id="@+id/spaNumLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_45"
+        android:background="@color/white"
+        android:layout_below="@id/line1">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/black_middle_style"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:layout_centerInParent="true"
+            android:text="@string/spa_number"/>
+
+        <EditText
+            android:id="@+id/spaNumEdit"
+            android:layout_width="@dimen/dimen_216"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="right|center_vertical"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:hint="@string/please_input_spa_num"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0.5"
+        android:background="@color/gray_C5C5C5"
+        android:layout_below="@id/spaNumLayout"/>
+
+    <RelativeLayout
+        android:id="@+id/actualNumLayout"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="@dimen/dimen_45"
+        android:layout_below="@id/line2">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/black_middle_style"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:text="@string/actual_number"/>
+
+        <EditText
+            android:id="@+id/actualNumTxt"
+            android:layout_width="@dimen/dimen_216"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="right|center_vertical"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:layout_alignParentRight="true"
+            android:hint="@string/please_input_actual_num"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/line3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_0.5"
+        android:background="@color/gray_C5C5C5"
+        android:layout_below="@id/actualNumLayout"/>
+
+    <Button
+        android:id="@+id/sureBtn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_49"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:background="@drawable/select_btn_sure_xml"
+        android:text="@string/sure"
+        style="@style/white_small_style"
+        android:layout_below="@id/line3"/>
+
+
+
+</RelativeLayout>

@@ -1,0 +1,2 @@
+include ':vsd', ':slidingmenulibrary', ':pullToRefreshLibrary', ':unitid-cmsdk',
+        ':android-expandpoptab-library'
