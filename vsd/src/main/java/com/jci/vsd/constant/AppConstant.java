@@ -32,7 +32,7 @@ public class AppConstant {
      */
     public static final int HZ_SEND_VEWPAGE_EVERY_PE_NAGO = 9;
     //http://192.168.1.114:8080/yuanshen/public/login
-  public static final String BASE_URL="http://192.168.1.114:8080/";
+    public static final String BASE_URL = "http://192.168.1.111:8080/";
     private static final String URL_TEST = "http://10.90.65.209:8084/";//http://10.126.211.7/";
     private static final String URL_PRD = "http://10.90.65.209:8082/";//"http://10.126.211.142/";//"http://10.90.65.209:8082/";"10.126.211.7";
     public static final String OUTSIZE_URL = "http://10.90.65.209:8088/";
@@ -48,13 +48,14 @@ public class AppConstant {
         } else {
             url = URL_TEST;
         }
-        url=BASE_URL;
+        url = BASE_URL;
         return url;
     }
 
     public static final String JSON_STATUS = "Status";
-    public static final String JSON_DATA = "Data";
-    public static final String JSON_MESSAGE = "Message";
+    public static final String JSON_CODE = "code";
+    public static final String JSON_DATA = "data";
+    public static final String JSON_MESSAGE = "msg";
     public static final String JSON_SUCCESS_STATUS = "200";
     public static final String JSON_SUCCESS_REPEAT_STATUS = "203";
 
@@ -69,4 +70,19 @@ public class AppConstant {
     public static final int MATERIAL_WAIT = 1;//待存
     public static final int MATERIAL_PROGRESS = 2;//进行中
     public static final int MATERIAL_DONE = 3;//已完成
+
+    /**
+     * 公司信息更新
+     */
+    public static final String UPDATE = "update";//
+    public static final String NEW = "new";
+    public static final String NEW_LOGIN = "new_login";//已完成
+
+    public static final String KEY_USER="user";
+
+    public static final String KEY_ENTERPRISE="enterprise";
+    public static final String KEY_ENTERPRISE_LIST="enterprise_list";
+    public static final String KEY_TYPE="type";
+    public static final String VALUE_AJUST="ajust";
+
 }

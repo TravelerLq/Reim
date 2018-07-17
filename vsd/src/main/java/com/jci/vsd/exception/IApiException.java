@@ -2,6 +2,8 @@ package com.jci.vsd.exception;
 
 import android.support.annotation.NonNull;
 
+import com.jci.vsd.utils.Loger;
+
 /**
  * Created by Victor on 10/31/2017.
  */
@@ -29,7 +31,11 @@ public class IApiException extends IException {
         super(errorMsg);
         this.responseCode = responseCode;
         this.setErrorMsg(errorMsg);
+        Loger.e("--reponseCode-" + responseCode);
+        Loger.e("--errorMsg-" + errorMsg);
+
     }
+
 
     public IApiException(int responseCode, String errorMsg) {
         super(errorMsg);

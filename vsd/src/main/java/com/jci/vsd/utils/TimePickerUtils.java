@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.jci.vsd.bean.ReimCategoryBean;
+import com.warmtel.expandtab.KeyValueBean;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -33,14 +36,14 @@ public class TimePickerUtils {
     //日期选择 editView
     public void onYearMonthDayPicker(Context context, final EditText view) {
         Calendar calendar = Calendar.getInstance();
-        final String  result = null;
+        final String result = null;
         Loger.i("calendar= " + calendar.get(Calendar.YEAR));
         final DatePicker picker = new DatePicker((Activity) context);
         picker.setCanLoop(false);
         picker.setWheelModeEnable(true);
         picker.setTopPadding(15);
-        picker.setRangeStart(calendar.get(Calendar.YEAR)-2, calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
-        picker.setRangeEnd(calendar.get(Calendar.YEAR)+2, calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+        picker.setRangeStart(calendar.get(Calendar.YEAR) - 2, calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+        picker.setRangeEnd(calendar.get(Calendar.YEAR) + 2, calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
         picker.setSelectedItem(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
         picker.setWeightEnable(true);
         picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
@@ -68,17 +71,18 @@ public class TimePickerUtils {
         });
         picker.show();
     }
-//日期选择 textview
+
+    //日期选择 textview
     public void onYearMonthDayPickerText(Context context, final TextView view) {
         Calendar calendar = Calendar.getInstance();
-        final String  result = null;
+        final String result = null;
         Loger.i("calendar= " + calendar.get(Calendar.YEAR));
         final DatePicker picker = new DatePicker((Activity) context);
         picker.setCanLoop(false);
         picker.setWheelModeEnable(true);
         picker.setTopPadding(15);
-        picker.setRangeStart(calendar.get(Calendar.YEAR)-2, calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
-        picker.setRangeEnd(calendar.get(Calendar.YEAR)+2, calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+        picker.setRangeStart(calendar.get(Calendar.YEAR) - 2, calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+        picker.setRangeEnd(calendar.get(Calendar.YEAR) + 2, calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
         picker.setSelectedItem(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
         picker.setWeightEnable(true);
         picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
@@ -210,5 +214,67 @@ public class TimePickerUtils {
 
         picker.show();
     }
+
+
+    //list
+
+    public void onListBeanPicker(Activity context, final List<ReimCategoryBean> keyValueBeanList, List<String> mData, final View view) {
+
+//        final SinglePicker<String> picker = new SinglePicker<String>(context, keyValueBeanList);
+//        picker.setCanLoop(false);
+//        picker.setWheelModeEnable(true);
+//        picker.setTopPadding(15);
+//        picker.setSelectedIndex(0);
+//        picker.setOnSingleWheelListener(new OnSingleWheelListener() {
+//            @Override
+//            public void onWheeled(int i, String s) {
+//
+//            }
+//        });
+//        picker.setOnItemPickListener(new OnItemPickListener<ReimCategoryBean>() {
+//            @Override
+//            public void onItemPicked(int i, ReimCategoryBean keyValueBean) {
+//                view.setTag(keyValueBean.getKey());
+//                if (view instanceof TextView) {
+//                    Loger.e("view instanceof TextView---");
+//                    ((TextView) view).setText(keyValueBean.getValue());
+//
+//                } else if (view instanceof EditText) {
+//                    ((EditText) view).setText(keyValueBean.getValue());
+//                }
+//            }
+//        });
+        final SinglePicker<String> picker = new SinglePicker<String>(context, mData);
+        picker.setCanLoop(false);
+        picker.setWheelModeEnable(true);
+        picker.setTopPadding(15);
+        picker.setSelectedIndex(0);
+        picker.setOnItemPickListener(new OnItemPickListener<String>() {
+            @Override
+            public void onItemPicked(int i, String s) {
+                ReimCategoryBean keyValueBean = keyValueBeanList.get(i);
+                view.setTag(keyValueBean.getKey());
+                if (view instanceof TextView) {
+                    Loger.e("view instanceof TextView---");
+                    ((TextView) view).setText(keyValueBean.getValue());
+
+                } else if (view instanceof EditText) {
+                    ((EditText) view).setText(keyValueBean.getValue());
+                }
+            }
+
+        });
+        picker.setOnSingleWheelListener(new OnSingleWheelListener() {
+            @Override
+            public void onWheeled(int i, String s) {
+
+            }
+        });
+
+        picker.setWeightEnable(true);
+
+        picker.show();
+    }
+
 
 }

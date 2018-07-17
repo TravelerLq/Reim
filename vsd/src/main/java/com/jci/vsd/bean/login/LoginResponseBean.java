@@ -25,7 +25,9 @@ public class LoginResponseBean extends BaseBean {
     private String Status;
     private String CreateUser;
     private String UserType;
+
     private List<HomeAuthorityBean> list;
+
 
     public LoginResponseBean() {
     }

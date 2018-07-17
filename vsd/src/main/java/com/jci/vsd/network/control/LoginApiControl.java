@@ -13,6 +13,7 @@ import com.jci.vsd.bean.login.PersonalInfoRequestBean;
 import com.jci.vsd.bean.login.PersonalInformationResponseBean;
 import com.jci.vsd.bean.login.UpdatePwdRequestBean;
 import com.jci.vsd.constant.AppConstant;
+import com.jci.vsd.constant.MySpEdit;
 import com.jci.vsd.exception.IApiException;
 import com.jci.vsd.network.api.LoginApi;
 import com.jci.vsd.utils.Loger;
@@ -21,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.com.syan.spark.client.sdk.data.entity.App;
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
@@ -62,69 +64,43 @@ public class LoginApiControl extends BaseControl {
     }
 
 
-    //
-
-
-    public Observable<LoginResponseBean> loginNew(String name, String psw) {
-        Retrofit retrofit = builderJsonRetrofit();
-        Map<String, String> parmsMap = new HashMap<>();
-        parmsMap.put("telephoneNumber", name);
-        parmsMap.put("password", psw);
-        // String json = JSONObject.toJSONString(requestBean);
-        String jsonRequest = JSONObject.toJSONString(parmsMap);
-
-        //  parmsMap.put("type",loginRequestbean.getType());
-        LoginApi loginApi = retrofit.create(LoginApi.class);
-        Observable<String> observable = loginApi.newLogin(jsonRequest);
-
-        // Loger.i("login = "+parmsMap);
-        return observable.map(new Function<String, LoginResponseBean>() {
-            @Override
-            public LoginResponseBean apply(@NonNull String s) throws Exception {
-                Loger.e("loginResponseStr = " + s);
-
-                JSONObject jsonObject = JSON.parseObject(s);
-
-
-                if ("200".equals(jsonObject.getString(AppConstant.JSON_STATUS))) {
-                    JSONObject dataObj = jsonObject.getJSONObject(AppConstant.JSON_DATA);
-                    LoginResponseBean loginResponseBean = JSON.parseObject(dataObj.getString("UserInfo"), LoginResponseBean.class);
-                    List<HomeAuthorityBean> authorityBeanList = JSON.parseArray(dataObj.getString("Authority"), HomeAuthorityBean.class);
-                    loginResponseBean.setList(authorityBeanList);
-                    return loginResponseBean;
-                }
-
-                throw new IApiException("登陆", jsonObject.getString(AppConstant.JSON_MESSAGE));
-            }
-        });
-    }
-
     public Observable<LoginResponseBean> loginResponse(String name, String psw) {
         Retrofit retrofit = builderJsonRetrofit();
         Map<String, String> parmsMap = new HashMap<>();
-        parmsMap.put("telephoneNumber", name);
+        parmsMap.put("phone", name);
         parmsMap.put("password", psw);
         // String json = JSONObject.toJSONString(requestBean);
-        String jsonRequest = JSONObject.toJSONString(parmsMap);
+        String jsonRequestStr = JSONObject.toJSONString(parmsMap);
 
         //  parmsMap.put("type",loginRequestbean.getType());
         LoginApi loginApi = retrofit.create(LoginApi.class);
-        Observable<Response<String>> observable = loginApi.loginResponse(jsonRequest);
+        Observable<Response<String>> observable = loginApi.loginResponse(jsonRequestStr);
         return observable.map(new Function<Response<String>, LoginResponseBean>() {
             @Override
             public LoginResponseBean apply(Response<String> stringResponse) throws Exception {
                 Headers headers = stringResponse.headers();
                 String authStr = headers.get("Authorization");
-                Loger.e("header-auth" + authStr);
+                Loger.e("header-authStr" + authStr);
+                MySpEdit.getInstance().setAuthor(authStr);
 
-
+                Loger.e("stringResponse.body=" + stringResponse.body());
                 JSONObject jsonObject = JSON.parseObject(stringResponse.body());
+                LoginResponseBean loginResponseBean;
+                if (jsonObject.getIntValue(AppConstant.JSON_CODE) == 200) {
 
-                if ("200".equals(jsonObject.getString(AppConstant.JSON_STATUS))) {
-                    JSONObject dataObj = jsonObject.getJSONObject(AppConstant.JSON_DATA);
-                    LoginResponseBean loginResponseBean = JSON.parseObject(dataObj.getString("UserInfo"), LoginResponseBean.class);
-                    List<HomeAuthorityBean> authorityBeanList = JSON.parseArray(dataObj.getString("Authority"), HomeAuthorityBean.class);
-                    loginResponseBean.setList(authorityBeanList);
+                    loginResponseBean = JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA), LoginResponseBean.class);
+                    if (loginResponseBean == null) {
+                        loginResponseBean = new LoginResponseBean();
+                    }
+                    loginResponseBean.setStatus("200");
+
+//                    List<HomeAuthorityBean> authorityBeanList = JSON.parseArray(dataObj.getString("Authority"), HomeAuthorityBean.class);
+//                    loginResponseBean.setList(authorityBeanList);
+                    return loginResponseBean;
+                }
+                if (jsonObject.getIntValue(AppConstant.JSON_CODE) == 20005) {
+                    loginResponseBean = new LoginResponseBean();
+                    loginResponseBean.setStatus("201");
                     return loginResponseBean;
                 }
 
@@ -200,4 +176,19 @@ public class LoginApiControl extends BaseControl {
             }
         });
     }
+
+
+    public Observable<String> loginOut() {
+        Retrofit retrofit = builderJsonRetrofit();
+        LoginApi loginApi = retrofit.create(LoginApi.class);
+        Observable<String> observable = loginApi.loginOut();
+        return observable.map(new Function<String, String>() {
+            @Override
+            public String apply(String s) throws Exception {
+                Loger.e("---response.body=" + s);
+                return null;
+            }
+        });
+    }
+
 }

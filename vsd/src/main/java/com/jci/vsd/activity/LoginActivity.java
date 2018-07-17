@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -21,15 +23,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.jci.vsd.R;
+import com.jci.vsd.activity.enterprise.RegisterCompanyActivity;
 import com.jci.vsd.adapter.PageAdapter;
 import com.jci.vsd.application.VsdApplication;
 import com.jci.vsd.bean.download.CheckUpdateResponse;
+import com.jci.vsd.bean.enterprise.EnterpriseBean;
 import com.jci.vsd.bean.login.LoginResponseBean;
+import com.jci.vsd.bean.register.RegisterRequestBean;
 import com.jci.vsd.constant.AppConstant;
 import com.jci.vsd.constant.MySpEdit;
+import com.jci.vsd.fragment.EnterpriseHomeFragment;
+import com.jci.vsd.fragment.dialog.RxStyleDialogFragment;
 import com.jci.vsd.fragment.dialog.UpdateAppDialog;
 import com.jci.vsd.fragment.login.LoginFragment;
 import com.jci.vsd.fragment.login.RegisterFragment;
@@ -40,30 +48,35 @@ import com.jci.vsd.observer.DefaultObserver;
 import com.jci.vsd.observer.RxHelper;
 import com.jci.vsd.utils.Loger;
 import com.jci.vsd.view.widget.SimpleToast;
+import com.squareup.haha.perflib.Main;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
+import cn.com.syan.spark.client.sdk.SparkApplication;
+import cn.unitid.spark.cm.sdk.business.CBSCertificateStore;
+import cn.unitid.spark.cm.sdk.data.entity.Certificate;
 import io.reactivex.Observable;
 
 /**
- * 可以提炼出来
+ * 登录
  * Created by Victor on 10/31/2017.
  */
 
 public class LoginActivity extends BaseActivity {
-//    private Button nextBtn;
-//
-//    private ImageButton nameDeleteBtn, pwdDeleteBtn;
-//    private EditText userAccountEdit, userPwdEdit;
-//    private EditText urlEdit;
+
 
     private MySpEdit prefs;
 
-    private TabLayout mTabLayout;
-    private ViewPager viewPager;
-    private String[] titles;
+
     private Button btnSure;
     @BindView(R.id.tv_register)
     TextView tvRegister;
+    @BindView(R.id.edt_acount)
+    EditText edtAccount;
+    @BindView(R.id.edt_psw)
+    EditText edtPsw;
+
 
     private Dialog dialog;
     private View inflate;
@@ -72,67 +85,41 @@ public class LoginActivity extends BaseActivity {
     private TextView tvRegisterCompany;
     private Context context;
 
+    private ArrayList<Certificate> certificateArrayList;//证书列表;
+    private CBSCertificateStore store;
+    private String intentType;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         context = LoginActivity.this;
-
-//        mTabLayout = (TabLayout) findViewById(R.id.tab_login);
-//        viewPager = (ViewPager) findViewById(R.id.vp_login);
-//        btnSure=(Button)findViewById(R.id.btn_sure);
         btnSure = (Button) findViewById(R.id.btn_sure);
         MySpEdit.getInstance().setAppEmv(true);
-        titles = new String[]{"登录", "注册"};
         prefs = MySpEdit.getInstance();
-
         tvRegister.setText(Html.fromHtml(getResources().getString(R.string.str_register, 1, "", "去注册")));
         initViewEvent();
-
-        //  mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-//        viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-//            @Override
-//            public Fragment getItem(int position) {
-//                Log.e("pos=", "" + position);
-//                switch (position) {
-//                    case 0:
-//                        //返回理化性能
-////                        fragment = LoginFragment.newInstance();
-////                        return fragment;
-//                        return new LoginFragment();
-//
-//                    case 1:
-//                        //详情
-//                        return new RegisterFragment();
-//
-//                    default:
-//                        // 默认
-//
-//                }
-//                return null;
-//            }
-//
-//            @Override
-//            public int getCount() {
-//                return titles.length;
-//            }
-//
-//            @Override
-//            public CharSequence getPageTitle(int position) {
-//                return titles[position];
-//            }
-//        });
-//        mTabLayout.setupWithViewPager(viewPager);
-
-
-        //环境选择
-//        new EnvironmentDialog(this).show();
-
-        // initViewEvent();
-
+        initTestData();
         //检查更新
-        //  checkUpdateApp();
+        // checkUpdateApp();
+        intentType = getIntent().getStringExtra("type");
+        Loger.e("logih-getIntenttype" + intentType);
+        edtAccount.setText(prefs.getUser());
+        edtPsw.setText(prefs.getPsw());
+
+//        RegisterRequestBean registerRequestBean = (RegisterRequestBean) getIntent().
+//                getSerializableExtra(AppConstant.SERIAL_KEY);
+//        if (registerRequestBean != null) {
+//            edtAccount.setText(registerRequestBean.getPhone());
+//            edtPsw.setText(registerRequestBean.getPassword());
+//        } else {
+//            initTestData();
+//        }
+    }
+
+    private void initTestData() {
+        edtAccount.setText("15951882547");
+        edtPsw.setText("123456");
     }
 
     @Override
@@ -145,7 +132,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        initTestData();
     }
 
     /**
@@ -163,54 +150,33 @@ public class LoginActivity extends BaseActivity {
         CommonDialogObserver<LoginResponseBean> observer = new CommonDialogObserver<LoginResponseBean>(this) {
 
             @Override
-            public void onNext(LoginResponseBean result) {
-                super.onNext(result);
-                Loger.i("===login====" + new Gson().toJson(result));
-                VsdApplication.getInstance().setLoginResponseBean(result);
-                if (result != null && !TextUtils.isEmpty(result.getCardId())) {
-                    if ("1".equals(type)) {
-                        prefs.setUser(userName);
+            public void onNext(LoginResponseBean responseBean) {
+                super.onNext(responseBean);
+                Loger.i("===login====" + new Gson().toJson(responseBean));
+                VsdApplication.getInstance().setLoginResponseBean(responseBean);
+                String status = responseBean.getStatus();
+                if (status.equals("200")) {
+                    SimpleToast.toastMessage("登录成功", Toast.LENGTH_LONG);
+                    //
+                    prefs.setUser(responseBean.getId());
+
+                    if (!TextUtils.isEmpty(intentType) && intentType.equals("boss")) {
+                        //
+                        toActivity(RegisterCompanyActivity.class);
+                    } else {
+                        toActivity(MainActivity.class);
                     }
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                } else if (status.equals("201")) {
+                    SimpleToast.toastMessage("登录201", Toast.LENGTH_LONG);
                 }
+
+                finish();
             }
 
             @Override
             public void onError(Throwable t) {
                 super.onError(t);
-            }
-        };
-
-        RxHelper.bindOnUIActivityLifeCycle(observable, observer, LoginActivity.this);
-    }
-
-    //response  header
-
-    private void loginResponse(final String userName, final String pwd, final String type) {
-
-        Observable<LoginResponseBean> observable = new LoginApiControl().loginResponse(userName, pwd);
-        CommonDialogObserver<LoginResponseBean> observer = new CommonDialogObserver<LoginResponseBean>(this) {
-
-            @Override
-            public void onNext(LoginResponseBean result) {
-                super.onNext(result);
-                Loger.i("===login====" + new Gson().toJson(result));
-                VsdApplication.getInstance().setLoginResponseBean(result);
-                if (result != null && !TextUtils.isEmpty(result.getCardId())) {
-                    if ("1".equals(type)) {
-                        prefs.setUser(userName);
-                    }
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            }
-
-            @Override
-            public void onError(Throwable t) {
-                super.onError(t);
+                SimpleToast.toastMessage(t.getMessage(), Toast.LENGTH_LONG);
             }
         };
 
@@ -230,44 +196,96 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-
     @Override
     public void onClick(View view) {
         //  super.onClick(view);
         switch (view.getId()) {
             case R.id.tv_register:
 //                userAccountEdit.setText("");
-                //   toActivity(RegisterActivity.class);
+                //   toActivity(RegisterActivity.class);c
+
                 showDialog();
 
                 break;
             case R.id.btn_sure:
 //                userPwdEdit.setText("");
                 Loger.e("---btnclick");
-                toActivity(MainActivity.class);
+                checkCBScert();
                 break;
             case R.id.tv_select_company:
+                //加入公司
                 Loger.e("-----take");
 //            spu.setRoleType("1");
                 toActivity(FillCodeActivity.class);
+                finish();
                 dialog.dismiss();
                 break;
             case R.id.tv_register_company:
-
+                //创建公司 -先去填写个人信息
                 Loger.e("-----foundation");
-                toActivity(FoundationActivity.class);
+                toActivityWithType(RegisterActivity.class, "boss");
+                finish();
+
+//                EnterpriseBean beanNew = new EnterpriseBean();
+//                beanNew.setIntentType("new_login");
+//                toAtivityWithParams(FoundationActivity.class, beanNew);
                 //创建公司 －－0；加入公司 1 不是返回的roleID，只是判断是点击 注册公司？添加公司？
 //                spu.setRoleType("0");
-                //  toActivity(context, RegCertActivity.class);
-
+                // toActivity(context, RegCertActivity.class);
                 dialog.dismiss();
                 break;
             case R.id.btn_cancel:
                 dialog.dismiss();
                 break;
+
             default:
                 break;
+
         }
+
+
+    }
+
+    private void checkCBScert() {
+
+        store = CBSCertificateStore.getInstance();
+        certificateArrayList = store.getAllCertificateList();
+        if (certificateArrayList.size() == 0) {
+            //先去申请证书
+            SimpleToast.ToastMessage("请先申请个人证书！");
+            toActivity(RegisterCertActivity.class);
+        } else {
+            // 去登录
+            checkData();
+
+
+        }
+
+    }
+
+    private void checkData() {
+        String accountStr = edtAccount.getText().toString().trim();
+        String pswStr = edtPsw.getText().toString().trim();
+        if (TextUtils.isEmpty(accountStr)) {
+            SimpleToast.toastMessage("帐号不可为空！", Toast.LENGTH_SHORT);
+            edtAccount.requestFocus();
+            return;
+
+        }
+
+        if (TextUtils.isEmpty(pswStr)) {
+            SimpleToast.toastMessage("密码不可为空！", Toast.LENGTH_SHORT);
+            edtPsw.requestFocus();
+            return;
+        }
+
+        // login
+        //  login(accountStr, pswStr, "1");
+
+
+        //  test
+        toActivity(MainActivity.class);
+
     }
 
 
@@ -312,8 +330,12 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
+        if (dialog != null) {
+            dialog.dismiss();
+        }
         super.onDestroy();
         VsdApplication.getRefWatcher(this).watch(this);
+
     }
 
     private void checkUpdateApp() {
@@ -365,4 +387,8 @@ public class LoginActivity extends BaseActivity {
         startActivity(intent);
         finish();
     }
+
+    //检查是否有证书
+
+
 }

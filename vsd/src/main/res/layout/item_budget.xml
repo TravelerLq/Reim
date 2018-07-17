@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dimen_85"
-    android:background="@drawable/bg_red__rounded_rectangle"
-    android:orientation="vertical"
-    android:layout_marginLeft="@dimen/dimen_10"
-    android:layout_marginTop="@dimen/dimen_16"
-    android:layout_marginRight="@dimen/dimen_5"
-    android:padding="@dimen/dimen_1"
-    android:paddingBottom="@dimen/dimen_5">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dimen_20"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_85"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginRight="@dimen/dimen_5"
+        android:background="@drawable/bg_red_rectangle"
+        android:orientation="vertical"
+        android:padding="@dimen/dimen_1">
 
     <ImageView
         android:id="@+id/iv_budget"
@@ -22,9 +26,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="26dp"
+        android:layout_marginTop="@dimen/dimen_5"
         android:layout_toEndOf="@+id/iv_budget"
         android:background="@null"
-        android:layout_marginTop="@dimen/dimen_5"
         android:text="销售部" />
 
     <EditText
@@ -37,5 +41,5 @@
         android:layout_marginStart="7dp"
         android:background="@null"
         android:text="1000" />
-
-</RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

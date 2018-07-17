@@ -29,7 +29,7 @@ import butterknife.BindView;
 
 /**
  * Created by liqing on 18/7/2.
- * 预算管理
+ * 预算管理(按照类别划分)
  */
 
 public class BudgetManageActivity extends BaseActivity {
@@ -47,16 +47,23 @@ public class BudgetManageActivity extends BaseActivity {
     Button btnSure;
     @BindView(R.id.rightFucTxt)
     TextView rightFucTxt;
+    @BindView(R.id.textview_title)
+    TextView tvTitle;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_budget_manage);
+        rightFucTxt.setVisibility(View.VISIBLE);
+        tvTitle.setText("预算管理（报销科目划分）");
         initViewEvent();
         context = BudgetManageActivity.this;
         intData();
         initRecycleView();
+        getData();
     }
+
 
     private void intData() {
         mDatas = new ArrayList<>();
@@ -77,6 +84,7 @@ public class BudgetManageActivity extends BaseActivity {
         super.onClick(view);
         switch (view.getId()) {
             case R.id.rightFucTxt:
+                toActivity(EditBudgetItemActivity.class);
                 break;
             case R.id.btn_sure:
                 break;
@@ -152,6 +160,7 @@ public class BudgetManageActivity extends BaseActivity {
                     public void onClick(View v) {
                         Toast.makeText(mContext, "onClick:" + mDatas.get(holder.getAdapterPosition()).getDepartmentName(), Toast.LENGTH_SHORT).show();
                         Log.d("TAG", "onClick() called with: v = [" + v + "]");
+
                     }
                 });
 
@@ -179,6 +188,15 @@ public class BudgetManageActivity extends BaseActivity {
         });
 
     }
+
+    //获取数据
+    private void getData() {
+
+    }
+
+
+    //删除数据
+
 
     /**
      * EditText获取焦点并显示软键盘

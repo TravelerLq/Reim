@@ -15,6 +15,7 @@ import com.jci.vsd.view.widget.treelist.TreeMenuBaseAdapter;
 import com.jci.vsd.view.widget.treelist.TreeMenuUtils;
 import com.jci.vsd.view.widget.treelist.bean.Node;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindInt;
@@ -29,10 +30,12 @@ import butterknife.ButterKnife;
 public class MembersManagerAdapter<T> extends TreeMenuBaseAdapter<T> {
     private int mCurrentPos;
     boolean isExpand;
+    private List<T> mData;
 
 
     public MembersManagerAdapter(ListView listView, Context context, List<T> data, int defaultLevel) throws IllegalAccessException {
         super(listView, context, data, defaultLevel);
+        this.mData = data;
     }
 
     public void setCurrentPosition(int position, boolean isExpand) {
@@ -40,6 +43,7 @@ public class MembersManagerAdapter<T> extends TreeMenuBaseAdapter<T> {
         this.isExpand = isExpand;
     }
 
+    
     private LinearLayout.LayoutParams getParams(int margin) {
         int itemHeight = ScreenUtil.dip2px(40);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, itemHeight);

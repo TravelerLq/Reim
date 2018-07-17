@@ -60,9 +60,10 @@ class StringResponseJsonBodyConverter implements Converter<ResponseBody, String>
     public String convert(ResponseBody value) throws IOException {
         String result = value.string();
 
-        Loger.e("StringResponseBodyConverter = " + result);
+        Loger.e("StringResponseJsonBodyConverter.result = " + result);
         return result;
     }
+
 }
 
 class StringRequestJsonBodyConverter implements Converter<String, RequestBody> {

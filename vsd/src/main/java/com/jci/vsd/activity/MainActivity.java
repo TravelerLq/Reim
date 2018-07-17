@@ -35,13 +35,16 @@ public class MainActivity extends BaseActivity {
 
     @BindView(R.id.tv_header)
     TextView tvHeader;
+    @BindView(R.id.textview_title)
+    TextView tvTitle;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        tvTitle.setText(getResources().getString(R.string.home_title));
         List<Fragment> list = new ArrayList<Fragment>();
         list.add(new HomeFragment());
         list.add(new HelpFragment());
@@ -53,7 +56,6 @@ public class MainActivity extends BaseActivity {
         initViewEvent();
         buttonBack.setVisibility(View.GONE);
         tvHeader.setVisibility(View.VISIBLE);
-
 
     }
 
@@ -81,6 +83,7 @@ public class MainActivity extends BaseActivity {
                 toActivity(UserInfoActivity.class);
 //                toActivity(UserInfoCenterActivity.class);
                 break;
+
             default:
                 break;
         }

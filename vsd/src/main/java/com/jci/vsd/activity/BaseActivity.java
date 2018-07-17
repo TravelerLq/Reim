@@ -9,14 +9,18 @@ import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.jci.vsd.R;
 import com.jci.vsd.application.VsdApplication;
 
 import com.jci.vsd.bean.BaseBean;
 import com.jci.vsd.constant.AppConstant;
+import com.jci.vsd.fragment.dialog.RxStyleDialogFragment;
 import com.jci.vsd.observer.DialogObserverHolder;
+import com.jci.vsd.utils.Loger;
 import com.trello.rxlifecycle2.components.support.RxFragmentActivity;
 import com.umeng.analytics.MobclickAgent;
 
@@ -26,8 +30,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.com.syan.spark.client.sdk.SparkApplication;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
@@ -41,6 +47,7 @@ public abstract class BaseActivity extends RxFragmentActivity implements DialogO
     private List<Subscription> compositeSubscription = new ArrayList<>();
     protected Unbinder unBinder;
 
+    RxStyleDialogFragment rxStyleDialogFragment;
 
     protected final static List<BaseActivity> mActivities = new LinkedList<>();
 
@@ -48,6 +55,9 @@ public abstract class BaseActivity extends RxFragmentActivity implements DialogO
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         VsdApplication.getInstance().addActivity(this);
+        //apply for cert init
+        SparkApplication.init(getApplication());
+
         synchronized (mActivities) {
             mActivities.add(this);
         }
@@ -63,6 +73,7 @@ public abstract class BaseActivity extends RxFragmentActivity implements DialogO
     public void setContentView(@LayoutRes int layoutResID) {
         super.setContentView(layoutResID);
         unBinder = ButterKnife.bind(this);
+
     }
 
     @Override
@@ -143,6 +154,7 @@ public abstract class BaseActivity extends RxFragmentActivity implements DialogO
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_back:
+                Loger.e("---btnback-");
                 finish();
                 break;
         }
@@ -159,6 +171,38 @@ public abstract class BaseActivity extends RxFragmentActivity implements DialogO
         startActivity(intent);
     }
 
+
+    /**
+     * 跳转页面
+     *
+     * @param clz 跳转到的类
+     * @param <T>
+     */
+    protected <T> void toActivityWithType(Class<T> clz,String intentTye) {
+        Intent intent = new Intent(this, clz);
+        intent.putExtra(AppConstant.KEY_TYPE,intentTye);
+
+
+    }
+
+
+    /**
+     * 跳转页面
+     *
+     * @param clz 跳转到的类
+     * @param <T>
+     */
+    protected <T> void toActivityWithType(Class<T> clz,String intentTye,int requestCode,boolean needCallBack) {
+        Intent intent = new Intent(this, clz);
+        intent.putExtra(AppConstant.KEY_TYPE,intentTye);
+        if(needCallBack){
+            startActivityForResult(intent,requestCode);
+        }else {
+            startActivity(intent);
+        }
+
+
+    }
 
 //    /**
 //     * 跳转页面
@@ -257,5 +301,29 @@ public abstract class BaseActivity extends RxFragmentActivity implements DialogO
         MobclickAgent.onPause(BaseActivity.this);
     }
 
+
+    protected void showProgress() {
+
+
+        try {
+            rxStyleDialogFragment = new RxStyleDialogFragment();
+            rxStyleDialogFragment.setCancelable(false);
+            rxStyleDialogFragment.show(this.getSupportFragmentManager(), "");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    protected void dimissProgress(){
+        if(rxStyleDialogFragment != null && rxStyleDialogFragment.getDialog() != null && rxStyleDialogFragment.getDialog().isShowing()){
+            try {
+                rxStyleDialogFragment.dismiss();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        rxStyleDialogFragment = null;
+    }
 
 }

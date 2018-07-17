@@ -1,11 +1,13 @@
 package com.jci.vsd.activity.enterprise;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -16,16 +18,23 @@ import com.jci.vsd.SlideRecycleview.CommonAdapter;
 import com.jci.vsd.SlideRecycleview.SwipeMenuLayout;
 import com.jci.vsd.SlideRecycleview.ViewHolder;
 import com.jci.vsd.activity.BaseActivity;
+import com.jci.vsd.activity.LoginActivity;
 import com.jci.vsd.activity.Reim.ReimRecycActivity;
 import com.jci.vsd.bean.SwipeBean;
 import com.jci.vsd.bean.enterprise.DepartmentBean;
+import com.jci.vsd.constant.AppConstant;
+import com.jci.vsd.network.control.DepartmentManageControl;
+import com.jci.vsd.observer.CommonDialogObserver;
+import com.jci.vsd.observer.RxHelper;
 import com.jci.vsd.view.ItemDecor;
+import com.jci.vsd.view.widget.SimpleToast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import cn.unitid.spark.cm.sdk.data.entity.Item;
+import io.reactivex.Observable;
 
 /**
  * Created by liqing on 18/7/2.
@@ -43,6 +52,7 @@ public class DepartmentManageActivity extends BaseActivity {
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.rightFucTxt)
     TextView tvRight;
+    private String keyStr;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,15 +78,27 @@ public class DepartmentManageActivity extends BaseActivity {
                 }, 2000);
             }
         });
+        if (getIntent() != null) {
+            keyStr = getIntent().getStringExtra(AppConstant.KEY_TYPE);
+
+        }
+
+        // getDepartment();
     }
+
 
     private void initData() {
         mDatas = new ArrayList<>();
+        DepartmentBean bean;
         for (int i = 0; i < 5; i++) {
-            mDatas.add(new DepartmentBean(i, "name" + i));
+            bean = new DepartmentBean();
+            bean.setDepartmentId(i);
+            bean.setDepartmentName("name" + i);
+            mDatas.add(bean);
         }
 
     }
+
 
     private void initRecycleView() {
 
@@ -99,26 +121,54 @@ public class DepartmentManageActivity extends BaseActivity {
                     }
                 });
 
+                //左滑删除
                 holder.setOnClickListener(R.id.btnDelete, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         int pos = holder.getLayoutPosition();
                         if (pos >= 0 && pos < mDatas.size()) {
                             Toast.makeText(context, "删除:" + pos, Toast.LENGTH_SHORT).show();
+                            deleteDepartment(mDatas.get(pos).getDepartmentId(), pos);
                             mDatas.remove(pos);
                             mAdapter.notifyItemRemoved(pos);//推荐用这个
+
                             //如果删除时，不使用mAdapter.notifyItemRemoved(pos)，则删除没有动画效果，
                             //且如果想让侧滑菜单同时关闭，需要同时调用 ((SwipeMenuLayout) holder.itemView).quickClose();
                             //mAdapter.notifyDataSetChanged();
                         }
                     }
                 });
+
+
+                //左滑编辑
+                holder.setOnClickListener(R.id.btnEdit, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int pos = holder.getLayoutPosition();
+                        if (pos >= 0 && pos < mDatas.size()) {
+                            Toast.makeText(context, "编辑:" + pos, Toast.LENGTH_SHORT).show();
+                            DepartmentBean editBean = mDatas.get(pos);
+                            toAtivityWithParams(NewDeparmentActivity.class, editBean);
+                        }
+                    }
+                });
+
                 //注意事项，设置item点击，不能对整个holder.itemView设置咯，只能对第一个子View，即原来的content设置，这算是局限性吧。
                 (holder).setOnClickListener(R.id.content, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(mContext, "onClick:" + mDatas.get(holder.getAdapterPosition()).getDepartmentName(), Toast.LENGTH_SHORT).show();
                         Log.d("TAG", "onClick() called with: v = [" + v + "]");
+                        if (!TextUtils.isEmpty(keyStr) && keyStr.equals(AppConstant.VALUE_AJUST)) {
+                            Intent intent = new Intent(DepartmentManageActivity.this,
+                                    DepartmentDetailActivity.class);
+                            // intent.putExtra("departId", mDatas.get(holder.getAdapterPosition()).getDepartmentName()) )
+                            Bundle bundle = new Bundle();
+                            DepartmentBean bean = mDatas.get(holder.getAdapterPosition());
+                            bundle.putSerializable(AppConstant.SERIAL_KEY, bean);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        }
                     }
                 });
                 //置顶：
@@ -126,7 +176,6 @@ public class DepartmentManageActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         int pos = holder.getLayoutPosition();
-
                         if (pos > 0 && pos < mDatas.size()) {
                             DepartmentBean swipeBean = mDatas.get(pos);
                             mDatas.remove(swipeBean);
@@ -147,6 +196,68 @@ public class DepartmentManageActivity extends BaseActivity {
         };
 
         recyclerView.setAdapter(mAdapter);
+    }
+
+    // 获取
+    private void getDepartment() {
+        Observable<List<DepartmentBean>> observable = new DepartmentManageControl().getDepartment();
+        CommonDialogObserver<List<DepartmentBean>> observer = new CommonDialogObserver<List<DepartmentBean>>(this) {
+            @Override
+            public void onNext(List<DepartmentBean> beanList) {
+                super.onNext(beanList);
+                SimpleToast.toastMessage("获取成功", Toast.LENGTH_LONG);
+                if (beanList != null) {
+                    mDatas.clear();
+                    mDatas.addAll(beanList);
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                super.onError(t);
+                if (t.getMessage().equals("401"))
+
+                    SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_LONG);
+                exit();
+                toActivity(LoginActivity.class);
+            }
+
+
+        };
+        RxHelper.bindOnUIActivityLifeCycle(observable, observer, DepartmentManageActivity.this);
+
+    }
+
+    //删除
+    private void deleteDepartment(int departId, final int pos) {
+
+        Observable<Boolean> observable = new DepartmentManageControl().deleteDepartment(departId);
+        CommonDialogObserver<Boolean> observer = new CommonDialogObserver<Boolean>(this) {
+            @Override
+            public void onNext(Boolean isSuccess) {
+                super.onNext(isSuccess);
+                SimpleToast.toastMessage("删除成功", Toast.LENGTH_LONG);
+                mDatas.remove(pos);
+                mAdapter.notifyItemRemoved(pos);//推荐用这个
+
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                super.onError(t);
+                if (t.getMessage().equals("401"))
+
+                    SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_LONG);
+                exit();
+                toActivity(LoginActivity.class);
+            }
+
+
+        };
+        RxHelper.bindOnUIActivityLifeCycle(observable, observer, DepartmentManageActivity.this);
+
+
     }
 
     @Override

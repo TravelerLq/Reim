@@ -11,8 +11,10 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.github.dfqin.grantor.PermissionListener;
 import com.github.dfqin.grantor.PermissionsUtil;
@@ -48,6 +50,11 @@ public class ReimHomeActivity extends BaseActivity {
     @BindView(R.id.rl_my_approval)
     RelativeLayout rlMyApproval;
 
+    @BindView(R.id.textview_title)
+    TextView tvTitle;
+    @BindView(R.id.button_back)
+    ImageButton buttonBack;
+
 
     private ImageCaptureManager captureManager;
 
@@ -56,6 +63,9 @@ public class ReimHomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reim_home);
         initViewEvent();
+        tvTitle.setText(getResources().getString(R.string.reim_tile));
+
+
     }
 
     @Override
@@ -66,6 +76,7 @@ public class ReimHomeActivity extends BaseActivity {
 
         rlMyExpense.setOnClickListener(this);
         rlMyApproval.setOnClickListener(this);
+        buttonBack.setOnClickListener(this);
 
     }
 
@@ -76,7 +87,7 @@ public class ReimHomeActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.iv_add_expense:
                 Loger.e("----ivAdd--click");
-                toActivity(ReimRecycActivity.class);
+                toActivity(ReimAddActivity.class);
                 // getFormId();
 //                Intent it = new Intent(getActivity(), AddExpenseItemActivtity.class);
 //                // it.putExtra("type", "home");
@@ -109,6 +120,10 @@ public class ReimHomeActivity extends BaseActivity {
 //                startActivity(intent);
 ////                Intent intent = new Intent(HomeFragment.this.getActivity(), ExpenseItemListActivity.class);
 //                startActivity(intent);
+                break;
+
+            case R.id.button_back:
+                finish();
                 break;
             default:
                 break;

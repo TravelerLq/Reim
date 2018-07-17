@@ -51,7 +51,7 @@
             <ImageView
                 android:id="@+id/iv_reim"
                 style="@style/home_round"
-                android:src="@drawable/bg_round_grey_xml" />
+                android:src="@drawable/ic_home_reim" />
 
             <TextView
                 android:id="@+id/tv_reim_title"
@@ -79,7 +79,7 @@
             <ImageView
                 android:id="@+id/iv_contract"
                 style="@style/home_round"
-                android:src="@drawable/bg_round_grey_xml" />
+                android:src="@drawable/ic_home_contract" />
 
             <TextView
                 android:id="@+id/tv_contract_title"

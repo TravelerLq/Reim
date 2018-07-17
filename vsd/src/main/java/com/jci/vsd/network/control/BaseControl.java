@@ -1,11 +1,15 @@
 package com.jci.vsd.network.control;
 
+import android.util.Log;
+
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.jci.vsd.application.VsdApplication;
 import com.jci.vsd.bean.download.ProgressInterceptor;
 import com.jci.vsd.bean.download.ProgressResponseBody;
 import com.jci.vsd.bean.login.LoginResponseBean;
 import com.jci.vsd.constant.AppConstant;
+import com.jci.vsd.constant.MySpEdit;
+import com.jci.vsd.interceptor.LoggingInterceptor;
 import com.jci.vsd.network.factory.StringConverterFactory;
 import com.jci.vsd.network.factory.StringConverterJsonFactory;
 import com.jci.vsd.network.factory.StringConverterUploadFactory;
@@ -63,15 +67,12 @@ public class BaseControl {
     }
 
 
-    protected  Retrofit buildRetrofit(){
-
-        HttpLoggingInterceptor interceptor =new HttpLoggingInterceptor();
-
-
-         return  null;
-    }
+    //Register an application interceptor by calling addInterceptor() on OkHttpClient.Builder
 
     protected Retrofit builderJsonRetrofit() {
+        final String requestAuth = MySpEdit.getInstance().getAuthor();
+       Loger.e("---RequestAuth---" + requestAuth);
+        LoggingInterceptor loggingInterceptor = new LoggingInterceptor();
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -88,7 +89,7 @@ public class BaseControl {
                                 .addHeader("Content-Type", "application/json")
                                 .addHeader("User-Agent", "ios6s")
                                 // .addHeader("Authorization", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHQiOjE1Mjc3MzY3MzA0MjYsInVpZCI6IjE1MiIsImlhdCI6MTUyNzczNjY3MDQyNn0.Yb6SyjzKCixg2CIVYt7VtAnMsFcB_hDmzalHmxjO0cI")
-                                .addHeader("Authorization", "")
+                                .addHeader("Authorization", requestAuth)
                                 .build();
 
 
@@ -97,6 +98,7 @@ public class BaseControl {
 
                 })
                 .addInterceptor(interceptor);//设置写入超时时间
+        //     .addInterceptor(loggingInterceptor);
 
 
         OkHttpClient client = builder.build();

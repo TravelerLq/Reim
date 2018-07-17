@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 
+import com.anupcowkur.reservoir.Reservoir;
 import com.jci.vsd.bean.login.LoginResponseBean;
 //import com.jci.vsd.bean.material.StoreMaterialOrderDteailResposeBean;
 //import com.jci.vsd.bean.material.StoreMaterialOrderResponseBean;
@@ -28,6 +29,10 @@ import java.util.List;
 
 public class VsdApplication extends Application {
     private static VsdApplication globalVar = null;
+
+    public static final long ONE_KB = 1024L;
+    public static final long ONE_MB = ONE_KB * 1024L;
+    public static final long CACHE_DATA_MAX_SIZE = ONE_MB * 3L;
     private List<WaitStoreMaterialBean> waitStoreMaterialBeanList = new ArrayList<>();
     //存料单列表
 //    private List<StoreMaterialOrderResponseBean> storeMaterialOrderBeanList = new ArrayList<>();
@@ -70,12 +75,22 @@ public class VsdApplication extends Application {
 //        refWatcher = MySpEdit.getInstance().getAppEmv()
 //                ? RefWatcher.DISABLED
 //                : LeakCanary.install(VsdApplication.this);
+        initReservoir();
+
     }
 
     public static VsdApplication getInstance() {
         return globalVar;
     }
 
+    private void initReservoir() {
+        try {
+            Reservoir.init(this, CACHE_DATA_MAX_SIZE);
+        } catch (Exception e) {
+            //failure
+            e.printStackTrace();
+        }
+    }
 
     public static Context getContext() {
         return getInstance().getBaseContext();

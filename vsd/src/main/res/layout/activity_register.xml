@@ -7,7 +7,6 @@
     android:background="#FFF"
     android:orientation="vertical">
 
-
     <include
         android:id="@+id/includeTitleLayout"
         layout="@layout/activity_title"
@@ -31,7 +30,7 @@
                 android:layout_height="50dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="0dp"
@@ -40,18 +39,19 @@
                     android:layout_weight="1"
                     android:text="账号:"
                     android:textColor="#000"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/edt_acount"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2.5"
+                    android:background="#FFF"
                     android:gravity="left|top"
                     android:hint="请输入您的账号"
                     android:maxLength="11"
                     android:minLines="1"
-                    android:background="#FFF"
                     android:padding="10dp"
                     android:textSize="16dp" />
 
@@ -61,6 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_1"
                 android:background="@color/stock" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -94,10 +95,12 @@
             </LinearLayout>
 
         </LinearLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_1"
             android:background="@color/stock" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -135,10 +138,12 @@
             </LinearLayout>
 
         </LinearLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_1"
             android:background="@color/stock" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -175,10 +180,12 @@
                     android:textSize="16dp" />
 
             </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_1"
                 android:background="@color/stock" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -209,10 +216,12 @@
                     android:textSize="16dp" />
 
             </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_1"
                 android:background="@color/stock" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -257,6 +266,7 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
                 <TextView
 
                     android:layout_width="0dp"
@@ -273,10 +283,12 @@
             </LinearLayout>
 
         </LinearLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_1"
             android:background="@color/stock" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -367,19 +379,22 @@
         android:layout_marginTop="@dimen/dimen_10"
         android:layout_weight="1"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_50"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
+
             <CheckBox
                 android:id="@+id/check_agree"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/agreement"/>
+                android:text="@string/agreement" />
         </LinearLayout>
 
         <Button

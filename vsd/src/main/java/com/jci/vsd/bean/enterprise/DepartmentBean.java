@@ -29,10 +29,11 @@ public class DepartmentBean extends BaseBean {
     private int reimbursementRightId;
     private String reimbursementRightName;
 
-    public DepartmentBean(int departmentId, String departmentName) {
-        this.departmentId = departmentId;
-        this.departmentName = departmentName;
-    }
+
+//    public DepartmentBean(int departmentId, String departmentName) {
+//        this.departmentId = departmentId;
+//        this.departmentName = departmentName;
+//    }
 
     public int getDepartmentId() {
         return departmentId;

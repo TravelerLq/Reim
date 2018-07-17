@@ -34,10 +34,10 @@ public class EditBudgetItemActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_budget_edit);
         BudgetBean bean = (BudgetBean) getIntent().getSerializableExtra(AppConstant.SERIAL_KEY);
-        if (bean != null) {
-            edtName.setText(bean.getBudget());
-            edtBudgetInput.setText(bean.getBudget());
-        }
+//        if (bean != null) {
+//            edtName.setText(bean.getBudget());
+//            edtBudgetInput.setText(bean.getBudget());
+//        }
 
         initViewEvent();
     }

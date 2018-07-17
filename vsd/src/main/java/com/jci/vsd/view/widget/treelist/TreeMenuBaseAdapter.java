@@ -39,6 +39,7 @@ public abstract class TreeMenuBaseAdapter<T> extends BaseAdapter {
     public void setTreeNodeClickListener(OnTreeNodeClickListener treeNodeClickListener) {
         mTreeNodeClickListener = treeNodeClickListener;
     }
+
     public void setTreeNodeLongClickListener(OnTreeNodeLongClickListener treeNodeLongClickListener) {
         mTreeNodeLongClickListener = treeNodeLongClickListener;
     }
@@ -59,6 +60,7 @@ public abstract class TreeMenuBaseAdapter<T> extends BaseAdapter {
     public interface OnTreeNodeClickListener {
         void onNodeClick(Node node, int position);
     }
+
     public interface OnTreeNodeLongClickListener {
         void onNodeLongClick(Node node, int position);
     }
@@ -72,18 +74,22 @@ public abstract class TreeMenuBaseAdapter<T> extends BaseAdapter {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Log.d("tag","collapse");
+
                 expandOrCollapse(position);//展开或关闭
                 if (mTreeNodeClickListener != null) {
                     mTreeNodeClickListener.onNodeClick(mVisibleNodes.get(position), position);
                 }
             }
         });
-        listView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
 
-                return false;
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if (mTreeNodeLongClickListener != null) {
+                    mTreeNodeLongClickListener.onNodeLongClick(mVisibleNodes.get(position), position);
+
+                }
+                return true;
             }
         });
 
@@ -104,7 +110,7 @@ public abstract class TreeMenuBaseAdapter<T> extends BaseAdapter {
             if (node != null) {
                 if (!node.isLeafNode()) {
                     node.setExpand(!node.isExpand());
-                  //  TreeMenuUtils.setNodeIcon(node);
+                    //  TreeMenuUtils.setNodeIcon(node);
                     mVisibleNodes = TreeMenuUtils.getVisibleNodesByAll(mAllNodes);
                     notifyDataSetChanged();
                 }

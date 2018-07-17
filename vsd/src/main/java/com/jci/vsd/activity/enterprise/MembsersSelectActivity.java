@@ -140,6 +140,7 @@ public class MembsersSelectActivity extends BaseActivity {
             case R.id.tv_register_company:
                 //从本公司删除
                 Loger.e("-----delete emplyee");
+
                 toActivity(FoundationActivity.class);
 
                 dialog.dismiss();

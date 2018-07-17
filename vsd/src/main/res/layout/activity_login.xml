@@ -71,11 +71,13 @@
                     android:text="用户名" />
 
                 <EditText
+                    android:id="@+id/edt_acount"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="566"
                     android:background="@drawable/bg_regtangle_grey_xml"
-                    android:hint="@string/hint_input_code" />
+                    android:paddingLeft="@dimen/dimen_5"
+                    android:hint="@string/hint_login_account" />
             </LinearLayout>
 
             <LinearLayout
@@ -93,11 +95,13 @@
                     android:text="密码" />
 
                 <EditText
+                    android:id="@+id/edt_psw"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="566"
                     android:background="@drawable/bg_regtangle_grey_xml"
-                    android:hint="@string/hint_input_code" />
+                    android:paddingLeft="@dimen/dimen_5"
+                    android:hint="@string/hint_login_password" />
             </LinearLayout>
 
         </LinearLayout>

@@ -20,6 +20,11 @@ public class MembersBean extends BaseBean {
     @TreeNodeName
     private String name;
 
+    private String status;
+
+    public MembersBean(String status) {
+        this.status = status;
+    }
 
     public MembersBean(String id, String name) {
         this.id = id;
@@ -31,6 +36,14 @@ public class MembersBean extends BaseBean {
         this.pid = pid;
         this.name = name;
 
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getId() {

@@ -381,11 +381,16 @@
     <style name="spinner" parent="@style/black_middle_style">
 
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/dimen_45</item>
-        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/dimen_2</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">@dimen/dimen_5</item>
         <item name="android:layout_marginRight">@dimen/dimen_15</item>
+        <item name="android:spinnerMode">dropdown</item>
+        <item name="android:dropDownVerticalOffset">0dp</item>
+        <item name="android:dropDownHorizontalOffset">@dimen/dimen_20</item>
+        <item name="android:popupBackground">@color/white</item>
     </style>
-
 
     <!--home 圆的色块-->
     <style name="home_round" parent="@style/black_middle_style">
@@ -535,7 +540,6 @@
         <item name="android:orientation">horizontal</item>
         <item name="android:layout_marginTop">@dimen/dimen_20</item>
     </style>
-
 
     <style name="billing_new_text_style">
         <item name="android:layout_width">0dp</item>

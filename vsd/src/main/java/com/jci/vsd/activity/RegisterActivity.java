@@ -15,9 +15,17 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.jci.vsd.R;
+import com.jci.vsd.activity.enterprise.RegisterCompanyActivity;
 import com.jci.vsd.adapter.RecAdapter;
+import com.jci.vsd.bean.register.RegisterRequestBean;
+import com.jci.vsd.bean.register.RegisterResponseBean;
+import com.jci.vsd.constant.MySpEdit;
+import com.jci.vsd.network.control.RegisterControl;
+import com.jci.vsd.observer.CommonDialogObserver;
+import com.jci.vsd.observer.RxHelper;
 import com.jci.vsd.utils.CertServiceUrl;
 import com.jci.vsd.utils.Loger;
+import com.jci.vsd.view.widget.SimpleToast;
 
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -35,6 +43,7 @@ import cn.unitid.spark.cm.sdk.business.*;
 import butterknife.BindView;
 import cn.unitid.spark.cm.sdk.exception.CmSdkException;
 import cn.unitid.spark.cm.sdk.listener.ProcessListener;
+import io.reactivex.Observable;
 
 /**
  * Created by liqing on 18/6/25.
@@ -59,6 +68,8 @@ public class RegisterActivity extends BaseActivity {
     EditText edtPsw;
     @BindView(R.id.check_agree)
     CheckBox checkAgree;
+    @BindView(R.id.edt_emil)
+    EditText edtEmail;
 
     private boolean agree = false;
     private OnlineClient onlineClient;
@@ -69,13 +80,20 @@ public class RegisterActivity extends BaseActivity {
     private String id;
     private String tel;
     private CBSCertificateStore store = null;
+    private String email;
+    private MySpEdit prefs;
+    private String intentType;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        prefs = MySpEdit.getInstance();
         initViewEvent();
+        intentType = getIntent().getStringExtra("type");
+        Loger.e("--registertype---" + intentType);
+
 
         onlineClient = new OnlineClient(CertServiceUrl.baseUrl, CertServiceUrl.appKey, CertServiceUrl.appSecret);
         //  sharedPreferencesUtil = new SharedPreferencesUtil(RegisterActivity.this);
@@ -83,8 +101,10 @@ public class RegisterActivity extends BaseActivity {
         store = CBSCertificateStore.getInstance();
         if (store.getAllCertificateList().size() > 0) {
             //
-            store.deleteCertificate(store.getAllCertificateList().get(0).getId());
+            //  store.deleteCertificate(store.getAllCertificateList().get(0).getId());
+
             Log.e("certificate--size=", "" + store.getAllCertificateList().size());
+            Log.e("certificate--id=", "" + store.getAllCertificateList().get(0).getId());
 
         }
 
@@ -112,7 +132,7 @@ public class RegisterActivity extends BaseActivity {
             if (agree) {
                 // toActivity(MainActivity.class);
                 Loger.e("--register--click");
-                initTestData();
+                initTestData1();
                 checkData();
             } else {
                 Toast.makeText(RegisterActivity.this,
@@ -128,25 +148,55 @@ public class RegisterActivity extends BaseActivity {
         edtName.setText("liq");
         edtID.setText("320322199007171428");
         edtTel.setText("15951882547");
+        edtEmail.setText("2319345023@qq.com");
+
+    }
+
+    private void initTestData1() {
+        edtAccount.setText("屠正松");
+        edtPsw.setText("123456");
+        edtName.setText("屠正松");
+        edtID.setText("320113199310156418");
+        edtTel.setText("15951882547");
+        edtEmail.setText("2319345023@qq.com");
+
+    }
+
+
+    private void initTestData2() {
+        //  edtAccount.setText("屠正松");
+        edtPsw.setText("123456");
+        edtName.setText("张睿");
+        edtID.setText("321027199409053017");
+        edtTel.setText("15951882511");
+        edtEmail.setText("2319345023@qq.com");
+
+    }
+
+    private void initTestData3() {
+        //  edtAccount.setText("屠正松");
+        edtPsw.setText("123456");
+        edtName.setText("周先康");
+        edtID.setText("342601199406205015");
+        edtTel.setText("15951883214");
+        edtEmail.setText("2319345023@qq.com");
+
     }
 
     private void checkData() {
 
-
         account = edtAccount.getText().toString().trim();
         psw = edtPsw.getText().toString().trim();
-
-
         realName = edtName.getText().toString().trim();
         id = edtID.getText().toString();
-
         tel = edtTel.getText().toString();
+        email = edtEmail.getText().toString();
 
-        if (TextUtils.isEmpty(account)) {
-            Toast.makeText(RegisterActivity.this, "请输入账号", Toast.LENGTH_SHORT).show();
-            edtAccount.requestFocus();
-            return;
-        }
+//        if (TextUtils.isEmpty(account)) {
+//            Toast.makeText(RegisterActivity.this, "请输入账号", Toast.LENGTH_SHORT).show();
+//            edtAccount.requestFocus();
+//            return;
+//        }
 
         if (TextUtils.isEmpty(psw)) {
             Toast.makeText(RegisterActivity.this, "请输入密码", Toast.LENGTH_SHORT).show();
@@ -170,6 +220,12 @@ public class RegisterActivity extends BaseActivity {
             edtTel.requestFocus();
             return;
         }
+
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(RegisterActivity.this, "请输入邮箱", Toast.LENGTH_SHORT).show();
+            edtEmail.requestFocus();
+            return;
+        }
         vcode = "1234";
 //                if ("".equals(vcode)) {
 //                    ToastUtil.showToast(RegFirstStepActivity.this, "请输入验证码", Toast.LENGTH_SHORT);
@@ -177,15 +233,13 @@ public class RegisterActivity extends BaseActivity {
 //                    return;
 //                }
 
-//        emailStr = edtEmail.getText().toString();
-//        if (TextUtils.isEmpty(emailStr)) {
-//            ToastUtil.showToast(RegisterActivity.this, "请输入邮箱", Toast.LENGTH_SHORT);
-//            edtEmail.requestFocus();
-//            return;
-//        }
-        //     goRegisterCertify();
-      toActivity(MainActivity.class);
 
+        //toActivity(MainActivity.class);
+        //   goRegisterCertify();
+        //注册证书 －－》同步证书
+
+
+        goRegister();
     }
 
     private void goRegisterCertify() {
@@ -197,9 +251,6 @@ public class RegisterActivity extends BaseActivity {
                 CertificateIssueService certificateIssueService = new CertificateIssueService(RegisterActivity.this, onlineClient, new ProcessListener<OnlineIssueResponse>() {
                     @Override
                     public void doFinish(OnlineIssueResponse data, String cert) {
-//                        if (pdu.getMypDialog().isShowing()) {
-//                            pdu.dismisspd();
-//                        }
                         Log.e("CertificateIssueService", "onFinish");
 
                         String your_signature = data.getSignCert();
@@ -216,11 +267,9 @@ public class RegisterActivity extends BaseActivity {
                         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                         String validate = formatter.format(x509Certificate.getNotBefore()) + " - " +
                                 formatter.format(x509Certificate.getNotAfter());
+                        //注册
+                        goRegister();
 
-//                        goToAddUser();
-                        //注册成功，去加入公司 or注册公司
-
-                        toActivity(MainActivity.class);
 
                     }
 
@@ -265,6 +314,53 @@ public class RegisterActivity extends BaseActivity {
             e.printStackTrace();
         }
 
+
+    }
+
+    private void goRegister() {
+        final RegisterRequestBean requestBean = new RegisterRequestBean();
+        requestBean.setRealname(realName);
+        requestBean.setIdNumber(id);
+        requestBean.setPhone(tel);
+        requestBean.setEmail(email);
+        requestBean.setPassword(psw);
+
+        Observable<RegisterResponseBean> observable = new RegisterControl()
+                .register(requestBean);
+        CommonDialogObserver<RegisterResponseBean> observer = new CommonDialogObserver<RegisterResponseBean>(this) {
+            @Override
+            public void onNext(RegisterResponseBean registerResponseBean) {
+                super.onNext(registerResponseBean);
+                String status = registerResponseBean.getStatus();
+                if (status.equals("200")) {
+                    Loger.e("--uid=" + registerResponseBean.getUid());
+
+                    SimpleToast.toastMessage(" 注册成功", Toast.LENGTH_LONG);
+//                    if (intentType.equals("boss")) {
+//
+//                        toActivityWithType(LoginActivity.class, intentType);
+//                    } else {
+//                        toActivity(LoginActivity.class);
+//                    }
+
+                }
+                if (status.equals("201")) {
+                    SimpleToast.toastMessage(" 帐号已存在,去登录", Toast.LENGTH_LONG);
+
+                }
+
+                prefs.setUser(tel);
+                prefs.setPsw(psw);
+                toActivityWithType(LoginActivity.class, intentType);
+                finish();
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                super.onError(t);
+            }
+        };
+        RxHelper.bindOnUIActivityLifeCycle(observable, observer, this);
 
     }
 

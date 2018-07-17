@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.jci.vsd.R;
+import com.jci.vsd.activity.Reim.ReimAddActivity;
 import com.jci.vsd.activity.Reim.ReimHomeActivity;
 import com.jci.vsd.activity.Reim.ReimRecycActivity;
 import com.jci.vsd.activity.contract.ContractManageRecycleActivity;
@@ -23,6 +24,8 @@ import io.reactivex.disposables.Disposable;
 
 /**
  * Created by liqing on 18/6/25.
+ * <p>
+ * 主页fragment
  */
 
 public class HomeFragment extends BaseFragment implements View.OnClickListener, DialogObserverHolder {
@@ -68,13 +71,15 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         switch (v.getId()) {
             case R.id.rl_reim:
                 toActivity(HomeFragment.this, ReimHomeActivity.class);
+                // toActivity(HomeFragment.this, ReimAddActivity.class);
+
                 break;
             case R.id.rl_contract:
                 toActivity(HomeFragment.this, ContractManageRecycleActivity.class);
                 break;
             case R.id.rl_invoicing:
                 //远程开票：
-                toActivity(HomeFragment.this,RemotelyBillingRecycleActivity.class);
+                toActivity(HomeFragment.this, RemotelyBillingRecycleActivity.class);
                 break;
             case R.id.rl_budget:
                 break;

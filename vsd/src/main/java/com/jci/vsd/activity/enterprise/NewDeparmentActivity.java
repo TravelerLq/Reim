@@ -1,6 +1,7 @@
 package com.jci.vsd.activity.enterprise;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -8,12 +9,24 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jci.vsd.R;
 import com.jci.vsd.activity.BaseActivity;
+import com.jci.vsd.activity.LoginActivity;
+import com.jci.vsd.bean.ReimCategoryBean;
+import com.jci.vsd.bean.enterprise.DepartmentBean;
 import com.jci.vsd.bean.enterprise.MembersBean;
+import com.jci.vsd.constant.AppConstant;
+import com.jci.vsd.network.control.DepartmentManageControl;
+import com.jci.vsd.network.control.MembersManageControl;
+import com.jci.vsd.observer.CommonDialogObserver;
+import com.jci.vsd.observer.RxHelper;
 import com.jci.vsd.utils.Loger;
+import com.jci.vsd.utils.TimePickerUtils;
+import com.jci.vsd.view.widget.SimpleToast;
 
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +34,7 @@ import butterknife.BindView;
 import cn.addapp.pickers.listeners.OnItemPickListener;
 import cn.addapp.pickers.listeners.OnSingleWheelListener;
 import cn.addapp.pickers.picker.SinglePicker;
+import io.reactivex.Observable;
 
 /**
  * Created by liqing on 18/7/2.
@@ -44,14 +58,60 @@ public class NewDeparmentActivity extends BaseActivity {
 
     @BindView(R.id.tv_add)
     TextView tvAdd;
+    private DepartmentBean editBean;
+    private List<ReimCategoryBean> listReimCategory;
+    private Context mContext;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_department);
+        mContext = NewDeparmentActivity.this;
         allStatus = new ArrayList<>();
+        listReimCategory = new ArrayList<>();
+        //  getAuthority();
+        initTestData();
         initViewEvent();
+        editBean = (DepartmentBean) getIntent().getSerializableExtra(AppConstant.SERIAL_KEY);
+        if (editBean != null) {
+
+//            edtDepartName.setText(getIntentBean.);
+//            edtLimit.setText();
+
+        }
+
+    }
+
+    private void initTestData() {
+        listReimCategory.add(new ReimCategoryBean(1, "管理"));
+        listReimCategory.add(new ReimCategoryBean(2, "管理2"));
+        listReimCategory.add(new ReimCategoryBean(3, "管理3"));
+        for (int i = 0; i < listReimCategory.size(); i++) {
+            allStatus.add(i, listReimCategory.get(i).getValue());
+        }
+    }
+
+    //获取报销权限
+    private void getAuthority() {
+        Observable<List<ReimCategoryBean>> observable = new DepartmentManageControl().getAuthority();
+        CommonDialogObserver<List<ReimCategoryBean>> observer
+                = new CommonDialogObserver<List<ReimCategoryBean>>(this) {
+
+            @Override
+            public void onNext(List<ReimCategoryBean> keyValueBeans) {
+                super.onNext(keyValueBeans);
+                listReimCategory.clear();
+                listReimCategory.addAll(keyValueBeans);
+            }
+
+            @Override
+            public void onError(Throwable t) {
+
+            }
+        };
+
+        RxHelper.bindOnUIActivityLifeCycle(observable, observer, NewDeparmentActivity.this);
     }
 
 
@@ -77,7 +137,7 @@ public class NewDeparmentActivity extends BaseActivity {
         }
     }
 
-    private void selectAuthority() {
+    private void selectAuthorityTest() {
         Resources res = getResources();
         String[] status = res.getStringArray(R.array.approval_no);
         for (int i = 0; i < status.length; i++) {
@@ -89,22 +149,108 @@ public class NewDeparmentActivity extends BaseActivity {
             // onListDataPicker(DepartmentsManageAddItemActivity.this, allStatus, tvAuthority);
             onListDataPicker(NewDeparmentActivity.this, allStatus, tvReimAuthority);
 
-            // selectPos = (int)view1.getTag();
-
-//                    selectId = deptRight.get(selectPos).getKey();
-//                    Loger.e("--selectPos" + selectPos + "selectId--" + selectId);
         }
     }
 
+
+    private void selectAuthority() {
+
+        TimePickerUtils.getInstance().onListBeanPicker(NewDeparmentActivity.this, listReimCategory, allStatus, tvReimAuthority);
+    }
+
     private void checkData() {
+        DepartmentBean requestBean = null;
+        String notEmpty = "不可以为空！";
         String departmentNameStr = edtDepartName.getText().toString().trim();
         String limitStr = edtLimit.getText().toString().trim();
         String departmentLeaderStr = tvDepartLeader.getText().toString().trim();
         String authorityStr = tvReimAuthority.getText().toString().trim();
+        int reimCatedgoryId = (int) tvReimAuthority.getTag();
+        Loger.e("reimtype" + authorityStr + " reimCategoryId=" + reimCatedgoryId);
+
+        if (TextUtils.isEmpty(departmentNameStr)) {
+            SimpleToast.toastMessage("部门名称" + notEmpty, Toast.LENGTH_LONG);
+            return;
+        }
+
+        if (TextUtils.isEmpty(limitStr)) {
+            SimpleToast.toastMessage("报销限额" + notEmpty, Toast.LENGTH_LONG);
+            return;
+        }
+        if (TextUtils.isEmpty(authorityStr)) {
+            SimpleToast.toastMessage("报销类别" + notEmpty, Toast.LENGTH_LONG);
+            return;
+        }
         if (TextUtils.isEmpty(departmentLeaderStr)) {
+            SimpleToast.toastMessage("部门主管" + notEmpty, Toast.LENGTH_LONG);
+            return;
+        }
+        if (TextUtils.isEmpty(departmentLeaderStr)) {
+            requestBean = new DepartmentBean();
+            requestBean.setDepartmentName(departmentNameStr);
+            addDepartment(requestBean);
 
         }
+        if (editBean != null) {
+
+            //去更新
+            updateDepartmentInfo(requestBean);
+        } else {
+            //去新增
+            addDepartment(requestBean);
+        }
     }
+
+    private void addDepartment(DepartmentBean requestBean) {
+        Observable<Boolean> observable = new DepartmentManageControl().addDepartment(requestBean);
+        CommonDialogObserver<Boolean> observer = new CommonDialogObserver<Boolean>(this) {
+            @Override
+            public void onNext(Boolean aBoolean) {
+                super.onNext(aBoolean);
+                if (aBoolean) {
+                    SimpleToast.toastMessage("成功", Toast.LENGTH_LONG);
+                }
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                super.onError(t);
+                if (t.getMessage().equals("401"))
+
+                    SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_LONG);
+                exit();
+                toActivity(LoginActivity.class);
+            }
+        };
+        RxHelper.bindOnUIActivityLifeCycle(observable, observer, NewDeparmentActivity.this);
+    }
+
+
+    private void updateDepartmentInfo(DepartmentBean requestBean) {
+
+        Observable<Boolean> observable = new DepartmentManageControl().updateDepartment(requestBean);
+        CommonDialogObserver<Boolean> observer = new CommonDialogObserver<Boolean>(this) {
+            @Override
+            public void onNext(Boolean aBoolean) {
+                super.onNext(aBoolean);
+                if (aBoolean) {
+                    SimpleToast.toastMessage("成功", Toast.LENGTH_LONG);
+                }
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                super.onError(t);
+                if (t.getMessage().equals("401"))
+
+                    SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_LONG);
+                exit();
+                toActivity(LoginActivity.class);
+            }
+        };
+        RxHelper.bindOnUIActivityLifeCycle(observable, observer, NewDeparmentActivity.this);
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

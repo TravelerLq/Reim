@@ -387,6 +387,11 @@
     <string name="register">没有帐号？%1$去注册</string>
     <string name="str_register"><Data><![CDATA[还没有帐号？<font color="#ff0000">%3$s</font>]]></Data></string>
     <string name="agreement">已阅读并同意注册协议</string>
+    <string name="login_out_time">登录超时，请重新登录</string>
+
+
+    <string name="home_title">主页</string>
+    <string name="reim_tile">云智税</string>
 
     <string-array name="approval_no">　
         <item>1</item>　
@@ -415,6 +420,23 @@
     <string-array name="pay_way">　
         <item>现金支付</item>　
         <item>银行转账支付</item>　　
+    </string-array>
+
+
+    <string-array name="company_type">　
+        <item>--请选择--</item>
+        <item>国有企业</item>　
+        <item>集体企业</item>　　
+        <item>联营企业</item>　　
+        <item>股份合作制企业</item>　
+        <item>私营企业</item>　
+        <item>个体户</item>　　
+        <item>合伙企业</item>　　
+        <item>有限责任公司</item>　
+        <item>股份有限公司</item>　　
+        <item>个人独资企业</item>　　
+        <item>外商投资企业</item>
+        　
     </string-array>
 
 </resources>

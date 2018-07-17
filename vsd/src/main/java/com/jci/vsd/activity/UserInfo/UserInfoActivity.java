@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -15,6 +16,10 @@ import com.jci.vsd.activity.BaseActivity;
 import com.jci.vsd.activity.LoginActivity;
 import com.jci.vsd.activity.MeFeedBackActivity;
 import com.jci.vsd.application.VsdApplication;
+import com.jci.vsd.network.control.LoginApiControl;
+import com.jci.vsd.observer.CommonDialogObserver;
+import com.jci.vsd.observer.RxHelper;
+import com.jci.vsd.utils.Loger;
 import com.jci.vsd.view.CircleImageView;
 
 import org.spongycastle.LICENSE;
@@ -22,6 +27,7 @@ import org.spongycastle.LICENSE;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
 import me.iwf.photopicker.PhotoPicker;
 
 /**
@@ -55,6 +61,7 @@ public class UserInfoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
         selectedPhotos = new ArrayList<>();
+
         initViewEvent();
         //
     }
@@ -69,6 +76,7 @@ If the thumbnail needs to load the same full-resolution image over the network, 
         switch (view.getId()) {
             case R.id.project_master_head:
                 chooseImage();
+
                 break;
             case R.id.ll_help:
                 break;
@@ -83,7 +91,7 @@ If the thumbnail needs to load the same full-resolution image over the network, 
                 break;
             case R.id.ll_exit:
                 //退出
-                warningDialog("确认退出？");
+                warningDialog("确认退出登录？");
                 break;
             default:
                 break;
@@ -148,10 +156,10 @@ If the thumbnail needs to load the same full-resolution image over the network, 
                 .setPositiveButton(getResources().getString(R.string.sure), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //清空之前扫描的料单数据
-                       // VsdApplication.getInstance().getWaitStoreMaterialBeanList().clear();
+                        loginOut();
                         exit();
-                        toActivity(LoginActivity.class);
+                       // toActivity(LoginActivity.class);
+
                     }
                 })
                 .setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -162,4 +170,53 @@ If the thumbnail needs to load the same full-resolution image over the network, 
                 })
                 .create().show();
     }
+
+    private void loginOut() {
+        Observable<String> observable = new LoginApiControl().loginOut();
+        CommonDialogObserver<String> observer = new CommonDialogObserver<String>(this) {
+            @Override
+            public void onNext(String s) {
+                super.onNext(s);
+                Loger.e("--s=" + s);
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                super.onError(t);
+            }
+        };
+        RxHelper.bindOnUIActivityLifeCycle(observable, observer, UserInfoActivity.this);
+    }
+
+    /*
+     RecycleBin机制 缓存机制
+     所有继承AbListview子类（listview和 gridview）都是这种机制
+     */
+    int mFirstActivePosition;
+    View[] mActiveViews;
+
+    public View getActiveViews(int pos) {
+        int index = pos - mFirstActivePosition;
+
+        final View[] activeViews = mActiveViews;
+        if (index >= 0 && index < activeViews.length) {
+            final View match = activeViews[index];
+            return match;
+        }
+
+        return null;
+    }
+
+//    View getActiveView(int position) {
+//        int index = position - mFirstActivePosition;
+//        final View[] activeViews = mActiveViews;
+//        if (index >= 0 && index < activeViews.length) {
+//            final View match = activeViews[index];
+//            activeViews[index] = null;
+//            return match;
+//        }
+//        return null;
+//    }
+
+
 }

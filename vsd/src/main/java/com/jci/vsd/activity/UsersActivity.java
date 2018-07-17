@@ -18,7 +18,6 @@ import com.jci.vsd.adapter.BaseAdapter;
 import com.jci.vsd.adapter.RecAdapter;
 import com.jci.vsd.adapter.UserAdapter;
 import com.jci.vsd.bean.UserBean;
-import com.jci.vsd.data.DataProvider;
 import com.jci.vsd.utils.Loger;
 import com.paginate.Paginate;
 import com.paginate.recycler.LoadingListItemCreator;
@@ -128,7 +127,7 @@ public class UsersActivity extends BaseActivity {
         @Override
         public void run() {
             page++;
-            recAdapter.add(DataProvider.getRandomData(itemsPerPage));
+           // recAdapter.add(DataProvider.getRandomData(itemsPerPage));
             loading = false;
         }
     };

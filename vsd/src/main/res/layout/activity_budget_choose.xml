@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include layout="@layout/activity_title"></include>
+
+    <TextView
+        android:id="@+id/tv_depart_type"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_45"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/dimen_20"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:paddingLeft="@dimen/dimen_20"
+        android:background="@drawable/bg_red_rectangle"
+        android:text="按部门划分"/>
+
+    <TextView
+        android:id="@+id/tv_subject_type"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_45"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/dimen_20"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:paddingLeft="@dimen/dimen_20"
+        android:background="@drawable/bg_red_rectangle"
+        android:text="按科目划分"/>
+</LinearLayout>
