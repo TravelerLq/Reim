@@ -220,30 +220,6 @@ public class TimePickerUtils {
 
     public void onListBeanPicker(Activity context, final List<ReimCategoryBean> keyValueBeanList, List<String> mData, final View view) {
 
-//        final SinglePicker<String> picker = new SinglePicker<String>(context, keyValueBeanList);
-//        picker.setCanLoop(false);
-//        picker.setWheelModeEnable(true);
-//        picker.setTopPadding(15);
-//        picker.setSelectedIndex(0);
-//        picker.setOnSingleWheelListener(new OnSingleWheelListener() {
-//            @Override
-//            public void onWheeled(int i, String s) {
-//
-//            }
-//        });
-//        picker.setOnItemPickListener(new OnItemPickListener<ReimCategoryBean>() {
-//            @Override
-//            public void onItemPicked(int i, ReimCategoryBean keyValueBean) {
-//                view.setTag(keyValueBean.getKey());
-//                if (view instanceof TextView) {
-//                    Loger.e("view instanceof TextView---");
-//                    ((TextView) view).setText(keyValueBean.getValue());
-//
-//                } else if (view instanceof EditText) {
-//                    ((EditText) view).setText(keyValueBean.getValue());
-//                }
-//            }
-//        });
         final SinglePicker<String> picker = new SinglePicker<String>(context, mData);
         picker.setCanLoop(false);
         picker.setWheelModeEnable(true);
@@ -253,13 +229,13 @@ public class TimePickerUtils {
             @Override
             public void onItemPicked(int i, String s) {
                 ReimCategoryBean keyValueBean = keyValueBeanList.get(i);
-                view.setTag(keyValueBean.getKey());
+                view.setTag(keyValueBean.getId());
                 if (view instanceof TextView) {
                     Loger.e("view instanceof TextView---");
-                    ((TextView) view).setText(keyValueBean.getValue());
+                    ((TextView) view).setText(keyValueBean.getPerm());
 
                 } else if (view instanceof EditText) {
-                    ((EditText) view).setText(keyValueBean.getValue());
+                    ((EditText) view).setText(keyValueBean.getPerm());
                 }
             }
 

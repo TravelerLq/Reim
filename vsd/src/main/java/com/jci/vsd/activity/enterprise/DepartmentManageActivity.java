@@ -2,6 +2,7 @@ package com.jci.vsd.activity.enterprise;
 
 import android.content.Context;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -26,6 +27,7 @@ import com.jci.vsd.constant.AppConstant;
 import com.jci.vsd.network.control.DepartmentManageControl;
 import com.jci.vsd.observer.CommonDialogObserver;
 import com.jci.vsd.observer.RxHelper;
+import com.jci.vsd.utils.Loger;
 import com.jci.vsd.view.ItemDecor;
 import com.jci.vsd.view.widget.SimpleToast;
 
@@ -63,7 +65,7 @@ public class DepartmentManageActivity extends BaseActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.addItemDecoration(new ItemDecor(40));
         tvRight.setVisibility(View.VISIBLE);
-        initData();
+        //initData();
         initRecycleView();
         initViewEvent();
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -83,7 +85,7 @@ public class DepartmentManageActivity extends BaseActivity {
 
         }
 
-        // getDepartment();
+        getDepartment();
     }
 
 
@@ -92,8 +94,8 @@ public class DepartmentManageActivity extends BaseActivity {
         DepartmentBean bean;
         for (int i = 0; i < 5; i++) {
             bean = new DepartmentBean();
-            bean.setDepartmentId(i);
-            bean.setDepartmentName("name" + i);
+            bean.setId(i);
+            bean.setName("name" + i);
             mDatas.add(bean);
         }
 
@@ -110,7 +112,7 @@ public class DepartmentManageActivity extends BaseActivity {
                 ((SwipeMenuLayout) holder.itemView).setIos(true).setLeftSwipe(true);
                 //    holder.setText(R.id.content, swipeBean.name + (mIndex == 0 ? "我左青龙" : "我右白虎"));
                 TextView tvDepartmentName = holder.getView(R.id.tv_depart_name);
-                tvDepartmentName.setText(swipeBean.getDepartmentName());
+                tvDepartmentName.setText(swipeBean.getName());
                 //验证长按
                 holder.setOnLongClickListener(R.id.content, new View.OnLongClickListener() {
                     @Override
@@ -127,10 +129,10 @@ public class DepartmentManageActivity extends BaseActivity {
                     public void onClick(View v) {
                         int pos = holder.getLayoutPosition();
                         if (pos >= 0 && pos < mDatas.size()) {
-                            Toast.makeText(context, "删除:" + pos, Toast.LENGTH_SHORT).show();
-                            deleteDepartment(mDatas.get(pos).getDepartmentId(), pos);
-                            mDatas.remove(pos);
-                            mAdapter.notifyItemRemoved(pos);//推荐用这个
+                            // Toast.makeText(context, "删除:" + pos, Toast.LENGTH_SHORT).show();
+                            deleteDepartment(mDatas.get(pos).getId(), pos);
+//                            mDatas.remove(pos);
+//                            mAdapter.notifyItemRemoved(pos);//推荐用这个
 
                             //如果删除时，不使用mAdapter.notifyItemRemoved(pos)，则删除没有动画效果，
                             //且如果想让侧滑菜单同时关闭，需要同时调用 ((SwipeMenuLayout) holder.itemView).quickClose();
@@ -140,7 +142,7 @@ public class DepartmentManageActivity extends BaseActivity {
                 });
 
 
-                //左滑编辑
+                //编辑
                 holder.setOnClickListener(R.id.btnEdit, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -157,17 +159,22 @@ public class DepartmentManageActivity extends BaseActivity {
                 (holder).setOnClickListener(R.id.content, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(mContext, "onClick:" + mDatas.get(holder.getAdapterPosition()).getDepartmentName(), Toast.LENGTH_SHORT).show();
-                        Log.d("TAG", "onClick() called with: v = [" + v + "]");
+                        //  Toast.makeText(mContext, "onClick:" + mDatas.get(holder.getAdapterPosition()).getName(), Toast.LENGTH_SHORT).show();
+                        int pos = holder.getAdapterPosition();
+                        DepartmentBean bean = mDatas.get(pos);
+                        toAtivityWithParams(DepartmentDetailActivity.class, bean);
+                        Log.d("TAG", "onClick() called with: v = [" + pos + "]");
                         if (!TextUtils.isEmpty(keyStr) && keyStr.equals(AppConstant.VALUE_AJUST)) {
                             Intent intent = new Intent(DepartmentManageActivity.this,
                                     DepartmentDetailActivity.class);
                             // intent.putExtra("departId", mDatas.get(holder.getAdapterPosition()).getDepartmentName()) )
-                            Bundle bundle = new Bundle();
-                            DepartmentBean bean = mDatas.get(holder.getAdapterPosition());
-                            bundle.putSerializable(AppConstant.SERIAL_KEY, bean);
-                            intent.putExtras(bundle);
-                            startActivity(intent);
+//                            Bundle bundle = new Bundle();
+//                            DepartmentBean bean = mDatas.get();
+//                            bundle.putSerializable(AppConstant.SERIAL_KEY, bean);
+//                            intent.putExtras(bundle);
+//                            startActivity(intent);
+
+
                         }
                     }
                 });
@@ -198,17 +205,19 @@ public class DepartmentManageActivity extends BaseActivity {
         recyclerView.setAdapter(mAdapter);
     }
 
-    // 获取
+    // 获取部门
     private void getDepartment() {
         Observable<List<DepartmentBean>> observable = new DepartmentManageControl().getDepartment();
         CommonDialogObserver<List<DepartmentBean>> observer = new CommonDialogObserver<List<DepartmentBean>>(this) {
             @Override
             public void onNext(List<DepartmentBean> beanList) {
                 super.onNext(beanList);
-                SimpleToast.toastMessage("获取成功", Toast.LENGTH_LONG);
+                SimpleToast.toastMessage("获取成功", Toast.LENGTH_SHORT);
                 if (beanList != null) {
                     mDatas.clear();
                     mDatas.addAll(beanList);
+                    mAdapter.notifyDataSetChanged();
+
                 }
 
             }
@@ -216,11 +225,15 @@ public class DepartmentManageActivity extends BaseActivity {
             @Override
             public void onError(Throwable t) {
                 super.onError(t);
-                if (t.getMessage().equals("401"))
+                if (t.getMessage().equals("401")) {
+                    SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_SHORT);
+                    exit();
+                    toActivity(LoginActivity.class);
+                } else {
+                    // SimpleToast.toastMessage(t.toString(), Toast.LENGTH_LONG);
+                }
 
-                    SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_LONG);
-                exit();
-                toActivity(LoginActivity.class);
+
             }
 
 
@@ -237,7 +250,7 @@ public class DepartmentManageActivity extends BaseActivity {
             @Override
             public void onNext(Boolean isSuccess) {
                 super.onNext(isSuccess);
-                SimpleToast.toastMessage("删除成功", Toast.LENGTH_LONG);
+                SimpleToast.toastMessage("删除成功", Toast.LENGTH_SHORT);
                 mDatas.remove(pos);
                 mAdapter.notifyItemRemoved(pos);//推荐用这个
 
@@ -248,7 +261,7 @@ public class DepartmentManageActivity extends BaseActivity {
                 super.onError(t);
                 if (t.getMessage().equals("401"))
 
-                    SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_LONG);
+                    SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_SHORT);
                 exit();
                 toActivity(LoginActivity.class);
             }
@@ -277,5 +290,12 @@ public class DepartmentManageActivity extends BaseActivity {
             default:
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        Loger.e("--resume-departManage");
+        super.onResume();
+        getDepartment();
     }
 }

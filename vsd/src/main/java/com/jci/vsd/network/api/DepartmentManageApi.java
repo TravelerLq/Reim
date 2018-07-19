@@ -7,6 +7,7 @@ import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
@@ -33,23 +34,27 @@ public interface DepartmentManageApi {
 //
 
     //获取部门
-    @GET("shuidao/tokens/login")
+    @GET("shuidao/depts/all")
     Observable<Response<String>> getDepartment();
 
     //新增部门
-    @POST("shuidao/coms/reg")
+    @POST("shuidao/depts/add")
     Observable<Response<String>> addDepartment(@Body String str);
 
     //删除部门
-    @DELETE("shuidao/tokens/login")
-    Observable<Response<String>> deleteDepartment(@Body String str);
+    @PATCH("shuidao/depts/del")
+    Observable<Response<String>> deleteDepartment(@Body String body);
+
+
+    @HTTP(method = "DELETE", path = "shuidao/depts/del", hasBody = true)
+    Observable<Response<String>> deleteBodyDepartment(@QueryMap Map<String, Object> map);
 
     // 更新部门信息
-    @PATCH("shuidao/coms/upd")
+    @PATCH("shuidao/depts/upd")
     Observable<Response<String>> updateDepartment(@Body String str);
 
-    //获取权限
-    @GET("shuidao/coms/upd")
+    //获取类别
+    @GET("shuidao/depts/perm")
     Observable<Response<String>> getAuthority();
 
 

@@ -403,18 +403,18 @@
     <!--home 圆的色块下的文字-->
     <style name="home_round_title" parent="@style/black_small_style">
 
-        <item name="android:layout_width">@dimen/dimen_180</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:layout_marginBottom">@dimen/dimen_1</item>
-        <item name="android:layout_marginTop">@dimen/dimen_50</item>
-        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">@dimen/dimen_10</item>
+        <item name="android:layout_alignParentBottom">true</item>
     </style>
 
     <!--home 圆的色块下的文字下的长条-->
     <style name="home_bottom_image" parent="@style/black_middle_style">
         <item name="android:layout_width">@dimen/dimen_120</item>
-        <item name="android:layout_height">@dimen/dimen_5</item>
+        <item name="android:layout_height">@dimen/dimen_20</item>
 
         <item name="android:layout_centerHorizontal">true</item>
     </style>
@@ -548,5 +548,14 @@
         <item name="android:textSize">16sp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:paddingLeft">@dimen/dimen_10</item>
+    </style>
+
+    <style name="cert_apply_image">
+        <item name="android:layout_width">@dimen/dimen_60</item>
+        <item name="android:layout_height">@dimen/dimen_60</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:background">@color/red_deep_btn</item>
+
     </style>
 </resources>

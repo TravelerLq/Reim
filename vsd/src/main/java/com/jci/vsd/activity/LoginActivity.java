@@ -118,7 +118,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void initTestData() {
-        edtAccount.setText("15951882547");
+        edtAccount.setText("13770721767");
         edtPsw.setText("123456");
     }
 
@@ -280,11 +280,12 @@ public class LoginActivity extends BaseActivity {
         }
 
         // login
-        //  login(accountStr, pswStr, "1");
+      //  accountStr = "15252466554";
+        login(accountStr, pswStr, "1");
 
 
         //  test
-        toActivity(MainActivity.class);
+        // toActivity(MainActivity.class);
 
     }
 

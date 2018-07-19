@@ -66,12 +66,9 @@ public class BaseControl {
         return retrofit;
     }
 
-
-    //Register an application interceptor by calling addInterceptor() on OkHttpClient.Builder
-
-    protected Retrofit builderJsonRetrofit() {
+    protected Retrofit builderRetrofitWithHeader() {
         final String requestAuth = MySpEdit.getInstance().getAuthor();
-       Loger.e("---RequestAuth---" + requestAuth);
+        Loger.e("---RequestAuth---" + requestAuth);
         LoggingInterceptor loggingInterceptor = new LoggingInterceptor();
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
@@ -90,6 +87,57 @@ public class BaseControl {
                                 .addHeader("User-Agent", "ios6s")
                                 // .addHeader("Authorization", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHQiOjE1Mjc3MzY3MzA0MjYsInVpZCI6IjE1MiIsImlhdCI6MTUyNzczNjY3MDQyNn0.Yb6SyjzKCixg2CIVYt7VtAnMsFcB_hDmzalHmxjO0cI")
                                 .addHeader("Authorization", requestAuth)
+                                .addHeader("Version1", "1")
+                                .build();
+
+
+                        return chain.proceed(request);
+                    }
+
+                })
+                .addInterceptor(interceptor);//设置写入超时时间
+        //     .addInterceptor(loggingInterceptor);
+
+
+        OkHttpClient client = builder.build();
+        Loger.i("=======AppConstant.getURL()=========" + AppConstant.getURL());
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(AppConstant.getURL())
+                //这个方法必须有,这样才能返回含有数据的实体类
+                .addConverterFactory(StringConverterFactory.create())
+                //要使用retroift和rexjava配合使用这个方法必须有,不然会报Unable to create call adapter
+                // for rx.Observable<com.ethanco.retrofit2_0test.HomeTopBean>异常
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(client)//整合ok
+                .build();
+
+        return retrofit;
+    }
+
+    //Register an application interceptor by calling addInterceptor() on OkHttpClient.Builder
+
+    protected Retrofit builderJsonRetrofit() {
+        final String requestAuth = MySpEdit.getInstance().getAuthor();
+        Loger.e("---RequestAuth---" + requestAuth);
+        LoggingInterceptor loggingInterceptor = new LoggingInterceptor();
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder builder = new OkHttpClient().newBuilder()
+                .connectTimeout(SOCKET_TIMEOUT, TimeUnit.SECONDS)//设置超时时间
+                .readTimeout(SOCKET_TIMEOUT, TimeUnit.SECONDS)//设置读取超时时间
+                .writeTimeout(SOCKET_TIMEOUT, TimeUnit.SECONDS)
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+
+                        Request request = chain.request()
+                                .newBuilder()
+                                .addHeader("Content-Type", "application/json")
+                                .addHeader("User-Agent", "ios6s")
+                                // .addHeader("Authorization", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHQiOjE1Mjc3MzY3MzA0MjYsInVpZCI6IjE1MiIsImlhdCI6MTUyNzczNjY3MDQyNn0.Yb6SyjzKCixg2CIVYt7VtAnMsFcB_hDmzalHmxjO0cI")
+                                .addHeader("Authorization", requestAuth)
+                                .addHeader("Version1", "1")
                                 .build();
 
 

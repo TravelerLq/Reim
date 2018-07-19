@@ -5,27 +5,28 @@ package com.jci.vsd.bean;
  */
 
 public class ReimCategoryBean extends BaseBean {
-    private int key;
-    private String value;
 
-    public int getKey() {
-        return key;
+    /**
+     * id : 1
+     * perm : 管理类费用
+     */
+
+    private int id;
+    private String perm;
+
+    public int getId() {
+        return id;
     }
 
-    public void setKey(int key) {
-        this.key = key;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getValue() {
-        return value;
+    public String getPerm() {
+        return perm;
     }
 
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public ReimCategoryBean(int key, String value) {
-        this.key = key;
-        this.value = value;
+    public void setPerm(String perm) {
+        this.perm = perm;
     }
 }

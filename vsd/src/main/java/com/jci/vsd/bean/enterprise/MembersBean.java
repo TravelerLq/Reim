@@ -22,22 +22,6 @@ public class MembersBean extends BaseBean {
 
     private String status;
 
-    public MembersBean(String status) {
-        this.status = status;
-    }
-
-    public MembersBean(String id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public MembersBean(String id, String pid, String name) {
-        this.id = id;
-        this.pid = pid;
-        this.name = name;
-
-    }
-
     public String getStatus() {
         return status;
     }

@@ -62,6 +62,7 @@ public class BudgetManageActivity extends BaseActivity {
         intData();
         initRecycleView();
         getData();
+
     }
 
 

@@ -1,43 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@drawable/ic_cert_bg">
 
-    <include layout="@layout/activity_title"></include>
+    <include
+        android:id="@+id/includeTitleLayout"
+        layout="@layout/activity_title"></include>
 
     <LinearLayout
+        android:id="@+id/ll_cert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_marginTop="@dimen/dimen_20"
-        android:layout_marginLeft="@dimen/dimen_15"
-        android:layout_marginRight="@dimen/dimen_15"
-        android:paddingLeft="@dimen/dimen_15"
-        android:paddingRight="@dimen/dimen_16"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dimen_105"
+        android:layout_marginLeft="@dimen/dimen_20"
+        android:layout_marginRight="@dimen/dimen_20"
+        android:background="@color/black"
+        android:paddingLeft="@dimen/dimen_20"
+        android:paddingRight="@dimen/dimen_20"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_75">
+            android:layout_height="@dimen/dimen_60"
+            android:layout_marginTop="@dimen/dimen_45"
+          >
 
-            <TextView
+            <ImageView
                 android:id="@+id/tv_tel_logo"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/dimen_70"
+                android:layout_width="@dimen/dimen_60"
+                android:layout_height="@dimen/dimen_60"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:drawableLeft="@drawable/ic_tel_grey" />
+                android:background="@color/red_deep_btn"
+                android:src="@drawable/ic_name" />
 
             <EditText
                 android:id="@+id/edt_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignBottom="@+id/tv_tel_logo"
-                android:layout_marginStart="@dimen/dimen_10"
                 android:layout_toEndOf="@+id/tv_tel_logo"
-                android:background="@null"
-                android:hint="@string/name" />
+                android:background="@color/grey_b5b5"
+                android:hint="@string/name"
+                android:paddingLeft="@dimen/dimen_10" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -46,27 +54,27 @@
                 android:layout_below="@+id/edt_name"
                 android:background="@color/stock" />
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_75">
+            android:layout_height="@dimen/dimen_60"
+            android:layout_marginTop="@dimen/dimen_20">
 
-            <TextView
+            <ImageView
                 android:id="@+id/tv_id_logo"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/dimen_70"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:drawableLeft="@drawable/ic_tel_grey" />
+                style="@style/cert_apply_image"
+                android:src="@drawable/ic_id" />
 
             <EditText
                 android:id="@+id/edt_id_no"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignBottom="@+id/tv_id_logo"
-                android:layout_marginStart="@dimen/dimen_10"
                 android:layout_toEndOf="@+id/tv_id_logo"
-                android:background="@null"
-                android:hint="@string/id_no" />
+                android:background="@color/grey_b5b5"
+                android:hint="@string/id_no"
+                android:paddingLeft="@dimen/dimen_10" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_1"
@@ -74,26 +82,25 @@
                 android:layout_below="@+id/edt_id_no"
                 android:background="@color/stock" />
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_75">
+            android:layout_height="@dimen/dimen_60"
+            android:layout_marginTop="@dimen/dimen_20">
 
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/dimen_70"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:drawableLeft="@drawable/ic_tel_grey" />
+            <ImageView
+                android:id="@+id/iv_pin_code"
+                style="@style/cert_apply_image"
+                android:src="@drawable/ic_tel" />
 
             <EditText
                 android:id="@+id/edt_tel"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignBottom="@+id/textView12"
-                android:layout_marginStart="@dimen/dimen_10"
-                android:layout_toEndOf="@+id/textView12"
-                android:background="@null"
+                android:layout_alignBottom="@+id/iv_pin_code"
+                android:paddingLeft="@dimen/dimen_10"
+                android:layout_toEndOf="@+id/iv_pin_code"
+                android:background="@color/grey_b5b5"
                 android:hint="@string/tel" />
 
             <TextView
@@ -104,11 +111,40 @@
                 android:background="@color/stock" />
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tv_sure"
-            style="@style/btn_sure"
-            android:text="@string/reg_cert" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_60"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_marginBottom="@dimen/dimen_20">
 
+            <ImageView
+              android:id="@+id/iv_pin"
+                style="@style/cert_apply_image"
+                android:src="@drawable/ic_psw" />
+
+            <EditText
+                android:id="@+id/edt_pin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignBottom="@+id/iv_pin"
+                android:paddingLeft="@dimen/dimen_10"
+                android:layout_toEndOf="@+id/iv_pin"
+                android:background="@color/grey_b5b5"
+                android:hint="@string/pin" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1"
+                android:layout_alignStart="@+id/edt_pin"
+                android:layout_below="@+id/edt_pin"
+                android:background="@color/stock" />
+        </RelativeLayout>
 
     </LinearLayout>
-</LinearLayout>
+    <TextView
+        android:id="@+id/tv_sure"
+        style="@style/btn_sure"
+       android:layout_alignParentBottom="true"
+        android:text="@string/reg_cert" />
+
+</RelativeLayout>

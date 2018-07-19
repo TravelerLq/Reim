@@ -102,7 +102,8 @@ public class CertificateRegisterService  {
         }
         IdCardValidator idCardValidator=new IdCardValidator();
         if(!idCardValidator.isValidate18Idcard(idno)){
-            throw new RuntimeException("idno is invalid ");
+//            throw new RuntimeException("idno is invalid ");
+            throw new RuntimeException("身份证号无效！");
         }
         if(telephone==null || "".equals(telephone)){
             throw new RuntimeException("telephone is required ");

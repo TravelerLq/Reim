@@ -41,7 +41,7 @@
         android:visibility="gone"/>
     <TextView
         android:id="@+id/rightFucTxt"
-        android:layout_width="@dimen/dimen_45"
+        android:layout_width="@dimen/dimen_50"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         style="@style/white_big_style"

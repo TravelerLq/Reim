@@ -35,12 +35,12 @@ public interface CodeApi {
 //    Observable<Response<String>> loginResponse(@Body String str);
 
     //填写邀请码
-    @POST("shuidao/users/verqr")
+    @POST("shuidao/notoken/verqr")
     Observable<Response<String>> submitCode(@Body String body);
 
     //获取邀请码
-    @POST("/shuidao/users/qr")
-    Observable<Response<String>>getCode();
+    @GET("/shuidao/users/qr")
+    Observable<Response<String>> getCode();
 
 
 }

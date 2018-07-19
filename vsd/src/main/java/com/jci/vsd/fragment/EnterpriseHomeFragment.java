@@ -230,7 +230,7 @@ public class EnterpriseHomeFragment extends BaseFragment implements View.OnClick
     private void getCode() {
         //
         RequestCodeBean requestBean = new RequestCodeBean();
-        Observable<String> observable = new FillcodeApiControl().getCode(requestBean);
+        Observable<String> observable = new FillcodeApiControl().getCode();
         CommonDialogObserver<String> observer = new CommonDialogObserver<String>(this) {
             @Override
             public void onNext(String s) {

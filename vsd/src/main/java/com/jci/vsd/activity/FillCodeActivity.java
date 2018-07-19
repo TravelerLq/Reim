@@ -52,21 +52,26 @@ public class FillCodeActivity extends BaseActivity {
                 SimpleToast.ToastMessage("请填写邀请码！");
             } else {
                 //
+
                 submitCode(codeStr);
-                toActivityWithType(RegisterActivity.class, "user");
+                // toActivityWithType(RegisterActivity.class, "user");
             }
         }
     }
 
     private void submitCode(String codeStr) {
-        Observable<Boolean> observable = new FillcodeApiControl().submitCode(codeStr);
-        CommonDialogObserver<Boolean> observer = new CommonDialogObserver<Boolean>(this) {
+        Observable<String> observable = new FillcodeApiControl().submitCode(codeStr);
+        CommonDialogObserver<String> observer = new CommonDialogObserver<String>(this) {
             @Override
-            public void onNext(Boolean aBoolean) {
-                super.onNext(aBoolean);
-                if (aBoolean) {
+            public void onNext(String s) {
+                super.onNext(s);
+                if (s.equals("200")) {
                     SimpleToast.toastMessage("加入公司成功", Toast.LENGTH_LONG);
+                    toActivity(RegisterActivity.class);
+                    finish();
                     //去注册申请
+                } else if (s.equals("50002")) {
+                    SimpleToast.toastMessage("邀请码过期，请重新填写", Toast.LENGTH_LONG);
                 }
             }
 

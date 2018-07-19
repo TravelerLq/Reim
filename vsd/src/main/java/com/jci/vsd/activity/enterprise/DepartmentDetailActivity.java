@@ -56,7 +56,7 @@ public class DepartmentDetailActivity extends BaseActivity {
 
     @BindView(R.id.tv_add)
     TextView tvAdd;
-    private DepartmentBean editBean;
+    private DepartmentBean bean;
     private List<ReimCategoryBean> listReimCategory;
     private Context mContext;
 
@@ -64,29 +64,28 @@ public class DepartmentDetailActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_department);
+        setContentView(R.layout.activity_department_detail);
         mContext = DepartmentDetailActivity.this;
         allStatus = new ArrayList<>();
         listReimCategory = new ArrayList<>();
         //  getAuthority();
         initTestData();
         initViewEvent();
-        editBean = (DepartmentBean) getIntent().getSerializableExtra(AppConstant.SERIAL_KEY);
-        if (editBean != null) {
-
-//            edtDepartName.setText(getIntentBean.);
-//            edtLimit.setText();
-
+        bean = (DepartmentBean) getIntent().getSerializableExtra(AppConstant.SERIAL_KEY);
+        if (bean != null) {
+            edtDepartName.setText(bean.getName());
+            tvReimAuthority.setText(bean.getPermname());
+            tvDepartLeader.setText(bean.getLname());
         }
 
     }
 
     private void initTestData() {
-        listReimCategory.add(new ReimCategoryBean(1, "管理"));
-        listReimCategory.add(new ReimCategoryBean(2, "管理2"));
-        listReimCategory.add(new ReimCategoryBean(3, "管理3"));
+//        listReimCategory.add(new ReimCategoryBean(1, "管理"));
+//        listReimCategory.add(new ReimCategoryBean(2, "管理2"));
+//        listReimCategory.add(new ReimCategoryBean(3, "管理3"));
         for (int i = 0; i < listReimCategory.size(); i++) {
-            allStatus.add(i, listReimCategory.get(i).getValue());
+            allStatus.add(i, listReimCategory.get(i).getPerm());
         }
     }
 
@@ -185,11 +184,11 @@ public class DepartmentDetailActivity extends BaseActivity {
         }
         if (TextUtils.isEmpty(departmentLeaderStr)) {
             requestBean = new DepartmentBean();
-            requestBean.setDepartmentName(departmentNameStr);
+            requestBean.setName(departmentNameStr);
             addDepartment(requestBean);
 
         }
-        if (editBean != null) {
+        if (bean != null) {
 
             //去更新
             updateDepartmentInfo(requestBean);

@@ -3,7 +3,7 @@ package com.warmtel.expandtab;
 public class KeyValueBean  {
     private String key;
     private String value;
-
+   private  Boolean isCheck;
     public String getKey() {
         return key;
     }
@@ -25,9 +25,21 @@ public class KeyValueBean  {
         this.value = value;
     }
 
+    public KeyValueBean(String key, String value, Boolean isCheck) {
+        this.key = key;
+        this.value = value;
+        this.isCheck = isCheck;
+    }
+
     public KeyValueBean() {
         super();
     }
 
+    public Boolean getCheck() {
+        return isCheck;
+    }
 
+    public void setCheck(Boolean check) {
+        isCheck = check;
+    }
 }

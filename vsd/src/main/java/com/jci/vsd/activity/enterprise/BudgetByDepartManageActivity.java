@@ -21,6 +21,8 @@ import com.jci.vsd.SlideRecycleview.SwipeMenuLayout;
 import com.jci.vsd.SlideRecycleview.ViewHolder;
 import com.jci.vsd.activity.BaseActivity;
 import com.jci.vsd.bean.enterprise.BudgetBean;
+import com.jci.vsd.constant.AppConstant;
+import com.jci.vsd.utils.Loger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,7 @@ import butterknife.BindView;
  */
 
 public class BudgetByDepartManageActivity extends BaseActivity {
+    private static final String TAG = BudgetByDepartManageActivity.class.getSimpleName();
 
     @BindView(R.id.recycle_budget)
     RecyclerView recyclerView;
@@ -59,8 +62,15 @@ public class BudgetByDepartManageActivity extends BaseActivity {
         context = BudgetByDepartManageActivity.this;
         rightFucTxt.setVisibility(View.VISIBLE);
         tvTitle.setText("预算管理（按部门划分）");
+        // getData();
         intData();
         initRecycleView();
+        initViewEvent();
+
+    }
+
+    private void getData(String type) {
+
     }
 
     private void intData() {
@@ -82,6 +92,8 @@ public class BudgetByDepartManageActivity extends BaseActivity {
         super.onClick(view);
         switch (view.getId()) {
             case R.id.rightFucTxt:
+                Loger.e("--add reim depart");
+                toActivityWithType(BudgetAddItemActivity.class, AppConstant.VALUE_ADD);
                 break;
             case R.id.btn_sure:
                 break;
@@ -90,6 +102,13 @@ public class BudgetByDepartManageActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Loger.e(TAG + "-----onResume");
+        //
+        //  getData();
+    }
 
     private void initRecycleView() {
 

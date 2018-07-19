@@ -62,8 +62,12 @@ public class DepartmentManageControl extends BaseControl {
                 JSONObject jsonObject = JSON.parseObject(stringResponse.body());
 
                 if (jsonObject.getIntValue(AppConstant.JSON_CODE) == 200) {
-                    List<DepartmentBean> list = JSON.parseArray(jsonObject.getString(AppConstant.JSON_DATA),
+                    JSONObject dataObject = JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA));
+                    List<DepartmentBean> list = JSON.parseArray(dataObject.getString("depts"),
                             DepartmentBean.class);
+
+//                    List<DepartmentBean> list = JSON.parseArray(jsonObject.getString(AppConstant.JSON_DATA),
+//                            DepartmentBean.class);
 
                     //  JSONObject dataObj = jsonObject.getJSONObject(AppConstant.JSON_DATA);
 //                    List<HomeAuthorityBean> authorityBeanList = JSON.parseArray(dataObj.getString("Authority"), HomeAuthorityBean.class);
@@ -87,8 +91,10 @@ public class DepartmentManageControl extends BaseControl {
 
         Retrofit retrofit = builderJsonRetrofit();
         String paramsStr = JSON.toJSONString(requestBean);
+        Loger.e("addDepartment.paramsStr=" + paramsStr);
         DepartmentManageApi api = retrofit.create(DepartmentManageApi.class);
         Observable<Response<String>> observable = api.addDepartment(paramsStr);
+
         return observable.map(new Function<Response<String>, Boolean>() {
             @Override
             public Boolean apply(Response<String> stringResponse) throws Exception {
@@ -126,6 +132,7 @@ public class DepartmentManageControl extends BaseControl {
         paraMap.put("id", departId);
         String paramsStr = JSON.toJSONString(paraMap);
         DepartmentManageApi api = retrofit.create(DepartmentManageApi.class);
+        // Observable<Response<String>> observable = api.deleteDepartment(paramsStr);
         Observable<Response<String>> observable = api.deleteDepartment(paramsStr);
 
         return observable.map(new Function<Response<String>, Boolean>() {
@@ -191,16 +198,13 @@ public class DepartmentManageControl extends BaseControl {
     }
 
     public Observable<List<ReimCategoryBean>> getAuthority() {
-        Retrofit retrofit = builderRetrofit();
+        Retrofit retrofit = builderJsonRetrofit();
         DepartmentManageApi api = retrofit.create(DepartmentManageApi.class);
         Observable<Response<String>> observable = api.getAuthority();
-
 
         return observable.map(new Function<Response<String>, List<ReimCategoryBean>>() {
             @Override
             public List<ReimCategoryBean> apply(Response<String> stringResponse) throws Exception {
-
-
                 Headers headers = stringResponse.headers();
                 String authStr = headers.get("Authorization");
                 int codeHttp = stringResponse.code();
@@ -213,12 +217,52 @@ public class DepartmentManageControl extends BaseControl {
                 JSONObject jsonObject = JSON.parseObject(stringResponse.body());
 
                 if (jsonObject.getIntValue(AppConstant.JSON_CODE) == 200) {
-                    List<ReimCategoryBean> list = JSON.parseArray(jsonObject.getString(AppConstant.JSON_DATA), ReimCategoryBean.class);
+                    // JSONObject dataObject = JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA));
+                    List<ReimCategoryBean> list = JSON.parseArray(jsonObject.getString("data"),
+                            ReimCategoryBean.class);
+
+//                    List<DepartmentBean> list = JSON.parseArray(jsonObject.getString(AppConstant.JSON_DATA),
+//                            DepartmentBean.class);
+
+                    //  JSONObject dataObj = jsonObject.getJSONObject(AppConstant.JSON_DATA);
+//                    List<HomeAuthorityBean> authorityBeanList = JSON.parseArray(dataObj.getString("Authority"), HomeAuthorityBean.class);
+//                    loginResponseBean.setList(authorityBeanList);
                     return list;
                 }
                 throw new IApiException("--", jsonObject.getString(AppConstant.JSON_MESSAGE));
+
             }
         });
+//
+//        return observable.map(new Function<Response<String>, List<ReimCategoryBean>>() {
+//            @Override
+//            public List<ReimCategoryBean> apply(Response<String> stringResponse) throws Exception {
+//
+//
+//                Headers headers = stringResponse.headers();
+//                String authStr = headers.get("Authorization");
+//                int codeHttp = stringResponse.code();
+//                if (codeHttp == 401) {
+//                    throw new IApiException("401", "401");
+//                }
+//                Loger.e("header-authStr" + authStr);
+//                Loger.e("stringResponse.body=" + stringResponse.body());
+//                JSONObject jsonObject = JSON.parseObject(stringResponse.body());
+//                int code = jsonObject.getIntValue(AppConstant.JSON_CODE);
+//                Loger.e("---code" + code);
+//                if (code == 200) {
+//                    Loger.e("---success" + code);
+//
+//                    List<ReimCategoryBean> list = JSON.parseArray(jsonObject.getString(AppConstant.JSON_DATA), ReimCategoryBean.class);
+//                    Loger.e("---报销类别－－");
+//                    return list;
+//                } else {
+//                    Loger.e("---报销类别error－－");
+//                }
+//                Loger.e("---throw－－");
+//                throw new IApiException("--", jsonObject.getString(AppConstant.JSON_MESSAGE));
+//            }
+//        });
     }
 
 

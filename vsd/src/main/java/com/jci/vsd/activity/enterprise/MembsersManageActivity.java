@@ -30,6 +30,7 @@ import com.jci.vsd.network.control.MembersManageControl;
 import com.jci.vsd.observer.CommonDialogObserver;
 import com.jci.vsd.observer.RxHelper;
 import com.jci.vsd.utils.Loger;
+import com.jci.vsd.utils.TimePickerUtils;
 import com.jci.vsd.view.widget.SimpleToast;
 import com.jci.vsd.view.widget.treelist.TreeMenuBaseAdapter;
 import com.jci.vsd.view.widget.treelist.TreeMenuUtils;
@@ -62,6 +63,8 @@ public class MembsersManageActivity extends BaseActivity {
     private TextView tvAjust;
     private TextView tvDelete;
     private int deletePos;
+    private MembersBean selectOperateBean;
+    private List<MembersBean> departmentList;
 
 
     @Override
@@ -70,9 +73,10 @@ public class MembsersManageActivity extends BaseActivity {
         setContentView(R.layout.activity_members_manage);
         context = MembsersManageActivity.this;
         mData = new ArrayList<>();
-        initTestData();
-        initTreeMemberAdapter();
+        departmentList = new ArrayList<>();
+        // initTestData();
         initViewEvent();
+        loadData();
 //        lvMembers.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 //            @Override
 //            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -141,11 +145,13 @@ public class MembsersManageActivity extends BaseActivity {
                 @Override
                 public void onNodeLongClick(Node node, int position) {
                     if (node.getChildrenNodes().size() == 0) {
+                        selectOperateBean = mData.get(position);
                         showDialog();
                         SimpleToast.toastMessage("nodeLongClick－－", Toast.LENGTH_SHORT);
-                        MembersBean deleteBean = mData.get(position);
-                        Loger.e("delete--pos");
+
+                        Loger.e("nodeLongClick--pos");
                         deletePos = position;
+
 //                        mData.remove(5);
 //
 //                        List<MembersBean> refreshData = new ArrayList<>();
@@ -190,18 +196,33 @@ public class MembsersManageActivity extends BaseActivity {
 //                toActivityWithType(DepartmentManageActivity.class,
 //                        AppConstant.VALUE_AJUST, REQUEST_CODE_DEPARTMENT, true);
                 //调整部门，就直接用listDiaog ,带有选择的那种
+                for (int i = 0; i < departmentList.size(); i++) {
+                    if (departmentList.get(i).getId().equals(selectOperateBean.getPid())) {
+                        departmentList.remove(i);
+                    }
+                }
+                items = new String[departmentList.size()];
+
+                for (int i = 0; i < departmentList.size(); i++) {
+                    items[i] = departmentList.get(i).getName();
+                }
+
+
                 showSingleChoiceDialog();
+//                TimePickerUtils.getInstance().onListBeanPicker();
                 dialog.dismiss();
                 break;
             case R.id.tv_register_company:
                 //从本公司删除成员
                 Loger.e("-----delete emplyee");
+
 //                mData.remove(deletePos);
 //                for (int i = 0; i < mData.size(); i++) {
 //                    Loger.e("nodeName" + mData.get(i).getName());
 //                }
 //
 //                adapter.notifyDataSetChanged();
+                deleteMember(selectOperateBean);
                 dialog.dismiss();
                 break;
             case R.id.btn_cancel:
@@ -212,8 +233,14 @@ public class MembsersManageActivity extends BaseActivity {
         }
     }
 
-    String[] items = new String[]{"财务部", "技术部", "吴"};
+    String[] items = new String[]{};
 
+    private void selectDepartment() {
+
+//        TimePickerUtils.getInstance().onListBeanPicker(MembsersManageActivity.this,
+//                listReimCategory, allStatus, tvReimAuthority);
+
+    }
 
     private void showSingleChoiceDialog() {
 
@@ -223,9 +250,13 @@ public class MembsersManageActivity extends BaseActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //Toast.makeText(MembsersManageActivity.this, items[which], Toast.LENGTH_SHORT).show();
-                        SimpleToast.toastMessage("调入" + items[which] + "成功", Toast.LENGTH_SHORT);
+                        // SimpleToast.toastMessage("调入" + items[which] + "成功", Toast.LENGTH_SHORT);
                         //
-                        // ajust();
+                        Loger.e("choose-whitch--" + which);
+                        AjustMembersBean ajustMembersBean = new AjustMembersBean();
+                        ajustMembersBean.setDpt(Integer.valueOf(departmentList.get(which).getId()));
+                        ajustMembersBean.setId(Integer.valueOf(selectOperateBean.getId()));
+                        ajust(ajustMembersBean);
                         dialog.dismiss();
 
                     }
@@ -242,19 +273,20 @@ public class MembsersManageActivity extends BaseActivity {
 
     private void initTestData() {
         //parentItem
-        mData.add(new MembersBean("1", "0", "总经理办公室"));
-        mData.add(new MembersBean("2", "0", "销售部"));
-        //总经理下的childItem
-        mData.add(new MembersBean("3", "1", "张三"));
-        mData.add(new MembersBean("4", "1", "王一"));
-
-        //销售部下的
-
-        mData.add(new MembersBean("5", "2", "孙田"));
-        mData.add(new MembersBean("6", "2", "Jsec"));
-        mData.add(new MembersBean("7", "2", "Lotey"));
+//        mData.add(new MembersBean("1", "0", "总经理办公室"));
+//        mData.add(new MembersBean("2", "0", "销售部"));
+//        //总经理下的childItem
+//        mData.add(new MembersBean("3", "1", "张三"));
+//        mData.add(new MembersBean("4", "1", "王一"));
+//
+//        //销售部下的
+//
+//        mData.add(new MembersBean("5", "2", "孙田"));
+//        mData.add(new MembersBean("6", "2", "Jsec"));
+//        mData.add(new MembersBean("7", "2", "Lotey"));
 
     }
+
 
     //加载MemberBean
     private void loadData() {
@@ -265,6 +297,15 @@ public class MembsersManageActivity extends BaseActivity {
                 super.onNext(beanList);
                 mData.clear();
                 mData.addAll(beanList);
+                initTreeMemberAdapter();
+
+                for (int i = 0; i < mData.size(); i++) {
+                    if (mData.get(i).getPid().equals("0")) {
+                        departmentList.add(mData.get(i));
+                    }
+                }
+
+
             }
 
 
@@ -278,7 +319,7 @@ public class MembsersManageActivity extends BaseActivity {
 
     //delete members
 
-    private void delete(MembersBean membersBean) {
+    private void deleteMember(MembersBean membersBean) {
         Observable<Boolean> observable = new MembersManageControl().deleteMember(membersBean);
         CommonDialogObserver<Boolean> observer = new CommonDialogObserver<Boolean>(this) {
             @Override
@@ -286,6 +327,7 @@ public class MembsersManageActivity extends BaseActivity {
                 super.onNext(aBoolean);
                 if (aBoolean) {
                     SimpleToast.toastMessage("删除成功", Toast.LENGTH_LONG);
+                    loadData();
                 } else {
                     SimpleToast.toastMessage("删除失败，请重试！", Toast.LENGTH_LONG);
                 }
@@ -309,6 +351,7 @@ public class MembsersManageActivity extends BaseActivity {
                 super.onNext(aBoolean);
                 if (aBoolean) {
                     SimpleToast.toastMessage("操作成功", Toast.LENGTH_LONG);
+                    loadData();
                 } else {
                     SimpleToast.toastMessage("操作失败，请重试！", Toast.LENGTH_LONG);
                 }

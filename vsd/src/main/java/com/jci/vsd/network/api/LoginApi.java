@@ -33,7 +33,7 @@ public interface LoginApi {
 
     //Response 的返回
     //http://192.168.1.111:8080/shuidao/tokens/login
-    @POST("shuidao/tokens/login")
+    @POST("shuidao/notoken/login")
     Observable<Response<String>> loginResponse(@Body String str);
 
     //填写邀请码

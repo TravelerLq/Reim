@@ -84,5 +84,7 @@ public class AppConstant {
     public static final String KEY_ENTERPRISE_LIST="enterprise_list";
     public static final String KEY_TYPE="type";
     public static final String VALUE_AJUST="ajust";
+    public static final String VALUE_ADD="add";
+
 
 }

@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,12 +49,16 @@ public class RegisterCertActivity extends BaseActivity {
     EditText edtTel;
     @BindView(R.id.tv_sure)
     TextView tvSure;
+    @BindView(R.id.ll_cert)
+    LinearLayout llCert;
     private OnlineClient onlineClient;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_cert);
+
+       llCert.getBackground().setAlpha(100);//0~255透明度值
         initRegistCert();
         initViewEvent();
 

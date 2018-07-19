@@ -23,24 +23,25 @@ import retrofit2.Retrofit;
 public class FillcodeApiControl extends BaseControl {
 
     //提交邀请码
-    public Observable<Boolean> submitCode(String shareCode) {
+    public Observable<String> submitCode(String shareCode) {
         Retrofit retrofit = builderJsonRetrofit();
         Map<String, String> paramsMap = new HashMap<>();
         paramsMap.put("sc", shareCode);
         CodeApi api = retrofit.create(CodeApi.class);
-        String paramStr=JSON.toJSONString(paramsMap);
+        String paramStr = JSON.toJSONString(paramsMap);
         Observable<Response<String>> observable = api.submitCode(paramStr);
-        return observable.map(new Function<Response<String>, Boolean>() {
+        return observable.map(new Function<Response<String>, String>() {
             @Override
-            public Boolean apply(Response<String> s) throws Exception {
+            public String apply(Response<String> s) throws Exception {
                 String responseBody = s.body();
+                int code = s.code();
                 JSONObject jsonObject = JSON.parseObject(responseBody);
-                String status = jsonObject.getString(AppConstant.JSON_STATUS);
-                if ("200".equals(status)) {
-                    return true;
-                } else {
-                    return false;
+                String status = jsonObject.getString(AppConstant.JSON_CODE);
+                if (code == 200) {
+                    return status;
                 }
+                throw new IApiException("获取邀请码", jsonObject.getString(AppConstant.JSON_MESSAGE));
+
             }
         });
 //        Observable<Boolean> observable=loginApi.submitCode(paramsMap);
@@ -55,9 +56,9 @@ public class FillcodeApiControl extends BaseControl {
     }
 
 
-    //获取邀请码
-    public Observable<String> getCode(RequestCodeBean requestBean) {
-        Retrofit retrofit = builderRetrofit();
+    //获取邀请码 (token)
+    public Observable<String> getCode() {
+        Retrofit retrofit = builderJsonRetrofit();
         CodeApi api = retrofit.create(CodeApi.class);
         Map<String, String> params = new HashMap<>();
         Observable<Response<String>> observable = api.getCode();
@@ -68,15 +69,15 @@ public class FillcodeApiControl extends BaseControl {
             public String apply(Response<String> stringResponse) throws Exception {
                 String responseBody = stringResponse.body();
                 int codeHttp = stringResponse.code();
-                if (codeHttp == 410) {
-                    throw new IApiException("410", "401");
+                if (codeHttp == 401) {
+                    throw new IApiException("401", "401");
                 }
                 JSONObject jsonObject = JSON.parseObject(responseBody);
                 int code = jsonObject.getIntValue(AppConstant.JSON_CODE);
 
                 if (code == 200) {
                     JSONObject objectData = JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA));
-                    String codeStr = jsonObject.getString("sc");
+                    String codeStr = objectData.getString("sc");
                     return codeStr;
                 }
 

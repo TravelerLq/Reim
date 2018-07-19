@@ -27,7 +27,8 @@
         android:id="@+id/btn_sure"
         style="@style/btn_sure"
         android:layout_alignParentBottom="true"
-        android:text="确定" />
+        android:text="确定"
+        android:visibility="gone" />
 
 
 </RelativeLayout>

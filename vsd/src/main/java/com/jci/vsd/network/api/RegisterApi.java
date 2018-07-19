@@ -11,7 +11,7 @@ import retrofit2.http.POST;
 
 public interface RegisterApi {
     //注册http://192.168.1.111:8080/shuidao/users/reg
-    @POST("shuidao/users/reg")
+    @POST("shuidao/notoken/reg")
     Observable<Response<String>> register(@Body String str);
 
 }

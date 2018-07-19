@@ -9,93 +9,68 @@ import com.jci.vsd.bean.BaseBean;
 
 public class DepartmentBean extends BaseBean {
 
+
     /**
-     * departmentId : 55
-     * departmentName : 生产部
-     * departmentQuota : 1000
-     * deptLeaderId : 54
-     * deptLeaderName : 王朕
-     * numberOfEmployees : 0
-     * reimbursementRightId : 3
-     * reimbursementRightName : 制造类费用
+     * leader : 28
+     * lname : 屠正松
+     * perm : 1
+     * name : 事业部
+     * id : 111
+     * permname : 管理类费用
      */
 
-    private int departmentId;
-    private String departmentName;
-    private String departmentQuota;
-    private int deptLeaderId;
-    private String deptLeaderName;
-    private int numberOfEmployees;
-    private int reimbursementRightId;
-    private String reimbursementRightName;
+    private int leader;
+    private String lname;
+    private int perm;
+    private String name;
+    private int id;
+    private String permname;
 
-
-//    public DepartmentBean(int departmentId, String departmentName) {
-//        this.departmentId = departmentId;
-//        this.departmentName = departmentName;
-//    }
-
-    public int getDepartmentId() {
-        return departmentId;
+    public int getLeader() {
+        return leader;
     }
 
-    public void setDepartmentId(int departmentId) {
-        this.departmentId = departmentId;
+    public void setLeader(int leader) {
+        this.leader = leader;
     }
 
-    public String getDepartmentName() {
-        return departmentName;
+    public String getLname() {
+        return lname;
     }
 
-    public void setDepartmentName(String departmentName) {
-        this.departmentName = departmentName;
+    public void setLname(String lname) {
+        this.lname = lname;
     }
 
-    public String getDepartmentQuota() {
-        return departmentQuota;
+    public int getPerm() {
+        return perm;
     }
 
-    public void setDepartmentQuota(String departmentQuota) {
-        this.departmentQuota = departmentQuota;
+    public void setPerm(int perm) {
+        this.perm = perm;
     }
 
-    public int getDeptLeaderId() {
-        return deptLeaderId;
+    public String getName() {
+        return name;
     }
 
-    public void setDeptLeaderId(int deptLeaderId) {
-        this.deptLeaderId = deptLeaderId;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDeptLeaderName() {
-        return deptLeaderName;
+    public int getId() {
+        return id;
     }
 
-    public void setDeptLeaderName(String deptLeaderName) {
-        this.deptLeaderName = deptLeaderName;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getNumberOfEmployees() {
-        return numberOfEmployees;
+    public String getPermname() {
+        return permname;
     }
 
-    public void setNumberOfEmployees(int numberOfEmployees) {
-        this.numberOfEmployees = numberOfEmployees;
-    }
-
-    public int getReimbursementRightId() {
-        return reimbursementRightId;
-    }
-
-    public void setReimbursementRightId(int reimbursementRightId) {
-        this.reimbursementRightId = reimbursementRightId;
-    }
-
-    public String getReimbursementRightName() {
-        return reimbursementRightName;
-    }
-
-    public void setReimbursementRightName(String reimbursementRightName) {
-        this.reimbursementRightName = reimbursementRightName;
+    public void setPermname(String permname) {
+        this.permname = permname;
     }
 }

@@ -109,7 +109,11 @@ public class MembsersSelectActivity extends BaseActivity {
 //                        showDialog();
                         Intent intent = new Intent();
                         Bundle bundle = new Bundle();
-                        MembersBean bean = new MembersBean(node.getNodeID(), node.getNodeName());
+//                        MembersBean bean = new MembersBean(node.getNodeID(), node.getNodeName());
+                        MembersBean bean = new MembersBean();
+                        bean.setId(node.getNodeID());
+                        bean.setName(node.getNodeName());
+
                         bundle.putSerializable("user", bean);
                         Loger.e("pos--" + position + "clickName=" + bean.getName());
                         intent.putExtras(bundle);
@@ -161,17 +165,17 @@ public class MembsersSelectActivity extends BaseActivity {
 
     private void initTestData() {
         //parentItem
-        mData.add(new MembersBean("1", "0", "总经理办公室"));
-        mData.add(new MembersBean("2", "0", "销售部"));
-        //总经理下的childItem
-        mData.add(new MembersBean("3", "1", "张三"));
-        mData.add(new MembersBean("4", "1", "王一"));
-
-        //销售部下的
-
-        mData.add(new MembersBean("5", "2", "孙田"));
-        mData.add(new MembersBean("6", "2", "Jsec"));
-        mData.add(new MembersBean("7", "2", "Lotey"));
+//        mData.add(new MembersBean("1", "0", "总经理办公室"));
+//        mData.add(new MembersBean("2", "0", "销售部"));
+//        //总经理下的childItem
+//        mData.add(new MembersBean("3", "1", "张三"));
+//        mData.add(new MembersBean("4", "1", "王一"));
+//
+//        //销售部下的
+//
+//        mData.add(new MembersBean("5", "2", "孙田"));
+//        mData.add(new MembersBean("6", "2", "Jsec"));
+//        mData.add(new MembersBean("7", "2", "Lotey"));
 
     }
 }

@@ -7,8 +7,14 @@ import com.jci.vsd.bean.BaseBean;
  */
 
 public class AjustMembersBean extends BaseBean {
-    int id;
-    int departId;
+
+    /**
+     * id : 28
+     * dpt : 114
+     */
+
+    private int id;
+    private int dpt;
 
     public int getId() {
         return id;
@@ -18,11 +24,11 @@ public class AjustMembersBean extends BaseBean {
         this.id = id;
     }
 
-    public int getDepartId() {
-        return departId;
+    public int getDpt() {
+        return dpt;
     }
 
-    public void setDepartId(int departId) {
-        this.departId = departId;
+    public void setDpt(int dpt) {
+        this.dpt = dpt;
     }
 }

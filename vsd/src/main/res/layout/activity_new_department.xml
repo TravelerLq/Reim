@@ -44,6 +44,7 @@
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:paddingLeft="@dimen/dimen_10">
 
         <TextView
@@ -78,7 +79,7 @@
         <TextView
             style="@style/new_depart_text_style"
 
-            android:text="报销权限" />
+            android:text="报销类型" />
 
         <TextView
             android:id="@+id/tv_reim_authority"
