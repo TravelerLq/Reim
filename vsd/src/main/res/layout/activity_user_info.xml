@@ -28,54 +28,63 @@
                 android:id="@+id/persondetailbt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#FFF"
+                android:background="@drawable/ic_info_bg"
                 android:clickable="true"
                 android:focusable="true"
                 android:orientation="horizontal">
-
-                <com.jci.vsd.view.CircleImageView
-                    android:id="@+id/project_master_head"
-                    android:layout_width="65dp"
-                    android:layout_height="65dp"
-                    android:layout_gravity="center_vertical|left"
-                    android:layout_margin="10dp"
-                    android:src="@drawable/ic_head" />
-
-                <RelativeLayout
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
+                    android:layout_margin="@dimen/dimen_40"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+                    <com.jci.vsd.view.CircleImageView
+                        android:id="@+id/project_master_head"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:layout_gravity="center_vertical|left"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/bg_round_green_shape"
+                        android:src="@drawable/ic_person_header" />
 
-                    <TextView
-                        android:id="@+id/tv_real_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginBottom="@dimen/dimen_5"
-                        android:text="Jsee"
-                        android:textColor="#000" />
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_tel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_below="@+id/tv_real_name"
-                        android:layout_marginTop="7dp"
-                        android:text="15932128935" />
+                        <TextView
+                            android:id="@+id/tv_real_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginBottom="@dimen/dimen_5"
+                            android:text="Jsee"
+                            android:textColor="#000" />
 
-                    <TextView
-                        android:id="@+id/tv_depart"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/dimen_20"
+                        <TextView
+                            android:id="@+id/tv_tel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@+id/tv_real_name"
+                            android:layout_marginTop="7dp"
+                            android:text="15932128935" />
 
-                        android:layout_marginTop="7dp"
-                        android:text="研发部" />
-                </RelativeLayout>
+                        <TextView
+                            android:id="@+id/tv_depart"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/dimen_20"
+
+                            android:layout_marginTop="7dp"
+                            android:text="研发部" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+
 
 
             </LinearLayout>
@@ -99,13 +108,13 @@
 
                 <ImageView
                     android:id="@+id/iv_about"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="@dimen/dimen_50"
+                    android:layout_height="@dimen/dimen_50"
                     android:layout_marginBottom="15dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="15dp"
-                    app:srcCompat="@drawable/ic_neek" />
+                    app:srcCompat="@drawable/ic_help" />
 
                 <TextView
                     android:id="@+id/tv_about"
@@ -136,13 +145,13 @@
 
                 <ImageView
                     android:id="@+id/iv_problem"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="@dimen/dimen_50"
+                    android:layout_height="@dimen/dimen_50"
                     android:layout_marginBottom="15dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="15dp"
-                    app:srcCompat="@drawable/ic_neek" />
+                    app:srcCompat="@drawable/ic_problem_back" />
 
                 <TextView
                     android:id="@+id/textVw30"
@@ -173,13 +182,13 @@
 
                 <ImageView
                     android:id="@+id/imageView5"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="@dimen/dimen_50"
+                    android:layout_height="@dimen/dimen_50"
                     android:layout_marginBottom="15dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="15dp"
-                    app:srcCompat="@drawable/ic_image" />
+                    app:srcCompat="@drawable/ic_version" />
 
                 <TextView
                     android:id="@+id/textView30"
@@ -206,6 +215,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center_vertical"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -274,13 +284,13 @@
 
                 <ImageView
 
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="@dimen/dimen_50"
+                    android:layout_height="@dimen/dimen_50"
                     android:layout_marginBottom="15dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="15dp"
-                    app:srcCompat="@drawable/ic_neek" />
+                    app:srcCompat="@drawable/ic_login_out" />
 
                 <TextView
 

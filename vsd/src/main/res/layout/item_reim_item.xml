@@ -11,10 +11,12 @@
         android:id="@+id/rl_expense_item"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_110"
+        android:background="@color/white"
         android:paddingBottom="@dimen/dimen_5"
         android:paddingRight="@dimen/dimen_10"
-        android:background="@color/white"
         android:paddingTop="@dimen/dimen_13">
+
+
 
         <TextView
             android:id="@+id/tv_money_title"
@@ -29,6 +31,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="2018-01-21" />
+
+        <ImageView
+            android:layout_width="@dimen/dimen_30"
+            android:layout_height="@dimen/dimen_30"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="7dp"
+            android:src="@drawable/ic_reim_rmb" />
 
         <TextView
             android:id="@+id/tv_money"
@@ -75,6 +85,7 @@
             android:src="@drawable/ic_rmb_blue"
             android:visibility="gone" />
     </RelativeLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_8"

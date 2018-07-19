@@ -18,10 +18,10 @@
             <LinearLayout style="@style/reim_item_linear">
 
                 <ImageView
-                    android:layout_width="@dimen/dimen_30"
-                    android:layout_height="@dimen/dimen_30"
+                    android:layout_width="@dimen/dimen_50"
+                    android:layout_height="@dimen/dimen_50"
                     android:layout_marginLeft="@dimen/dimen_20"
-                    android:src="@drawable/ic_rmb_blue" />
+                    android:src="@drawable/ic_reim_rmb" />
 
                 <EditText
                     android:id="@+id/edt_money"
@@ -31,7 +31,7 @@
                     android:layout_marginLeft="@dimen/dimen_20"
                     android:background="@null"
                     android:gravity="center_vertical"
-                    android:hint="报销金额"
+                    android:hint="请填写报销金额"
                     android:inputType="number|numberDecimal"
                     android:paddingLeft="@dimen/dimen_10" />
             </LinearLayout>

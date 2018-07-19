@@ -16,7 +16,7 @@
         android:layout_marginRight="@dimen/dimen_5"
         android:layout_marginTop="@dimen/dimen_10"
         android:layout_weight="470"
-        android:background="@drawable/bg_grey_rectangle_fill"
+        android:background="@drawable/bg_red_rectangle"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="@dimen/dimen_1"
@@ -29,7 +29,7 @@
             <ImageView
                 android:id="@+id/iv_home_pic"
                 style="@style/reim_home_top_image"
-                android:src="@drawable/ic_camera" />
+                android:src="@drawable/ic_reim_pic" />
 
             <TextView
                 style="@style/reim_home_top_image_title"
@@ -42,7 +42,7 @@
             <ImageView
                 android:id="@+id/iv_invoicing_verify"
                 style="@style/reim_home_top_image"
-                android:src="@drawable/ic_head" />
+                android:src="@drawable/ic_reim_check" />
 
             <TextView
                 style="@style/reim_home_top_image_title"
@@ -54,7 +54,7 @@
             <ImageView
                 android:id="@+id/iv_add_expense"
                 style="@style/reim_home_top_image"
-                android:src="@drawable/ic_add_blue" />
+                android:src="@drawable/ic_reim_new" />
 
             <TextView
                 style="@style/reim_home_top_image_title"
@@ -69,31 +69,27 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="670"
-
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dimen_5"
+        android:paddingRight="@dimen/dimen_5"
+        android:background="@color/white">
 
         <RelativeLayout
             android:id="@+id/rl_my_approval"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dimen_37">
+            style="@style/reim_home_my_rl">
 
             <ImageView
                 android:id="@+id/iv_my_approval"
-                android:layout_width="@dimen/dimen_80"
-                android:layout_height="@dimen/dimen_55"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:background="@drawable/bg_round_green_shape"
-                android:src="@drawable/ic_my_expense" />
+                style="@style/reim_home_my_iv"
+                android:src="@drawable/ic_my_approval" />
 
             <TextView
                 android:id="@+id/tv_my_approval"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/dimen_20"
-                android:layout_marginTop="20dp"
                 android:layout_toRightOf="@+id/iv_my_approval"
+                android:gravity="center_vertical"
                 android:text="@string/my_approval" />
 
             <TextView
@@ -115,29 +111,20 @@
 
         <RelativeLayout
             android:id="@+id/rl_my_expense"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/dimen_30"
-            android:padding="@dimen/dimen_37">
+            style="@style/reim_home_my_rl">
 
             <ImageView
                 android:id="@+id/iv_my_expense"
-                android:layout_width="@dimen/dimen_80"
-                android:layout_height="@dimen/dimen_55"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:background="@drawable/bg_round_orange_shape"
-                android:src="@drawable/ic_my_expense" />
+                style="@style/reim_home_my_iv"
+                android:src="@drawable/ic_my_reim" />
 
             <TextView
                 android:id="@+id/tv_my_expense_title"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/dimen_20"
-                android:layout_marginTop="20dp"
                 android:layout_toRightOf="@+id/iv_my_expense"
+                android:gravity="center_vertical"
                 android:text="@string/my_expense" />
 
             <TextView

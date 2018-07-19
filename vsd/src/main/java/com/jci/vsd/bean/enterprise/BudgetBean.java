@@ -11,10 +11,7 @@ public class BudgetBean extends BaseBean {
     private String departmentName;
     private int budget;
 
-    public BudgetBean(String departmentName, int budget) {
-        this.departmentName = departmentName;
-        this.budget = budget;
-    }
+
 
     public String getDepartmentName() {
         return departmentName;

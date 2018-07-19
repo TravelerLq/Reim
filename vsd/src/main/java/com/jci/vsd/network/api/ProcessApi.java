@@ -3,8 +3,10 @@ package com.jci.vsd.network.api;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
 
@@ -15,22 +17,22 @@ import retrofit2.http.QueryMap;
 
 public interface ProcessApi {
 
-    //budget 获取
+    //审批流程 获取
     @GET("api/Login/PDALogin")
-    Observable<String> getBudgetList(@QueryMap Map<String, String> map);
+    Observable<Response<String>> getProcessList(@QueryMap Map<String, Object> map);
 
-    //budget item 删除
-    @GET("api/PersonalInfo/BindingCard")
-    Observable<String> deleteBudgetItem(@QueryMap Map<String, String> map);
+    //审批流程 item 删除
+    @PATCH("api/PersonalInfo/BindingCard")
+    Observable<Response<String>> deleteProcessItem(@Body String body);
 
-    //budget 新增item
+    //审批流程 新增item
     @POST("api/PersonalInfo/PDAUpdatePassword")
-    Observable<String> addBudgetItem(@Body Map<String, String> map);
+    Observable<Response<String>> addProcessItem(@Body String body);
 
 
-    //budget 修改编辑item
-    @POST("api/PersonalInfo/PDAUpdatePassword")
-    Observable<String> updateBudgetItem(@QueryMap Map<String, String> map);
+    //审批流程 修改编辑item
+    @PATCH("api/PersonalInfo/PDAUpdatePassword")
+    Observable<Response<String>> updateProcessItem(@Body String body);
 
 
 }

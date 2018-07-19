@@ -7,6 +7,7 @@ import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
 
@@ -19,20 +20,20 @@ public interface BudgetApi {
 
     //budget 获取
     @GET("api/Login/PDALogin")
-    Observable<Response<String>> getBudgetList(@QueryMap Map<String, String> map);
+    Observable<Response<String>> getBudgetList(@QueryMap Map<String, Object> map);
 
     //budget item 删除
-    @GET("api/PersonalInfo/BindingCard")
-    Observable<String> deleteBudgetItem(@QueryMap Map<String, String> map);
+    @PATCH("api/PersonalInfo/BindingCard")
+    Observable<Response<String>> deleteBudgetItem(@Body String body);
 
     //budget 新增item
     @POST("api/PersonalInfo/PDAUpdatePassword")
-    Observable<String> addBudgetItem(@Body Map<String, String> map);
+    Observable<Response<String>> addBudgetItem(@Body String body);
 
 
     //budget 修改编辑item
-    @POST("api/PersonalInfo/PDAUpdatePassword")
-    Observable<String> updateBudgetItem(@QueryMap Map<String, String> map);
+    @PATCH("api/PersonalInfo/PDAUpdatePassword")
+    Observable<Response<String>> updateBudgetItem(@Body String body);
 
 
 }

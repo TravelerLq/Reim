@@ -259,11 +259,13 @@ public class DepartmentManageActivity extends BaseActivity {
             @Override
             public void onError(Throwable t) {
                 super.onError(t);
-                if (t.getMessage().equals("401"))
-
+                if (t.getMessage().equals("401")){
                     SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_SHORT);
-                exit();
-                toActivity(LoginActivity.class);
+                    exit();
+                    toActivity(LoginActivity.class);
+                }
+
+
             }
 
 

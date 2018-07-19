@@ -20,16 +20,25 @@ import com.jci.vsd.SlideRecycleview.CommonAdapter;
 import com.jci.vsd.SlideRecycleview.SwipeMenuLayout;
 import com.jci.vsd.SlideRecycleview.ViewHolder;
 import com.jci.vsd.activity.BaseActivity;
+import com.jci.vsd.activity.LoginActivity;
 import com.jci.vsd.bean.enterprise.BudgetBean;
+import com.jci.vsd.network.control.BudgetManageControl;
+import com.jci.vsd.observer.CommonDialogObserver;
+import com.jci.vsd.observer.RxHelper;
+import com.jci.vsd.view.widget.SimpleToast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 import butterknife.BindView;
+import io.reactivex.Observable;
 
 /**
  * Created by liqing on 18/7/2.
- * 预算管理(按照类别划分)
+ * 预算管理
+ * 根据type()??
+ * (按照类别划分)
  */
 
 public class BudgetManageActivity extends BaseActivity {
@@ -61,15 +70,20 @@ public class BudgetManageActivity extends BaseActivity {
         context = BudgetManageActivity.this;
         intData();
         initRecycleView();
-        getData();
+
 
     }
 
 
     private void intData() {
         mDatas = new ArrayList<>();
+        BudgetBean bean = null;
         for (int i = 0; i < 5; i++) {
-            mDatas.add(new BudgetBean("部门" + i, i * 10 + i));
+            bean = new BudgetBean();
+            bean.setBudget(i + i * 10);
+            bean.setDepartmentName("技术部门" + i + "");
+            mDatas.add(new BudgetBean());
+
         }
 
     }
@@ -191,12 +205,68 @@ public class BudgetManageActivity extends BaseActivity {
     }
 
     //获取数据
-    private void getData() {
+    //加载List 数据
+    private void loadData() {
+        Observable<List<BudgetBean>> observable = new BudgetManageControl().getBudgetList();
+        CommonDialogObserver<List<BudgetBean>> observer = new CommonDialogObserver<List<BudgetBean>>(this) {
+            @Override
+            public void onNext(List<BudgetBean> beanList) {
+                super.onNext(beanList);
+                SimpleToast.toastMessage("数据获取成功", Toast.LENGTH_SHORT);
+                mDatas.clear();
+                mDatas.addAll(beanList);
+                mAdapter.notifyDataSetChanged();
 
+            }
+
+
+            @Override
+            public void onError(Throwable t) {
+                super.onError(t);
+                if (t.getMessage().equals("401")) {
+                    SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_SHORT);
+                    exit();
+                    toActivity(LoginActivity.class);
+                }
+            }
+        };
+        RxHelper.bindOnUIActivityLifeCycle(observable, observer, BudgetManageActivity.this);
     }
 
 
     //删除数据
+
+    private void deleteDepartment(int departId, final int pos) {
+        BudgetBean budgetBean = new BudgetBean();
+        Observable<Boolean> observable = new BudgetManageControl().deleteBudget(budgetBean);
+        CommonDialogObserver<Boolean> observer = new CommonDialogObserver<Boolean>(this) {
+            @Override
+            public void onNext(Boolean isSuccess) {
+                super.onNext(isSuccess);
+                SimpleToast.toastMessage("删除成功", Toast.LENGTH_SHORT);
+                mDatas.remove(pos);
+                mAdapter.notifyItemRemoved(pos);//推荐用这个
+
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                super.onError(t);
+                if (t.getMessage().equals("401")) {
+                    SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_SHORT);
+                    exit();
+                    toActivity(LoginActivity.class);
+                }
+
+
+            }
+
+
+        };
+        RxHelper.bindOnUIActivityLifeCycle(observable, observer, BudgetManageActivity.this);
+
+
+    }
 
 
     /**

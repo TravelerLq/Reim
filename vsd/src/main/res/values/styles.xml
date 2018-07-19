@@ -558,4 +558,24 @@
         <item name="android:background">@color/red_deep_btn</item>
 
     </style>
+
+
+    <style name="reim_home_my_rl">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_80</item>
+        <item name="android:layout_marginTop">@dimen/dimen_20</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:background">@color/grey_b5b5</item>
+
+    </style>
+
+    <style name="reim_home_my_iv">
+        <item name="android:layout_width">@dimen/dimen_80</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:background">@color/red_deep_btn</item>
+
+    </style>
+
+
 </resources>
