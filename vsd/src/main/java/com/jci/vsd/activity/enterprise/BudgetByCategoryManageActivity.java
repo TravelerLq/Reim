@@ -99,7 +99,7 @@ public class BudgetByCategoryManageActivity extends BaseActivity {
             case R.id.rightFucTxt:
                 Loger.e("--add reim depart");
                 //     toActivity(EditBudgetItemActivity.class);
-                toActivityWithType(BudgetAddItemActivity.class, AppConstant.VALUE_BUDGET_DEPART);
+                toActivityWithType(BudgetAddItemActivity.class, AppConstant.VALUE_BUDGET_CATEGORY);
                 break;
             case R.id.btn_sure:
                 break;

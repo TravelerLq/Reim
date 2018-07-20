@@ -179,14 +179,14 @@ public class BudgetEditByDeparmentActivity extends BaseActivity {
         budgetBean.setId(id);
         budgetBean.setDpt(selectDepartId);
         budgetBean.setQuota(Double.valueOf(budget));
-        updateBudgetItemByDepartment(budgetBean);
+        updateBudgetItemByDepartment(1,1.11);
 //        toActivity(BudgetManageActivity.class);
 //        this.finish();
     }
 
-    private void updateBudgetItemByDepartment(BudgetBean budgetBean) {
+    private void updateBudgetItemByDepartment(int id,Double d ) {
 
-        Observable<Boolean> observable = new BudgetManageControl().updateBudget(budgetBean);
+        Observable<Boolean> observable = new BudgetManageControl().updateBudget(id,d);
         CommonDialogObserver<Boolean> observer = new CommonDialogObserver<Boolean>(this) {
             @Override
             public void onNext(Boolean aBoolean) {

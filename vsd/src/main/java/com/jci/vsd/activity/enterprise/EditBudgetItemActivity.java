@@ -55,7 +55,7 @@ public class EditBudgetItemActivity extends BaseActivity {
         BudgetBean bean = (BudgetBean) getIntent().getSerializableExtra(AppConstant.SERIAL_KEY);
         //判断是科目？还是部门哪个？
         Loger.e("editBudget Id=" + bean.getId());
-
+        id = bean.getId();
         Loger.e("editBudget getItem=" + bean.getItem());
         Loger.e("editBudget getCat=" + bean.getCat());
         Loger.e("editBudget type=" + bean.getType());
@@ -112,6 +112,7 @@ public class EditBudgetItemActivity extends BaseActivity {
             edtBudgetInput.requestFocus();
             return;
         }
+
         updateBudget(id, Double.valueOf(budget));
 
 //        toActivity(BudgetManageActivity.class);
