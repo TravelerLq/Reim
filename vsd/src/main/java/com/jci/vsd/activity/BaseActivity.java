@@ -178,10 +178,10 @@ public abstract class BaseActivity extends RxFragmentActivity implements DialogO
      * @param clz 跳转到的类
      * @param <T>
      */
-    protected <T> void toActivityWithType(Class<T> clz,String intentTye) {
+    protected <T> void toActivityWithType(Class<T> clz, String intentTye) {
         Intent intent = new Intent(this, clz);
-        intent.putExtra(AppConstant.KEY_TYPE,intentTye);
-
+        intent.putExtra(AppConstant.KEY_TYPE, intentTye);
+        startActivity(intent);
 
     }
 
@@ -192,12 +192,12 @@ public abstract class BaseActivity extends RxFragmentActivity implements DialogO
      * @param clz 跳转到的类
      * @param <T>
      */
-    protected <T> void toActivityWithType(Class<T> clz,String intentTye,int requestCode,boolean needCallBack) {
+    protected <T> void toActivityWithType(Class<T> clz, String intentTye, int requestCode, boolean needCallBack) {
         Intent intent = new Intent(this, clz);
-        intent.putExtra(AppConstant.KEY_TYPE,intentTye);
-        if(needCallBack){
-            startActivityForResult(intent,requestCode);
-        }else {
+        intent.putExtra(AppConstant.KEY_TYPE, intentTye);
+        if (needCallBack) {
+            startActivityForResult(intent, requestCode);
+        } else {
             startActivity(intent);
         }
 
@@ -264,6 +264,16 @@ public abstract class BaseActivity extends RxFragmentActivity implements DialogO
         startActivity(intent);
     }
 
+    protected <T> void toAtivityWithParamsAndBean(Class<T> clz, BaseBean baseBean, String type) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(AppConstant.SERIAL_KEY, baseBean);
+
+        Intent intent = new Intent(this, clz);
+        intent.putExtras(bundle);
+        intent.putExtra(AppConstant.KEY_TYPE, type);
+        startActivity(intent);
+    }
+
     /**
      * view 初始化及事件控制
      */
@@ -309,17 +319,17 @@ public abstract class BaseActivity extends RxFragmentActivity implements DialogO
             rxStyleDialogFragment = new RxStyleDialogFragment();
             rxStyleDialogFragment.setCancelable(false);
             rxStyleDialogFragment.show(this.getSupportFragmentManager(), "");
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
-    protected void dimissProgress(){
-        if(rxStyleDialogFragment != null && rxStyleDialogFragment.getDialog() != null && rxStyleDialogFragment.getDialog().isShowing()){
+    protected void dimissProgress() {
+        if (rxStyleDialogFragment != null && rxStyleDialogFragment.getDialog() != null && rxStyleDialogFragment.getDialog().isShowing()) {
             try {
                 rxStyleDialogFragment.dismiss();
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

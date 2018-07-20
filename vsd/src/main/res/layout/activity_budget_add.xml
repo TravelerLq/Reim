@@ -29,6 +29,7 @@
             android:id="@+id/edt_name"
             style="@style/new_depart_edit_style"
             android:layout_gravity="center_vertical"
+            android:drawableRight="@drawable/ic_more"
             android:text="请选择部门" />
 
     </LinearLayout>
@@ -58,6 +59,7 @@
             android:id="@+id/tv_budget_category"
             style="@style/new_depart_edit_style"
             android:layout_gravity="center_vertical"
+            android:drawableRight="@drawable/ic_more"
             android:text="请选择科目类别" />
 
     </LinearLayout>
@@ -80,9 +82,9 @@
         <EditText
             android:id="@+id/edt_budget_input"
             style="@style/new_depart_edit_style"
-            android:layout_gravity="center_vertical"
             android:layout_weight="2.5"
             android:hint="请输入"
+            android:layout_gravity="center_vertical"
             android:textColor="@color/grey_b5b5" />
 
     </LinearLayout>
@@ -106,9 +108,9 @@
         <EditText
             android:id="@+id/tv_approval_person"
             style="@style/new_depart_edit_style"
-            android:layout_gravity="center_vertical"
             android:layout_weight="2.5"
             android:hint="请输入"
+            android:layout_gravity="center_vertical"
             android:textColor="@color/grey_b5b5" />
 
 

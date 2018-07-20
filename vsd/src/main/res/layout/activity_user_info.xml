@@ -32,12 +32,15 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:orientation="horizontal">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/dimen_40"
-                    android:background="@color/white"
+                    android:background="@drawable/ic_info_cloud"
+
                     android:orientation="horizontal">
+
                     <com.jci.vsd.view.CircleImageView
                         android:id="@+id/project_master_head"
                         android:layout_width="65dp"
@@ -85,8 +88,6 @@
                 </LinearLayout>
 
 
-
-
             </LinearLayout>
 
             <LinearLayout
@@ -114,7 +115,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="15dp"
-                    app:srcCompat="@drawable/ic_help" />
+                    android:src="@drawable/ic_help" />
 
                 <TextView
                     android:id="@+id/tv_about"
@@ -151,7 +152,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="15dp"
-                    app:srcCompat="@drawable/ic_problem_back" />
+                    android:src="@drawable/ic_problem_back" />
 
                 <TextView
                     android:id="@+id/textVw30"
@@ -188,7 +189,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="15dp"
-                    app:srcCompat="@drawable/ic_version" />
+                    android:src="@drawable/ic_version" />
 
                 <TextView
                     android:id="@+id/textView30"
@@ -215,8 +216,8 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center_vertical"
-                android:visibility="gone"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <ImageView
 
@@ -226,7 +227,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="15dp"
-                    app:srcCompat="@drawable/ic_neek" />
+                    android:src="@drawable/ic_neek" />
 
                 <TextView
 
@@ -259,7 +260,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="15dp"
-                    app:srcCompat="@drawable/ic_expense_type" />
+                    android:src="@drawable/ic_expense_type" />
 
                 <TextView
 
@@ -290,7 +291,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="15dp"
-                    app:srcCompat="@drawable/ic_login_out" />
+                    android:src="@drawable/ic_login_out" />
 
                 <TextView
 

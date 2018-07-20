@@ -37,11 +37,11 @@ import io.reactivex.Observable;
 
 /**
  * Created by liqing on 18/7/2.
- * 预算管理(按照部门划分）
+ * 预算管理(按照科目划分）
  */
 
-public class BudgetByDepartManageActivity extends BaseActivity {
-    private static final String TAG = BudgetByDepartManageActivity.class.getSimpleName();
+public class BudgetByCategoryManageActivity extends BaseActivity {
+    private static final String TAG = BudgetByCategoryManageActivity.class.getSimpleName();
 
     @BindView(R.id.recycle_budget)
     RecyclerView recyclerView;
@@ -58,7 +58,7 @@ public class BudgetByDepartManageActivity extends BaseActivity {
     TextView rightFucTxt;
     @BindView(R.id.textview_title)
     TextView tvTitle;
-    private static int type = 1;
+    private static int type = 2;
 
 
     @Override
@@ -66,9 +66,9 @@ public class BudgetByDepartManageActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_budget_manage);
         initViewEvent();
-        context = BudgetByDepartManageActivity.this;
+        context = BudgetByCategoryManageActivity.this;
         rightFucTxt.setVisibility(View.VISIBLE);
-        tvTitle.setText("预算管理（按部门划分）");
+        tvTitle.setText("预算管理（报销科目划分）");
         // type=1
         getData(type);
         intData();
@@ -161,6 +161,7 @@ public class BudgetByDepartManageActivity extends BaseActivity {
                         if (pos >= 0 && pos < mDatas.size()) {
                             //   Toast.makeText(context, "删除:" + pos, Toast.LENGTH_SHORT).show();
                             deleteBudgetItem(mDatas.get(pos).getId(), pos);
+                            ((SwipeMenuLayout) holder.itemView).quickClose();
 //                            mDatas.remove(pos);
 //                            mAdapter.notifyItemRemoved(pos);//推荐用这个
                             //如果删除时，不使用mAdapter.notifyItemRemoved(pos)，则删除没有动画效果，
@@ -173,9 +174,12 @@ public class BudgetByDepartManageActivity extends BaseActivity {
                 holder.setOnClickListener(R.id.btnEdit, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        ((SwipeMenuLayout) holder.itemView).quickClose();
                         int pos = holder.getLayoutPosition();
-                        mDatas.get(pos).setType(AppConstant.VALUE_BUDGET_DEPART);
 //
+                        mDatas.get(pos).setType(AppConstant.VALUE_BUDGET_CATEGORY);
+//
+                        toAtivityWithParams(EditBudgetItemActivity.class, mDatas.get(pos));
                         toAtivityWithParams(EditBudgetItemActivity.class, mDatas.get(pos));
 
 
@@ -239,7 +243,7 @@ public class BudgetByDepartManageActivity extends BaseActivity {
             }
         };
 
-        RxHelper.bindOnUIActivityLifeCycle(observable, observer, BudgetByDepartManageActivity.this);
+        RxHelper.bindOnUIActivityLifeCycle(observable, observer, BudgetByCategoryManageActivity.this);
 
     }
 
@@ -273,7 +277,7 @@ public class BudgetByDepartManageActivity extends BaseActivity {
 
 
         };
-        RxHelper.bindOnUIActivityLifeCycle(observable, observer, BudgetByDepartManageActivity.this);
+        RxHelper.bindOnUIActivityLifeCycle(observable, observer, BudgetByCategoryManageActivity.this);
 
 
     }

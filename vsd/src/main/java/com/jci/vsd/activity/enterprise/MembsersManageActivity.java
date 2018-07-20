@@ -20,6 +20,7 @@ import com.jci.vsd.R;
 import com.jci.vsd.activity.BaseActivity;
 import com.jci.vsd.activity.FillCodeActivity;
 import com.jci.vsd.activity.FoundationActivity;
+import com.jci.vsd.activity.LoginActivity;
 import com.jci.vsd.activity.MainActivity;
 import com.jci.vsd.adapter.enterprise.MembersManagerAdapter;
 import com.jci.vsd.bean.enterprise.AjustMembersBean;
@@ -360,6 +361,12 @@ public class MembsersManageActivity extends BaseActivity {
             @Override
             public void onError(Throwable t) {
                 super.onError(t);
+
+                if (t.getMessage().equals("401")){
+                    SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_SHORT);
+                    exit();
+                    toActivity(LoginActivity.class);
+                }
             }
         };
         RxHelper.bindOnUIActivityLifeCycle(observable, observer, MembsersManageActivity.this);

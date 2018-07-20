@@ -3,6 +3,7 @@ package com.jci.vsd.network.control;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.jci.vsd.bean.enterprise.AddBudgetItemBean;
 import com.jci.vsd.bean.enterprise.AjustMembersBean;
 import com.jci.vsd.bean.enterprise.BudgetBean;
 import com.jci.vsd.bean.enterprise.MembersBean;
@@ -31,11 +32,11 @@ public class BudgetManageControl extends BaseControl {
 
 
     //预算管理
-    public Observable<List<BudgetBean>> getBudgetList() {
-        Retrofit retrofit = builderJsonRetrofit();
+    public Observable<List<BudgetBean>> getBudgetList(int type) {
+        Retrofit retrofit = builderRetrofitWithHeader();
         BudgetApi api = retrofit.create(BudgetApi.class);
         Map<String, Object> map = new HashMap<>();
-        map.put("type", 1);
+        map.put("type", type);
         String paramStr = JSON.toJSONString(map);
         Observable<Response<String>> observable = api.getBudgetList(map);
         return observable.map(new Function<Response<String>, List<BudgetBean>>() {
@@ -68,7 +69,7 @@ public class BudgetManageControl extends BaseControl {
 
     //add预算
 
-    public Observable<Boolean> addBudget(BudgetBean bean) {
+    public Observable<Boolean> addBudget(AddBudgetItemBean bean) {
         Retrofit retrofit = builderJsonRetrofit();
 //        Map<String, Object> paramMap = new HashMap<>();
 //        paramMap.put("id", membersBean.getId());
@@ -119,7 +120,7 @@ public class BudgetManageControl extends BaseControl {
                 if (code == 200) {
                     return true;
                 }
-                throw new IApiException("预算管理", jsonObject.getString(AppConstant.JSON_MESSAGE));
+                throw new IApiException("删除预算（部门）", jsonObject.getString(AppConstant.JSON_MESSAGE));
 
 
             }
@@ -131,13 +132,14 @@ public class BudgetManageControl extends BaseControl {
 
     //更新预算管理
 
-    public Observable<Boolean> updateBudget(BudgetBean budgetBean) {
+    public Observable<Boolean> updateBudget(int id, Double budget) {
         Retrofit retrofit = builderJsonRetrofit();
         Map<String, Object> paramMap = new HashMap<>();
-      //  paramMap.put("id", ajustMembersBean.getId());
-        String paramsStr = JSON.toJSONString(budgetBean);
-        MembersApi api = retrofit.create(MembersApi.class);
-        Observable<Response<String>> observable = api.ajust(paramsStr);
+        paramMap.put("id", id);
+        paramMap.put("quota", budget);
+        String paramsStr = JSON.toJSONString(paramMap);
+        BudgetApi api = retrofit.create(BudgetApi.class);
+        Observable<Response<String>> observable = api.updateBudgetItem(paramsStr);
         return observable.map(new Function<Response<String>, Boolean>() {
             @Override
             public Boolean apply(Response<String> stringResponse) throws Exception {
@@ -151,7 +153,71 @@ public class BudgetManageControl extends BaseControl {
                 if (code == 200) {
                     return true;
                 }
+                throw new IApiException("预算管理更新", jsonObject.getString(AppConstant.JSON_MESSAGE));
+
+
+            }
+
+
+        });
+    }
+
+    //获取 可选择预算部门
+
+    public Observable<List<BudgetBean>> getBudgetDepart() {
+        Retrofit retrofit = builderJsonRetrofit();
+        Map<String, Object> paramMap = new HashMap<>();
+        //  paramMap.put("id", ajustMembersBean.getId());
+//        String paramsStr = JSON.toJSONString(budgetBean);
+        BudgetApi api = retrofit.create(BudgetApi.class);
+        Observable<Response<String>> observable = api.getBudgetDeparment();
+        return observable.map(new Function<Response<String>, List<BudgetBean>>() {
+            @Override
+            public List<BudgetBean> apply(Response<String> stringResponse) throws Exception {
+                String responseStr = stringResponse.body();
+                int codeHttp = stringResponse.code();
+                if (codeHttp == 401) {
+                    throw new IApiException("401", "401");
+                }
+                JSONObject jsonObject = JSON.parseObject(responseStr);
+                int code = jsonObject.getIntValue(AppConstant.JSON_CODE);
+                if (code == 200) {
+
+                    return null;
+                }
                 throw new IApiException("预算管理", jsonObject.getString(AppConstant.JSON_MESSAGE));
+
+
+            }
+
+
+        });
+    }
+
+    //获取 可选择预算科目
+
+    public Observable<List<BudgetBean>> getBudgetCategory() {
+        Retrofit retrofit = builderJsonRetrofit();
+        Map<String, Object> paramMap = new HashMap<>();
+        //  paramMap.put("id", ajustMembersBean.getId());
+//        String paramsStr = JSON.toJSONString(budgetBean);
+        BudgetApi api = retrofit.create(BudgetApi.class);
+        Observable<Response<String>> observable = api.getBudgetDeparment();
+        return observable.map(new Function<Response<String>, List<BudgetBean>>() {
+            @Override
+            public List<BudgetBean> apply(Response<String> stringResponse) throws Exception {
+                String responseStr = stringResponse.body();
+                int codeHttp = stringResponse.code();
+                if (codeHttp == 401) {
+                    throw new IApiException("401", "401");
+                }
+                JSONObject jsonObject = JSON.parseObject(responseStr);
+                int code = jsonObject.getIntValue(AppConstant.JSON_CODE);
+                if (code == 200) {
+
+                    return null;
+                }
+                throw new IApiException("新增预算（科目）", jsonObject.getString(AppConstant.JSON_MESSAGE));
 
 
             }

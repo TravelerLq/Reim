@@ -43,7 +43,8 @@ public class BudgetChooseActivity extends BaseActivity {
                 toActivity(BudgetByDepartManageActivity.class);
                 break;
             case R.id.tv_subject_type:
-                toActivity(BudgetManageActivity.class);
+                //toActivity(BudgetManageActivity.class);
+                toActivity(BudgetByCategoryManageActivity.class);
                 break;
             default:
                 break;

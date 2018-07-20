@@ -85,6 +85,9 @@ public class AppConstant {
     public static final String KEY_TYPE="type";
     public static final String VALUE_AJUST="ajust";
     public static final String VALUE_ADD="add";
+    public static final String VALUE_BUDGET_DEPART="depart";
+    public static final String VALUE_BUDGET_CATEGORY="category";
+    public static final String VALUE_SUBJECT_TYPE="subject_type";
 
 
 }

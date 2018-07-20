@@ -19,21 +19,29 @@ import retrofit2.http.QueryMap;
 public interface BudgetApi {
 
     //budget 获取
-    @GET("api/Login/PDALogin")
+    @GET("shuidao/quotas/all")
     Observable<Response<String>> getBudgetList(@QueryMap Map<String, Object> map);
 
     //budget item 删除
-    @PATCH("api/PersonalInfo/BindingCard")
+    @PATCH("shuidao/quotas/del")
     Observable<Response<String>> deleteBudgetItem(@Body String body);
 
     //budget 新增item
-    @POST("api/PersonalInfo/PDAUpdatePassword")
+    //http://192.168.1.111:8080/shuidao/quotas/add
+    @POST("shuidao/quotas/add")
     Observable<Response<String>> addBudgetItem(@Body String body);
 
 
     //budget 修改编辑item
-    @PATCH("api/PersonalInfo/PDAUpdatePassword")
+    @PATCH("shuidao/quotas/upd")
     Observable<Response<String>> updateBudgetItem(@Body String body);
 
+    //budget 获取可选择的部门
+    @GET("shuidao/quotas/all")
+    Observable<Response<String>> getBudgetDeparment();
+
+    //budget 获取 可选择的科目
+    @GET("shuidao/quotas/all")
+    Observable<Response<String>> getBudgetCategory();
 
 }

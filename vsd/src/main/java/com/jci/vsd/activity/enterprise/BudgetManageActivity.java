@@ -70,8 +70,12 @@ public class BudgetManageActivity extends BaseActivity {
         context = BudgetManageActivity.this;
         intData();
         initRecycleView();
+        getData();
 
 
+    }
+
+    private void getData() {
     }
 
 
@@ -80,8 +84,8 @@ public class BudgetManageActivity extends BaseActivity {
         BudgetBean bean = null;
         for (int i = 0; i < 5; i++) {
             bean = new BudgetBean();
-            bean.setBudget(i + i * 10);
-            bean.setDepartmentName("技术部门" + i + "");
+//            bean.setBudget(i + i * 10);
+//            bean.setDepartmentName("技术部门" + i + "");
             mDatas.add(new BudgetBean());
 
         }
@@ -120,10 +124,10 @@ public class BudgetManageActivity extends BaseActivity {
                 // ((SwipeMenuLayout) holder.itemView).setIos(true).setLeftSwipe(mIndex == 0 ? false : true);// 并依次打开左滑右滑
                 ((SwipeMenuLayout) holder.itemView).setIos(true).setLeftSwipe(true);
 //
-                EditText tvName = (EditText) holder.getView(R.id.edt_budget_deparment);
-                EditText tvBudget = (EditText) holder.getView(R.id.edt_budget_account);
-                tvName.setText(swipeBean.getDepartmentName());
-                tvBudget.setText(swipeBean.getBudget() + "");
+                TextView tvName = (TextView) holder.getView(R.id.edt_budget_deparment);
+                TextView tvBudget = (TextView) holder.getView(R.id.edt_budget_account);
+//                tvName.setText(swipeBean.getDepartmentName());
+//                tvBudget.setText(swipeBean.getBudget() + "");
 //                tvName.setFocusable(false);
 //                tvBudget.setFocusable(false);
 //                tvName.setFocusable(false);
@@ -160,6 +164,7 @@ public class BudgetManageActivity extends BaseActivity {
                         }
                     }
                 });
+                //edit
                 holder.setOnClickListener(R.id.btnEdit, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -173,7 +178,7 @@ public class BudgetManageActivity extends BaseActivity {
                 (holder).setOnClickListener(R.id.content, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(mContext, "onClick:" + mDatas.get(holder.getAdapterPosition()).getDepartmentName(), Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(mContext, "onClick:" + mDatas.get(holder.getAdapterPosition()).getDepartmentName(), Toast.LENGTH_SHORT).show();
                         Log.d("TAG", "onClick() called with: v = [" + v + "]");
 
                     }
@@ -207,7 +212,8 @@ public class BudgetManageActivity extends BaseActivity {
     //获取数据
     //加载List 数据
     private void loadData() {
-        Observable<List<BudgetBean>> observable = new BudgetManageControl().getBudgetList();
+        BudgetBean budgetBean = null;
+        Observable<List<BudgetBean>> observable = new BudgetManageControl().getBudgetList(2);
         CommonDialogObserver<List<BudgetBean>> observer = new CommonDialogObserver<List<BudgetBean>>(this) {
             @Override
             public void onNext(List<BudgetBean> beanList) {

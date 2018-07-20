@@ -8,7 +8,8 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_25" />
+        android:layout_height="@dimen/dimen_25"
+        android:background="@color/white" />
 
     <LinearLayout
         android:id="@+id/ll_budget_department"
@@ -22,42 +23,35 @@
         <TextView
             android:id="@+id/textVi23ewer28"
             style="@style/new_depart_text_style"
-            android:layout_gravity="center_vertical"
             android:text="部门名称:" />
 
         <TextView
             android:id="@+id/edt_name"
             style="@style/new_depart_edit_style"
-            android:layout_gravity="center_vertical"
+            android:drawableRight="@drawable/ic_more"
             android:text="请选择部门" />
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_1"
-        android:background="@color/stock" />
-
     <LinearLayout
         android:id="@+id/ll_budget_category"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_60"
-        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_height="@dimen/dimen_55"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/dimen_10">
+        android:paddingLeft="@dimen/dimen_10"
+        android:visibility="gone">
 
         <TextView
 
             style="@style/new_depart_text_style"
-            android:layout_gravity="center_vertical"
             android:text="科目类别:" />
 
         <TextView
             android:id="@+id/tv_budget_category"
             style="@style/new_depart_edit_style"
-            android:layout_gravity="center_vertical"
+            android:drawableRight="@drawable/ic_more"
             android:text="请选择科目类别" />
 
     </LinearLayout>
@@ -65,7 +59,7 @@
     <LinearLayout
         android:id="@+id/ll_expense_authority"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_60"
+        android:layout_height="@dimen/dimen_55"
         android:layout_marginTop="@dimen/dimen_10"
         android:background="@color/white"
         android:gravity="center_vertical"
@@ -74,13 +68,12 @@
 
         <TextView
             style="@style/new_depart_text_style"
-            android:layout_gravity="center_vertical"
+
             android:text="预算金额" />
 
         <EditText
             android:id="@+id/edt_budget_input"
             style="@style/new_depart_edit_style"
-            android:layout_gravity="center_vertical"
             android:layout_weight="2.5"
             android:hint="请输入"
             android:textColor="@color/grey_b5b5" />
@@ -106,7 +99,6 @@
         <EditText
             android:id="@+id/tv_approval_person"
             style="@style/new_depart_edit_style"
-            android:layout_gravity="center_vertical"
             android:layout_weight="2.5"
             android:hint="请输入"
             android:textColor="@color/grey_b5b5" />
