@@ -4,13 +4,10 @@ package com.jci.vsd.network.control;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jci.vsd.bean.enterprise.AddBudgetItemBean;
-import com.jci.vsd.bean.enterprise.AjustMembersBean;
 import com.jci.vsd.bean.enterprise.BudgetBean;
-import com.jci.vsd.bean.enterprise.MembersBean;
 import com.jci.vsd.constant.AppConstant;
 import com.jci.vsd.exception.IApiException;
 import com.jci.vsd.network.api.BudgetApi;
-import com.jci.vsd.network.api.MembersApi;
 import com.jci.vsd.utils.Loger;
 
 import java.util.HashMap;
@@ -25,14 +22,69 @@ import retrofit2.Retrofit;
 
 /**
  * Created by liqing on 18/7/11.
- * 预算管理
+ * 报销
  */
 
-public class BudgetManageControl extends BaseControl {
+public class ReimControl extends BaseControl {
 
+
+
+    //add预算
+
+    public Observable<Boolean> addReim(AddBudgetItemBean bean) {
+        String type = bean.getType();
+        Retrofit retrofit = builderJsonRetrofit();
+        Map<String, Object> paramMap = new HashMap<>();
+        if (type.equals("1")) {
+            //部门
+            paramMap.put("dpt", bean.getDpt());
+            paramMap.put("dquota", bean.getDquota());
+
+        } else if (type.equals("2")) {
+            //二级科目
+            paramMap.put("cat", bean.getCat());
+            paramMap.put("cquota", bean.getCquota());
+        } else if (type.equals("3")) {
+            paramMap.put("item", bean.getItem());
+            paramMap.put("iquota", bean.getIquota());
+        }
+
+//        {
+//            "cat":2,"cquota":10000.00
+//
+//            "item":3,"iquota":1800.00
+//
+//            "dpt":"118","dquota":20000.00
+//        }
+//        paramMap.put("id", membersBean.getId());
+        String paramStr = JSON.toJSONString(paramMap);
+        BudgetApi api = retrofit.create(BudgetApi.class);
+        Observable<Response<String>> observable = api.addBudgetItem(paramStr);
+        return observable.map(new Function<Response<String>, Boolean>() {
+            @Override
+            public Boolean apply(Response<String> stringResponse) throws Exception {
+                String responseStr = stringResponse.body();
+                int codeHttp = stringResponse.code();
+                if (codeHttp == 401) {
+                    throw new IApiException("401", "401");
+                }
+                JSONObject jsonObject = JSON.parseObject(responseStr);
+                int code = jsonObject.getIntValue(AppConstant.JSON_CODE);
+                if (code == 200) {
+
+                    return true;
+                }
+                throw new IApiException("新增预算管理", jsonObject.getString(AppConstant.JSON_MESSAGE));
+
+
+            }
+
+
+        });
+    }
 
     //预算管理
-    public Observable<List<BudgetBean>> getBudgetList(int type) {
+    public Observable<List<BudgetBean>> getReimList(int type) {
         Retrofit retrofit = builderRetrofitWithHeader();
         BudgetApi api = retrofit.create(BudgetApi.class);
         Map<String, Object> map = new HashMap<>();

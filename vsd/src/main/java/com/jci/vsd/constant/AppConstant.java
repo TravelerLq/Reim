@@ -32,7 +32,9 @@ public class AppConstant {
      */
     public static final int HZ_SEND_VEWPAGE_EVERY_PE_NAGO = 9;
     //http://192.168.1.114:8080/yuanshen/public/login
-    public static final String BASE_URL = "http://192.168.1.111:8080/";
+    //http://192.168.1.100:8080/shuidao/chk/listrelas
+   // public static final String BASE_URL = "http://192.168.1.111:8080/";
+    public static final String BASE_URL = "http://192.168.1.100:8080/";
     private static final String URL_TEST = "http://10.90.65.209:8084/";//http://10.126.211.7/";
     private static final String URL_PRD = "http://10.90.65.209:8082/";//"http://10.126.211.142/";//"http://10.90.65.209:8082/";"10.126.211.7";
     public static final String OUTSIZE_URL = "http://10.90.65.209:8088/";
@@ -82,6 +84,11 @@ public class AppConstant {
 
     public static final String KEY_ENTERPRISE="enterprise";
     public static final String KEY_ENTERPRISE_LIST="enterprise_list";
+
+    public static final String KEY_DEPARTMENT="department";
+    public static final String KEY_DEPARTMENT_LIST="department_list";
+
+
     public static final String KEY_TYPE="type";
     public static final String VALUE_AJUST="ajust";
     public static final String VALUE_ADD="add";

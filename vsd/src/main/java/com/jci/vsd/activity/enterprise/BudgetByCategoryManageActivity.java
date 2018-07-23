@@ -291,6 +291,11 @@ public class BudgetByCategoryManageActivity extends BaseActivity {
         editText.requestFocus();
         // activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
-
-
+//
+//    @Override
+//    protected void onResume() {
+//        super.onPostResume();
+//        Loger.e(TAG+"onPostResume---");
+//        getData(type);
+//    }
 }

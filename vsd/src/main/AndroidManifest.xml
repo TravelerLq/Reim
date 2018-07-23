@@ -177,9 +177,15 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
 
         <activity
-            android:name=".activity.enterprise.ProducerAddActivity"
+        android:name=".activity.enterprise.ProducerAddActivity"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+        <activity
+            android:name=".activity.enterprise.ProducerEditActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+
+
         <activity
             android:name=".activity.UserInfo.UserInfoActivity"
             android:screenOrientation="portrait"

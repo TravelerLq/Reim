@@ -13,35 +13,37 @@ import retrofit2.http.QueryMap;
 
 /**
  * Created by Yso on 2017/11/13.ring
- * 预算Api
+ * 审批流程Api
  */
 
-public interface BudgetApi {
+public interface ProducerApi {
 
-    //budget 获取
+    // 获取
     @GET("shuidao/quotas/all")
-    Observable<Response<String>> getBudgetList(@QueryMap Map<String, Object> map);
+    Observable<Response<String>> getProducerList();
 
     //budget item 删除
-    @PATCH("shuidao/quotas/del")
-    Observable<Response<String>> deleteBudgetItem(@Body String body);
+    @DELETE("shuidao/quotas/del")
+    Observable<Response<String>> deleteProducerItem(@Body String body);
 
     //budget 新增item
     //http://192.168.1.111:8080/shuidao/quotas/add
     @POST("shuidao/quotas/add")
-    Observable<Response<String>> addBudgetItem(@Body String body);
+    Observable<Response<String>> addProducerItem(@Body String body);
 
 
     //budget 修改编辑item
     @PATCH("shuidao/quotas/upd")
-    Observable<Response<String>> updateBudgetItem(@Body String body);
+    Observable<Response<String>> updateProducerItem(@Body String body);
 
-    //budget 获取可选择的部门    getJsonData();
-    @GET("shuidao/quotas/avldpts")
+    //budget 获取可选择的部门
+    @GET("shuidao/quotas/all")
     Observable<Response<String>> getBudgetDeparment();
 
+    //http://192.168.1.100:8080/shuidao/chk/listrelas
+
     //budget 获取 可选择的科目
-    @GET("shuidao/quotas/all")
+    @GET("shuidao/chk/listrelas")
     Observable<Response<String>> getBudgetCategory();
 
 }

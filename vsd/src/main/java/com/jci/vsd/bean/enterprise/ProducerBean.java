@@ -25,12 +25,12 @@ public class ProducerBean extends BaseBean {
     private String approverName;
     private int approverOrder;
 
-    public ProducerBean(String approveNumName, String approverName, int approverOrder,String dname) {
-        this.approveNumName = approveNumName;
-        this.approverName = approverName;
-        this.approverOrder = approverOrder;
-        this.dname=dname;
-    }
+//    public ProducerBean(String approveNumName, String approverName, int approverOrder,String dname) {
+//        this.approveNumName = approveNumName;
+//        this.approverName = approverName;
+//        this.approverOrder = approverOrder;
+//        this.dname=dname;
+//    }
 
     public String getDname() {
         return dname;

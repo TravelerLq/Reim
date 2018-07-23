@@ -17,16 +17,25 @@ import com.jci.vsd.SlideRecycleview.CommonAdapter;
 import com.jci.vsd.SlideRecycleview.SwipeMenuLayout;
 import com.jci.vsd.SlideRecycleview.ViewHolder;
 import com.jci.vsd.activity.BaseActivity;
+import com.jci.vsd.activity.LoginActivity;
 import com.jci.vsd.bean.enterprise.BudgetBean;
+import com.jci.vsd.bean.enterprise.DepartmentBean;
 import com.jci.vsd.bean.enterprise.ProducerBean;
+import com.jci.vsd.network.control.DepartmentManageControl;
+import com.jci.vsd.network.control.ProducerManageControl;
+import com.jci.vsd.observer.CommonDialogObserver;
+import com.jci.vsd.observer.RxHelper;
+import com.jci.vsd.view.widget.SimpleToast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
 
 /**
  * Created by liqing on 18/7/3.
+ * 审批流程管理
  */
 
 public class ProducerManageActivity extends BaseActivity {
@@ -48,6 +57,8 @@ public class ProducerManageActivity extends BaseActivity {
         initViewEvent();
         context = ProducerManageActivity.this;
         rightFucTxt.setVisibility(View.VISIBLE);
+        getData();
+        //test
         intData();
         initRecycleView();
     }
@@ -55,10 +66,19 @@ public class ProducerManageActivity extends BaseActivity {
 
     private void intData() {
         mDatas = new ArrayList<>();
+        ProducerBean bean;
         for (int i = 0; i < 5; i++) {
-            mDatas.add(new ProducerBean("boss审批", "jess", 1, "技术部门"));
+            bean = new ProducerBean();
+            bean.setApproveNumName("boss approval" + i);
+
+
+//         bean.
+            // mDatas.add(new ProducerBean("boss审批", "jess", 1, "技术部门"));
+
+
         }
     }
+
 
     private void initRecycleView() {
 
@@ -104,9 +124,11 @@ public class ProducerManageActivity extends BaseActivity {
                     public void onClick(View v) {
                         int pos = holder.getLayoutPosition();
                         if (pos >= 0 && pos < mDatas.size()) {
-                            Toast.makeText(context, "删除:" + pos, Toast.LENGTH_SHORT).show();
-                            mDatas.remove(pos);
-                            mAdapter.notifyItemRemoved(pos);//推荐用这个
+
+                            delete(mDatas.get(pos).getApproverId(), pos);
+                            //  Toast.makeText(context, "删除:" + pos, Toast.LENGTH_SHORT).show();
+//                            mDatas.remove(pos);
+//                            mAdapter.notifyItemRemoved(pos);//推荐用这个
                             //如果删除时，不使用mAdapter.notifyItemRemoved(pos)，则删除没有动画效果，
                             //且如果想让侧滑菜单同时关闭，需要同时调用 ((SwipeMenuLayout) holder.itemView).quickClose();
                             //mAdapter.notifyDataSetChanged();
@@ -119,7 +141,7 @@ public class ProducerManageActivity extends BaseActivity {
                         int pos = holder.getLayoutPosition();
 //
                         //   toAtivityWithParams(EditBudgetItemActivity.class, mDatas.get(pos));
-                        toAtivityWithParams(ProducerAddActivity.class, mDatas.get(pos));
+                        toAtivityWithParams(ProducerEditActivity.class, mDatas.get(pos));
 
                     }
                 });
@@ -177,4 +199,78 @@ public class ProducerManageActivity extends BaseActivity {
                 break;
         }
     }
+
+
+    // 获取
+    private void getData() {
+        Observable<List<ProducerBean>> observable = new ProducerManageControl().getProducerList();
+        CommonDialogObserver<List<ProducerBean>> observer = new CommonDialogObserver<List<ProducerBean>>(this) {
+            @Override
+            public void onNext(List<ProducerBean> beanList) {
+                super.onNext(beanList);
+                SimpleToast.toastMessage("获取成功", Toast.LENGTH_SHORT);
+                if (beanList != null) {
+                    mDatas.clear();
+                    mDatas.addAll(beanList);
+                    mAdapter.notifyDataSetChanged();
+
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                super.onError(t);
+                if (t.getMessage().equals("401")) {
+                    SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_SHORT);
+                    exit();
+                    toActivity(LoginActivity.class);
+                } else {
+                    // SimpleToast.toastMessage(t.toString(), Toast.LENGTH_LONG);
+                }
+
+
+            }
+
+
+        };
+        RxHelper.bindOnUIActivityLifeCycle(observable, observer, ProducerManageActivity.this);
+
+    }
+
+
+    //删除
+    //删除
+    private void delete(int departId, final int pos) {
+
+        Observable<Boolean> observable = new ProducerManageControl().deleteProducer(departId);
+        CommonDialogObserver<Boolean> observer = new CommonDialogObserver<Boolean>(this) {
+            @Override
+            public void onNext(Boolean isSuccess) {
+                super.onNext(isSuccess);
+                SimpleToast.toastMessage("删除成功", Toast.LENGTH_SHORT);
+                mDatas.remove(pos);
+                mAdapter.notifyItemRemoved(pos);//推荐用这个
+
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                super.onError(t);
+                if (t.getMessage().equals("401")) {
+                    SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_SHORT);
+                    exit();
+                    toActivity(LoginActivity.class);
+                }
+
+
+            }
+
+
+        };
+        RxHelper.bindOnUIActivityLifeCycle(observable, observer, ProducerManageActivity.this);
+
+
+    }
+
 }

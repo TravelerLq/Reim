@@ -2,6 +2,7 @@ package com.jci.vsd.activity.enterprise;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -9,9 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.jci.vsd.R;
 import com.jci.vsd.activity.BaseActivity;
 import com.jci.vsd.activity.LoginActivity;
+import com.jci.vsd.bean.CatBean;
 import com.jci.vsd.bean.enterprise.AddBudgetItemBean;
 import com.jci.vsd.bean.enterprise.BudgetBean;
 import com.jci.vsd.constant.AppConstant;
@@ -22,15 +25,18 @@ import com.jci.vsd.utils.Loger;
 import com.jci.vsd.utils.TimePickerUtils;
 import com.jci.vsd.view.widget.SimpleToast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.addapp.pickers.entity.Province;
 import cn.addapp.pickers.listeners.OnItemPickListener;
 import cn.addapp.pickers.listeners.OnMoreItemPickListener;
 import cn.addapp.pickers.listeners.OnSingleWheelListener;
 import cn.addapp.pickers.picker.LinkagePicker;
 import cn.addapp.pickers.picker.SinglePicker;
+import cn.addapp.pickers.util.ConvertUtils;
 import cn.addapp.pickers.util.DateUtils;
 import io.reactivex.Observable;
 
@@ -63,6 +69,14 @@ public class BudgetAddItemActivity extends BaseActivity {
 
     List<String> singlePickList;
     List<BudgetBean> departmentList;
+    List<CatBean.ItemsBean> itemsBeanList = new ArrayList<>();
+
+    private List<CatBean> catBeanList = new ArrayList<>();
+    private List<String> firstList;
+    private int categoryId;
+    private int itemId;
+    private int departId;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,10 +94,44 @@ public class BudgetAddItemActivity extends BaseActivity {
         } else {
             llBudgetCategory.setVisibility(View.VISIBLE);
             llBudgetDepartment.setVisibility(View.GONE);
-            getBudgetCategory();
+            // getBudgetCategory();
+            getJsonData();
         }
 
         initViewEvent();
+    }
+
+
+    private void getJsonData() {
+
+        catBeanList = new ArrayList<>();
+        firstList = new ArrayList<>();
+        //  showProgress();
+
+        Thread thread = new Thread(new Runnable() {
+
+            private String json;
+
+
+            @Override
+            public void run() {
+                //线程执行内容
+                try {
+                    json = ConvertUtils.toString(getAssets().open("data.json"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                catBeanList.addAll(JSON.parseArray(json, CatBean.class));
+                for (int i = 0; i < catBeanList.size(); i++) {
+
+                    firstList.add(catBeanList.get(i).getCname());
+                }
+            }
+        });
+        //开启线程
+        thread.start();
+
+
     }
 
 
@@ -104,9 +152,11 @@ public class BudgetAddItemActivity extends BaseActivity {
             case R.id.edt_name:
                 //选择部门
                 onOptionPicker(tvDepartmentName, singlePickList);
+                //  TimePickerUtils.getInstance().onListDataPicker(BudgetAddItemActivity.this,singlePickList,edtBudgetInput);
 
                 break;
             case R.id.tv_budget_category:
+                onLinkagePicker(tvBudgetCategory);
 
                 break;
             default:
@@ -117,6 +167,7 @@ public class BudgetAddItemActivity extends BaseActivity {
     private void checkData(String intentType) {
         String name = tvDepartmentName.getText().toString();
         String budget = edtBudgetInput.getText().toString();
+        Double budgetDouble = Double.valueOf(budget);
 
         String category = tvBudgetCategory.getText().toString();
         if (TextUtils.isEmpty(budget)) {
@@ -134,6 +185,10 @@ public class BudgetAddItemActivity extends BaseActivity {
             }
             //addBudget Bydepartment
             AddBudgetItemBean addBudgetItemBean = new AddBudgetItemBean();
+            addBudgetItemBean.setType("1");
+            addBudgetItemBean.setDpt(departId);
+
+            addBudgetItemBean.setDquota(budgetDouble);
             addBudgetItem(addBudgetItemBean);
 
         } else {
@@ -145,7 +200,23 @@ public class BudgetAddItemActivity extends BaseActivity {
             }
             //addBudget Bydepartment
             AddBudgetItemBean addBudgetItemBean = new AddBudgetItemBean();
-            addBudgetItem(addBudgetItemBean);
+
+
+            if (itemId != 0) {
+                //更新科目三
+
+                addBudgetItemBean.setCat(itemId);
+                addBudgetItemBean.setType("3");
+                addBudgetItemBean.setIquota(budgetDouble);
+                addBudgetItem(addBudgetItemBean);
+            } else {
+                // 更科目二
+                addBudgetItemBean.setType("2");
+                addBudgetItemBean.setCat(categoryId);
+                addBudgetItemBean.setCquota(budgetDouble);
+                addBudgetItem(addBudgetItemBean);
+            }
+
 
         }
 
@@ -153,7 +224,7 @@ public class BudgetAddItemActivity extends BaseActivity {
     }
 
     private void getBudgetDeparment() {
-        Observable<List<BudgetBean>> observable = new BudgetManageControl().getBudgetCategory();
+        Observable<List<BudgetBean>> observable = new BudgetManageControl().getBudgetDepart();
         CommonDialogObserver observer = new CommonDialogObserver<List<BudgetBean>>(this) {
             @Override
             public void onNext(List<BudgetBean> budgetBeans) {
@@ -163,6 +234,7 @@ public class BudgetAddItemActivity extends BaseActivity {
                 singlePickList.clear();
                 for (int i = 0; i < departmentList.size(); i++) {
                     singlePickList.add(departmentList.get(i).getName());
+                    Loger.e("--pickDptName--" + singlePickList.get(i));
                 }
 
 
@@ -207,14 +279,21 @@ public class BudgetAddItemActivity extends BaseActivity {
     }
 
     private void addBudgetItem(AddBudgetItemBean requestBean) {
+        final String addType = requestBean.getType();
+        Loger.e("add-type=" + addType);
         Observable<Boolean> observable = new BudgetManageControl().addBudget(requestBean);
         CommonDialogObserver<Boolean> observer = new CommonDialogObserver<Boolean>(this) {
             @Override
             public void onNext(Boolean aBoolean) {
                 super.onNext(aBoolean);
                 if (aBoolean) {
-                    SimpleToast.toastMessage("添加部门成功", Toast.LENGTH_SHORT);
-                    toActivity(BudgetManageActivity.class);
+                    SimpleToast.toastMessage("新增成功", Toast.LENGTH_SHORT);
+                    if (addType.equals("1")) {
+                        toActivity(BudgetByDepartManageActivity.class);
+                    } else {
+                        toActivity(BudgetByCategoryManageActivity.class);
+                    }
+
                     finish();
                 }
             }
@@ -222,11 +301,13 @@ public class BudgetAddItemActivity extends BaseActivity {
             @Override
             public void onError(Throwable t) {
                 super.onError(t);
-                if (t.getMessage().equals("401"))
+                SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_LONG);
+                if (t.getMessage().equals("401")) {
+                    exit();
+                    toActivity(LoginActivity.class);
+                }
 
-                    SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_LONG);
-                exit();
-                toActivity(LoginActivity.class);
+
             }
         };
         RxHelper.bindOnUIActivityLifeCycle(observable, observer, BudgetAddItemActivity.this);
@@ -234,19 +315,24 @@ public class BudgetAddItemActivity extends BaseActivity {
 
 
     //单选
-    public void onOptionPicker(View view, List<String> list) {
+    public void onOptionPicker(final TextView view, List<String> list) {
         SinglePicker<String> picker = new SinglePicker<>(this, list);
         picker.setCanLoop(false);//不禁用循环
         picker.setLineVisible(true);
         picker.setTextSize(18);
-        picker.setSelectedIndex(8);
-        picker.setWheelModeEnable(false);
+//        picker.setSelectedIndex(8);
+//        picker.setWheelModeEnable(false);
         //启用权重 setWeightWidth 才起作用
-        picker.setLabel("分");
-        picker.setWeightEnable(true);
-        picker.setWeightWidth(1);
-        picker.setSelectedTextColor(Color.GREEN);//前四位值是透明度
-        picker.setUnSelectedTextColor(Color.RED);
+//        picker.setCanLoop(false);
+        picker.setWheelModeEnable(true);
+        picker.setTopPadding(15);
+        picker.setSelectedIndex(0);
+//        picker.setLabel("分");
+//        picker.setWeightEnable(true);
+//        picker.setWeightWidth(1);
+//        picker.setCanLoop(false);
+//        picker.setSelectedTextColor(Color.GREEN);//前四位值是透明度
+//        picker.setUnSelectedTextColor(Color.RED);
         picker.setOnSingleWheelListener(new OnSingleWheelListener() {
             @Override
             public void onWheeled(int index, String item) {
@@ -258,7 +344,9 @@ public class BudgetAddItemActivity extends BaseActivity {
             public void onItemPicked(int index, String item) {
                 Loger.e("index=" + index + ", item=" + item);
                 // 获取部门ID
-                int selectDepartId = departmentList.get(index).getDpt();
+                departId = departmentList.get(index).getId();
+                view.setText(item);
+
 
             }
         });
@@ -268,7 +356,7 @@ public class BudgetAddItemActivity extends BaseActivity {
 
     //两级 关联
 
-    public void onLinkagePicker(View view) {
+    public void onLinkagePicker(final TextView view) {
         LinkagePicker.DataProvider provider = new LinkagePicker.DataProvider() {
 
 //            @Override
@@ -283,24 +371,28 @@ public class BudgetAddItemActivity extends BaseActivity {
 
             @Override
             public List<String> provideFirstData() {
-                ArrayList<String> firstList = new ArrayList<>();
-                firstList.add("管理费");
-                firstList.add("");
+//                ArrayList<String> firstList = new ArrayList<>();
+//                firstList.add("管理费1");
+//                firstList.add("管理费2");
                 return firstList;
             }
 
             @Override
             public List<String> provideSecondData(int firstIndex) {
-                //二级下面的KeyValueBean
+//                //二级下面的KeyValueBean
                 ArrayList<String> secondList = new ArrayList<>();
-                for (int i = 1; i <= (firstIndex == 0 ? 12 : 24); i++) {
-                    String str = DateUtils.fillZero(i);
-                    if (firstIndex == 0) {
-                        str += "￥";
-                    } else {
-                        str += "$";
-                    }
-                    secondList.add(str);
+                CatBean catBean = catBeanList.get(firstIndex);
+                itemsBeanList.clear();
+                itemsBeanList.addAll(catBean.getItems());
+                secondList.clear();
+//                secondList.addAll(catBean.getItems());
+                categoryId = catBean.getCat();
+                Loger.e("---categoryId" + categoryId);
+
+                for (int i = 0; i < itemsBeanList.size(); i++) {
+                    String itemName = itemsBeanList.get(i).getIname();
+                    Loger.e("--itemName--" + itemName);
+                    secondList.add(itemName);
                 }
                 return secondList;
             }
@@ -308,6 +400,8 @@ public class BudgetAddItemActivity extends BaseActivity {
             @Override
             public List<String> provideThirdData(int firstIndex, int secondIndex) {
 
+                itemId = itemsBeanList.get(secondIndex).getId();
+                Loger.e("---itemSelectId--" + itemId);
                 ArrayList<String> thirdList = new ArrayList<>();
                 for (int i = 1; i <= (firstIndex == 0 ? 12 : 24); i++) {
                     String str = DateUtils.fillZero(i) + "third";
@@ -323,19 +417,23 @@ public class BudgetAddItemActivity extends BaseActivity {
 
         };
         LinkagePicker picker = new LinkagePicker(this, provider);
-        picker.setCanLoop(false);
-        picker.setLabel("小时制", "点");
-        picker.setSelectedIndex(0, 8);
+        picker.setCanLoop(true);
+//        picker.setLabel("科目二", "科目三");
+        picker.setSelectedIndex(0, 0);
         //picker.setSelectedItem("12", "9");
         picker.setOnMoreItemPickListener(new OnMoreItemPickListener<String>() {
 
             @Override
             public void onItemPicked(String first, String second, String third) {
                 Loger.e(first + "-" + second + "-" + third);
+                view.setText("" + first + second);
+
+
             }
         });
         picker.show();
     }
+
 
 }
 

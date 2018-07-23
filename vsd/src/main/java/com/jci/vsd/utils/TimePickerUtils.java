@@ -42,8 +42,8 @@ public class TimePickerUtils {
         picker.setCanLoop(false);
         picker.setWheelModeEnable(true);
         picker.setTopPadding(15);
-        picker.setRangeStart(calendar.get(Calendar.YEAR) - 2, calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
-        picker.setRangeEnd(calendar.get(Calendar.YEAR) + 2, calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+        picker.setRangeStart(calendar.get(Calendar.YEAR) - 5, calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+        picker.setRangeEnd(calendar.get(Calendar.YEAR) + 10, calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
         picker.setSelectedItem(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
         picker.setWeightEnable(true);
         picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
@@ -81,8 +81,8 @@ public class TimePickerUtils {
         picker.setCanLoop(false);
         picker.setWheelModeEnable(true);
         picker.setTopPadding(15);
-        picker.setRangeStart(calendar.get(Calendar.YEAR) - 2, calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
-        picker.setRangeEnd(calendar.get(Calendar.YEAR) + 2, calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+        picker.setRangeStart(calendar.get(Calendar.YEAR) - 5, calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+        picker.setRangeEnd(calendar.get(Calendar.YEAR) + 10, calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
         picker.setSelectedItem(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
         picker.setWeightEnable(true);
         picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {

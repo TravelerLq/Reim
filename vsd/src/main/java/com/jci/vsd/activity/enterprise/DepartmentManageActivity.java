@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.anupcowkur.reservoir.Reservoir;
 import com.jci.vsd.R;
 import com.jci.vsd.SlideRecycleview.CommonAdapter;
 import com.jci.vsd.SlideRecycleview.SwipeMenuLayout;
@@ -24,6 +25,7 @@ import com.jci.vsd.activity.Reim.ReimRecycActivity;
 import com.jci.vsd.bean.SwipeBean;
 import com.jci.vsd.bean.enterprise.DepartmentBean;
 import com.jci.vsd.constant.AppConstant;
+import com.jci.vsd.data.DepartmentData;
 import com.jci.vsd.network.control.DepartmentManageControl;
 import com.jci.vsd.observer.CommonDialogObserver;
 import com.jci.vsd.observer.RxHelper;
@@ -216,6 +218,7 @@ public class DepartmentManageActivity extends BaseActivity {
                 if (beanList != null) {
                     mDatas.clear();
                     mDatas.addAll(beanList);
+                    DepartmentData.saveDepartmentList(mDatas);
                     mAdapter.notifyDataSetChanged();
 
                 }
@@ -259,7 +262,7 @@ public class DepartmentManageActivity extends BaseActivity {
             @Override
             public void onError(Throwable t) {
                 super.onError(t);
-                if (t.getMessage().equals("401")){
+                if (t.getMessage().equals("401")) {
                     SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_SHORT);
                     exit();
                     toActivity(LoginActivity.class);
