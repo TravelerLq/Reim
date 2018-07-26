@@ -3,11 +3,13 @@ package com.jci.vsd.activity.Reim;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,14 +18,19 @@ import android.widget.Toast;
 
 import com.jci.vsd.R;
 import com.jci.vsd.activity.BaseActivity;
+import com.jci.vsd.activity.MainActivity;
 import com.jci.vsd.adapter.TimeLineAdapter;
 import com.jci.vsd.adapter.reim.ApprovalDetailRecycleAdapter;
 import com.jci.vsd.bean.reim.ApprovalAllDetailBean;
 import com.jci.vsd.bean.reim.WaitApprovalDetailBean;
+import com.jci.vsd.constant.MySpEdit;
 import com.jci.vsd.network.control.ReimControl;
 import com.jci.vsd.observer.CommonDialogObserver;
 import com.jci.vsd.observer.RxHelper;
+import com.jci.vsd.utils.BitmapUtil;
+import com.jci.vsd.utils.FileUtils;
 import com.jci.vsd.utils.Loger;
+import com.jci.vsd.utils.StrTobaseUtil;
 import com.jci.vsd.view.widget.DividerItemDecorationOld;
 import com.jci.vsd.view.widget.SimpleToast;
 
@@ -32,6 +39,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.unitid.spark.cm.sdk.business.SignatureP1Service;
+import cn.unitid.spark.cm.sdk.common.DataProcessType;
+import cn.unitid.spark.cm.sdk.data.response.DataProcessResponse;
+import cn.unitid.spark.cm.sdk.exception.CmSdkException;
+import cn.unitid.spark.cm.sdk.listener.ProcessListener;
 import io.reactivex.Observable;
 
 /**
@@ -66,6 +78,10 @@ public class MyApprovalProcessActivity extends BaseActivity {
     private String reason;
     private boolean approveResultId;
     private int level = 0;
+    private String picPath;
+    private String cert;
+    private String sign;
+    private int id;
 
 
     @Override
@@ -84,6 +100,7 @@ public class MyApprovalProcessActivity extends BaseActivity {
         int id = Integer.valueOf(getIntent().getStringExtra("id"));
 
         getData(id);
+        getpic(id);
 
     }
 
@@ -194,7 +211,17 @@ public class MyApprovalProcessActivity extends BaseActivity {
             case R.id.tv_approval_pass:
                 //通过，先去签名数据
                 approveResultId = true;
-                submit();
+                String hashFile = null;
+                try {
+                    hashFile = FileUtils.getMD5Checksum(picPath);
+                    signVerifyP1(hashFile);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Loger.e("--hashFile--" + hashFile);
+                signVerifyP1(hashFile);
+                // submit();
+
                 break;
             case R.id.tv_approval_unpass:
                 //填写理由
@@ -269,6 +296,57 @@ public class MyApprovalProcessActivity extends BaseActivity {
     }
 
 
+    //签名验证
+    private void signVerifyP1(final String base64Code1) {
+//        pdu.showpd();
+
+        String plantext = base64Code1;
+
+
+        MyApprovalProcessActivity.this.getIntent().putExtra("data", plantext);
+        MyApprovalProcessActivity.this.getIntent().putExtra("type", DataProcessType.SIGNATURE_P1.name());
+        SignatureP1Service signatureP1Service = new SignatureP1Service(MyApprovalProcessActivity.this, "1234", new ProcessListener<DataProcessResponse>() {
+            @Override
+            public void doFinish(DataProcessResponse dataProcessResponse, String certificate) {
+
+//                if (pdu.getMypDialog().isShowing()) {
+//                    pdu.dismisspd();
+//                }
+                if (dataProcessResponse.getRet() == 0) {
+                    Log.e("密钥", "= " + dataProcessResponse.getResult());
+                    // spu.setCertKey(dataProcessResponse.getResult());
+                    //获得就是签名证书
+                    Log.e("cert", "= " + certificate);
+                    cert = certificate;
+                    sign = dataProcessResponse.getResult();
+                    // spu.setCert(certificate);
+                    SubmitApprovalBean bean = new SubmitApprovalBean();
+                    bean.setCer(cert);
+                    bean.setSign(sign);
+                    id = 36;
+                    bean.setId(id);
+                    submitApproval(bean);
+                    //去提交单据
+                    // submitSignJsonstring();
+                } else {
+//                    if (pdu.getMypDialog().isShowing()) {
+//                        pdu.dismisspd();
+//                    }
+                    Toast.makeText(MyApprovalProcessActivity.this, "文件签名失败" + dataProcessResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void doException(CmSdkException e) {
+//                if (pdu.getMypDialog().isShowing()) {
+//                    pdu.dismisspd();
+//                }
+                Toast.makeText(MyApprovalProcessActivity.this, "文件签名失败" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
     private void getData(int id) {
         Observable<List<WaitApprovalDetailBean>> observable = new ReimControl().getWaitApprovalDetail(id);
         CommonDialogObserver<List<WaitApprovalDetailBean>> observer = new CommonDialogObserver<List<WaitApprovalDetailBean>>(this) {
@@ -294,5 +372,57 @@ public class MyApprovalProcessActivity extends BaseActivity {
 
     }
 
+
+    private void getpic(int id) {
+
+        Observable<ReimPicBean> observable = new ReimControl().getReimPic(id);
+        CommonDialogObserver<ReimPicBean> observer = new CommonDialogObserver<ReimPicBean>(this) {
+            @Override
+            public void onNext(ReimPicBean bean) {
+                super.onNext(bean);
+                SimpleToast.toastMessage("获取成功", Toast.LENGTH_SHORT);
+                if (bean != null) {
+                    String base64Code = bean.getBytes();
+                    String picName = bean.getName();
+                    Bitmap bitmap = StrTobaseUtil.base64ToBitmap(base64Code);
+                    //  picPath = BitmapUtil.saveBitmapToSDCard(bitmap, System.currentTimeMillis() + ".jpg");
+                    picPath = BitmapUtil.saveBitmapToSDCard(bitmap, picName + ".jpg");
+                    ivReimPic.setImageBitmap(bitmap);
+
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                super.onError(t);
+            }
+        };
+        RxHelper.bindOnUIActivityLifeCycle(observable, observer, MyApprovalProcessActivity.this);
+
+
+    }
+
+    private void submitApproval(SubmitApprovalBean bean) {
+
+        Observable<Boolean> observable = new ReimControl().submitApproval(bean);
+        CommonDialogObserver<Boolean> observer = new CommonDialogObserver<Boolean>(this) {
+            @Override
+            public void onNext(Boolean boo) {
+                super.onNext(boo);
+                SimpleToast.toastMessage("提交成功。", Toast.LENGTH_SHORT);
+                toActivity(MyApprovalRecyActivity.class);
+                finish();
+
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                super.onError(t);
+            }
+        };
+
+        RxHelper.bindOnUIActivityLifeCycle(observable, observer, MyApprovalProcessActivity.this);
+    }
 
 }

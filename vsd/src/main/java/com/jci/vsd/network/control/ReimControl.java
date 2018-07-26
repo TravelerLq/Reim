@@ -3,6 +3,8 @@ package com.jci.vsd.network.control;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.jci.vsd.activity.Reim.ReimPicBean;
+import com.jci.vsd.activity.Reim.SubmitApprovalBean;
 import com.jci.vsd.bean.enterprise.BudgetBean;
 import com.jci.vsd.bean.reim.ApprovalBean;
 import com.jci.vsd.bean.reim.IdsBean;
@@ -248,6 +250,75 @@ public class ReimControl extends BaseControl {
 
                 }
                 throw new IApiException("待审批详情", jsonObject.getString(AppConstant.JSON_MESSAGE));
+
+
+            }
+
+
+        });
+    }
+
+    //get 获取待审批详情的 报销单愿票据照片
+    public Observable<ReimPicBean> getReimPic(int id) {
+
+        Retrofit retrofit = builderRetrofitWithHeader();
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("id", id);
+
+        ReimApi api = retrofit.create(ReimApi.class);
+        Observable<Response<String>> observable = api.getOriginalReimPic(paramMap);
+        return observable.map(new Function<Response<String>, ReimPicBean>() {
+            @Override
+            public ReimPicBean apply(Response<String> stringResponse) throws Exception {
+                String responseStr = stringResponse.body();
+                int codeHttp = stringResponse.code();
+                if (codeHttp == 401) {
+                    throw new IApiException("401", "401");
+                }
+                JSONObject jsonObject = JSON.parseObject(responseStr);
+                int code = jsonObject.getIntValue(AppConstant.JSON_CODE);
+                if (code == 200) {
+                    ReimPicBean bean = JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA), ReimPicBean.class);
+                    if (bean != null) {
+                        return bean;
+                    }
+
+
+                }
+                throw new IApiException("待审批详情", jsonObject.getString(AppConstant.JSON_MESSAGE));
+
+
+            }
+
+
+        });
+    }
+
+
+    public Observable<Boolean> submitApproval(SubmitApprovalBean bean) {
+
+        Retrofit retrofit = builderJsonRetrofit();
+        String paramStr = JSON.toJSONString(bean);
+        Loger.e("---params--" + paramStr);
+
+        ReimApi api = retrofit.create(ReimApi.class);
+        Observable<Response<String>> observable = api.submitApproval(paramStr);
+        return observable.map(new Function<Response<String>, Boolean>() {
+            @Override
+            public Boolean apply(Response<String> stringResponse) throws Exception {
+                String responseStr = stringResponse.body();
+                int codeHttp = stringResponse.code();
+                if (codeHttp == 401) {
+                    throw new IApiException("401", "401");
+                }
+                JSONObject jsonObject = JSON.parseObject(responseStr);
+                int code = jsonObject.getIntValue(AppConstant.JSON_CODE);
+                if (code == 200) {
+                  return true;
+
+
+                }
+                throw new IApiException("提交报销单", jsonObject.getString(AppConstant.JSON_MESSAGE));
 
 
             }

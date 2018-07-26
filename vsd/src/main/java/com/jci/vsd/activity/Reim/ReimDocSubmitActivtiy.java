@@ -104,7 +104,7 @@ public class ReimDocSubmitActivtiy extends BaseActivity {
                     e.printStackTrace();
                 }
                 Loger.e("--hashFile--" + hashFile);
-                signVerifyP1(hashFile);
+//                signVerifyP1(hashFile);
                 break;
             //提交单据 （先签名添加，成功后－再提交）
             case R.id.iv_reim_doc:

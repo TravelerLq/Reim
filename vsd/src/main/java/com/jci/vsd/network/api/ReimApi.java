@@ -34,6 +34,10 @@ public interface ReimApi {
     @POST("shuidao/form/ci")
     Observable<Response<String>> submitReimDoc(@Body String body);
 
+    //提交审批报销单
+    @POST("shuidao/form/gen")
+    Observable<Response<String>> submitApproval(@Body String body);
+
     // 获取待审批的报销单
     @GET("shuidao/chk/pend")
     Observable<Response<String>> getWaitApprovalData();
@@ -42,6 +46,10 @@ public interface ReimApi {
 
     @GET("shuidao/chk/penddetails")
     Observable<Response<String>> getWaitApprovalDetail(@QueryMap Map<String, Object> map);
+
+    //shuidao/chk/costpic?id=136
+    @GET("shuidao/chk/costpic")
+    Observable<Response<String>> getOriginalReimPic(@QueryMap Map<String, Object> map);
 
     //budget item 删除
     @PATCH("shuidao/quotas/del")
