@@ -3,7 +3,6 @@ package com.jci.vsd.bean;
 import android.graphics.Bitmap;
 
 
-
 /**
  * Created by Administrator on 2017/11/15 0015.
  */

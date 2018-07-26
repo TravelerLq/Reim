@@ -15,9 +15,11 @@ import com.jci.vsd.R;
 import com.jci.vsd.activity.BaseActivity;
 import com.jci.vsd.activity.LoginActivity;
 import com.jci.vsd.bean.CatBean;
+import com.jci.vsd.bean.ReimCategoryBean;
 import com.jci.vsd.bean.enterprise.AddBudgetItemBean;
 import com.jci.vsd.bean.enterprise.BudgetBean;
 import com.jci.vsd.constant.AppConstant;
+import com.jci.vsd.data.ReimCategoryData;
 import com.jci.vsd.network.control.BudgetManageControl;
 import com.jci.vsd.observer.CommonDialogObserver;
 import com.jci.vsd.observer.RxHelper;
@@ -122,6 +124,7 @@ public class BudgetAddItemActivity extends BaseActivity {
                     e.printStackTrace();
                 }
                 catBeanList.addAll(JSON.parseArray(json, CatBean.class));
+                ReimCategoryData.saveCategoryList(catBeanList);
                 for (int i = 0; i < catBeanList.size(); i++) {
 
                     firstList.add(catBeanList.get(i).getCname());

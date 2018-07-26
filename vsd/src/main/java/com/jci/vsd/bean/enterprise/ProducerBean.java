@@ -3,49 +3,39 @@ package com.jci.vsd.bean.enterprise;
 
 import com.jci.vsd.bean.BaseBean;
 
+import java.util.List;
+
 /**
  * Created by liqing on 18/5/3.
  */
 
 public class ProducerBean extends BaseBean {
-    private String dname;
-    private String num;
-    private String name;
+
+
     /**
-     * approveNumId : 24
-     * approveNumName : 部门审批
-     * approverId : 54
-     * approverName : 王朕
-     * approverOrder : 1
+     * fath : 0
+     * coverdpts : [{"name":"研发部","dpt":118},{"name":"人事部","dpt":119}]
+     * name : 领导审批
+     * checkername : 加图索
+     * id : 2
+     * checker : 29
+     * sort : 1
      */
 
-    private int approveNumId;
-    private String approveNumName;
-    private int approverId;
-    private String approverName;
-    private int approverOrder;
+    private int fath;
+    private String name;
+    private String checkername;
+    private int id;
+    private int checker;
+    private int sort;
+    private List<CoverdptsBean> coverdpts;
 
-//    public ProducerBean(String approveNumName, String approverName, int approverOrder,String dname) {
-//        this.approveNumName = approveNumName;
-//        this.approverName = approverName;
-//        this.approverOrder = approverOrder;
-//        this.dname=dname;
-//    }
-
-    public String getDname() {
-        return dname;
+    public int getFath() {
+        return fath;
     }
 
-    public void setDname(String dname) {
-        this.dname = dname;
-    }
-
-    public String getNum() {
-        return num;
-    }
-
-    public void setNum(String num) {
-        this.num = num;
+    public void setFath(int fath) {
+        this.fath = fath;
     }
 
     public String getName() {
@@ -56,43 +46,69 @@ public class ProducerBean extends BaseBean {
         this.name = name;
     }
 
-    public int getApproveNumId() {
-        return approveNumId;
+    public String getCheckername() {
+        return checkername;
     }
 
-    public void setApproveNumId(int approveNumId) {
-        this.approveNumId = approveNumId;
+    public void setCheckername(String checkername) {
+        this.checkername = checkername;
     }
 
-    public String getApproveNumName() {
-        return approveNumName;
+    public int getId() {
+        return id;
     }
 
-    public void setApproveNumName(String approveNumName) {
-        this.approveNumName = approveNumName;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getApproverId() {
-        return approverId;
+    public int getChecker() {
+        return checker;
     }
 
-    public void setApproverId(int approverId) {
-        this.approverId = approverId;
+    public void setChecker(int checker) {
+        this.checker = checker;
     }
 
-    public String getApproverName() {
-        return approverName;
+    public int getSort() {
+        return sort;
     }
 
-    public void setApproverName(String approverName) {
-        this.approverName = approverName;
+    public void setSort(int sort) {
+        this.sort = sort;
     }
 
-    public int getApproverOrder() {
-        return approverOrder;
+    public List<CoverdptsBean> getCoverdpts() {
+        return coverdpts;
     }
 
-    public void setApproverOrder(int approverOrder) {
-        this.approverOrder = approverOrder;
+    public void setCoverdpts(List<CoverdptsBean> coverdpts) {
+        this.coverdpts = coverdpts;
+    }
+
+    public static class CoverdptsBean extends BaseBean {
+        /**
+         * name : 研发部
+         * dpt : 118
+         */
+
+        private String name;
+        private int dpt;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getDpt() {
+            return dpt;
+        }
+
+        public void setDpt(int dpt) {
+            this.dpt = dpt;
+        }
     }
 }

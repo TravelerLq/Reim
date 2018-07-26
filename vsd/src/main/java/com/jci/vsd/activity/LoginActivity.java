@@ -164,7 +164,8 @@ public class LoginActivity extends BaseActivity {
                         //
                         toActivity(RegisterCompanyActivity.class);
                     } else {
-                        toActivity(MainActivity.class);
+                       toActivity(MainActivity.class);
+                     // toActivity(ReserviorTestActivity.class);
                     }
                 } else if (status.equals("201")) {
                     SimpleToast.toastMessage("登录201", Toast.LENGTH_LONG);
@@ -282,11 +283,11 @@ public class LoginActivity extends BaseActivity {
         // login
         //  accountStr = "15252466554";
 
-        //  login(accountStr, pswStr, "1");
+        login(accountStr, pswStr, "1");
 
 
         //  test
-        toActivity(MainActivity.class);
+        //toActivity(MainActivity.class);
 
     }
 

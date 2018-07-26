@@ -32,9 +32,9 @@ public class AppConstant {
      */
     public static final int HZ_SEND_VEWPAGE_EVERY_PE_NAGO = 9;
     //http://192.168.1.114:8080/yuanshen/public/login
-    //http://192.168.1.100:8080/shuidao/chk/listrelas
+    //http://192.168.1.100:8080/shuidao/chk/listrelas192.168.1.88
    // public static final String BASE_URL = "http://192.168.1.111:8080/";
-    public static final String BASE_URL = "http://192.168.1.100:8080/";
+    public static final String BASE_URL = "http://192.168.1.95:8080/";
     private static final String URL_TEST = "http://10.90.65.209:8084/";//http://10.126.211.7/";
     private static final String URL_PRD = "http://10.90.65.209:8082/";//"http://10.126.211.142/";//"http://10.90.65.209:8082/";"10.126.211.7";
     public static final String OUTSIZE_URL = "http://10.90.65.209:8088/";
@@ -88,6 +88,11 @@ public class AppConstant {
     public static final String KEY_DEPARTMENT="department";
     public static final String KEY_DEPARTMENT_LIST="department_list";
 
+    public static final String KEY_CATEGORY="category";
+    public static final String KEY_CATEGORY_LIST="category_list";
+
+    public static final String KEY_REIM_ITEM="reim_item";
+    public static final String KEY_REIM_ITEM_LIST="reim_item_list";
 
     public static final String KEY_TYPE="type";
     public static final String VALUE_AJUST="ajust";

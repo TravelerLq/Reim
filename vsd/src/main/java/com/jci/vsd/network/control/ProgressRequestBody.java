@@ -33,7 +33,7 @@ class ProgressRequestBody extends RequestBody {
     //包装完成的BufferedSink
     private BufferedSink bufferedSink;
     public ProgressRequestBody(@NonNull final File file) {
-        requestBodyNow = RequestBody.create(MediaType.parse("image/jpeg"),file);
+        requestBodyNow = RequestBody.create(MediaType.parse("image/*"),file);
     }
 
     public  ProgressRequestBody create(@Nullable final MediaType contentType, @NonNull final File file, @NonNull UploadProgressListener progressListener) {

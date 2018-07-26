@@ -1,5 +1,7 @@
 package com.jci.vsd.activity.enterprise;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -13,7 +15,10 @@ import com.jci.vsd.R;
 import com.jci.vsd.activity.BaseActivity;
 import com.jci.vsd.activity.LoginActivity;
 import com.jci.vsd.bean.enterprise.MembersBean;
+import com.jci.vsd.bean.enterprise.ProducerAddBean;
 import com.jci.vsd.bean.enterprise.ProducerBean;
+import com.jci.vsd.bean.enterprise.ProducerSettingInfoBean;
+import com.jci.vsd.bean.enterprise.ProducerUpdateBean;
 import com.jci.vsd.constant.AppConstant;
 import com.jci.vsd.network.control.ProducerManageControl;
 import com.jci.vsd.observer.CommonDialogObserver;
@@ -22,6 +27,7 @@ import com.jci.vsd.utils.Loger;
 import com.jci.vsd.utils.TimePickerUtils;
 import com.jci.vsd.view.widget.SimpleToast;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -51,12 +57,25 @@ public class ProducerEditActivity extends BaseActivity {
     @BindView(R.id.tv_sure)
     TextView tvSure;
 
+    private List<ProducerSettingInfoBean.AvldptsBean> listDeparts = new ArrayList<>();
+    private List<ProducerSettingInfoBean.AvlusersBean> listApprover = new ArrayList<>();
+    List<Integer> selectDepsId = new ArrayList<>();
+
+    String[] itemsDeparts = new String[]{""};
+    String[] itemsApprovers = new String[]{""};
+    private int selectApproverId;
+
+    private List<Integer> depts = new ArrayList<>();
+    private int approverId;
+    private int id;
+    private int fath;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_producer_edit);
         initViewEvent();
+        getProducerSettingInfo();
         ProducerBean bean = (ProducerBean) getIntent().getSerializableExtra(AppConstant.SERIAL_KEY);
         if (bean != null) {
             /**
@@ -66,12 +85,40 @@ public class ProducerEditActivity extends BaseActivity {
              * approverName : 王朕
              * approverOrder : 1
              */
-            edtProducerName.setText(bean.getApproveNumName());
-            tvProducerDepart.setText(bean.getDname());
+            edtProducerName.setText(bean.getName());
+            id = bean.getId();
+            approverId = bean.getChecker();
+            fath = bean.getFath();
+            String dptName;
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < bean.getCoverdpts().size(); i++) {
+                sb.append(bean.getCoverdpts().get(i).getName());
+                depts.add(bean.getCoverdpts().get(i).getDpt());
+
+            }
+            String str = sb.toString();
+
+            tvProducerDepart.setText(str);
             //tvProducerOrder.setText("wwe");
-            tvProducerOrder.setText(bean.getApproverOrder() + "");
-            tvProducerPerson.setText(bean.getApproverName());
+            tvProducerOrder.setText(bean.getSort() + "");
+            tvProducerPerson.setText(bean.getCheckername());
         }
+        stringAppend();
+
+    }
+
+    public void stringAppend() {
+        String str = "";
+        long start = System.currentTimeMillis();
+        long end = System.currentTimeMillis();
+
+        StringBuilder sb = new StringBuilder();
+        start = System.currentTimeMillis();
+        for (int i = 0; i < 100000; i++)
+            sb.append("a");
+        str = sb.toString();
+        end = System.currentTimeMillis();
+        Loger.e("strAppend--" + str + "end-start=" + (end - start));
     }
 
     @Override
@@ -95,14 +142,25 @@ public class ProducerEditActivity extends BaseActivity {
                 break;
             case R.id.tv_producer_department:
                 //deparment
+                if (listApprover.size() == 0) {
+                    SimpleToast.toastMessage("暂无可配置部门", Toast.LENGTH_SHORT);
+                } else {
+                    showMultiChoiceDialog();
+                }
                 break;
             case R.id.tv_producer_order:
                 Loger.e("click--tv_producer_level");
-                selectLevel();
+                SimpleToast.toastMessage("流程不可更改", Toast.LENGTH_SHORT);
+
                 break;
             case R.id.tv_producer_person:
                 Loger.e("click--tv_producer_person");
-                selectPerson();
+                if (listDeparts.size() == 0) {
+                    SimpleToast.toastMessage("暂无可配置人员", Toast.LENGTH_SHORT);
+                } else {
+                    showSingleChoiceDialog();
+                }
+
                 //deparment
                 break;
             default:
@@ -155,8 +213,11 @@ public class ProducerEditActivity extends BaseActivity {
         }
 
         // updateBudgetItem()
-        ProducerBean bean = new ProducerBean();
-
+        ProducerUpdateBean bean = new ProducerUpdateBean();
+        bean.setName(name);
+        bean.setId(id);
+        bean.setChecker(approverId);
+        bean.setDpts(depts);
         updateBudgetItem(bean);
 
 //        toActivity(ProducerManageActivity.class);
@@ -173,7 +234,7 @@ public class ProducerEditActivity extends BaseActivity {
     }
 
 
-    private void updateBudgetItem(ProducerBean requestBean) {
+    private void updateBudgetItem(ProducerUpdateBean requestBean) {
         Observable<Boolean> observable = new ProducerManageControl().updateProducer(requestBean);
         CommonDialogObserver<Boolean> observer = new CommonDialogObserver<Boolean>(this) {
             @Override
@@ -201,5 +262,102 @@ public class ProducerEditActivity extends BaseActivity {
         RxHelper.bindOnUIActivityLifeCycle(observable, observer, ProducerEditActivity.this);
     }
 
+    private void getProducerSettingInfo() {
+        Observable<ProducerSettingInfoBean> observable = new ProducerManageControl().getProducerSettingInfo();
+        CommonDialogObserver<ProducerSettingInfoBean> observer = new CommonDialogObserver<ProducerSettingInfoBean>(this) {
+            @Override
+            public void onNext(ProducerSettingInfoBean bean) {
+                super.onNext(bean);
+                SimpleToast.toastMessage("流程可配置信息获取成功", Toast.LENGTH_SHORT);
 
+                if (bean.getAvldpts() != null && bean.getAvldpts().size() > 0) {
+                    //可选择的审核部门
+                    //setting department
+                    listDeparts.clear();
+                    listDeparts.addAll(bean.getAvldpts());
+
+                    //赋值给 department items
+                    itemsDeparts = new String[listDeparts.size()];
+
+                    for (int i = 0; i < listDeparts.size(); i++) {
+                        itemsDeparts[i] = listDeparts.get(i).getName();
+                        Loger.e("depart-" + listDeparts.get(i).getName());
+                    }
+
+                }
+
+
+                if (bean.getAvlusers() != null && bean.getAvlusers().size() > 0) {
+                    //可选择的审核人
+
+                    listApprover.clear();
+                    listApprover.addAll(bean.getAvlusers());
+                    //赋值给 approver items
+
+                    itemsApprovers = new String[listApprover.size()];
+                    for (int i = 0; i < listApprover.size(); i++) {
+                        itemsApprovers[i] = listApprover.get(i).getName();
+                        Loger.e("approver-" + listApprover.get(i).getName());
+
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                super.onError(t);
+                if (t.getMessage().equals("401")) {
+                    SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_LONG);
+                    exit();
+                    toActivity(LoginActivity.class);
+                }
+
+
+            }
+        };
+        RxHelper.bindOnUIActivityLifeCycle(observable, observer, ProducerEditActivity.this);
+    }
+
+    //多选
+    private void showMultiChoiceDialog() {
+
+        selectDepsId.clear();
+        AlertDialog dialog = new AlertDialog.Builder(this).setTitle("多选对话框")
+                .setNegativeButton("取消", null).setPositiveButton("确定", null)
+                .setMultiChoiceItems(itemsDeparts, null, new DialogInterface.OnMultiChoiceClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        Loger.e("multi chocie--which" + which);
+                        ProducerAddBean producerAddBean = new ProducerAddBean();
+                        tvProducerDepart.setText(itemsDeparts[which]);
+                        selectDepsId.add(listDeparts.get(which).getDpt());
+
+                    }
+                }).create();
+        dialog.show();
+
+    }
+
+    //singleChoice
+    private void showSingleChoiceDialog() {
+
+        AlertDialog dialog = new AlertDialog.Builder(this).setTitle("单选对话框").setIcon(R.drawable.ic_image)
+                .setSingleChoiceItems(itemsApprovers, -1, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Loger.e("choose-whitch--" + which);
+                        tvProducerPerson.setText(itemsApprovers[which]);
+                        selectApproverId = listApprover.get(which).getUid();
+                        dialog.dismiss();
+
+                    }
+                }).create();
+        dialog.show();
+
+    }
 }

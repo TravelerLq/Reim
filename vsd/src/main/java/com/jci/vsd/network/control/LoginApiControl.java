@@ -80,7 +80,7 @@ public class LoginApiControl extends BaseControl {
             public LoginResponseBean apply(Response<String> stringResponse) throws Exception {
                 Headers headers = stringResponse.headers();
                 String authStr = headers.get("Authorization");
-                Loger.e("header-authStr" + authStr);
+                Loger.e("after login-authStr" + authStr);
                 MySpEdit.getInstance().setAuthor(authStr);
 
                 Loger.e("stringResponse.body=" + stringResponse.body());

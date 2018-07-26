@@ -69,7 +69,7 @@ public class ProducerManageActivity extends BaseActivity {
         ProducerBean bean;
         for (int i = 0; i < 5; i++) {
             bean = new ProducerBean();
-            bean.setApproveNumName("boss approval" + i);
+            //   bean.setApproveNumName("boss approval" + i);
 
 
 //         bean.
@@ -94,9 +94,9 @@ public class ProducerManageActivity extends BaseActivity {
                 TextView tvName = (TextView) holder.getView(R.id.tv_producer_name);
                 TextView tvLevel = (TextView) holder.getView(R.id.tv_producer_level);
                 TextView tvProducerPerson = (TextView) holder.getView(R.id.tv_producer_person);
-                tvName.setText(swipeBean.getApproveNumName());
-                tvLevel.setText(swipeBean.getApproverOrder() + "");
-                tvProducerPerson.setText(swipeBean.getApproverName());
+                tvName.setText(swipeBean.getName());
+                tvLevel.setText(swipeBean.getSort() + "");
+                tvProducerPerson.setText(swipeBean.getCheckername());
 //                tvName.setFocusable(false);
 //                tvBudget.setFocusable(false);
 //                tvName.setFocusable(false);
@@ -125,7 +125,7 @@ public class ProducerManageActivity extends BaseActivity {
                         int pos = holder.getLayoutPosition();
                         if (pos >= 0 && pos < mDatas.size()) {
 
-                            delete(mDatas.get(pos).getApproverId(), pos);
+                            delete(mDatas.get(pos).getId(), pos);
                             //  Toast.makeText(context, "删除:" + pos, Toast.LENGTH_SHORT).show();
 //                            mDatas.remove(pos);
 //                            mAdapter.notifyItemRemoved(pos);//推荐用这个
@@ -251,6 +251,7 @@ public class ProducerManageActivity extends BaseActivity {
                 SimpleToast.toastMessage("删除成功", Toast.LENGTH_SHORT);
                 mDatas.remove(pos);
                 mAdapter.notifyItemRemoved(pos);//推荐用这个
+                getData();
 
             }
 

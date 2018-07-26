@@ -211,19 +211,34 @@ public class BaseControl {
 
 
     protected Retrofit builderUploadPicRetrofit() {
+        final String requestAuth = MySpEdit.getInstance().getAuthor();
+        Loger.e("---RequestAuth---" + requestAuth);
+        LoggingInterceptor loggingInterceptor = new LoggingInterceptor();
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder builder = new OkHttpClient().newBuilder()
                 .connectTimeout(SOCKET_TIMEOUT, TimeUnit.SECONDS)//设置超时时间
                 .readTimeout(SOCKET_TIMEOUT, TimeUnit.SECONDS)//设置读取超时时间
                 .writeTimeout(SOCKET_TIMEOUT, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(true)
+//                .addHeader("Connection", "close")
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
                         Request request = chain.request()
                                 .newBuilder()
+                                .addHeader("Content-Type", "application/json")
+                                .addHeader("User-Agent", "ios6s")
+                                // .addHeader("Authorization", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHQiOjE1Mjc3MzY3MzA0MjYsInVpZCI6IjE1MiIsImlhdCI6MTUyNzczNjY3MDQyNn0.Yb6SyjzKCixg2CIVYt7VtAnMsFcB_hDmzalHmxjO0cI")
+                                .addHeader("Authorization", requestAuth)
+                                .addHeader("Version1", "1")
                                 .build();
                         return chain.proceed(request);
                     }
-                });//设置写入超时时间
+                })
+                .addInterceptor(interceptor);//设置写入超时时间
+
         OkHttpClient client = builder.build();
         Loger.i("=======AppConstant.getURL()=========" + AppConstant.getURL());
         Retrofit retrofit = new Retrofit.Builder()

@@ -1,5 +1,6 @@
 package com.jci.vsd.activity.Reim;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,19 @@ import android.widget.Toast;
 
 import com.jci.vsd.R;
 import com.jci.vsd.activity.BaseActivity;
+import com.jci.vsd.activity.MainActivity;
+import com.jci.vsd.bean.reim.ReimAddResponseBean;
+import com.jci.vsd.bean.reim.ReimDocSubmitBean;
+import com.jci.vsd.constant.AppConstant;
+import com.jci.vsd.constant.MySpEdit;
+import com.jci.vsd.data.ReimAddData;
+import com.jci.vsd.network.control.ReimControl;
+import com.jci.vsd.observer.CommonDialogObserver;
+import com.jci.vsd.observer.RxHelper;
+import com.jci.vsd.utils.BitmapUtil;
+import com.jci.vsd.utils.Loger;
+import com.jci.vsd.utils.StrTobaseUtil;
+import com.jci.vsd.view.widget.SimpleToast;
 
 import butterknife.BindView;
 import cn.unitid.spark.cm.sdk.business.SignatureP1Service;
@@ -16,6 +30,7 @@ import cn.unitid.spark.cm.sdk.common.DataProcessType;
 import cn.unitid.spark.cm.sdk.data.response.DataProcessResponse;
 import cn.unitid.spark.cm.sdk.exception.CmSdkException;
 import cn.unitid.spark.cm.sdk.listener.ProcessListener;
+import io.reactivex.Observable;
 
 /**
  * Created by liqing on 18/6/28.
@@ -29,12 +44,42 @@ public class ReimDocSubmitActivtiy extends BaseActivity {
     @BindView(R.id.btn_reim_submit)
     Button btnReimDocSubmit;
     private String base64Code;
+    private String picPath;
+    private String cert;
+    private String sign;
+    private int id;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reim_submit);
         initViewEvent();
+        ReimAddResponseBean getIntentBean = (ReimAddResponseBean) getIntent().getExtras().getSerializable(AppConstant.SERIAL_KEY);
+        if (getIntentBean != null) {
+            id = getIntentBean.getId();
+            base64Code = getIntentBean.getBytes();
+            Bitmap bitmap = StrTobaseUtil.base64ToBitmap(base64Code);
+            //bitmap to png
+
+            picPath = BitmapUtil.saveBitmapToSDCard(bitmap, System.currentTimeMillis() + ".jpg");
+            ivReimDoc.setImageBitmap(bitmap);
+
+            Loger.e("bitmap--save to Pic" + picPath);
+//            originalBoxPicList.clear();
+//            originalBoxPicList.add(0, picPath);
+
+
+//                    方式一.  Drawable drawable=new BitmapDrawable(Bitmap);
+//                    Glide.with(mContext).load(drawable).into(ivImage);
+            //2.
+//                    byte[] decodedString = Base64.decode(person_object.getPhoto(),Base64.NO_WRAP);
+//                    InputStream inputStream  = new ByteArrayInputStream(decodedString);
+//                    Bitmap bitmap  = BitmapFactory.decodeStream(inputStream);
+//                    user_image.setImageBitmap(bitmap);
+            // ivPicTest.setImageBitmap(bitmap);
+            // ivReimDoc.setImageBitmap(bitmap);
+//                    Drawable drawable = new BitmapDrawable(
+        }
 
     }
 
@@ -74,6 +119,7 @@ public class ReimDocSubmitActivtiy extends BaseActivity {
         SignatureP1Service signatureP1Service = new SignatureP1Service(ReimDocSubmitActivtiy.this, "1234", new ProcessListener<DataProcessResponse>() {
             @Override
             public void doFinish(DataProcessResponse dataProcessResponse, String certificate) {
+
 //                if (pdu.getMypDialog().isShowing()) {
 //                    pdu.dismisspd();
 //                }
@@ -82,8 +128,14 @@ public class ReimDocSubmitActivtiy extends BaseActivity {
                     // spu.setCertKey(dataProcessResponse.getResult());
                     //获得就是签名证书
                     Log.e("cert", "= " + certificate);
+                    cert = certificate;
+                    sign = dataProcessResponse.getResult();
                     // spu.setCert(certificate);
-
+                    ReimDocSubmitBean bean = new ReimDocSubmitBean();
+                    bean.setCer(cert);
+                    bean.setSign(sign);
+                    bean.setId(id);
+                    submitReimDoc(bean);
                     //去提交单据
                     // submitSignJsonstring();
                 } else {
@@ -103,4 +155,45 @@ public class ReimDocSubmitActivtiy extends BaseActivity {
             }
         });
     }
+
+    private void submitReimDoc(ReimDocSubmitBean bean) {
+        Observable<ReimAddResponseBean> observable = new ReimControl().submitReimDoc(bean);
+        CommonDialogObserver<ReimAddResponseBean> observer = new CommonDialogObserver<ReimAddResponseBean>(this) {
+            @Override
+            public void onNext(ReimAddResponseBean reimAddResponseBean) {
+                super.onNext(reimAddResponseBean);
+                SimpleToast.toastMessage("提交成功。", Toast.LENGTH_SHORT);
+                ReimAddData.removeReimList();
+                if (reimAddResponseBean != null) {
+                    int formId = reimAddResponseBean.getId();
+                    Loger.e("formIdFormNet--" + formId);
+                    MySpEdit.getInstance().setFormId(formId);
+                    Loger.e("formIdFormShare--" + MySpEdit.getInstance().getFormId());
+
+//                    Thread closeActivity = new Thread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            try {
+//                                Thread.sleep(3000);
+//                                // Do some stuff
+//                            } catch (Exception e) {
+//                                e.getLocalizedMessage();
+//                            }
+//                        }
+//                    });
+//                    closeActivity.start();
+                    finish();
+                    toActivity(MainActivity.class);
+                }
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                super.onError(t);
+            }
+        };
+
+        RxHelper.bindOnUIActivityLifeCycle(observable, observer, ReimDocSubmitActivtiy.this);
+    }
+
 }

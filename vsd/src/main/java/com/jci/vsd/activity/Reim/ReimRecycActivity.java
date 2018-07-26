@@ -19,12 +19,23 @@ import com.jci.vsd.SlideRecycleview.ViewHolder;
 import com.jci.vsd.activity.BaseActivity;
 import com.jci.vsd.bean.SwipeBean;
 import com.jci.vsd.bean.reim.Bean;
+import com.jci.vsd.bean.reim.IdsBean;
+import com.jci.vsd.bean.reim.ReimAddItemBean;
+import com.jci.vsd.bean.reim.ReimAddResponseBean;
+import com.jci.vsd.constant.AppConstant;
+import com.jci.vsd.data.ReimAddData;
+import com.jci.vsd.network.control.ReimControl;
+import com.jci.vsd.observer.CommonDialogObserver;
+import com.jci.vsd.observer.RxHelper;
+import com.jci.vsd.utils.Loger;
+import com.jci.vsd.view.widget.SimpleToast;
 //import com.mcxtzhang.swipemenulib.SwipeMenuLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
 
 /**
  * Created by liqing on 18/6/27.
@@ -41,9 +52,9 @@ public class ReimRecycActivity extends BaseActivity {
     @BindView(R.id.btn_reim_generate)
     Button btnReimGenetate;
 
-    private CommonAdapter<SwipeBean> mAdapter;
+    private CommonAdapter<ReimAddItemBean> mAdapter;
     private LinearLayoutManager mLayoutManager;
-    private List<SwipeBean> mDatas;
+    private List<ReimAddItemBean> mDatas = new ArrayList<>();
     private int mIndex;
 
     @Override
@@ -51,7 +62,28 @@ public class ReimRecycActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reim_recycle);
         rightFucTxt.setVisibility(View.VISIBLE);
+
+        List<ReimAddItemBean> list = ReimAddData.getReimItemList();
+        if (list != null) {
+            for (int i = 0; i < list.size(); i++) {
+                Loger.e("--getReimFromReservior-" + list.get(i).getRemark());
+            }
+            mDatas.addAll(list);
+        }
+
+
         //  recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        String intentType = getIntent().getStringExtra(AppConstant.KEY_TYPE);
+        if (intentType.equals(AppConstant.KEY_REIM_ITEM)) {
+            Bundle bundle = getIntent().getExtras();
+            ReimAddItemBean bean = (ReimAddItemBean) bundle.getSerializable(AppConstant.SERIAL_KEY);
+            if (bean != null) {
+                mDatas.add(bean);
+                Loger.e("getBUndleSeri--" + bean.getAmount() + "--remark" + bean.getRemark());
+                ReimAddData.saveReimItemList(mDatas);
+            }
+        }
+
         initRecycleView();
         initViewEvent();
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -85,8 +117,14 @@ public class ReimRecycActivity extends BaseActivity {
                 break;
             case R.id.btn_reim_generate:
                 //生成单据
-                finish();
-                toActivity(ReimDocSubmitActivtiy.class);
+                IdsBean idsBean = new IdsBean();
+                List<Integer> integers = new ArrayList<>();
+                for (int i = 0; i < mDatas.size(); i++) {
+                    integers.add(mDatas.get(i).getId());
+                }
+                idsBean.setIds(integers);
+                submitReim(idsBean);
+
         }
         if (view.getId() == R.id.rightFucTxt) {
             toActivity(ReimAddActivity.class);
@@ -94,20 +132,71 @@ public class ReimRecycActivity extends BaseActivity {
         }
     }
 
+    private void submitReim(IdsBean idsBean) {
+        Observable<ReimAddResponseBean> observable = new ReimControl().submitReim(idsBean);
+        CommonDialogObserver<ReimAddResponseBean> observer = new CommonDialogObserver<ReimAddResponseBean>(this) {
+            @Override
+            public void onNext(ReimAddResponseBean reimAddResponseBean) {
+                super.onNext(reimAddResponseBean);
+                SimpleToast.toastMessage("提交成功，正在为您生成报销单。。。", Toast.LENGTH_SHORT);
+                if (reimAddResponseBean != null) {
+
+                    Thread closeActivity = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(3000);
+                                // Do some stuff
+                            } catch (Exception e) {
+                                e.getLocalizedMessage();
+                            }
+                        }
+                    });
+                    closeActivity.start();
+                    finish();
+                    toAtivityWithParams(ReimDocSubmitActivtiy.class, reimAddResponseBean);
+                }
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                super.onError(t);
+            }
+        };
+        RxHelper.bindOnUIActivityLifeCycle(observable,observer,ReimRecycActivity.this);
+
+    }
+
     private void initRecycleView() {
-        mDatas = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            mDatas.add(new SwipeBean("" + i));
-        }
+
+//        ReimAddItemBean bean = null;
+//
+//        for (int i = 0; i < 5; i++) {
+//            bean = new ReimAddItemBean();
+//            bean.setAmount(i * 20 + i + "");
+//            bean.setRemark("说明" + i);
+//            mDatas.add(bean);
+//        }
+//        ReimAddData.saveReimItemList(mDatas);
+//        ReimAddData.getReimItemList();
 
 //        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 //        mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-        mAdapter = new CommonAdapter<SwipeBean>(ReimRecycActivity.this, mDatas, R.layout.item_reim_item_swipe) {
+        mAdapter = new CommonAdapter<ReimAddItemBean>(ReimRecycActivity.this, mDatas, R.layout.item_reim_item_swipe) {
             @Override
-            public void convert(final ViewHolder holder, SwipeBean swipeBean) {
+            public void convert(final ViewHolder holder, ReimAddItemBean swipeBean) {
                 //设置是否开启左滑出菜单，设置false 为右滑出菜单
                 // ((SwipeMenuLayout) holder.itemView).setIos(true).setLeftSwipe(mIndex == 0 ? false : true);// 并依次打开左滑右滑
                 ((SwipeMenuLayout) holder.itemView).setIos(true).setLeftSwipe(true);
+                TextView tvMoney = (TextView) holder.getView(R.id.tv_money);
+                tvMoney.setText(swipeBean.getAmount());
+                TextView tvCategoryName = (TextView) holder.getView(R.id.tv_expense_category);
+                tvCategoryName.setText(swipeBean.getCategoryName());
+
+                TextView tvExplain = holder.getView(R.id.tv_explain);
+                tvExplain.setText(swipeBean.getRemark());
+
+
                 //    holder.setText(R.id.content, swipeBean.name + (mIndex == 0 ? "我左青龙" : "我右白虎"));
 
                 //验证长按
@@ -138,7 +227,7 @@ public class ReimRecycActivity extends BaseActivity {
                 (holder).setOnClickListener(R.id.content, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(mContext, "onClick:" + mDatas.get(holder.getAdapterPosition()).name, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "onClick:" + mDatas.get(holder.getAdapterPosition()).getAmount(), Toast.LENGTH_SHORT).show();
                         Log.d("TAG", "onClick() called with: v = [" + v + "]");
                     }
                 });
@@ -149,7 +238,7 @@ public class ReimRecycActivity extends BaseActivity {
                         int pos = holder.getLayoutPosition();
 
                         if (pos > 0 && pos < mDatas.size()) {
-                            SwipeBean swipeBean = mDatas.get(pos);
+                            ReimAddItemBean swipeBean = mDatas.get(pos);
                             mDatas.remove(swipeBean);
                             mAdapter.notifyItemInserted(0);
                             mDatas.add(0, swipeBean);

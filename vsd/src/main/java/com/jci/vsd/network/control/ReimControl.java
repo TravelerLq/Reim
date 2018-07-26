@@ -5,11 +5,18 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jci.vsd.bean.enterprise.AddBudgetItemBean;
 import com.jci.vsd.bean.enterprise.BudgetBean;
+import com.jci.vsd.bean.reim.IdsBean;
+import com.jci.vsd.bean.reim.ReimAddItemBean;
+import com.jci.vsd.bean.reim.ReimAddResponseBean;
+import com.jci.vsd.bean.reim.ReimDocSubmitBean;
 import com.jci.vsd.constant.AppConstant;
 import com.jci.vsd.exception.IApiException;
 import com.jci.vsd.network.api.BudgetApi;
+import com.jci.vsd.network.api.ReimApi;
+import com.jci.vsd.utils.BaseUtils;
 import com.jci.vsd.utils.Loger;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +24,9 @@ import java.util.Map;
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 import okhttp3.Headers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
@@ -28,41 +38,91 @@ import retrofit2.Retrofit;
 public class ReimControl extends BaseControl {
 
 
-
     //add预算
 
-    public Observable<Boolean> addReim(AddBudgetItemBean bean) {
-        String type = bean.getType();
+    public Observable<String> submitReim_pic(ReimAddItemBean bean, File file, final UploadProgressListener uploadProgressListener) {
+
+        Retrofit retrofit = builderUploadPicRetrofit();
+        ReimApi api = retrofit.create(ReimApi.class);
+
+        Map<String, RequestBody> params = new HashMap<>();
+        params.put("start", BaseUtils.convertToRequestBody(bean.getStart()));
+        params.put("end", BaseUtils.convertToRequestBody(bean.getEnd()));
+
+        params.put("bp", BaseUtils.convertToRequestBody(bean.getBp()));
+        params.put("dst", BaseUtils.convertToRequestBody(bean.getDst()));
+
+        params.put("amount", BaseUtils.convertToRequestBody(bean.getAmount()));
+        params.put("remark", BaseUtils.convertToRequestBody(bean.getRemark()));
+
+        params.put("number", BaseUtils.convertToRequestBody(bean.getNumber()));
+        params.put("qty", BaseUtils.convertToRequestBody(bean.getQty()));
+
+
+        params.put("details", BaseUtils.convertToRequestBody(bean.getDetails()));
+        params.put("reason", BaseUtils.convertToRequestBody(bean.getReason()));
+
+        params.put("cat", BaseUtils.convertToRequestBody(bean.getCat()));
+        params.put("item", BaseUtils.convertToRequestBody(bean.getItem()));
+        params.put("client", BaseUtils.convertToRequestBody(bean.getClient()));
+        params.put("cer", BaseUtils.convertToRequestBody(bean.getCer()));
+        params.put("sign", BaseUtils.convertToRequestBody(bean.getSign()));
+
+        RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+        MultipartBody.Part part = MultipartBody.Part.createFormData("original", file.getName(), requestBody);
+        Loger.e("路径图片 " + file.getName());
+
+        //
+//        RequestBody requestFile =
+//                RequestBody.create(MediaType.parse("multipart/form-data"), file);
+//
+//        // MultipartBody.Part is used to send also the actual file name
+//        MultipartBody.Part filePart = MultipartBody.Part.createFormData("original", file.getName(), requestFile);
+//
+        //application/octet-strea
+
+//        final ProgressRequestBody progressFileRequestBody = new ProgressRequestBody(file).create(MediaType.parse("application/octet-stream"), file, uploadProgressListener);
+//        MultipartBody.Builder builder = new MultipartBody.Builder();
+//        builder.setType(MultipartBody.FORM);
+//        String fileName = android.os.Build.SERIAL + "_" + new Date().getTime() + "_" + file.getName();
+//        builder.addFormDataPart("original", fileName, progressFileRequestBody);
+//        //  builder.addFormDataPart("enctype", "multipart/form-data");//告诉das服务上传的是文件
+//        //  builder.addFormDataPart("userId", VsdApplication.getInstance().getLoginResponseBean().getId());
+//        builder.addFormDataPart("start", "12");
+//        builder.addFormDataPart("end", "1");
+//
+//        builder.addFormDataPart("bp", "1");
+//        builder.addFormDataPart("dst", "1");
+//
+////        builder.addFormDataPart("client", "1");//告诉das服务上传的是文件
+//        builder.addFormDataPart("amount", "1");
+//        builder.addFormDataPart("remark", "1");
+//        builder.addFormDataPart("number", "1");
+//        builder.addFormDataPart("qty", "1");
+//
+//        builder.addFormDataPart("details", "1");
+//        builder.addFormDataPart("reason", "1");
+//        builder.addFormDataPart("cat", "1");
+//        builder.addFormDataPart("item", "1");
+        // feedBackApi.upload(builder.build());
+
+        return api.upload_reim(part, params);
+    }
+
+
+    //submit reim items 提交报销项 (items amount<5)
+
+    public Observable<ReimAddResponseBean> submitReim(IdsBean bean) {
+
         Retrofit retrofit = builderJsonRetrofit();
-        Map<String, Object> paramMap = new HashMap<>();
-        if (type.equals("1")) {
-            //部门
-            paramMap.put("dpt", bean.getDpt());
-            paramMap.put("dquota", bean.getDquota());
+        String paramStr = JSON.toJSONString(bean);
+        Loger.e("---params--" + paramStr);
 
-        } else if (type.equals("2")) {
-            //二级科目
-            paramMap.put("cat", bean.getCat());
-            paramMap.put("cquota", bean.getCquota());
-        } else if (type.equals("3")) {
-            paramMap.put("item", bean.getItem());
-            paramMap.put("iquota", bean.getIquota());
-        }
-
-//        {
-//            "cat":2,"cquota":10000.00
-//
-//            "item":3,"iquota":1800.00
-//
-//            "dpt":"118","dquota":20000.00
-//        }
-//        paramMap.put("id", membersBean.getId());
-        String paramStr = JSON.toJSONString(paramMap);
-        BudgetApi api = retrofit.create(BudgetApi.class);
-        Observable<Response<String>> observable = api.addBudgetItem(paramStr);
-        return observable.map(new Function<Response<String>, Boolean>() {
+        ReimApi api = retrofit.create(ReimApi.class);
+        Observable<Response<String>> observable = api.submitReim(paramStr);
+        return observable.map(new Function<Response<String>, ReimAddResponseBean>() {
             @Override
-            public Boolean apply(Response<String> stringResponse) throws Exception {
+            public ReimAddResponseBean apply(Response<String> stringResponse) throws Exception {
                 String responseStr = stringResponse.body();
                 int codeHttp = stringResponse.code();
                 if (codeHttp == 401) {
@@ -71,8 +131,13 @@ public class ReimControl extends BaseControl {
                 JSONObject jsonObject = JSON.parseObject(responseStr);
                 int code = jsonObject.getIntValue(AppConstant.JSON_CODE);
                 if (code == 200) {
+                    ReimAddResponseBean reimAddResponseBean =
+                            JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA), ReimAddResponseBean.class);
+                    if (reimAddResponseBean != null) {
+                        return reimAddResponseBean;
+                    }
 
-                    return true;
+
                 }
                 throw new IApiException("新增预算管理", jsonObject.getString(AppConstant.JSON_MESSAGE));
 
@@ -83,76 +148,19 @@ public class ReimControl extends BaseControl {
         });
     }
 
-    //预算管理
-    public Observable<List<BudgetBean>> getReimList(int type) {
-        Retrofit retrofit = builderRetrofitWithHeader();
-        BudgetApi api = retrofit.create(BudgetApi.class);
-        Map<String, Object> map = new HashMap<>();
-        map.put("type", type);
-        String paramStr = JSON.toJSONString(map);
-        Observable<Response<String>> observable = api.getBudgetList(map);
-        return observable.map(new Function<Response<String>, List<BudgetBean>>() {
-            @Override
-            public List<BudgetBean> apply(Response<String> stringResponse) throws Exception {
-                Headers headers = stringResponse.headers();
-                String authStr = headers.get("Authorization");
-                Loger.e("header-authStr" + authStr);
-                int codeHttp = stringResponse.code();
-                if (codeHttp == 401) {
-                    throw new IApiException("401", "401");
-                }
+    //submit reim doc提交报销单 ()
 
-                Loger.e("stringResponse.body=" + stringResponse.body());
-                JSONObject jsonObject = JSON.parseObject(stringResponse.body());
-                if (jsonObject.getIntValue(AppConstant.JSON_CODE) == 200) {
-                    JSONObject dataObj = jsonObject.getJSONObject(AppConstant.JSON_DATA);
-                    List<BudgetBean> beanList = JSON.parseArray(dataObj.getString("vos"), BudgetBean.class);
+    public Observable<ReimAddResponseBean> submitReimDoc(ReimDocSubmitBean bean) {
 
-//                    List<HomeAuthorityBean> authorityBeanList = JSON.parseArray(dataObj.getString("Authority"), HomeAuthorityBean.class);
-//                    loginResponseBean.setList(authorityBeanList);
-                    return beanList;
-                }
-
-                throw new IApiException("", jsonObject.getString(AppConstant.JSON_MESSAGE));
-            }
-        });
-    }
-
-
-    //add预算
-
-    public Observable<Boolean> addBudget(AddBudgetItemBean bean) {
-        String type = bean.getType();
         Retrofit retrofit = builderJsonRetrofit();
-        Map<String, Object> paramMap = new HashMap<>();
-        if (type.equals("1")) {
-            //部门
-            paramMap.put("dpt", bean.getDpt());
-            paramMap.put("dquota", bean.getDquota());
+        String paramStr = JSON.toJSONString(bean);
+        Loger.e("---params--" + paramStr);
 
-        } else if (type.equals("2")) {
-            //二级科目
-            paramMap.put("cat", bean.getCat());
-            paramMap.put("cquota", bean.getCquota());
-        } else if (type.equals("3")) {
-            paramMap.put("item", bean.getItem());
-            paramMap.put("iquota", bean.getIquota());
-        }
-
-//        {
-//            "cat":2,"cquota":10000.00
-//
-//            "item":3,"iquota":1800.00
-//
-//            "dpt":"118","dquota":20000.00
-//        }
-//        paramMap.put("id", membersBean.getId());
-        String paramStr = JSON.toJSONString(paramMap);
-        BudgetApi api = retrofit.create(BudgetApi.class);
-        Observable<Response<String>> observable = api.addBudgetItem(paramStr);
-        return observable.map(new Function<Response<String>, Boolean>() {
+        ReimApi api = retrofit.create(ReimApi.class);
+        Observable<Response<String>> observable = api.submitReimDoc(paramStr);
+        return observable.map(new Function<Response<String>, ReimAddResponseBean>() {
             @Override
-            public Boolean apply(Response<String> stringResponse) throws Exception {
+            public ReimAddResponseBean apply(Response<String> stringResponse) throws Exception {
                 String responseStr = stringResponse.body();
                 int codeHttp = stringResponse.code();
                 if (codeHttp == 401) {
@@ -161,10 +169,15 @@ public class ReimControl extends BaseControl {
                 JSONObject jsonObject = JSON.parseObject(responseStr);
                 int code = jsonObject.getIntValue(AppConstant.JSON_CODE);
                 if (code == 200) {
+                    ReimAddResponseBean reimAddResponseBean =
+                            JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA), ReimAddResponseBean.class);
+                    if (reimAddResponseBean != null) {
+                        return reimAddResponseBean;
+                    }
 
-                    return true;
+
                 }
-                throw new IApiException("新增预算管理", jsonObject.getString(AppConstant.JSON_MESSAGE));
+                throw new IApiException("提交报销单", jsonObject.getString(AppConstant.JSON_MESSAGE));
 
 
             }

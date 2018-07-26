@@ -60,7 +60,7 @@ public class MySpEdit {
     }
 
 
-    public void setCompanyId(int companyId) {
+       public void setCompanyId(int companyId) {
         SharedPreferences sp = VsdApplication.getInstance().getSharedPreferences(name, Activity.MODE_PRIVATE);
         sp.edit().putInt("COMP_ID", companyId).apply();
     }
@@ -71,6 +71,19 @@ public class MySpEdit {
         SharedPreferences sp = VsdApplication.getInstance().getSharedPreferences(name, Activity.MODE_PRIVATE);
         return sp.getInt("COMP_ID", -1);
     }
+
+    public void setFormId(int id) {
+        SharedPreferences sp = VsdApplication.getInstance().getSharedPreferences(name, Activity.MODE_PRIVATE);
+        sp.edit().putInt("FORM_ID", id).apply();
+    }
+
+
+
+    public int getFormId() {
+        SharedPreferences sp = VsdApplication.getInstance().getSharedPreferences(name, Activity.MODE_PRIVATE);
+        return sp.getInt("FORM_ID", -1);
+    }
+
 
     public void setAuthor(String author) {
         SharedPreferences sp = VsdApplication.getInstance().getSharedPreferences(name, Activity.MODE_PRIVATE);

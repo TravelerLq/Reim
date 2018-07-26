@@ -103,236 +103,171 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_members_manage"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_60"
-                android:layout_marginTop="@dimen/dimen_10"
-                android:background="#FFF"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
 
-                <ImageView
-                    android:id="@+id/imageViewt"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="15dp" />
+                android:paddingTop="@dimen/dimen_5"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dimen_5"
+                android:paddingRight="@dimen/dimen_5">
 
-                <TextView
-                    android:id="@+id/textView2r4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="成员管理" />
+                <LinearLayout
+                    android:id="@+id/ll_members_manage"
+                    style="@style/enterprise_home_item_parent">
 
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/imageViewt"
+                        style="@style/enterprise_home_iv"
+                        android:src="@drawable/ic_enterprise_members" />
 
-            <LinearLayout
-                android:id="@+id/ll_department_manage"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_61"
-                android:layout_marginTop="@dimen/dimen_10"
-                android:background="#FFF"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/textView2r4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="成员管理" />
 
-                <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="15dp" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/textView54"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="部门管理" />
+                <LinearLayout
+                    android:id="@+id/ll_department_manage"
+                    style="@style/enterprise_home_item_parent">
 
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/imageView4"
+                        style="@style/enterprise_home_iv"
+                        android:src="@drawable/ic_enterprise_depart" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="@dimen/dimen_10"
-                android:background="#EEE" />
+                    <TextView
+                        android:id="@+id/textView54"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="部门管理" />
 
-            <LinearLayout
-                android:id="@+id/ll_budget_manage"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_61"
-                android:background="#FFF"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/imageVdiew8"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="15dp" />
 
-                <TextView
-                    android:id="@+id/textView2f4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="预算管理" />
 
-            </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_budget_manage"
+                    style="@style/enterprise_home_item_parent">
 
-            <LinearLayout
-                android:id="@+id/ll_producer_manage"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_61"
-                android:layout_marginTop="@dimen/dimen_12"
-                android:background="#FFF"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/imageVdiew8"
+                        style="@style/enterprise_home_iv"
+                        android:src="@drawable/ic_enterprise_budget" />
 
-                <ImageView
-                    android:id="@+id/iv_producer"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="15dp" />
+                    <TextView
+                        android:id="@+id/textView2f4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="预算管理" />
 
-                <TextView
+                </LinearLayout>
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="审批流程管理" />
+                <LinearLayout
+                    android:id="@+id/ll_producer_manage"
+                    style="@style/enterprise_home_item_parent">
 
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/iv_producer"
+                        style="@style/enterprise_home_iv"
+                        android:src="@drawable/ic_enterprise_approval" />
 
-            <LinearLayout
-                android:id="@+id/ll_enterprise_update"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="12dp"
-                android:background="#FFF"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="visible">
+                    <TextView
 
-                <ImageView
-                    android:id="@+id/imageView8r"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="15dp" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="审批流程管理" />
 
-                <TextView
-                    android:id="@+id/textView24e"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="企业信息更新" />
+                </LinearLayout>
 
-            </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_enterprise_update"
+                    style="@style/enterprise_home_item_parent">
 
-            <LinearLayout
-                android:id="@+id/ll_add_enterprise"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="12dp"
-                android:background="#FFF"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="visible">
+                    <ImageView
+                        android:id="@+id/imageView8r"
+                        style="@style/enterprise_home_iv"
+                        android:src="@drawable/ic_enterprise_update" />
 
-                <ImageView
+                    <TextView
+                        android:id="@+id/textView24e"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="企业信息更新" />
 
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="15dp" />
+                </LinearLayout>
 
-                <TextView
+                <LinearLayout
+                    android:id="@+id/ll_add_enterprise"
+                    style="@style/enterprise_home_item_parent">
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_company" />
+                    <ImageView
 
-            </LinearLayout>
+                        style="@style/enterprise_home_iv"
+                        android:src="@drawable/ic_enterprise_bulid" />
 
-            <LinearLayout
-                android:id="@+id/ll_applicant"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="12dp"
-                android:background="#FFF"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                    <TextView
 
-                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_company" />
 
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="15dp" />
+                </LinearLayout>
 
-                <TextView
+                <LinearLayout
+                    android:id="@+id/ll_applicant"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="12dp"
+                    android:background="#FFF"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/applicant" />
+                    <ImageView
 
-            </LinearLayout>
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="15dp" />
 
-            <LinearLayout
+                    <TextView
 
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_62"
-                android:layout_marginTop="@dimen/dimen_10"
-                android:background="#FFF"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/applicant" />
 
-                <ImageView
+                </LinearLayout>
 
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="15dp"
-                    app:srcCompat="@drawable/ic_neek" />
+                <LinearLayout
 
-                <TextView
-                    android:id="@+id/tv_get_code"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/get_code" />
+                    style="@style/enterprise_home_item_parent"
+                    android:layout_marginBottom="@dimen/dimen_5">
 
-                <TextView
-                    android:id="@+id/tv_get_code_content"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_30"
-                    android:text="xxx"
-                    android:textIsSelectable="true" />
+                    <ImageView
+                        style="@style/enterprise_home_iv"
+                        android:src="@drawable/ic_enterprise_code" />
 
+                    <TextView
+                        android:id="@+id/tv_get_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/get_code" />
+
+                    <TextView
+                        android:id="@+id/tv_get_code_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_30"
+                        android:text="xxx"
+                        android:textIsSelectable="true" />
+
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

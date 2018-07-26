@@ -18,9 +18,7 @@
             <LinearLayout style="@style/reim_item_linear">
 
                 <ImageView
-                    android:layout_width="@dimen/dimen_50"
-                    android:layout_height="@dimen/dimen_50"
-                    android:layout_marginLeft="@dimen/dimen_20"
+                   style="@style/enterprise_home_iv"
                     android:src="@drawable/ic_reim_rmb" />
 
                 <EditText

@@ -13,10 +13,25 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.jci.vsd.R;
 import com.jci.vsd.activity.BaseActivity;
 import com.jci.vsd.activity.MainActivity;
+import com.jci.vsd.activity.MeFeedBackActivity;
+import com.jci.vsd.bean.CatBean;
+import com.jci.vsd.bean.PicBean;
+import com.jci.vsd.bean.reim.ReimAddItemBean;
+import com.jci.vsd.constant.AppConstant;
+import com.jci.vsd.data.ReimAddData;
+import com.jci.vsd.data.ReimCategoryData;
+import com.jci.vsd.network.api.FeedBackApi;
+import com.jci.vsd.network.control.FeedBackApiControl;
+import com.jci.vsd.network.control.ReimControl;
+import com.jci.vsd.network.control.UploadProgressListener;
+import com.jci.vsd.observer.CommonDialogObserver;
+import com.jci.vsd.observer.RxHelper;
 import com.jci.vsd.utils.CompressUtil;
 import com.jci.vsd.utils.DateUtils;
 import com.jci.vsd.utils.DisplayUtils;
@@ -31,18 +46,27 @@ import com.warmtel.expandtab.KeyValueBean;
 import com.warmtel.expandtab.PopTwoListView;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.addapp.pickers.util.ConvertUtils;
 import cn.unitid.spark.cm.sdk.business.SignatureP1Service;
 import cn.unitid.spark.cm.sdk.common.DataProcessType;
 import cn.unitid.spark.cm.sdk.data.response.DataProcessResponse;
 import cn.unitid.spark.cm.sdk.exception.CmSdkException;
 import cn.unitid.spark.cm.sdk.listener.ProcessListener;
+import io.reactivex.Observable;
 import me.iwf.photopicker.PhotoPicker;
 import me.iwf.photopicker.PhotoPreview;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by liqing on 18/6/26.
@@ -78,14 +102,21 @@ public class ReimAddActivity extends BaseActivity {
     Button btnAdd;
     //expandapoTab
     private PopTwoListView popTwoListView;
-    private List<KeyValueBean> parentsList;
-    List<ArrayList<KeyValueBean>> childList;
+    private List<KeyValueBean> parentsList = new ArrayList<>();
+    List<ArrayList<KeyValueBean>> childList = new ArrayList<>();
     private Context context;
-    private ArrayList<String> selectedPhotos;
+    private ArrayList<String> selectedPhotos = new ArrayList<>();
     private ArrayList<String> photos;
     private String path;
     private Uri uri;
-
+    List<PicBean> picBeanList = new ArrayList<>();
+    private List<CatBean> catBeanList = new ArrayList<>();
+    //科目三
+    private List<KeyValueBean> thirdList = new ArrayList<>();
+    private int categoryId;
+    private int itemId;
+    private String cert;
+    private String signKey;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,8 +124,28 @@ public class ReimAddActivity extends BaseActivity {
         setContentView(R.layout.activity_reim_add);
         context = ReimAddActivity.this;
         initViewEvent();
-        initData();
+        initTesData();
+
+        catBeanList = ReimCategoryData.getCategoryList();
+        if (catBeanList == null || catBeanList.size() == 0) {
+            getJsonData();
+        } else {
+            CatBean catBean = null;
+            parentsList.clear();
+            for (int i = 0; i < catBeanList.size(); i++) {
+                catBean = catBeanList.get(i);
+
+                //firstList.add(catBeanList.get(i).getCname());
+                // parentsList.add(new KeyValueBean(object.getExpenseCategoryId(), object.getExpenseCategoryName()));
+                parentsList.add(new KeyValueBean(String.valueOf(catBeanList.get(i).getCat()), catBean.getCname()));
+
+
+            }
+
+            initExpandaTabView();
+        }
     }
+
 
     private void initData() {
         parentsList = new ArrayList<>();
@@ -113,6 +164,7 @@ public class ReimAddActivity extends BaseActivity {
 
     }
 
+
     //收到照片后处理
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -128,7 +180,6 @@ public class ReimAddActivity extends BaseActivity {
 
             selectedPhotos.clear();
 
-
             if (photos != null) {
 
                 selectedPhotos.addAll(photos);
@@ -136,11 +187,13 @@ public class ReimAddActivity extends BaseActivity {
             path = selectedPhotos.get(0);
             Loger.e("path--" + (new File(selectedPhotos.get(0)).length()));
             uri = Uri.fromFile(new File(selectedPhotos.get(0)));
-            //图片压缩：
-            Glide.with(ReimAddActivity.this)
-                    .load(uri)
-                    .thumbnail(0.1f)
-                    .into(ivReimPic);
+//            //图片压缩：
+//            Glide.with(ReimAddActivity.this)
+//                    .load(uri)
+//                    .thumbnail(0.1f)
+//                    .into(ivReimPic);
+
+
 //
             File outFile = CompressUtil.compressImage(path,
                     ScreenUtil.getInstance().getDisplayWidth(),
@@ -173,12 +226,14 @@ public class ReimAddActivity extends BaseActivity {
         SignatureP1Service signatureP1Service = new SignatureP1Service(ReimAddActivity.this, "1234", new ProcessListener<DataProcessResponse>() {
             @Override
             public void doFinish(DataProcessResponse dataProcessResponse, String certificate) {
+                cert = certificate;
                 Log.e("doFinish---", "= ");
 //                if (pdu.getMypDialog().isShowing()) {
 //                    pdu.dismisspd();
 //                }
                 if (dataProcessResponse.getRet() == 0) {
                     Log.e("密钥", "= " + dataProcessResponse.getResult());
+                    signKey = dataProcessResponse.getResult();
                     //  spu.setCertKey(dataProcessResponse.getResult());
                     //获得就是签名证书
                     Log.e("cert", "= " + certificate);
@@ -203,7 +258,7 @@ public class ReimAddActivity extends BaseActivity {
 //                if (pdu.getMypDialog().isShowing()) {
 //                    pdu.dismisspd();
 //                }
-                SimpleToast.toastMessage("图片签名失败" + e.getMessage(), Toast.LENGTH_LONG);
+                SimpleToast.toastMessage("图片签名失败,请重试" + e.getMessage(), Toast.LENGTH_LONG);
                 //Toast.makeText(AddExpenseItemActivtity.this, "图片签名失败" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -225,14 +280,18 @@ public class ReimAddActivity extends BaseActivity {
 
             @Override
             public void getValue(String showText, String parentKey, String childrenKey) {
-                Log.e("----", "三级－－ :" + showText + " ,parentKey :" + parentKey + " ,childrenKey :" + childrenKey);
+                Log.e("----", "三级－－ :" + showText +
+                        " ,parentKey :" + parentKey + " ,childrenKey :" + childrenKey);
+                itemId = Integer.valueOf(childrenKey);
+
 
             }
 
             @Override
             public void getParentValue(int position, String showText, String key) {
                 Log.e("－－－－", "二级－－－－ :" + showText + " ,二级key :" + key);
-
+                categoryId = Integer.valueOf(key);
+                getItemdata(position);
             }
 
         });
@@ -242,94 +301,46 @@ public class ReimAddActivity extends BaseActivity {
 
     void setSecondMenuData() {
 
-        KeyValueBean parentBean = new KeyValueBean();
-        parentBean.setKey("1");
-        parentBean.setValue("四川");
-        parentsList.add(parentBean);
-
-        parentBean = new KeyValueBean();
-        parentBean.setKey("2");
-        parentBean.setValue("重庆");
-        parentsList.add(parentBean);
-
-        parentBean = new KeyValueBean();
-        parentBean.setKey("3");
-        parentBean.setValue("云南");
-        parentsList.add(parentBean);
-//        //==================================================
-
+//        KeyValueBean parentBean = new KeyValueBean();
+//        parentBean.setKey("1");
+//        parentBean.setValue("四川");
+//        parentsList.add(parentBean);
+//
+//        parentBean = new KeyValueBean();
+//        parentBean.setKey("2");
+//        parentBean.setValue("重庆");
+//        parentsList.add(parentBean);
+//
+//        parentBean = new KeyValueBean();
+//        parentBean.setKey("3");
+//        parentBean.setValue("云南");
+//        parentsList.add(parentBean);
+////        //==================================================
+//
         ArrayList<KeyValueBean> sclist = new ArrayList<>();
         KeyValueBean bean = new KeyValueBean();
+
         bean.setKey("11");
-        bean.setValue("成都");
+        bean.setValue("住宿费");
         sclist.add(bean);
 
         bean = new KeyValueBean();
         bean.setKey("12");
-        bean.setValue("绵阳");
+        bean.setValue("打车票");
         sclist.add(bean);
 
         bean = new KeyValueBean();
         bean.setKey("13");
-        bean.setValue("德阳");
+        bean.setValue("餐饮费");
         sclist.add(bean);
 
         bean = new KeyValueBean();
         bean.setKey("14");
-        bean.setValue("宜宾");
+        bean.setValue("食品票");
         sclist.add(bean);
         childList.add(sclist);
 
-
-        ArrayList<KeyValueBean> cqlist = new ArrayList<>();
-        bean = new KeyValueBean();
-        bean.setKey("21");
-        bean.setValue("渝北");
-        cqlist.add(bean);
-
-        bean = new KeyValueBean();
-        bean.setKey("22");
-        bean.setValue("渝中");
-        cqlist.add(bean);
-
-        bean = new KeyValueBean();
-        bean.setKey("23");
-        bean.setValue("江北");
-        cqlist.add(bean);
-
-        bean = new KeyValueBean();
-        bean.setKey("24");
-        bean.setValue("沙坪坝");
-        cqlist.add(bean);
-        childList.add(cqlist);
-
-        ArrayList<KeyValueBean> shlist = new ArrayList<>();
-        bean = new KeyValueBean();
-        bean.setKey("31");
-        bean.setValue("昆明");
-        shlist.add(bean);
-
-        bean = new KeyValueBean();
-        bean.setKey("32");
-        bean.setValue("丽江");
-        shlist.add(bean);
-
-        bean = new KeyValueBean();
-        bean.setKey("33");
-        bean.setValue("香格里拉");
-        shlist.add(bean);
-
-        bean = new KeyValueBean();
-        bean.setKey("34");
-        bean.setValue("凯里");
-        shlist.add(bean);
-        childList.add(shlist);
-
-        //     childList.add(shlist);
-
         addItem(expandPopTabView, parentsList, childList, parentsList.get(0).getKey(), childList.get(0).get(0).getKey(), "");
-
-
     }
 
 
@@ -371,8 +382,18 @@ public class ReimAddActivity extends BaseActivity {
         }
     }
 
+    private void initTesData() {
+        edtMoney.setText("110");
+        edtStartTime.setText("2018-7-26");
+        edtEndTime.setText("2018-7-29");
+        edtStartLocation.setText("南京");
+        edtEndLocation.setText("上海");
+
+    }
+
 
     private void checkData() {
+
         String edtMoneyStr = edtMoney.getText().toString();
 //        expenseTypeStr = tv.getText().toString();
         String startTimeStr = edtStartTime.getText().toString().trim();
@@ -386,6 +407,7 @@ public class ReimAddActivity extends BaseActivity {
             Toast.makeText(this, "金额不可为空", Toast.LENGTH_SHORT).show();
             return;
         }
+
         if (TextUtils.isEmpty(remarkStr)) {
             Toast.makeText(this, "说明不可为空", Toast.LENGTH_SHORT).show();
             return;
@@ -416,15 +438,28 @@ public class ReimAddActivity extends BaseActivity {
             return;
         }
 
+
         Date startTime = DateUtils.strToDate(startTimeStr);
         Date endTime = DateUtils.strToDate(endTimeStr);
-        toActivity(ReimRecycActivity.class);
-        finish();
         //新增报销项目
 
 //        amount = Double.parseDouble(edtFeeStr);
 //
 //        submitExpenseItem();
+
+        ReimAddItemBean bean = new ReimAddItemBean();
+        bean.setAmount(edtMoneyStr);
+        bean.setStart(startTimeStr);
+        bean.setEnd(endTimeStr);
+        bean.setBp(startLocationStr);
+        bean.setDst(endLocationStr);
+        bean.setRemark(remarkStr);
+        bean.setCat(String.valueOf(categoryId));
+        bean.setItem(String.valueOf(itemId));
+        bean.setCer(cert);
+        bean.setSign(signKey);
+
+        subFile(bean, selectedPhotos.get(0), uploadProgressListener);
     }
 
     private void takePics() {
@@ -434,6 +469,7 @@ public class ReimAddActivity extends BaseActivity {
                 .setPreviewEnabled(false)
                 .setSelected(selectedPhotos)
                 .start(ReimAddActivity.this);
+
     }
 
     @Override
@@ -443,5 +479,115 @@ public class ReimAddActivity extends BaseActivity {
             expandPopTabView.onExpandPopView();
         }
     }
+
+    //
+
+    private void subFile(final ReimAddItemBean bean, String path, UploadProgressListener uploadProgressListener) {
+        final File file = new File(path);
+        Loger.i("subFile = " + path);
+        Observable<String> observable = new ReimControl().submitReim_pic(bean, file, uploadProgressListener);
+        CommonDialogObserver<String> observer = new CommonDialogObserver<String>(ReimAddActivity.this) {
+            @Override
+            public void onNext(String s) {
+                super.onNext(s);
+                Loger.e("subFile" + s);
+                JSONObject jsonObject = JSON.parseObject(s);
+                if (jsonObject.getIntValue(AppConstant.JSON_CODE) == 200) {
+                    SimpleToast.toastMessage("成功", Toast.LENGTH_SHORT);
+                    JSONObject jsonData = JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA));
+                    int id = jsonData.getIntValue("id");
+                    bean.setId(id);
+
+                    ReimAddData.saveReimAddItemBean(bean);
+                    //  toAcW(ReimRecycActivity.class);
+                    toAtivityWithParamsAndBean(ReimRecycActivity.class, bean, AppConstant.KEY_REIM_ITEM);
+                    finish();
+                }
+            }
+        };
+        RxHelper.bindOnUI(observable, observer);
+    }
+
+    UploadProgressListener uploadProgressListener = new UploadProgressListener() {
+        @Override
+        public void onProgress(long currentBytesCount, long totalBytesCount) {
+            Loger.i("uploadProgressListener = " + currentBytesCount);
+        }
+    };
+
+    //获取报销科目
+
+    private void getJsonData() {
+
+        catBeanList = new ArrayList<>();
+        // firstList = new ArrayList<>();
+        //  showProgress();
+
+        Thread thread = new Thread(new Runnable() {
+
+            private String json;
+
+
+            @Override
+            public void run() {
+                //线程执行内容
+                try {
+                    json = ConvertUtils.toString(getAssets().open("data.json"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                catBeanList.addAll(JSON.parseArray(json, CatBean.class));
+                ReimCategoryData.saveCategoryList(catBeanList);
+                CatBean catBean = null;
+                for (int i = 0; i < catBeanList.size(); i++) {
+                    catBean = catBeanList.get(i);
+
+                    //firstList.add(catBeanList.get(i).getCname());
+                    // parentsList.add(new KeyValueBean(object.getExpenseCategoryId(), object.getExpenseCategoryName()));
+                    parentsList.clear();
+                    parentsList.add(new KeyValueBean(String.valueOf(catBeanList.get(i).getCat()), catBean.getCname()));
+                }
+            }
+        });
+        //开启线程
+        thread.start();
+
+
+    }
+
+    private void getItemdata(int pos) {
+//        for (int i = 0; i < thirdExpenseCategoryList.size(); i++) {
+//            //   Loger.e("thirdExpenseCategoryList-name" + thirdExpenseCategoryList.get(i).getExpenseItemName());
+//            if (thirdExpenseCategoryList.get(i).getExpenseItemId() != null) {
+//                ExpenseThirdTypeBean bean = thirdExpenseCategoryList.get(i);
+//                KeyValueBean keyValueBean = new KeyValueBean(bean.getExpenseItemId().toString(), bean.getExpenseItemName());
+//                thirdList.add(keyValueBean);
+//            }
+//
+//
+//        }
+        thirdList.clear();
+        List<CatBean.ItemsBean> itemsBeanList = catBeanList.get(pos).getItems();
+        CatBean.ItemsBean itemsBean = null;
+        if (itemsBeanList != null && itemsBeanList.size() > 0) {
+            for (int i = 0; i < itemsBeanList.size(); i++) {
+                //   Log.e("thirdListNewGet==", "" + thirdList.get(i).getValue());
+                itemsBean = itemsBeanList.get(i);
+                KeyValueBean keyValueBean = new KeyValueBean
+                        (String.valueOf(itemsBean.getItem()), itemsBean.getIname());
+                thirdList.add(keyValueBean);
+            }
+
+        }
+        if (popTwoListView == null) {
+            popTwoListView = new PopTwoListView(this);
+        }
+
+        popTwoListView.refreshChild(thirdList);
+    }
+
+
+    // pic load
+
 
 }

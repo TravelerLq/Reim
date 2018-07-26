@@ -577,5 +577,26 @@
 
     </style>
 
+    <style name="enterprise_home_item_parent">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_60</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_marginTop">@dimen/dimen_10</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+
+    </style>
+
+    <style name="enterprise_home_iv">
+        <item name="android:layout_width">@dimen/dimen_50</item>
+        <item name="android:layout_height">@dimen/dimen_50</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:background">@color/red_deep_btn</item>
+        <item name="android:layout_marginRight">@dimen/dimen_15</item>
+        <item name="android:layout_marginLeft">@dimen/dimen_20</item>
+      <item name="android:layout_gravity">center_vertical</item>
+
+    </style>
+
 
 </resources>

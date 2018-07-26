@@ -3,13 +3,12 @@ package com.jci.vsd.network.control;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.jci.vsd.bean.enterprise.AjustMembersBean;
-import com.jci.vsd.bean.enterprise.MembersBean;
 import com.jci.vsd.bean.enterprise.ProducerAddBean;
 import com.jci.vsd.bean.enterprise.ProducerBean;
+import com.jci.vsd.bean.enterprise.ProducerSettingInfoBean;
+import com.jci.vsd.bean.enterprise.ProducerUpdateBean;
 import com.jci.vsd.constant.AppConstant;
 import com.jci.vsd.exception.IApiException;
-import com.jci.vsd.network.api.MembersApi;
 import com.jci.vsd.network.api.ProducerApi;
 import com.jci.vsd.utils.Loger;
 
@@ -47,7 +46,7 @@ public class ProducerManageControl extends BaseControl {
                 JSONObject jsonObject = JSON.parseObject(stringResponse.body());
                 if (jsonObject.getIntValue(AppConstant.JSON_CODE) == 200) {
                     JSONObject dataObj = jsonObject.getJSONObject(AppConstant.JSON_DATA);
-                    List<ProducerBean> beanList = JSON.parseArray(dataObj.getString("vos"), ProducerBean.class);
+                    List<ProducerBean> beanList = JSON.parseArray(dataObj.getString("chkpnts"), ProducerBean.class);
 
 //                    List<HomeAuthorityBean> authorityBeanList = JSON.parseArray(dataObj.getString("Authority"), HomeAuthorityBean.class);
 //                    loginResponseBean.setList(authorityBeanList);
@@ -59,12 +58,11 @@ public class ProducerManageControl extends BaseControl {
         });
     }
 
-    //添加审流程
-
+    //
+    // {"name":"部门审批","checker":28,"sort":2,"fath":1,"dpts":[118,119]}
     public Observable<Boolean> addProducer(ProducerAddBean requestBean) {
         Retrofit retrofit = builderJsonRetrofit();
-//        Map<String, Object> paramMap = new HashMap<>();
-//        paramMap.put("id", membersBean.getId());
+
         String paramStr = JSON.toJSONString(requestBean);
         ProducerApi api = retrofit.create(ProducerApi.class);
         Observable<Response<String>> observable = api.addProducerItem(paramStr);
@@ -80,6 +78,78 @@ public class ProducerManageControl extends BaseControl {
                 int code = jsonObject.getIntValue(AppConstant.JSON_CODE);
                 if (code == 200) {
                     return true;
+                }
+                throw new IApiException("成员管理", jsonObject.getString(AppConstant.JSON_MESSAGE));
+
+
+            }
+
+
+        });
+    }
+
+
+    //获取可以配置的 部门和 审核人和可配置级别
+
+    public Observable<ProducerSettingInfoBean> getProducerSettingInfo() {
+        Retrofit retrofit = builderJsonRetrofit();
+//        Map<String, Object> paramMap = new HashMap<>();
+//        paramMap.put("id", membersBean.getId());
+//        String paramStr = JSON.toJSONString(requestBean);
+        ProducerApi api = retrofit.create(ProducerApi.class);
+        Observable<Response<String>> observable = api.getProducerSettingInfo();
+        return observable.map(new Function<Response<String>, ProducerSettingInfoBean>() {
+            @Override
+            public ProducerSettingInfoBean apply(Response<String> stringResponse) throws Exception {
+                String responseStr = stringResponse.body();
+                int codeHttp = stringResponse.code();
+                if (codeHttp == 401) {
+                    throw new IApiException("401", "401");
+                }
+                JSONObject jsonObject = JSON.parseObject(responseStr);
+                int code = jsonObject.getIntValue(AppConstant.JSON_CODE);
+
+                if (code == 200) {
+                    ProducerSettingInfoBean bean = JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA),
+                            ProducerSettingInfoBean.class);
+                    return bean;
+                }
+
+                throw new IApiException("审核流程配置", jsonObject.getString(AppConstant.JSON_MESSAGE));
+
+
+            }
+
+
+        });
+    }
+//获取以配置的父结点流程
+
+    public Observable<List<ProducerBean>> getParentProducer(int producer) {
+        Retrofit retrofit = builderJsonRetrofit();
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("sort", producer);
+        String paramStr = JSON.toJSONString(paramMap);
+        ProducerApi api = retrofit.create(ProducerApi.class);
+        Observable<Response<String>> observable = api.getParentProducer(paramMap);
+        return observable.map(new Function<Response<String>, List<ProducerBean>>() {
+            @Override
+            public List<ProducerBean> apply(Response<String> stringResponse) throws Exception {
+                String responseStr = stringResponse.body();
+                int codeHttp = stringResponse.code();
+                if (codeHttp == 401) {
+                    throw new IApiException("401", "401");
+                }
+                JSONObject jsonObject = JSON.parseObject(responseStr);
+                int code = jsonObject.getIntValue(AppConstant.JSON_CODE);
+                if (code == 200) {
+                    JSONObject dataObj = jsonObject.getJSONObject(AppConstant.JSON_DATA);
+                    // JSONObject jsonData = jsonObject.getJSONObject(jsonObject.getString(AppConstant.JSON_DATA));
+                    if (dataObj == null) {
+                        Loger.e("--jsonData--null");
+                    }
+                    List<ProducerBean> list = JSON.parseArray(dataObj.getString("faths"), ProducerBean.class);
+                    return list;
                 }
                 throw new IApiException("成员管理", jsonObject.getString(AppConstant.JSON_MESSAGE));
 
@@ -124,7 +194,7 @@ public class ProducerManageControl extends BaseControl {
 
     //更新审批流程
 
-    public Observable<Boolean> updateProducer(ProducerBean requestbean) {
+    public Observable<Boolean> updateProducer(ProducerUpdateBean requestbean) {
         Retrofit retrofit = builderJsonRetrofit();
         Map<String, Object> paramMap = new HashMap<>();
         //   paramMap.put("id", id);
