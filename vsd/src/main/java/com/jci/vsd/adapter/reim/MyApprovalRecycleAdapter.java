@@ -10,7 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jci.vsd.R;
@@ -49,7 +49,7 @@ public class MyApprovalRecycleAdapter extends RecyclerView.Adapter<MyApprovalRec
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         MyViewHolder myViewHolder = null;
         if (myViewHolder == null) {
-            myViewHolder = new MyViewHolder(inflater.inflate(R.layout.item_my_approval_recy_item, parent, false));
+            myViewHolder = new MyViewHolder(inflater.inflate(R.layout.item_wait_approval, parent, false));
 
         }
         return myViewHolder;
@@ -63,16 +63,16 @@ public class MyApprovalRecycleAdapter extends RecyclerView.Adapter<MyApprovalRec
                 Log.e("holder.tvTitle", "null");
             } else {
                 Log.e("holder.tvTitle", "not null");
-                holder.tvFee.setText(bean.getMoney());
+                holder.tvFee.setText(bean.getTotal());
                 //  holder.tvExplain.setText(bean.getApprovalName());
                 holder.tvDate.setText(bean.getDate());
-                holder.tvNum.setText(String.valueOf(bean.getCount()));
-                String process = bean.getProcess();
-                if (process.length() >= 10) {
-                    process = process.substring(0, 9) + "...";
-                }
-                holder.tvDepartment.setText(process);
-                holder.tvName.setText(bean.getUserName());
+                holder.tvNum.setText(String.valueOf(bean.getAnnex()));
+//                String process = bean.getProcess();
+//                if (process.length() >= 10) {
+//                    process = process.substring(0, 9) + "...";
+//                }
+
+                holder.tvName.setText(bean.getAppl());
                 holder.rlItem.setTag(position);
                 holder.rlItem.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -104,7 +104,7 @@ public class MyApprovalRecycleAdapter extends RecyclerView.Adapter<MyApprovalRec
         TextView tvNum;
         TextView tvExplain;
         TextView tvDepartment;
-        RelativeLayout rlItem;
+        LinearLayout rlItem;
         View view;
 
         public MyViewHolder(View view) {
@@ -114,7 +114,7 @@ public class MyApprovalRecycleAdapter extends RecyclerView.Adapter<MyApprovalRec
             tvDate = (TextView) view.findViewById(R.id.tv_expense_time);
             tvNum = (TextView) view.findViewById(R.id.tv_expense_num);
             //   tvExplain = view.findViewById(R.id.tv_explain);
-            rlItem = (RelativeLayout) view.findViewById(R.id.rl_expense_item);
+            rlItem = (LinearLayout) view.findViewById(R.id.rl_expense_item);
             tvDepartment = (TextView) view.findViewById(R.id.tv_department);
             this.view = view;
         }

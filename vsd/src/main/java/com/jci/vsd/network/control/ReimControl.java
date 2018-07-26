@@ -3,12 +3,13 @@ package com.jci.vsd.network.control;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.jci.vsd.bean.enterprise.AddBudgetItemBean;
 import com.jci.vsd.bean.enterprise.BudgetBean;
+import com.jci.vsd.bean.reim.ApprovalBean;
 import com.jci.vsd.bean.reim.IdsBean;
 import com.jci.vsd.bean.reim.ReimAddItemBean;
 import com.jci.vsd.bean.reim.ReimAddResponseBean;
 import com.jci.vsd.bean.reim.ReimDocSubmitBean;
+import com.jci.vsd.bean.reim.WaitApprovalDetailBean;
 import com.jci.vsd.constant.AppConstant;
 import com.jci.vsd.exception.IApiException;
 import com.jci.vsd.network.api.BudgetApi;
@@ -23,7 +24,6 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
-import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -185,6 +185,77 @@ public class ReimControl extends BaseControl {
 
         });
     }
+
+
+    public Observable<List<ApprovalBean>> getWaitApprovalData() {
+
+        Retrofit retrofit = builderJsonRetrofit();
+
+        ReimApi api = retrofit.create(ReimApi.class);
+        Observable<Response<String>> observable = api.getWaitApprovalData();
+        return observable.map(new Function<Response<String>, List<ApprovalBean>>() {
+            @Override
+            public List<ApprovalBean> apply(Response<String> stringResponse) throws Exception {
+                String responseStr = stringResponse.body();
+                int codeHttp = stringResponse.code();
+                if (codeHttp == 401) {
+                    throw new IApiException("401", "401");
+                }
+                JSONObject jsonObject = JSON.parseObject(responseStr);
+                int code = jsonObject.getIntValue(AppConstant.JSON_CODE);
+                if (code == 200) {
+                    JSONObject jsonData = JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA));
+                    List<ApprovalBean> list = JSON.parseArray(jsonData.getString("forms"), ApprovalBean.class);
+                    if (list != null) {
+                        return list;
+                    }
+
+                }
+                throw new IApiException("提交报销单", jsonObject.getString(AppConstant.JSON_MESSAGE));
+
+
+            }
+
+
+        });
+    }
+
+    //get 获取待审批详情数据
+    public Observable<List<WaitApprovalDetailBean>> getWaitApprovalDetail(int id) {
+
+        Retrofit retrofit = builderRetrofitWithHeader();
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("id", id);
+
+        ReimApi api = retrofit.create(ReimApi.class);
+        Observable<Response<String>> observable = api.getWaitApprovalDetail(paramMap);
+        return observable.map(new Function<Response<String>, List<WaitApprovalDetailBean>>() {
+            @Override
+            public List<WaitApprovalDetailBean> apply(Response<String> stringResponse) throws Exception {
+                String responseStr = stringResponse.body();
+                int codeHttp = stringResponse.code();
+                if (codeHttp == 401) {
+                    throw new IApiException("401", "401");
+                }
+                JSONObject jsonObject = JSON.parseObject(responseStr);
+                int code = jsonObject.getIntValue(AppConstant.JSON_CODE);
+                if (code == 200) {
+                    JSONObject jsonData = JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA));
+                    List<WaitApprovalDetailBean> list = JSON.parseArray(jsonData.getString("costs"), WaitApprovalDetailBean.class);
+                    if (list != null) {
+                        return list;
+                    }
+
+                }
+                throw new IApiException("待审批详情", jsonObject.getString(AppConstant.JSON_MESSAGE));
+
+
+            }
+
+
+        });
+    }
+
 
     //删除预算
 

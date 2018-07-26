@@ -9,39 +9,20 @@ import com.jci.vsd.bean.BaseBean;
 
 public class ApprovalBean extends BaseBean {
 
+
     /**
-     * approvalId : 450
-     * count : 1
-     * date : 2018-04-26
-     * formId : 1373
-     * money : 23.66
-     * process : 部门审批
-     * userName : 王朕
+     * date : 2018-07-25
+     * total : 1730
+     * appl : 加图索
+     * id : 1
+     * annex : 3
      */
 
-    private int approvalId;
-    private int count;
     private String date;
-    private int formId;
-    private String money;
-    private String process;
-    private String userName;
-
-    public int getApprovalId() {
-        return approvalId;
-    }
-
-    public void setApprovalId(int approvalId) {
-        this.approvalId = approvalId;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
+    private String total;
+    private String appl;
+    private int id;
+    private String annex;
 
     public String getDate() {
         return date;
@@ -51,35 +32,35 @@ public class ApprovalBean extends BaseBean {
         this.date = date;
     }
 
-    public int getFormId() {
-        return formId;
+    public String getTotal() {
+        return total;
     }
 
-    public void setFormId(int formId) {
-        this.formId = formId;
+    public void setTotal(String total) {
+        this.total = total;
     }
 
-    public String getMoney() {
-        return money;
+    public String getAppl() {
+        return appl;
     }
 
-    public void setMoney(String money) {
-        this.money = money;
+    public void setAppl(String appl) {
+        this.appl = appl;
     }
 
-    public String getProcess() {
-        return process;
+    public int getId() {
+        return id;
     }
 
-    public void setProcess(String process) {
-        this.process = process;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getAnnex() {
+        return annex;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setAnnex(String annex) {
+        this.annex = annex;
     }
 }

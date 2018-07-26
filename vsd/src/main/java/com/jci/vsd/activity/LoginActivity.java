@@ -164,8 +164,8 @@ public class LoginActivity extends BaseActivity {
                         //
                         toActivity(RegisterCompanyActivity.class);
                     } else {
-                       toActivity(MainActivity.class);
-                     // toActivity(ReserviorTestActivity.class);
+                        toActivity(MainActivity.class);
+                        // toActivity(ReserviorTestActivity.class);
                     }
                 } else if (status.equals("201")) {
                     SimpleToast.toastMessage("登录201", Toast.LENGTH_LONG);
@@ -211,7 +211,8 @@ public class LoginActivity extends BaseActivity {
             case R.id.btn_sure:
 //                userPwdEdit.setText("");
                 Loger.e("---btnclick");
-                checkCBScert();
+                //checkCBScert();
+                checkData();
                 break;
             case R.id.tv_select_company:
                 //加入公司

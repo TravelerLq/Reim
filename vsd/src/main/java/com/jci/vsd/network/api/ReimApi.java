@@ -22,7 +22,7 @@ import retrofit2.http.QueryMap;
 
 public interface ReimApi {
 
-
+    //提交一个报销项
     @Multipart
     @POST("shuidao/cost/add")
     Observable<String> upload_reim(@Part MultipartBody.Part image, @PartMap Map<String, RequestBody> map);
@@ -34,9 +34,14 @@ public interface ReimApi {
     @POST("shuidao/form/ci")
     Observable<Response<String>> submitReimDoc(@Body String body);
 
-    //budget 获取
-    @GET("shuidao/quotas/all")
-    Observable<Response<String>> getBudgetList(@QueryMap Map<String, Object> map);
+    // 获取待审批的报销单
+    @GET("shuidao/chk/pend")
+    Observable<Response<String>> getWaitApprovalData();
+
+    // 获取待审批的报销单详情
+
+    @GET("shuidao/chk/penddetails")
+    Observable<Response<String>> getWaitApprovalDetail(@QueryMap Map<String, Object> map);
 
     //budget item 删除
     @PATCH("shuidao/quotas/del")

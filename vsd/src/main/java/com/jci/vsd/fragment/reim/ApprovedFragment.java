@@ -71,7 +71,7 @@ public class ApprovedFragment extends BaseFragment {
             public void convert(final ViewHolder holder, ApprovalBean approvalBean) {
                 ((SwipeMenuLayout) holder.itemView).setIos(true).setLeftSwipe(true);
                 TextView tv = (TextView) holder.getView(R.id.tv_money);
-                tv.setText(approvalBean.getMoney());
+                tv.setText(approvalBean.getTotal());
 
                 holder.setOnClickListener(R.id.btnDelete, new View.OnClickListener() {
                     @Override
@@ -139,12 +139,7 @@ public class ApprovedFragment extends BaseFragment {
         for (int i = 0; i < 5; i++) {
             ApprovalBean bean = new ApprovalBean();
             bean.setDate("2018-01-07");
-            bean.setMoney("200." + i);
-//            bean.setFormId(i);
-//            bean.setApprovalName("remark" + i);
-            bean.setUserName("张三");
-            bean.setProcess("财务部审批中");
-            bean.setCount(1);
+
             mData.add(i, bean);
         }
     }
