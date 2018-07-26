@@ -139,7 +139,6 @@ public class ApprovedFragment extends BaseFragment {
         for (int i = 0; i < 5; i++) {
             ApprovalBean bean = new ApprovalBean();
             bean.setDate("2018-01-07");
-
             mData.add(i, bean);
         }
     }

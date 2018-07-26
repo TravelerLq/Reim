@@ -12,20 +12,27 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jci.vsd.R;
 import com.jci.vsd.activity.BaseActivity;
 import com.jci.vsd.adapter.TimeLineAdapter;
 import com.jci.vsd.adapter.reim.ApprovalDetailRecycleAdapter;
 import com.jci.vsd.bean.reim.ApprovalAllDetailBean;
+import com.jci.vsd.bean.reim.WaitApprovalDetailBean;
+import com.jci.vsd.network.control.ReimControl;
+import com.jci.vsd.observer.CommonDialogObserver;
+import com.jci.vsd.observer.RxHelper;
 import com.jci.vsd.utils.Loger;
 import com.jci.vsd.view.widget.DividerItemDecorationOld;
+import com.jci.vsd.view.widget.SimpleToast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
 
 /**
  * Created by liqing on 18/6/28.
@@ -52,7 +59,7 @@ public class MyApprovalProcessActivity extends BaseActivity {
 
     private ArrayList<HashMap<String, Object>> timeLineItem;
 
-    private List<ApprovalAllDetailBean.SingleReimVoAppArrayListBean> approvalReimbeanList;
+    private List<WaitApprovalDetailBean> approvalReimbeanList;
 
     private List<ApprovalAllDetailBean.ApprovalProcessVoAppArrayListBean> approvalProcessbeanList;
     private TimeLineAdapter timeLineAdapter;
@@ -64,7 +71,7 @@ public class MyApprovalProcessActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.actvity_my_approval_process);
+        setContentView(R.layout.activity_wait_approval_detail);
         context = MyApprovalProcessActivity.this;
         initViewEvent();
         layoutReimManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
@@ -73,7 +80,10 @@ public class MyApprovalProcessActivity extends BaseActivity {
         approvalProcessbeanList = new ArrayList<>();
         timeLineItem = new ArrayList<>();
         initRecyApproval();
-        initTimeLine();
+        // initTimeLine();
+        int id = Integer.valueOf(getIntent().getStringExtra("id"));
+
+        getData(id);
 
     }
 
@@ -257,5 +267,32 @@ public class MyApprovalProcessActivity extends BaseActivity {
 
         builder.show();
     }
+
+
+    private void getData(int id) {
+        Observable<List<WaitApprovalDetailBean>> observable = new ReimControl().getWaitApprovalDetail(id);
+        CommonDialogObserver<List<WaitApprovalDetailBean>> observer = new CommonDialogObserver<List<WaitApprovalDetailBean>>(this) {
+            @Override
+            public void onNext(List<WaitApprovalDetailBean> list) {
+                super.onNext(list);
+                SimpleToast.toastMessage("获取成功", Toast.LENGTH_SHORT);
+                if (list != null) {
+                    approvalReimbeanList.clear();
+                    approvalReimbeanList.addAll(list);
+                    adapter.notifyDataSetChanged();
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                super.onError(t);
+            }
+        };
+        RxHelper.bindOnUIActivityLifeCycle(observable, observer, MyApprovalProcessActivity.this);
+
+
+    }
+
 
 }

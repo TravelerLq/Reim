@@ -72,7 +72,7 @@ public class MyReimApprovalDetailActivity extends BaseActivity {
 
     private void initRecyApproval() {
         rlApprovalDetail.setLayoutManager(layoutReimManager);
-        adapter = new ApprovalDetailRecycleAdapter(context, approvalReimbeanList);
+       // adapter = new ApprovalDetailRecycleAdapter(context, approvalReimbeanList);
         rlApprovalDetail.setAdapter(adapter);
         adapter.setOnItemClickListener(new ApprovalDetailRecycleAdapter.OnItemClickListener() {
             @Override

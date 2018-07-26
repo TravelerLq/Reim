@@ -51,8 +51,8 @@ public class MyApprovalRecyActivity extends BaseActivity {
         context = MyApprovalRecyActivity.this;
         beanList = new ArrayList<>();
         tvTitle.setText("待审批事项");
-        // initTestData();
-        getData();
+       initTestData();
+      //  getData();
         initRecycleView();
 
     }
