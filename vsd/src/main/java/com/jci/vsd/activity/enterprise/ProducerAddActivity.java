@@ -21,7 +21,6 @@ import com.jci.vsd.bean.enterprise.ProducerSettingInfoBean;
 import com.jci.vsd.network.control.ProducerManageControl;
 import com.jci.vsd.observer.CommonDialogObserver;
 import com.jci.vsd.observer.RxHelper;
-import com.jci.vsd.task.AddressPickTask;
 import com.jci.vsd.utils.Loger;
 import com.jci.vsd.utils.TimePickerUtils;
 import com.jci.vsd.view.widget.SimpleToast;
@@ -172,22 +171,7 @@ ProducerAddActivity extends BaseActivity {
 
 
     //省级 、地级
-    public void onAddress3Picker(View view, int sort) {
-        AddressPickTask task = new AddressPickTask(this, sort);
-        task.setHideCounty(true);
-        task.setCallback(new AddressPickTask.Callback() {
-            @Override
-            public void onAddressInitFailed() {
-                //   showToast("数据初始化失败");
-            }
 
-            @Override
-            public void onAddressPicked(Province province, City city, County county) {
-                //  showToast(province.getAreaName() + " " + city.getAreaName());
-            }
-        });
-        task.execute("四川", "阿坝");
-    }
 
 
     public void onLinkagePicker(final TextView view, final int i) {
