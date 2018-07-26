@@ -36,6 +36,7 @@ import com.jci.vsd.utils.CompressUtil;
 import com.jci.vsd.utils.DateUtils;
 import com.jci.vsd.utils.DisplayUtils;
 import com.jci.vsd.utils.FileToBase64Util;
+import com.jci.vsd.utils.FileUtils;
 import com.jci.vsd.utils.Loger;
 import com.jci.vsd.utils.ScreenUtil;
 import com.jci.vsd.utils.Utils;
@@ -203,9 +204,10 @@ public class ReimAddActivity extends BaseActivity {
             try {
 //
                 String base64CodePic = FileToBase64Util.encodeBase64File(outFile.getPath());
+                String hashFile = FileUtils.getMD5Checksum(outFile.getPath());
+                Loger.e("--hashFile--" + hashFile);
 
-
-                signVerifyP1(base64CodePic);
+                signVerifyP1(hashFile);
 
             } catch (Exception e) {
                 e.printStackTrace();

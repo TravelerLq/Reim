@@ -20,6 +20,7 @@ import com.jci.vsd.network.control.ReimControl;
 import com.jci.vsd.observer.CommonDialogObserver;
 import com.jci.vsd.observer.RxHelper;
 import com.jci.vsd.utils.BitmapUtil;
+import com.jci.vsd.utils.FileUtils;
 import com.jci.vsd.utils.Loger;
 import com.jci.vsd.utils.StrTobaseUtil;
 import com.jci.vsd.view.widget.SimpleToast;
@@ -94,7 +95,16 @@ public class ReimDocSubmitActivtiy extends BaseActivity {
         super.onClick(view);
         switch (view.getId()) {
             case R.id.btn_reim_submit:
-                signVerifyP1(base64Code);
+
+                String hashFile = null;
+                try {
+                    hashFile = FileUtils.getMD5Checksum(picPath);
+                    signVerifyP1(hashFile);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Loger.e("--hashFile--" + hashFile);
+                signVerifyP1(hashFile);
                 break;
             //提交单据 （先签名添加，成功后－再提交）
             case R.id.iv_reim_doc:
