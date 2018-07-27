@@ -76,7 +76,6 @@ public class ApprovalDetailRecycleAdapter extends RecyclerView.Adapter<ApprovalD
             if (holder.tvExplain == null) {
                 Log.e("holder.tvTitle", "null");
             } else {
-
                 holder.tvFee.setText(bean.getAmount());
                 holder.tvExplain.setText(bean.getRemark());
                 holder.tvDate.setText(bean.getDetail());
