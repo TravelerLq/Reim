@@ -3,12 +3,14 @@ package com.jci.vsd.activity.Reim;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jci.vsd.R;
 import com.jci.vsd.activity.BaseActivity;
-import com.jci.vsd.bean.reim.WaitApprovalDetailAllBean;
+import com.jci.vsd.bean.reim.ReimPicBean;
 import com.jci.vsd.bean.reim.WaitApprovalDetailBean;
 import com.jci.vsd.constant.AppConstant;
 import com.jci.vsd.network.control.ReimControl;
@@ -37,6 +39,11 @@ public class WaitApprovalPicActivity extends BaseActivity {
     private String picPath;
     private List<String> selectPic;
 
+    @BindView(R.id.button_back)
+    ImageButton backBtn;
+    @BindView(R.id.textview_title)
+    TextView titleTxt;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,6 +62,8 @@ public class WaitApprovalPicActivity extends BaseActivity {
     @Override
     protected void initViewEvent() {
         ivPic.setOnClickListener(this);
+        backBtn.setOnClickListener(this);
+        titleTxt.setText(getResources().getString(R.string.reim_item_pic));
     }
 
     @Override

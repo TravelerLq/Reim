@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,6 +59,8 @@ public class BudgetManageActivity extends BaseActivity {
     TextView rightFucTxt;
     @BindView(R.id.textview_title)
     TextView tvTitle;
+    @BindView(R.id.button_back)
+    ImageButton backBtn;
 
 
     @Override
@@ -96,6 +99,7 @@ public class BudgetManageActivity extends BaseActivity {
     protected void initViewEvent() {
         rightFucTxt.setOnClickListener(this);
         btnSure.setOnClickListener(this);
+        backBtn.setOnClickListener(this);
     }
 
     @Override

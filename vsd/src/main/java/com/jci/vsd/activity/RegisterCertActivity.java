@@ -49,6 +49,8 @@ public class RegisterCertActivity extends BaseActivity {
     EditText edtTel;
     @BindView(R.id.tv_sure)
     TextView tvSure;
+    @BindView(R.id.edt_pin)
+    EditText edtPin;
     @BindView(R.id.ll_cert)
     LinearLayout llCert;
     private OnlineClient onlineClient;
@@ -58,10 +60,18 @@ public class RegisterCertActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_cert);
 
-       llCert.getBackground().setAlpha(100);//0~255透明度值
+        llCert.getBackground().setAlpha(100);//0~255透明度值
+        initTestData();
         initRegistCert();
         initViewEvent();
 
+    }
+
+    private void initTestData() {
+        edtName.setText("李青");
+        edtIdNo.setText("320322199007171428");
+        edtTel.setText("15951882547");
+        edtPin.setText("1234");
     }
 
     private void initRegistCert() {
@@ -74,6 +84,7 @@ public class RegisterCertActivity extends BaseActivity {
     @Override
     protected void initViewEvent() {
         tvSure.setOnClickListener(this);
+
 
     }
 
@@ -90,6 +101,7 @@ public class RegisterCertActivity extends BaseActivity {
         String nameStr = edtName.getText().toString().trim();
         String idNoStr = edtIdNo.getText().toString().trim();
         String telStr = edtTel.getText().toString().trim();
+        String pin =edtPin.getText().toString().trim();
         if (TextUtils.isEmpty(nameStr)) {
             edtName.requestFocus();
             SimpleToast.toastMessage("姓名不可以为空！", Toast.LENGTH_LONG);
@@ -105,6 +117,12 @@ public class RegisterCertActivity extends BaseActivity {
         if (TextUtils.isEmpty(telStr)) {
             edtTel.requestFocus();
             SimpleToast.toastMessage("电话号码不可以为空！", Toast.LENGTH_LONG);
+            return;
+        }
+
+        if (TextUtils.isEmpty(pin)) {
+            edtPin.requestFocus();
+            SimpleToast.toastMessage("PIN码不可以为空！", Toast.LENGTH_LONG);
             return;
         }
 

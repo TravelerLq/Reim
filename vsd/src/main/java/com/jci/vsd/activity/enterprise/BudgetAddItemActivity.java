@@ -6,6 +6,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,6 +67,9 @@ public class BudgetAddItemActivity extends BaseActivity {
     @BindView(R.id.ll_budget_category)
     LinearLayout llBudgetCategory;
     private String intentType;
+
+    @BindView(R.id.button_back)
+    ImageButton backBtn;
     @BindView(R.id.textview_title)
     TextView tvTitle;
 
@@ -143,6 +147,7 @@ public class BudgetAddItemActivity extends BaseActivity {
         tvSure.setOnClickListener(this);
         tvDepartmentName.setOnClickListener(this);
         tvBudgetCategory.setOnClickListener(this);
+        backBtn.setOnClickListener(this);
     }
 
     @Override

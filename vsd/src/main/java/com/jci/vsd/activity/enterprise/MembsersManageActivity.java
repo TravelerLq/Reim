@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +50,8 @@ import io.reactivex.Observable;
  */
 
 public class MembsersManageActivity extends BaseActivity {
+
+
     private static final int REQUEST_CODE_DEPARTMENT = 1111;
     @BindView(R.id.lv_members)
 
@@ -66,6 +69,11 @@ public class MembsersManageActivity extends BaseActivity {
     private int deletePos;
     private MembersBean selectOperateBean;
     private List<MembersBean> departmentList;
+
+    @BindView(R.id.button_back)
+    ImageButton backBtn;
+    @BindView(R.id.textview_title)
+    TextView titleTxt;
 
 
     @Override
@@ -268,7 +276,8 @@ public class MembsersManageActivity extends BaseActivity {
 
     @Override
     protected void initViewEvent() {
-
+        backBtn.setOnClickListener(this);
+        titleTxt.setText(getResources().getString(R.string.members_manage));
     }
 
 

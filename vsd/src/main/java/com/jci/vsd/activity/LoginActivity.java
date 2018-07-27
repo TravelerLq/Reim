@@ -46,6 +46,7 @@ import com.jci.vsd.observer.CommonDialogObserver;
 import com.jci.vsd.observer.DefaultObserver;
 import com.jci.vsd.observer.RxHelper;
 import com.jci.vsd.utils.Loger;
+import com.jci.vsd.utils.Utils;
 import com.jci.vsd.view.widget.SimpleToast;
 import com.squareup.haha.perflib.Main;
 
@@ -92,7 +93,7 @@ public class LoginActivity extends BaseActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-      //  checkCBScert();
+        //  checkCBScert();
         context = LoginActivity.this;
         btnSure = (Button) findViewById(R.id.btn_sure);
         MySpEdit.getInstance().setAppEmv(true);
@@ -101,7 +102,7 @@ public class LoginActivity extends BaseActivity {
         initViewEvent();
         initTestData();
         //检查更新
-        // checkUpdateApp();
+        checkUpdateApp();
         intentType = getIntent().getStringExtra("type");
         Loger.e("logih-getIntenttype" + intentType);
         edtAccount.setText(prefs.getUser());
@@ -278,11 +279,11 @@ public class LoginActivity extends BaseActivity {
         // login
         //  accountStr = "15252466554";
 
-        login(accountStr, pswStr, "1");
+        //    login(accountStr, pswStr, "1");
 
 
         //  test
-        // toActivity(MainActivity.class);
+        toActivity(MainActivity.class);
 
     }
 
@@ -352,7 +353,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onNext(CheckUpdateResponse checkUpdateResponse) {
                 super.onNext(checkUpdateResponse);
-                updateShowDialog(checkUpdateResponse.getUrl(), checkUpdateResponse.getContent());
+                updateShowDialog(checkUpdateResponse.getUrl(), checkUpdateResponse.getLast());
                 // downLoadApp(checkUpdateResponse.getUrl());
             }
         };

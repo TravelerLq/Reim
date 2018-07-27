@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,7 +44,10 @@ public class EditBudgetItemActivity extends BaseActivity {
 
     @BindView(R.id.ll_budget_category)
     LinearLayout llBudgetCategory;
-
+    @BindView(R.id.button_back)
+    ImageButton backBtn;
+    @BindView(R.id.textview_title)
+    TextView titleTxt;
     private int id;
     private String intentType;
 
@@ -87,6 +91,8 @@ public class EditBudgetItemActivity extends BaseActivity {
     @Override
     protected void initViewEvent() {
         tvSure.setOnClickListener(this);
+        backBtn.setOnClickListener(this);
+        titleTxt.setText(getResources().getString(R.string.edit));
     }
 
     @Override

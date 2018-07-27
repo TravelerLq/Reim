@@ -1,11 +1,15 @@
 package com.jci.vsd.activity.Reim;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jci.vsd.R;
@@ -48,6 +52,12 @@ public class ReimDocSubmitActivtiy extends BaseActivity {
     ImageView ivReimDoc;
     @BindView(R.id.btn_reim_submit)
     Button btnReimDocSubmit;
+
+    @BindView(R.id.button_back)
+    ImageButton backBtn;
+    @BindView(R.id.textview_title)
+    TextView titleTxt;
+
     private String base64Code;
     private String picPath;
     private String cert;
@@ -93,11 +103,13 @@ public class ReimDocSubmitActivtiy extends BaseActivity {
     protected void initViewEvent() {
         ivReimDoc.setOnClickListener(this);
         btnReimDocSubmit.setOnClickListener(this);
+        backBtn.setOnClickListener(this);
+        titleTxt.setText(getResources().getString(R.string.submit_reim_doc));
     }
 
     @Override
     public void onClick(View view) {
-        super.onClick(view);
+
         switch (view.getId()) {
             case R.id.btn_reim_submit:
 
@@ -121,6 +133,9 @@ public class ReimDocSubmitActivtiy extends BaseActivity {
                         .setShowDeleteButton(false)
                         .start(ReimDocSubmitActivtiy.this, PhotoPreview.REQUEST_CODE);
                 //查看单据大图
+                break;
+            case R.id.button_back:
+                warningDialog("确定退出？");
                 break;
             default:
                 break;
@@ -217,5 +232,6 @@ public class ReimDocSubmitActivtiy extends BaseActivity {
 
         RxHelper.bindOnUIActivityLifeCycle(observable, observer, ReimDocSubmitActivtiy.this);
     }
+
 
 }

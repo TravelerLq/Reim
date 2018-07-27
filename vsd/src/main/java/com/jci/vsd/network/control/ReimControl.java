@@ -3,8 +3,8 @@ package com.jci.vsd.network.control;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.jci.vsd.activity.Reim.ReimPicBean;
-import com.jci.vsd.activity.Reim.SubmitApprovalBean;
+import com.jci.vsd.bean.reim.ReimPicBean;
+import com.jci.vsd.bean.reim.SubmitApprovalBean;
 import com.jci.vsd.bean.enterprise.BudgetBean;
 import com.jci.vsd.bean.reim.ApprovalBean;
 import com.jci.vsd.bean.reim.IdsBean;
@@ -13,7 +13,6 @@ import com.jci.vsd.bean.reim.ReimAddItemBean;
 import com.jci.vsd.bean.reim.ReimAddResponseBean;
 import com.jci.vsd.bean.reim.ReimDocSubmitBean;
 import com.jci.vsd.bean.reim.WaitApprovalDetailAllBean;
-import com.jci.vsd.bean.reim.WaitApprovalDetailBean;
 import com.jci.vsd.constant.AppConstant;
 import com.jci.vsd.exception.IApiException;
 import com.jci.vsd.network.api.BudgetApi;
@@ -368,8 +367,11 @@ public class ReimControl extends BaseControl {
     public Observable<MyReimDetailBean> getMyReimDetail( int id) {
 
         Retrofit retrofit = builderRetrofitWithHeader();
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("id", id);
+
         ReimApi api = retrofit.create(ReimApi.class);
-        Observable<Response<String>> observable = api.getWaitApprovalData();
+        Observable<Response<String>> observable = api.getReimDetail(paramMap);
         return observable.map(new Function<Response<String>, MyReimDetailBean>() {
             @Override
             public MyReimDetailBean apply(Response<String> stringResponse) throws Exception {
@@ -381,12 +383,12 @@ public class ReimControl extends BaseControl {
                 JSONObject jsonObject = JSON.parseObject(responseStr);
                 int code = jsonObject.getIntValue(AppConstant.JSON_CODE);
                 if (code == 200) {
-                    JSONObject jsonData = JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA));
+                    MyReimDetailBean bean = JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA),MyReimDetailBean.class);
 //                    List<ApprovalBean> list = JSON.parseArray(jsonData.getString("forms"), ApprovalBean.class);
 //                    if (list != null) {
 //                        return list;
 //                    }
-                    return null;
+                    return bean;
 
                 }
                 throw new IApiException("提交报销单", jsonObject.getString(AppConstant.JSON_MESSAGE));

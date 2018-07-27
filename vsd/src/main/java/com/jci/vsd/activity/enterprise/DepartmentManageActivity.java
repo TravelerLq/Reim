@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +59,10 @@ public class DepartmentManageActivity extends BaseActivity {
     TextView tvRight;
     private String keyStr;
 
+    @BindView(R.id.button_back)
+    ImageButton backBtn;
+    @BindView(R.id.textview_title)
+    TextView titleTxt;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -281,6 +286,8 @@ public class DepartmentManageActivity extends BaseActivity {
     @Override
     protected void initViewEvent() {
         tvRight.setOnClickListener(this);
+        backBtn.setOnClickListener(this);
+        titleTxt.setText(getResources().getString(R.string.department_manage));
     }
 
     @Override

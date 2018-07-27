@@ -43,7 +43,7 @@ public interface ReimApi {
     Observable<Response<String>> getWaitApprovalData();
 
     // 获取我的报销 －报销单审批详情
-    @GET("shuidao/chk/pend")
+    @GET("shuidao/chk/mydetails")
     Observable<Response<String>> getReimDetail(@QueryMap Map<String, Object> map);
 
     // 获取待审批的报销单详情

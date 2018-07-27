@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +57,10 @@ public class ProducerEditActivity extends BaseActivity {
     TextView tvProducerPerson;
     @BindView(R.id.tv_sure)
     TextView tvSure;
+    @BindView(R.id.button_back)
+    ImageButton backBtn;
+    @BindView(R.id.textview_title)
+    TextView titleTxt;
 
     private List<ProducerSettingInfoBean.AvldptsBean> listDeparts = new ArrayList<>();
     private List<ProducerSettingInfoBean.AvlusersBean> listApprover = new ArrayList<>();
@@ -231,6 +236,8 @@ public class ProducerEditActivity extends BaseActivity {
         tvProducerOrder.setOnClickListener(this);
         tvProducerDepart.setOnClickListener(this);
         tvProducerPerson.setOnClickListener(this);
+        backBtn.setOnClickListener(this);
+        titleTxt.setText(getResources().getString(R.string.edit));
     }
 
 

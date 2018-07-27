@@ -2,6 +2,7 @@ package com.jci.vsd.activity.enterprise;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.jci.vsd.R;
@@ -21,6 +22,11 @@ public class BudgetChooseActivity extends BaseActivity {
     @BindView(R.id.tv_subject_type)
     TextView tvChooseSubject;
 
+    @BindView(R.id.button_back)
+    ImageButton backBtn;
+    @BindView(R.id.textview_title)
+    TextView titleTxt;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +38,8 @@ public class BudgetChooseActivity extends BaseActivity {
     protected void initViewEvent() {
         tvChooseDepart.setOnClickListener(this);
         tvChooseSubject.setOnClickListener(this);
+        backBtn.setOnClickListener(this);
+        titleTxt.setText(getResources().getString(R.string.budget_choose));
     }
 
     @Override

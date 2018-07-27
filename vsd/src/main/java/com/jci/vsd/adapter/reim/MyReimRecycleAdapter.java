@@ -31,11 +31,11 @@ import java.util.List;
 public class MyReimRecycleAdapter extends RecyclerView.Adapter<MyReimRecycleAdapter.MyViewHolder> {
 
     private Context context;
-    private List<MyReimDetailBean> list;
+    private List<MyReimDetailBean.CostsBean> list;
     private LayoutInflater inflater;
     private List<Bitmap> listBitmap = new ArrayList<>();
 
-    public MyReimRecycleAdapter(Context context, List<MyReimDetailBean> list) {
+    public MyReimRecycleAdapter(Context context, List<MyReimDetailBean.CostsBean> list) {
         this.context = context;
         this.list = list;
         this.inflater = LayoutInflater.from(this.context);
@@ -72,16 +72,16 @@ public class MyReimRecycleAdapter extends RecyclerView.Adapter<MyReimRecycleAdap
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        final MyReimDetailBean bean = list.get(position);
+        final MyReimDetailBean.CostsBean bean = list.get(position);
         if (bean != null) {
             if (holder.tvExplain == null) {
                 Log.e("holder.tvTitle", "null");
             } else {
-//                holder.tvFee.setText(bean.getAmount());
-//                holder.tvExplain.setText(bean.getRemark());
-//                holder.tvType.setText(bean.getName());
-//                holder.rlItem.setTag(position);
-//                holder.ivPic.setTag(position);
+                holder.tvFee.setText(bean.getAmount()+"");
+                holder.tvExplain.setText(bean.getRemark());
+                holder.tvType.setText(bean.getName());
+                holder.rlItem.setTag(position);
+                holder.ivPic.setTag(position);
                 if (listBitmap.size() == 0) {
                     Loger.e("listmap.size()==000");
                 } else {

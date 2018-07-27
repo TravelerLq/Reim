@@ -33,8 +33,8 @@ public class AppConstant {
     public static final int HZ_SEND_VEWPAGE_EVERY_PE_NAGO = 9;
     //http://192.168.1.114:8080/yuanshen/public/login
     //http://192.168.1.100:8080/shuidao/chk/listrelas192.168.1.88
-   // public static final String BASE_URL = "http://192.168.1.111:8080/";
-    public static final String BASE_URL = "http://192.168.31.109:8080/";
+   public static final String BASE_URL = "http://180.111.35.99:8080/";
+  //  public static final String BASE_URL = "http://192.168.31.109:8080/";
     private static final String URL_TEST = "http://10.90.65.209:8084/";//http://10.126.211.7/";
     private static final String URL_PRD = "http://10.90.65.209:8082/";//"http://10.126.211.142/";//"http://10.90.65.209:8082/";"10.126.211.7";
     public static final String OUTSIZE_URL = "http://10.90.65.209:8088/";

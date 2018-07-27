@@ -139,12 +139,18 @@ public class BaseFragment extends RxFragment {
      * @param clz 跳转到扫描的类
      * @param <T>
      */
-    protected <T> void toActivityWithId(Fragment fragment, Class<T> clz,int id) {
+    protected <T> void toActivityWithId(Fragment fragment, Class<T> clz,String id) {
 
         Intent intent = new Intent(getActivity(), clz);
         intent.putExtra("id",id);
         startActivity(intent);
 
+    }
+
+    protected <T> void toActivityWithData(Context context, Class<T> tClass, String key, String data) {
+        Intent intent = new Intent(context, tClass);
+        intent.putExtra(key, data);
+        startActivity(intent);
     }
 
     @Override

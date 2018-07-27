@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,6 +66,10 @@ ProducerAddActivity extends BaseActivity {
     TextView tvSure;
 
     private int departId;
+    @BindView(R.id.button_back)
+    ImageButton backBtn;
+    @BindView(R.id.textview_title)
+    TextView titleTxt;
 
     // 可配置的部门
     private List<ProducerSettingInfoBean.AvldptsBean> listDeparts = new ArrayList<>();
@@ -418,6 +423,8 @@ ProducerAddActivity extends BaseActivity {
         tvProducerOrder.setOnClickListener(this);
         tvProducerDepart.setOnClickListener(this);
         tvProducerPerson.setOnClickListener(this);
+        backBtn.setOnClickListener(this);
+        titleTxt.setText(getResources().getString(R.string.producer_add));
     }
 
 

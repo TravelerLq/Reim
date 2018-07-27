@@ -12,28 +12,26 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jci.vsd.R;
 import com.jci.vsd.activity.BaseActivity;
-import com.jci.vsd.activity.MainActivity;
 import com.jci.vsd.adapter.TimeLineAdapter;
 import com.jci.vsd.adapter.reim.ApprovalDetailRecycleAdapter;
 import com.jci.vsd.bean.reim.ApprovalAllDetailBean;
 import com.jci.vsd.bean.reim.MyReimDetailBean;
-import com.jci.vsd.bean.reim.WaitApprovalDetailAllBean;
+import com.jci.vsd.bean.reim.ReimPicBean;
+import com.jci.vsd.bean.reim.SubmitApprovalBean;
 import com.jci.vsd.bean.reim.WaitApprovalDetailBean;
-import com.jci.vsd.constant.MySpEdit;
 import com.jci.vsd.network.control.ReimControl;
 import com.jci.vsd.observer.CommonDialogObserver;
 import com.jci.vsd.observer.RxHelper;
-import com.jci.vsd.utils.BitmapUtil;
 import com.jci.vsd.utils.FileUtils;
 import com.jci.vsd.utils.Loger;
 import com.jci.vsd.utils.StrTobaseUtil;
-import com.jci.vsd.view.widget.DividerItemDecorationOld;
 import com.jci.vsd.view.widget.SimpleToast;
 
 import java.io.File;
@@ -67,6 +65,13 @@ public class MyApprovalProcessActivity extends BaseActivity {
     TextView tvUnpass;
     @BindView(R.id.tv_approval_pass)
     TextView tvPass;
+    //    @BindView(R.id.button_back);
+    @BindView(R.id.button_back)
+    ImageButton backBtn;
+
+    @BindView(R.id.textview_title)
+    TextView titleTxt;
+
 
     private Context context;
     private ApprovalDetailRecycleAdapter adapter;
@@ -83,8 +88,8 @@ public class MyApprovalProcessActivity extends BaseActivity {
     private boolean approveResultId;
     private int level = 0;
     private String picPath;
-    private String cert="";
-    private String sign="";
+    private String cert = "";
+    private String sign = "";
     private int id;
     private String reimBase64;
     private String reimPicName;
@@ -100,6 +105,7 @@ public class MyApprovalProcessActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wait_approval_detail);
         context = MyApprovalProcessActivity.this;
+        titleTxt.setText(getResources().getString(R.string.my_approval_detail));
         initViewEvent();
         layoutReimManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         layoutTimeManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
@@ -111,8 +117,8 @@ public class MyApprovalProcessActivity extends BaseActivity {
         int id = Integer.valueOf(getIntent().getStringExtra("id"));
         Loger.e("---approval id" + id);
 //        id = 48;
-          getData(id);
-          getpic(id);
+        getData(id);
+        getpic(id);
 
     }
 
@@ -124,7 +130,7 @@ public class MyApprovalProcessActivity extends BaseActivity {
         adapter.setOnItemClickListener(new ApprovalDetailRecycleAdapter.OnItemClickListener() {
             @Override
             public void OnItemClick(View view, int pos) {
-                toAtivityWithParams(WaitApprovalPicActivity.class,approvalReimbeanList.get(pos));
+                toAtivityWithParams(WaitApprovalPicActivity.class, approvalReimbeanList.get(pos));
             }
 
             @Override
@@ -217,6 +223,7 @@ public class MyApprovalProcessActivity extends BaseActivity {
         ivReimPic.setOnClickListener(this);
         tvPass.setOnClickListener(this);
         tvUnpass.setOnClickListener(this);
+        backBtn.setOnClickListener(this);
 
     }
 
@@ -239,7 +246,7 @@ public class MyApprovalProcessActivity extends BaseActivity {
                 try {
 //                    picPath = file.getPath();
 
-                   // signVerifyP1(hashFile, approvalResult);
+                    // signVerifyP1(hashFile, approvalResult);
                     SubmitApprovalBean bean = new SubmitApprovalBean();
                     bean.setCer(cert);
                     bean.setSign(sign);

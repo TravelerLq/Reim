@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +64,11 @@ public class NewDeparmentActivity extends BaseActivity {
     private int selectLeaderId;
     private int reimCatedgoryId;
     private DepartmentBean editBean;
+
+    @BindView(R.id.button_back)
+    ImageButton backBtn;
+    @BindView(R.id.textview_title)
+    TextView titleTxt;
 
 
     @Override
@@ -299,6 +305,8 @@ public class NewDeparmentActivity extends BaseActivity {
         tvDepartLeader.setOnClickListener(this);
         tvReimAuthority.setOnClickListener(this);
         tvAdd.setOnClickListener(this);
+        backBtn.setOnClickListener(this);
+        titleTxt.setText(getResources().getString(R.string.new_depart));
     }
 
     @Override

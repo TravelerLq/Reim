@@ -2,12 +2,11 @@ package com.jci.vsd.activity.Reim;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,18 +14,13 @@ import android.widget.Toast;
 import com.jci.vsd.R;
 import com.jci.vsd.activity.BaseActivity;
 import com.jci.vsd.adapter.TimeLineAdapter;
-import com.jci.vsd.adapter.reim.ApprovalDetailRecycleAdapter;
 import com.jci.vsd.adapter.reim.MyReimRecycleAdapter;
 import com.jci.vsd.bean.reim.ApprovalAllDetailBean;
 import com.jci.vsd.bean.reim.MyReimDetailBean;
-import com.jci.vsd.bean.reim.WaitApprovalDetailAllBean;
-import com.jci.vsd.fragment.reim.ApprovedFragment;
-import com.jci.vsd.fragment.reim.ApprovingFragment;
 import com.jci.vsd.network.control.ReimControl;
 import com.jci.vsd.observer.CommonDialogObserver;
 import com.jci.vsd.observer.RxHelper;
 import com.jci.vsd.utils.BitmapUtil;
-import com.jci.vsd.utils.FileUtils;
 import com.jci.vsd.utils.Loger;
 import com.jci.vsd.utils.StrTobaseUtil;
 import com.jci.vsd.view.widget.DividerItemDecorationOld;
@@ -52,6 +46,12 @@ public class MyReimApprovalDetailActivity extends BaseActivity {
     RecyclerView rlTimeLine;
     @BindView(R.id.iv_reim_pic)
     ImageView ivReimPic;
+
+    @BindView(R.id.button_back)
+    ImageButton backBtn;
+    @BindView(R.id.textview_title)
+    TextView titleTxt;
+
     private Context context;
     private MyReimRecycleAdapter adapter;
     private LinearLayoutManager layoutReimManager;
@@ -59,11 +59,13 @@ public class MyReimApprovalDetailActivity extends BaseActivity {
 
     private ArrayList<HashMap<String, Object>> timeLineItem;
 
-    private List<MyReimDetailBean> approvalReimbeanList;
+    private List<MyReimDetailBean.CostsBean> mDatas;
 
-    private List<ApprovalAllDetailBean.ApprovalProcessVoAppArrayListBean> approvalProcessbeanList;
+    private List<MyReimDetailBean.SchedsBean> approvalProcessbeanList;
     private TimeLineAdapter timeLineAdapter;
     private int id;
+    private String picPath;
+    private List<String> selectPic;
 
 
     @Override
@@ -74,12 +76,15 @@ public class MyReimApprovalDetailActivity extends BaseActivity {
         initViewEvent();
         layoutReimManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         layoutTimeManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        approvalReimbeanList = new ArrayList<>();
+        mDatas = new ArrayList<>();
         approvalProcessbeanList = new ArrayList<>();
         timeLineItem = new ArrayList<>();
         initRecyApproval();
-        initTimeLine();
-        id = Integer.valueOf(getIntent().getStringExtra("id"));
+        //    initTimeLine();
+        if (getIntent() != null) {
+            id = Integer.valueOf(getIntent().getStringExtra("id"));
+        }
+
         getData(id);
 
     }
@@ -87,7 +92,7 @@ public class MyReimApprovalDetailActivity extends BaseActivity {
 
     private void initRecyApproval() {
         rlApprovalDetail.setLayoutManager(layoutReimManager);
-        adapter = new MyReimRecycleAdapter(context, approvalReimbeanList);
+        adapter = new MyReimRecycleAdapter(context, mDatas);
         rlApprovalDetail.setAdapter(adapter);
         adapter.setOnItemClickListener(new MyReimRecycleAdapter.OnItemClickListener() {
             @Override
@@ -108,7 +113,7 @@ public class MyReimApprovalDetailActivity extends BaseActivity {
 
 
     private void initTimeLine() {
-        initTimeLineData();
+
 
         rlTimeLine.setLayoutManager(layoutTimeManager);
         rlTimeLine.setHasFixedSize(true);
@@ -128,16 +133,16 @@ public class MyReimApprovalDetailActivity extends BaseActivity {
         } else {
             for (int i = 0; i < approvalProcessbeanList.size(); i++) {
                 Loger.e("----processList.size=" + approvalProcessbeanList.size());
-                String strDepart = approvalProcessbeanList.get(i).getApprovalName();
-                String strApproval = approvalProcessbeanList.get(i).getApprover();
-                String strResult = approvalProcessbeanList.get(i).getResult();
+                String strDepart = approvalProcessbeanList.get(i).getName();
+                String strApproval = approvalProcessbeanList.get(i).getChecker();
+                String strResult = approvalProcessbeanList.get(i).isResult();
 //                if (strResult.equals("true")) {
 //                    strResult = "通过";
 //                } else {
 //                    strResult = "不通过";
 //                }
                 String itemTitleStr = strDepart + " " + strApproval + " " + strResult;
-                String itemDate = approvalProcessbeanList.get(i).getDate();
+                String itemDate = approvalProcessbeanList.get(i).getTime();
                 HashMap<String, Object> map = new HashMap<String, Object>();
                 map.put("ItemTitle", itemTitleStr);
                 map.put("ItemText", itemDate);
@@ -149,32 +154,12 @@ public class MyReimApprovalDetailActivity extends BaseActivity {
         timeLineAdapter.notifyDataSetChanged();
     }
 
-    private void initTimeLineData() {
-
-        ApprovalAllDetailBean.ApprovalProcessVoAppArrayListBean bean =
-                new ApprovalAllDetailBean.ApprovalProcessVoAppArrayListBean();
-        bean.setApprovalName("部门审批");
-        bean.setApprover("张三");
-        bean.setResult("通过");
-        bean.setNumber(1);
-        bean.setDate("2018-4-17");
-
-        ApprovalAllDetailBean.ApprovalProcessVoAppArrayListBean bean1 =
-                new ApprovalAllDetailBean.ApprovalProcessVoAppArrayListBean();
-        bean.setApprovalName("财务审批");
-        bean.setApprover("王朕");
-        bean.setResult("通过");
-        bean.setNumber(2);
-        bean.setDate("2018-4-27");
-
-
-        approvalProcessbeanList.add(0, bean);
-        approvalProcessbeanList.add(1, bean1);
-    }
 
     @Override
     protected void initViewEvent() {
         ivReimPic.setOnClickListener(this);
+        backBtn.setOnClickListener(this);
+        titleTxt.setText(getResources().getString(R.string.revenue_has_done));
 
 
     }
@@ -185,6 +170,13 @@ public class MyReimApprovalDetailActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.iv_reim_pic:
                 //查看大图的报销单据照片
+                selectPic = new ArrayList<>();
+                selectPic.add(picPath);
+                PhotoPreview.builder()
+                        .setPhotos((ArrayList) selectPic)
+                        .setShowDeleteButton(false)
+                        .start(MyReimApprovalDetailActivity.this, PhotoPreview.REQUEST_CODE);
+                //查看单据大图
 
                 break;
 //            case R.id.tv_approving:
@@ -197,14 +189,41 @@ public class MyReimApprovalDetailActivity extends BaseActivity {
 
 
     private void getData(int id) {
-        Observable<WaitApprovalDetailAllBean> observable = new ReimControl().getWaitApprovalDetail(id);
-        CommonDialogObserver<WaitApprovalDetailAllBean> observer = new CommonDialogObserver<WaitApprovalDetailAllBean>(this) {
+        Observable<MyReimDetailBean> observable = new ReimControl().getMyReimDetail(id);
+        CommonDialogObserver<MyReimDetailBean> observer = new CommonDialogObserver<MyReimDetailBean>(this) {
             @Override
-            public void onNext(WaitApprovalDetailAllBean bean) {
+            public void onNext(MyReimDetailBean bean) {
                 super.onNext(bean);
 
                 if (bean != null) {
-                    //   SimpleToast.toastMessage("成功");
+                    if (bean.getCosts().size() > 0) {
+                        //  SimpleToast.toastMessage("成功", Toast.LENGTH_SHORT);
+                        mDatas.clear();
+                        mDatas.addAll(bean.getCosts());
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        SimpleToast.toastMessage("暂无数据", Toast.LENGTH_SHORT);
+                    }
+
+                    if (bean.getScheds().size() > 0) {
+                        approvalProcessbeanList.clear();
+                        approvalProcessbeanList.addAll(bean.getScheds());
+                        for (int i = 0; i < approvalProcessbeanList.size(); i++) {
+                            Loger.e("proces--" + approvalProcessbeanList.get(i).getName());
+                        }
+                        initTimeLine();
+
+                    } else {
+                        SimpleToast.toastMessage("暂无审批进度", Toast.LENGTH_SHORT);
+                    }
+
+                    String base64Code = bean.getBytes();
+                    Bitmap bitmap = StrTobaseUtil.base64ToBitmap(base64Code);
+                    //bitmap to png
+
+                    picPath = BitmapUtil.saveBitmapToSDCard(bitmap, System.currentTimeMillis() + ".jpg");
+                    ivReimPic.setImageBitmap(bitmap);
+
 
                 }
             }

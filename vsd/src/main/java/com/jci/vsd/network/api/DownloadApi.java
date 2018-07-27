@@ -9,7 +9,8 @@ import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 import rx.Observable;
 
-/**文件下载功能
+/**
+ * 文件下载功能
  * Created by Administrator on 2017/11/20 0020.
  */
 
@@ -18,8 +19,8 @@ public interface DownloadApi {
     @GET
     Observable<ResponseBody> download(@Url String url);//直接使用网址下载
 
-    @GET("api/PersonalInfo/UpdateVisionInfo")
-    io.reactivex.Observable<String> checkUpdate(@QueryMap Map<String,String> map);
+    @GET("shuidao/ver/chk")
+    io.reactivex.Observable<String> checkUpdate(@QueryMap Map<String, String> map);
 
     @Streaming
     @GET

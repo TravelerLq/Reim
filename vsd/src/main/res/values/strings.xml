@@ -438,5 +438,25 @@
         <item>外商投资企业</item>
         　
     </string-array>
+    <string name="reim_item">报销项</string>
+    <string name="my_reim_detail">报销单审批详情</string>
+    <string name="my_reim_list">我的报销单</string>
+    <string name="my_approval_detail">审批进度详情</string>
+    <string name="add_reim_item">新增报销项</string>
+    <string name="submit_reim_doc">报销单</string>
+    <string name="reim_item_pic">报销项票据</string>
+    <string name="budget_category">预算管理（按报销科目划分）</string>
+    <string name="budget_depart">预算管理（按部门划分）</string>
+    <string name="budget_choose">预算分类</string>
+    <string name="edit">编辑</string>
+    <string name="department_detail">部门详情</string>
+    <string name="department_manage">部门管理</string>
+    <string name="members_manage">成员管理</string>
+    <string name="new_depart">新建部门</string>
+    <string name="producer_add">新增审批流程</string>
+    <string name="producer_manage">审批流程管理</string>
+    <string name="register_company">注册公司</string>
+    <string name="company_update">公司更新</string>
+
 
 </resources>

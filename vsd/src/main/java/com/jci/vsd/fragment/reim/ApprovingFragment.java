@@ -29,6 +29,7 @@ import com.jci.vsd.network.control.ReimControl;
 import com.jci.vsd.observer.CommonDialogObserver;
 import com.jci.vsd.observer.DialogObserverHolder;
 import com.jci.vsd.observer.RxHelper;
+import com.jci.vsd.utils.Loger;
 import com.jci.vsd.view.widget.SimpleToast;
 
 import org.reactivestreams.Subscription;
@@ -41,20 +42,21 @@ import io.reactivex.disposables.Disposable;
 
 /**
  * Created by liqing on 18/6/28.
- * 审批中fragment
+ * 审批中fragment type = 1
  */
 
 public class ApprovingFragment extends BaseFragment implements DialogObserverHolder {
 
     private Context context;
-
     private List<ApprovalBean> mData;
 
     private CommonAdapter<ApprovalBean> mAdapter;
     private LinearLayoutManager mLayoutManager;
+
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private int type = 1;
+
 
 
     @Nullable
@@ -80,6 +82,7 @@ public class ApprovingFragment extends BaseFragment implements DialogObserverHol
 
         getData(type);
         //  initDatas();
+        initAdapter();
 
 
         mAdapter = new CommonAdapter<ApprovalBean>(context, mData, R.layout.item_approving_swipe) {
@@ -109,7 +112,7 @@ public class ApprovingFragment extends BaseFragment implements DialogObserverHol
                             //如果删除时，不使用mAdapter.notifyItemRemoved(pos)，则删除没有动画效果，
                             //且如果想让侧滑菜单同时关闭，需要同时调用 ((SwipeMenuLayout) holder.itemView).quickClose();
                             //mAdapter.notifyDataSetChanged();
-                            delete(mData.get(pos).getId(),pos);
+                            delete(mData.get(pos).getId(), pos);
                         }
                     }
                 });
@@ -118,10 +121,13 @@ public class ApprovingFragment extends BaseFragment implements DialogObserverHol
                 (holder).setOnClickListener(R.id.content, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        int pos = holder.getLayoutPosition();
 //                       getActivity(). toActivity(MyReimApprovalDetailActivity.class);
-                        toActivity(ApprovingFragment.this, MyReimApprovalDetailActivity.class);
+                        Loger.e("--reim list-id" + mData.get(pos).getId());
+                        toActivityWithId(ApprovingFragment.this, MyReimApprovalDetailActivity.class, String.valueOf(mData.get(pos).getId()));
                         //  Toast.makeText(mContext, "onClick:" + mDatas.get(holder.getAdapterPosition()).name, Toast.LENGTH_SHORT).show();
                         Log.d("TAG", "onClick() called with: v = [" + v + "]");
+                        getActivity().finish();
                     }
                 });
 
@@ -159,6 +165,9 @@ public class ApprovingFragment extends BaseFragment implements DialogObserverHol
             }
         });
         return view;
+    }
+
+    private void initAdapter() {
     }
 
 

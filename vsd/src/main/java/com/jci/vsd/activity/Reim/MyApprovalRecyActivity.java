@@ -37,7 +37,7 @@ public class MyApprovalRecyActivity extends BaseActivity {
     @BindView(R.id.textview_title)
     TextView tvTitle;
     @BindView(R.id.button_back)
-    ImageButton btnBack;
+    ImageButton backBtn;
     private LinearLayoutManager layoutManager;
     private MyApprovalRecycleAdapter adapter;
     private List<ApprovalBean> beanList;
@@ -54,6 +54,7 @@ public class MyApprovalRecyActivity extends BaseActivity {
         // initTestData();
         getData();
         initRecycleView();
+
 
     }
 
@@ -125,6 +126,6 @@ public class MyApprovalRecyActivity extends BaseActivity {
 
     @Override
     protected void initViewEvent() {
-
+        backBtn.setOnClickListener(this);
     }
 }

@@ -49,6 +49,7 @@ public abstract class BaseActivity extends RxFragmentActivity implements DialogO
 
     RxStyleDialogFragment rxStyleDialogFragment;
 
+
     protected final static List<BaseActivity> mActivities = new LinkedList<>();
 
     @Override
@@ -154,7 +155,7 @@ public abstract class BaseActivity extends RxFragmentActivity implements DialogO
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_back:
-                Loger.e("---btnback-");
+                Loger.e("---baseActivity--btnback-");
                 finish();
                 break;
         }
@@ -294,6 +295,7 @@ public abstract class BaseActivity extends RxFragmentActivity implements DialogO
                         //清空之前扫描的料单数据
                         VsdApplication.getInstance().getWaitStoreMaterialBeanList().clear();
                         finish();
+
                     }
                 })
                 .setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -303,12 +305,36 @@ public abstract class BaseActivity extends RxFragmentActivity implements DialogO
                     }
                 })
                 .create().show();
+
+    }
+
+    protected void warningDialogDestory(String message) {
+        new AlertDialog.Builder(BaseActivity.this)
+                .setTitle(getResources().getString(R.string.notice))
+                .setMessage(message)
+                .setPositiveButton(getResources().getString(R.string.sure), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //清空之前扫描的料单数据
+                        VsdApplication.getInstance().getWaitStoreMaterialBeanList().clear();
+                        finish();
+                    }
+                })
+                .setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+                .create().show();
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPause(BaseActivity.this);
+
     }
 
 

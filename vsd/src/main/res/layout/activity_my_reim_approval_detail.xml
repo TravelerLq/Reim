@@ -26,6 +26,7 @@
         android:id="@+id/rl_pdf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minHeight="@dimen/dimen_200"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:gravity="center"

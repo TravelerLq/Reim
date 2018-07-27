@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +48,11 @@ public class MembsersSelectActivity extends BaseActivity {
     private Context context;
     private TextView tvAjust;
     private TextView tvDelete;
+
+    @BindView(R.id.button_back)
+    ImageButton backBtn;
+    @BindView(R.id.textview_title)
+    TextView titleTxt;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -159,6 +165,9 @@ public class MembsersSelectActivity extends BaseActivity {
 
     @Override
     protected void initViewEvent() {
+
+        backBtn.setOnClickListener(this);
+        titleTxt.setText(getResources().getString(R.string.members_manage));
 
     }
 

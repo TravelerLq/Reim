@@ -1,6 +1,8 @@
 package com.jci.vsd.activity.Reim;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,8 +11,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -20,6 +24,7 @@ import com.jci.vsd.R;
 import com.jci.vsd.activity.BaseActivity;
 import com.jci.vsd.activity.MainActivity;
 import com.jci.vsd.activity.MeFeedBackActivity;
+import com.jci.vsd.application.VsdApplication;
 import com.jci.vsd.bean.CatBean;
 import com.jci.vsd.bean.PicBean;
 import com.jci.vsd.bean.reim.ReimAddItemBean;
@@ -101,6 +106,14 @@ public class ReimAddActivity extends BaseActivity {
 
     @BindView(R.id.btn_add)
     Button btnAdd;
+
+    @BindView(R.id.button_back)
+    ImageButton backBtn;
+    @BindView(R.id.textview_title)
+    TextView titleTxt;
+    @BindView(R.id.tv_money)
+    TextView tvReimType;
+
     //expandapoTab
     private PopTwoListView popTwoListView;
     private List<KeyValueBean> parentsList = new ArrayList<>();
@@ -285,6 +298,7 @@ public class ReimAddActivity extends BaseActivity {
                 Log.e("----", "三级－－ :" + showText +
                         " ,parentKey :" + parentKey + " ,childrenKey :" + childrenKey);
                 itemId = Integer.valueOf(childrenKey);
+                tvReimType.setText(showText);
 
 
             }
@@ -351,12 +365,14 @@ public class ReimAddActivity extends BaseActivity {
         // llReimType.setOnClickListener(this);
         ivReimPic.setOnClickListener(this);
         btnAdd.setOnClickListener(this);
+        backBtn.setOnClickListener(this);
+        titleTxt.setText(getResources().getString(R.string.add_reim_item));
 
     }
 
     @Override
     public void onClick(View view) {
-        super.onClick(view);
+
 
         switch (view.getId()) {
             case R.id.btn_add:
@@ -377,9 +393,14 @@ public class ReimAddActivity extends BaseActivity {
                 // TimePickerUtils.getInstance().onYearMonthDayPicker(AddExpenseItemActivtity.this, tvDate);
                 break;
             case R.id.iv_reim_pic:
-
                 takePics();
+                break;
+            case R.id.button_back:
+                warningDialog("确定退出当前编辑？");
+                break;
+
             default:
+
                 break;
         }
     }
@@ -473,6 +494,28 @@ public class ReimAddActivity extends BaseActivity {
                 .start(ReimAddActivity.this);
 
     }
+
+//    protected void warningDialog(String message) {
+//        new AlertDialog.Builder(ReimAddActivity.this)
+//                .setTitle(getResources().getString(R.string.notice))
+//                .setMessage(message)
+//                .setPositiveButton(getResources().getString(R.string.sure), new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        //清空之前扫描的料单数据
+////                        VsdApplication.getInstance().getWaitStoreMaterialBeanList().clear();
+//                        finish();
+//
+//                    }
+//                })
+//                .setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//
+//                    }
+//                })
+//                .create().show();
+//    }
 
     @Override
     protected void onDestroy() {

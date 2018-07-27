@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +50,10 @@ public class ProducerManageActivity extends BaseActivity {
     private Context context;
     private List<ProducerBean> mDatas;
     private LinearLayoutManager mLayoutManager;
+    @BindView(R.id.button_back)
+    ImageButton backBtn;
+    @BindView(R.id.textview_title)
+    TextView titleTxt;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -183,6 +188,8 @@ public class ProducerManageActivity extends BaseActivity {
     @Override
     protected void initViewEvent() {
         rightFucTxt.setOnClickListener(this);
+        backBtn.setOnClickListener(this);
+        titleTxt.setText(getResources().getString(R.string.revenue_has_done));
     }
 
     @Override

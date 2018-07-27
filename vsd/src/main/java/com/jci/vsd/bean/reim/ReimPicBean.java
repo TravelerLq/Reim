@@ -1,4 +1,4 @@
-package com.jci.vsd.activity.Reim;
+package com.jci.vsd.bean.reim;
 
 import com.jci.vsd.bean.BaseBean;
 

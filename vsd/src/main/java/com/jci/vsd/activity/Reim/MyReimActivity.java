@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.jci.vsd.R;
@@ -29,6 +30,11 @@ public class MyReimActivity extends BaseActivity {
     private ApprovingFragment approvingFragment;
     private ApprovedFragment approvedFragment;
 
+    @BindView(R.id.button_back)
+    ImageButton backBtn;
+    @BindView(R.id.textview_title)
+    TextView titleTxt;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +49,8 @@ public class MyReimActivity extends BaseActivity {
 
         tvApproving.setOnClickListener(this);
         tvApproved.setOnClickListener(this);
+        backBtn.setOnClickListener(this);
+        titleTxt.setText(getResources().getString(R.string.my_reim_list));
 
     }
     @Override

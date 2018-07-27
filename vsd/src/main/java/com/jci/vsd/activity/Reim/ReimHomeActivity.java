@@ -122,9 +122,9 @@ public class ReimHomeActivity extends BaseActivity {
 //                startActivity(intent);
                 break;
 
-            case R.id.button_back:
-                finish();
-                break;
+//            case R.id.button_back:
+//                finish();
+//                break;
             default:
                 break;
         }

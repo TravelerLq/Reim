@@ -7,8 +7,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jci.vsd.R;
@@ -41,6 +43,11 @@ import io.reactivex.Observable;
  */
 
 public class RegisterCompanyActivity extends BaseActivity {
+    @BindView(R.id.button_back)
+    ImageButton backBtn;
+    @BindView(R.id.textview_title)
+    TextView titleTxt;
+
     @BindView(R.id.edt_company_name)
     EditText edtCompanyName;
     @BindView(R.id.edt_tax_no)
@@ -221,6 +228,9 @@ public class RegisterCompanyActivity extends BaseActivity {
     @Override
     protected void initViewEvent() {
         llSure.setOnClickListener(this);
+
+        backBtn.setOnClickListener(this);
+        titleTxt.setText(getResources().getString(R.string.register_company));
     }
 
     private void initTestData() {

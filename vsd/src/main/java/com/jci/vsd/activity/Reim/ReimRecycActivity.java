@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +52,11 @@ public class ReimRecycActivity extends BaseActivity {
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.btn_reim_generate)
     Button btnReimGenetate;
+
+    @BindView(R.id.button_back)
+    ImageButton backBtn;
+    @BindView(R.id.textview_title)
+    TextView titleTxt;
 
     private CommonAdapter<ReimAddItemBean> mAdapter;
     private LinearLayoutManager mLayoutManager;
@@ -105,6 +111,9 @@ public class ReimRecycActivity extends BaseActivity {
     protected void initViewEvent() {
         rightFucTxt.setOnClickListener(this);
         btnReimGenetate.setOnClickListener(this);
+
+        backBtn.setOnClickListener(this);
+        titleTxt.setText(getResources().getString(R.string.revenue_has_done));
     }
 
     @Override

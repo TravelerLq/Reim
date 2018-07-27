@@ -45,7 +45,7 @@ public class UpdateAppDialog extends DialogFragment implements View.OnClickListe
     private Button cancelBtn;
     private String downloadUrl = "";
     private String versionCode = "";
-    private static final String fileName = "appNow.apk";
+    private static final String fileName = "reim.apk";
     private static final String fileStoreDir = Environment.getExternalStorageDirectory().getAbsolutePath();
     private TextView newVersionMsgTxt,nowVersionMsgTxt;
     Subscription subscription;

@@ -70,7 +70,7 @@ public class DownloadAppControl extends BaseControl {
 
     public Observable<CheckUpdateResponse> getNewAppVersion(){
         String version = Utils.getVersionCode();
-        Retrofit retrofit = builderRetrofit();
+        Retrofit retrofit = builderRetrofitWithHeader();
         DownloadApi downloadApi = retrofit.create(DownloadApi.class);
         Map<String,String> map = new HashMap<>();
         map.put("version",version);
@@ -81,7 +81,8 @@ public class DownloadAppControl extends BaseControl {
                 Loger.i("getNewAppVersion = "+s);
                 JSONObject jsonObject = JSON.parseObject(s);
                 if("200".equals(jsonObject.getString(AppConstant.JSON_STATUS))){
-                    CheckUpdateResponse checkUpdateResponse = JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA),CheckUpdateResponse.class);
+                    JSONObject jsonData=JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA));
+                    CheckUpdateResponse checkUpdateResponse = JSON.parseObject(jsonData.getString("ver"),CheckUpdateResponse.class);
                     return checkUpdateResponse;
                 }
                 throw new IApiException("获取更新版本信息",jsonObject.getString(AppConstant.JSON_MESSAGE));

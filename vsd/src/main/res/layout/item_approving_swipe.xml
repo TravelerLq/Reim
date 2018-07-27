@@ -18,7 +18,7 @@
     <!--android:text="项目中我是任意复杂的原Item布局"/>-->
     <include
         android:id="@+id/content"
-        layout="@layout/item_approving"></include>
+        layout="@layout/item_approving_new"></include>
 
     <!-- 以下都是侧滑菜单的内容依序排列 -->
     <Button

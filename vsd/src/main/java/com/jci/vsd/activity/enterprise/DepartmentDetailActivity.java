@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +57,10 @@ public class DepartmentDetailActivity extends BaseActivity {
 
     @BindView(R.id.tv_add)
     TextView tvAdd;
+    @BindView(R.id.button_back)
+    ImageButton backBtn;
+    @BindView(R.id.textview_title)
+    TextView titleTxt;
     private DepartmentBean bean;
     private List<ReimCategoryBean> listReimCategory;
     private Context mContext;
@@ -265,6 +270,8 @@ public class DepartmentDetailActivity extends BaseActivity {
         tvDepartLeader.setOnClickListener(this);
         tvReimAuthority.setOnClickListener(this);
         tvAdd.setOnClickListener(this);
+        backBtn.setOnClickListener(this);
+        titleTxt.setText(getResources().getString(R.string.department_detail));
     }
 
 

@@ -114,9 +114,10 @@ public class ApprovedFragment extends BaseFragment implements DialogObserverHold
                     @Override
                     public void onClick(View v) {
                         int pos = holder.getLayoutPosition();
-//                       getActivity(). toActivity(MyReimApprovalDetailActivity.class);
-                        toActivityWithId(ApprovedFragment.this, MyReimApprovalDetailActivity.class, mData.get(pos).getId());
+//
+                      toActivityWithId(ApprovedFragment.this, MyReimApprovalDetailActivity.class, String.valueOf(mData.get(pos).getId()));
                         //  Toast.makeText(mContext, "onClick:" + mDatas.get(holder.getAdapterPosition()).name, Toast.LENGTH_SHORT).show();
+                       // toActivityWithData(context, ExpenseProcessDetailActvity.class, "approvalId", approvalId);
                         Log.d("TAG", "onClick() called with: v = [" + v + "]");
                     }
                 });

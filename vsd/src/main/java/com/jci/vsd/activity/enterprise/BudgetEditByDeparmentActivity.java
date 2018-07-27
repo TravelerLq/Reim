@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,11 @@ public class BudgetEditByDeparmentActivity extends BaseActivity {
     TextView edtBudgetInput;
     @BindView(R.id.tv_sure)
     TextView tvSure;
+
+    @BindView(R.id.button_back)
+    ImageButton backBtn;
+    @BindView(R.id.textview_title)
+    TextView titleTxt;
     List<BudgetBean> budgetBeanList = new ArrayList<>();
     private List<String> singlePickList = new ArrayList<>();
     private int selectDepartId;
@@ -73,6 +79,8 @@ public class BudgetEditByDeparmentActivity extends BaseActivity {
     @Override
     protected void initViewEvent() {
         tvSure.setOnClickListener(this);
+        backBtn.setOnClickListener(this);
+        titleTxt.setText(getResources().getString(R.string.edit));
     }
 
     @Override

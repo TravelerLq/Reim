@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,8 +57,10 @@ public class BudgetByDepartManageActivity extends BaseActivity {
     Button btnSure;
     @BindView(R.id.rightFucTxt)
     TextView rightFucTxt;
+    @BindView(R.id.button_back)
+    ImageButton backBtn;
     @BindView(R.id.textview_title)
-    TextView tvTitle;
+    TextView titleTxt;
     private static int type = 1;
 
 
@@ -68,7 +71,7 @@ public class BudgetByDepartManageActivity extends BaseActivity {
         initViewEvent();
         context = BudgetByDepartManageActivity.this;
         rightFucTxt.setVisibility(View.VISIBLE);
-        tvTitle.setText("预算管理（按部门划分）");
+       //   tvTitle.setText("预算管理（按部门划分）");
         // type=1
         getData(type);
         intData();
@@ -90,6 +93,8 @@ public class BudgetByDepartManageActivity extends BaseActivity {
     protected void initViewEvent() {
         rightFucTxt.setOnClickListener(this);
         btnSure.setOnClickListener(this);
+        backBtn.setOnClickListener(this);
+        titleTxt.setText(getResources().getString(R.string.budget_depart));
     }
 
     @Override
