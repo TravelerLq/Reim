@@ -88,7 +88,6 @@ public class ApprovalDetailRecycleAdapter extends RecyclerView.Adapter<ApprovalD
                     holder.ivPic.setImageBitmap(listBitmap.get(position));
                 }
 
-
                 holder.ivPic.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
