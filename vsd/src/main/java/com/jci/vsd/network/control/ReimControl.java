@@ -364,8 +364,8 @@ public class ReimControl extends BaseControl {
     }
 
 
-    //获取我的报销单详情
-    public Observable<MyReimDetailBean> getMyReimDetail(int type, int id) {
+    //获取我的报销 －报销单审批详情
+    public Observable<MyReimDetailBean> getMyReimDetail( int id) {
 
         Retrofit retrofit = builderRetrofitWithHeader();
         ReimApi api = retrofit.create(ReimApi.class);

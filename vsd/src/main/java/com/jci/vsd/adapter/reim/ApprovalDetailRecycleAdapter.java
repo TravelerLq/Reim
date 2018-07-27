@@ -24,7 +24,7 @@ import java.util.List;
 
 /**
  * Created by liqing on 18/3/20.
- * 添加报销 －记一笔的Adapter
+ *
  */
 
 public class ApprovalDetailRecycleAdapter extends RecyclerView.Adapter<ApprovalDetailRecycleAdapter.MyViewHolder> {

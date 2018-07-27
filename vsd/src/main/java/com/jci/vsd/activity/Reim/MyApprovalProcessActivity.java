@@ -22,6 +22,7 @@ import com.jci.vsd.activity.MainActivity;
 import com.jci.vsd.adapter.TimeLineAdapter;
 import com.jci.vsd.adapter.reim.ApprovalDetailRecycleAdapter;
 import com.jci.vsd.bean.reim.ApprovalAllDetailBean;
+import com.jci.vsd.bean.reim.MyReimDetailBean;
 import com.jci.vsd.bean.reim.WaitApprovalDetailAllBean;
 import com.jci.vsd.bean.reim.WaitApprovalDetailBean;
 import com.jci.vsd.constant.MySpEdit;
@@ -389,41 +390,42 @@ public class MyApprovalProcessActivity extends BaseActivity {
 
 
     private void getData(int id) {
-        Observable<WaitApprovalDetailAllBean> observable = new ReimControl().getWaitApprovalDetail(id);
-        CommonDialogObserver<WaitApprovalDetailAllBean> observer = new CommonDialogObserver<WaitApprovalDetailAllBean>(this) {
+        Observable<MyReimDetailBean> observable = new ReimControl().getMyReimDetail(id);
+        CommonDialogObserver<MyReimDetailBean> observer = new CommonDialogObserver<MyReimDetailBean>(this) {
             @Override
-            public void onNext(WaitApprovalDetailAllBean bean) {
+            public void onNext(MyReimDetailBean bean) {
                 super.onNext(bean);
 
                 if (bean != null) {
-                    if (bean.getCosts().size() == 0) {
-                        SimpleToast.toastMessage("暂无数据", Toast.LENGTH_SHORT);
 
-                    } else {
-                        SimpleToast.toastMessage("获取成功", Toast.LENGTH_SHORT);
-
-                        String base64Code = bean.getBytes();
-                        String reimPicName = bean.getName();
-                        bitmap = StrTobaseUtil.base64ToBitmap(base64Code);
-                        // file = BitmapUtil.saveBitmapToSDCardFile(bitmap, reimPicName + ".jpg");
-                        // file = BitmapUtil.saveBitmapToSDCardFile(bitmap, reimPicName );
-
-                        picPath = BitmapUtil.saveBitmapToSDCard(bitmap, System.currentTimeMillis() + ".jpg");
-                        Loger.e("---picPath" + picPath);
-                        //  picPath = BitmapUtil.saveBitmapToSDCard(bitmap, reimPicName + ".jpg");
-                        ivReimPic.setImageBitmap(bitmap);
-                        try {
-                            hashFile = FileUtils.getMD5Checksum(picPath);
-                            Loger.e("--hashFile--" + hashFile);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                        approvalReimbeanList.clear();
-                        approvalReimbeanList.addAll(bean.getCosts());
-                        adapter.notifyDataSetChanged();
-
-                    }
+//                    if (bean.getCosts().size() == 0) {
+//                        SimpleToast.toastMessage("暂无数据", Toast.LENGTH_SHORT);
+//
+//                    } else {
+//                        SimpleToast.toastMessage("获取成功", Toast.LENGTH_SHORT);
+//
+//                        String base64Code = bean.getBytes();
+//                        String reimPicName = bean.getName();
+//                        bitmap = StrTobaseUtil.base64ToBitmap(base64Code);
+//                        // file = BitmapUtil.saveBitmapToSDCardFile(bitmap, reimPicName + ".jpg");
+//                        // file = BitmapUtil.saveBitmapToSDCardFile(bitmap, reimPicName );
+//
+//                        picPath = BitmapUtil.saveBitmapToSDCard(bitmap, System.currentTimeMillis() + ".jpg");
+//                        Loger.e("---picPath" + picPath);
+//                        //  picPath = BitmapUtil.saveBitmapToSDCard(bitmap, reimPicName + ".jpg");
+//                        ivReimPic.setImageBitmap(bitmap);
+//                        try {
+//                            hashFile = FileUtils.getMD5Checksum(picPath);
+//                            Loger.e("--hashFile--" + hashFile);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                        approvalReimbeanList.clear();
+//                        approvalReimbeanList.addAll(bean.getCosts());
+//                        adapter.notifyDataSetChanged();
+//
+//                    }
 
                 }
             }
