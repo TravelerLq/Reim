@@ -35,6 +35,7 @@ import com.jci.vsd.utils.StrTobaseUtil;
 import com.jci.vsd.view.widget.DividerItemDecorationOld;
 import com.jci.vsd.view.widget.SimpleToast;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -80,9 +81,15 @@ public class MyApprovalProcessActivity extends BaseActivity {
     private boolean approveResultId;
     private int level = 0;
     private String picPath;
-    private String cert;
-    private String sign;
+    private String cert="";
+    private String sign="";
     private int id;
+    private String reimBase64;
+    private String reimPicName;
+    private String hashFile;
+    private String approvalResult;
+    private Bitmap bitmap;
+    private File file;
 
 
     @Override
@@ -99,9 +106,10 @@ public class MyApprovalProcessActivity extends BaseActivity {
         initRecyApproval();
         // initTimeLine();
         int id = Integer.valueOf(getIntent().getStringExtra("id"));
-        id = 48;
+        Loger.e("---approval id" + id);
+//        id = 48;
         getData(id);
-        getpic(id);
+        //  getpic(id);
 
     }
 
@@ -128,70 +136,70 @@ public class MyApprovalProcessActivity extends BaseActivity {
     }
 
 
-    private void initTimeLine() {
-        initTimeLineData();
-
-        rlTimeLine.setLayoutManager(layoutTimeManager);
-        rlTimeLine.setHasFixedSize(true);
-
-        //用自定义分割线类设置分割线
-        rlTimeLine.addItemDecoration(new DividerItemDecorationOld(this));
-        timeLineAdapter = new TimeLineAdapter(context, timeLineItem);
-        rlTimeLine.setAdapter(timeLineAdapter);
-
-        timeLineItem.clear();
-        if (approvalProcessbeanList.size() == 0) {
-            HashMap<String, Object> map = new HashMap<String, Object>();
-            map.put("ItemTitle", "暂无数据");
-            map.put("ItemText", "");
-            timeLineItem.add(0, map);
-
-        } else {
-            for (int i = 0; i < approvalProcessbeanList.size(); i++) {
-                Loger.e("----processList.size=" + approvalProcessbeanList.size());
-                String strDepart = approvalProcessbeanList.get(i).getApprovalName();
-                String strApproval = approvalProcessbeanList.get(i).getApprover();
-                String strResult = approvalProcessbeanList.get(i).getResult();
-//                if (strResult.equals("true")) {
-//                    strResult = "通过";
-//                } else {
-//                    strResult = "不通过";
-//                }
-                String itemTitleStr = strDepart + " " + strApproval + " " + strResult;
-                String itemDate = approvalProcessbeanList.get(i).getDate();
-                HashMap<String, Object> map = new HashMap<String, Object>();
-                map.put("ItemTitle", itemTitleStr);
-                map.put("ItemText", itemDate);
-                timeLineItem.add(i, map);
-            }
-        }
-
-        Loger.e("----processList.size=" + timeLineItem.size());
-        timeLineAdapter.notifyDataSetChanged();
-    }
-
-    private void initTimeLineData() {
-
-        ApprovalAllDetailBean.ApprovalProcessVoAppArrayListBean bean =
-                new ApprovalAllDetailBean.ApprovalProcessVoAppArrayListBean();
-        bean.setApprovalName("部门审批");
-        bean.setApprover("张三");
-        bean.setResult("通过");
-        bean.setNumber(1);
-        bean.setDate("2018-4-17");
-
-        ApprovalAllDetailBean.ApprovalProcessVoAppArrayListBean bean1 =
-                new ApprovalAllDetailBean.ApprovalProcessVoAppArrayListBean();
-        bean.setApprovalName("财务审批");
-        bean.setApprover("王朕");
-        bean.setResult("通过");
-        bean.setNumber(2);
-        bean.setDate("2018-4-27");
-
-
-        approvalProcessbeanList.add(0, bean);
-        approvalProcessbeanList.add(1, bean1);
-    }
+//    private void initTimeLine() {
+//        initTimeLineData();
+//
+//        rlTimeLine.setLayoutManager(layoutTimeManager);
+//        rlTimeLine.setHasFixedSize(true);
+//
+//        //用自定义分割线类设置分割线
+//        rlTimeLine.addItemDecoration(new DividerItemDecorationOld(this));
+//        timeLineAdapter = new TimeLineAdapter(context, timeLineItem);
+//        rlTimeLine.setAdapter(timeLineAdapter);
+//
+//        timeLineItem.clear();
+//        if (approvalProcessbeanList.size() == 0) {
+//            HashMap<String, Object> map = new HashMap<String, Object>();
+//            map.put("ItemTitle", "暂无数据");
+//            map.put("ItemText", "");
+//            timeLineItem.add(0, map);
+//
+//        } else {
+//            for (int i = 0; i < approvalProcessbeanList.size(); i++) {
+//                Loger.e("----processList.size=" + approvalProcessbeanList.size());
+//                String strDepart = approvalProcessbeanList.get(i).getApprovalName();
+//                String strApproval = approvalProcessbeanList.get(i).getApprover();
+//                String strResult = approvalProcessbeanList.get(i).getResult();
+////                if (strResult.equals("true")) {
+////                    strResult = "通过";
+////                } else {
+////                    strResult = "不通过";
+////                }
+//                String itemTitleStr = strDepart + " " + strApproval + " " + strResult;
+//                String itemDate = approvalProcessbeanList.get(i).getDate();
+//                HashMap<String, Object> map = new HashMap<String, Object>();
+//                map.put("ItemTitle", itemTitleStr);
+//                map.put("ItemText", itemDate);
+//                timeLineItem.add(i, map);
+//            }
+//        }
+//
+//        Loger.e("----processList.size=" + timeLineItem.size());
+//        timeLineAdapter.notifyDataSetChanged();
+//    }
+//
+//    private void initTimeLineData() {
+//
+//        ApprovalAllDetailBean.ApprovalProcessVoAppArrayListBean bean =
+//                new ApprovalAllDetailBean.ApprovalProcessVoAppArrayListBean();
+//        bean.setApprovalName("部门审批");
+//        bean.setApprover("张三");
+//        bean.setResult("通过");
+//        bean.setNumber(1);
+//        bean.setDate("2018-4-17");
+//
+//        ApprovalAllDetailBean.ApprovalProcessVoAppArrayListBean bean1 =
+//                new ApprovalAllDetailBean.ApprovalProcessVoAppArrayListBean();
+//        bean.setApprovalName("财务审批");
+//        bean.setApprover("王朕");
+//        bean.setResult("通过");
+//        bean.setNumber(2);
+//        bean.setDate("2018-4-27");
+//
+//
+//        approvalProcessbeanList.add(0, bean);
+//        approvalProcessbeanList.add(1, bean1);
+//    }
 
     @Override
     protected void initViewEvent() {
@@ -211,16 +219,23 @@ public class MyApprovalProcessActivity extends BaseActivity {
                 break;
             case R.id.tv_approval_pass:
                 //通过，先去签名数据
-                approveResultId = true;
-                String hashFile = null;
+                approvalResult = "true";
                 try {
-                    hashFile = FileUtils.getMD5Checksum(picPath);
-                    signVerifyP1(hashFile);
+//                    picPath = file.getPath();
+
+                   // signVerifyP1(hashFile, approvalResult);
+                    SubmitApprovalBean bean = new SubmitApprovalBean();
+                    bean.setCer(cert);
+                    bean.setSign(sign);
+                    bean.setFlag(approvalResult);
+//                    id = 48;
+                    bean.setId(id);
+                    submitApproval(bean);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 Loger.e("--hashFile--" + hashFile);
-                signVerifyP1(hashFile);
+                //  signVerifyP1(hashFile);
                 // submit();
 
                 break;
@@ -233,29 +248,29 @@ public class MyApprovalProcessActivity extends BaseActivity {
         }
     }
 
-    private void submit() {
-        switch (level) {
-//            case 0:
-//                getPdfForm();
+//    private void submit() {
+//        switch (level) {
+////            case 0:
+////                getPdfForm();
+////                break;
+////            case 1:
+////                //
+////                toDownLoadPdf();
+////                break;
+////            case 2:
+////                // signVerifyP1();
+////                signVerifyP1NoPin();
+////                break;
+////            case 3:
+////                submitSignJsonstring();
+////                break;
+////            case 4:
+////                submitApproval();
+////                break;
+//            default:
 //                break;
-//            case 1:
-//                //
-//                toDownLoadPdf();
-//                break;
-//            case 2:
-//                // signVerifyP1();
-//                signVerifyP1NoPin();
-//                break;
-//            case 3:
-//                submitSignJsonstring();
-//                break;
-//            case 4:
-//                submitApproval();
-//                break;
-            default:
-                break;
-        }
-    }
+//        }
+//    }
 
     //填写reason Dialog
 
@@ -278,11 +293,20 @@ public class MyApprovalProcessActivity extends BaseActivity {
             public void onClick(DialogInterface dialog, int which) {
                 reason = input.getText().toString();
                 //pass=1 ;unpass =2
-                approveResultId = false;
+                approvalResult = "false";
                 if (TextUtils.isEmpty(reason)) {
-
+                    SimpleToast.toastMessage("请填写不通过理由", Toast.LENGTH_SHORT);
+                    return;
                 }
-                submit();
+
+                try {
+                    hashFile = FileUtils.getMD5Checksum(picPath);
+                    signVerifyP1(hashFile, approvalResult);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Loger.e("--hashFile--" + hashFile);
+
 
             }
         });
@@ -298,7 +322,7 @@ public class MyApprovalProcessActivity extends BaseActivity {
 
 
     //签名验证
-    private void signVerifyP1(final String base64Code1) {
+    private void signVerifyP1(final String base64Code1, final String isPass) {
 //        pdu.showpd();
 
         String plantext = base64Code1;
@@ -324,7 +348,8 @@ public class MyApprovalProcessActivity extends BaseActivity {
                     SubmitApprovalBean bean = new SubmitApprovalBean();
                     bean.setCer(cert);
                     bean.setSign(sign);
-                    id = 36;
+                    bean.setFlag(isPass);
+//                    id = 48;
                     bean.setId(id);
                     submitApproval(bean);
                     //去提交单据
@@ -361,6 +386,24 @@ public class MyApprovalProcessActivity extends BaseActivity {
 
                     } else {
                         SimpleToast.toastMessage("获取成功", Toast.LENGTH_SHORT);
+
+                        String base64Code = bean.getBytes();
+                        String reimPicName = bean.getName();
+                        bitmap = StrTobaseUtil.base64ToBitmap(base64Code);
+                        // file = BitmapUtil.saveBitmapToSDCardFile(bitmap, reimPicName + ".jpg");
+                        // file = BitmapUtil.saveBitmapToSDCardFile(bitmap, reimPicName );
+
+                        picPath = BitmapUtil.saveBitmapToSDCard(bitmap, System.currentTimeMillis() + ".jpg");
+                        Loger.e("---picPath" + picPath);
+                        //  picPath = BitmapUtil.saveBitmapToSDCard(bitmap, reimPicName + ".jpg");
+                        ivReimPic.setImageBitmap(bitmap);
+                        try {
+                            hashFile = FileUtils.getMD5Checksum(picPath);
+                            Loger.e("--hashFile--" + hashFile);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                         approvalReimbeanList.clear();
                         approvalReimbeanList.addAll(bean.getCosts());
                         adapter.notifyDataSetChanged();
@@ -394,7 +437,7 @@ public class MyApprovalProcessActivity extends BaseActivity {
                     String picName = bean.getName();
                     Bitmap bitmap = StrTobaseUtil.base64ToBitmap(base64Code);
                     //  picPath = BitmapUtil.saveBitmapToSDCard(bitmap, System.currentTimeMillis() + ".jpg");
-                    picPath = BitmapUtil.saveBitmapToSDCard(bitmap, picName + ".jpg");
+                    // picPath = BitmapUtil.saveBitmapToSDCard(bitmap, picName + ".jpg");
                     ivReimPic.setImageBitmap(bitmap);
 
 

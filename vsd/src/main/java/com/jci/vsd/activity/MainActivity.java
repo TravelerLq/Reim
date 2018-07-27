@@ -1,15 +1,22 @@
 package com.jci.vsd.activity;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.github.dfqin.grantor.PermissionListener;
+import com.github.dfqin.grantor.PermissionsUtil;
 import com.jci.vsd.R;
 
+import com.jci.vsd.activity.Reim.ReimHomeActivity;
 import com.jci.vsd.activity.UserInfo.UserInfoActivity;
 import com.jci.vsd.adapter.PageAdapter;
 import com.jci.vsd.fragment.EnterpriseHomeFragment;
@@ -56,8 +63,10 @@ public class MainActivity extends BaseActivity {
         initViewEvent();
         buttonBack.setVisibility(View.GONE);
         tvHeader.setVisibility(View.VISIBLE);
+    //    checkAuthority();
 
     }
+
 
 
     @Override
@@ -99,4 +108,8 @@ public class MainActivity extends BaseActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
     }
+
+
+
+
 }

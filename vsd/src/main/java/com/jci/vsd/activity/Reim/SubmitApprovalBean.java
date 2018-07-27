@@ -7,13 +7,16 @@ import com.jci.vsd.bean.BaseBean;
  */
 
 public class SubmitApprovalBean extends BaseBean {
+
     /**
-     * id : 41
-     * sign : sign
-     * cer : cer
+     * id : 44
+     * flag : true
+     * sign : signtest
+     * cer : certest
      */
 
     private int id;
+    private String flag;
     private String sign;
     private String cer;
 
@@ -23,6 +26,14 @@ public class SubmitApprovalBean extends BaseBean {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 
     public String getSign() {

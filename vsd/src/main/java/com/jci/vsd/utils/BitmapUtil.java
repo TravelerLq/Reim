@@ -64,6 +64,38 @@ public class BitmapUtil {
 
     }
 
+    // 保存 bitmap 到SD卡F
+    public static File saveBitmapToSDCardFile(Bitmap bitmap, String fileName) {
+        File f = null;
+        boolean flag = false;
+        if (null != bitmap) {
+            try {
+//                fileName = fileName + ".jpg";
+                File file = new File(filePath);
+                if (!file.exists()) {
+                    file.mkdirs();
+                }
+                f = new File(filePath + fileName);
+                if (f.exists()) {
+                    f.delete();
+                }
+                BufferedOutputStream outputStream = new BufferedOutputStream(
+                        new FileOutputStream(f));
+                bitmap.compress(CompressFormat.JPEG, 100, outputStream);
+                outputStream.flush();
+                outputStream.close();
+                flag = true;
+            } catch (FileNotFoundException e) {
+                flag = false;
+            } catch (IOException e) {
+                flag = false;
+            }
+        }
+       // return f.getPath();
+        return  f;
+
+    }
+
 
     /**
      * @param drawable

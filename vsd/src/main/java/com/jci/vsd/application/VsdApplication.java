@@ -1,12 +1,19 @@
 package com.jci.vsd.application;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.anupcowkur.reservoir.Reservoir;
+import com.github.dfqin.grantor.PermissionListener;
+import com.github.dfqin.grantor.PermissionsUtil;
+import com.jci.vsd.activity.BaseActivity;
+import com.jci.vsd.activity.Reim.ReimHomeActivity;
 import com.jci.vsd.bean.login.LoginResponseBean;
 //import com.jci.vsd.bean.material.StoreMaterialOrderDteailResposeBean;
 //import com.jci.vsd.bean.material.StoreMaterialOrderResponseBean;
@@ -77,6 +84,36 @@ public class VsdApplication extends Application {
 //                : LeakCanary.install(VsdApplication.this);
         initReservoir();
 
+        checkAuthority();
+
+    }
+
+
+    private void checkAuthority() {
+
+
+
+        if (PermissionsUtil.hasPermission(this.getApplicationContext(), Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+
+        } else {
+            PermissionsUtil.requestPermission((BaseActivity)this.getApplicationContext(), new PermissionListener() {
+                @Override
+                public void permissionGranted(@NonNull String[] permission) {
+                    Log.e("--", "permissionGranted: 用户授予了访问外部存储的权限");
+
+                }
+
+                @Override
+                public void permissionDenied(@NonNull String[] permission) {
+                    Log.e("--", "permissionDenied: 用户拒绝了访问外部存储的申请");
+                    // needPermissionTips();
+
+                }
+            }, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE});
+        }
     }
 
     public static VsdApplication getInstance() {

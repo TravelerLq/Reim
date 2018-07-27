@@ -35,7 +35,7 @@ public interface ReimApi {
     Observable<Response<String>> submitReimDoc(@Body String body);
 
     //提交审批报销单
-    @POST("shuidao/form/gen")
+    @POST("shuidao/chk/pass")
     Observable<Response<String>> submitApproval(@Body String body);
 
     // 获取待审批的报销单

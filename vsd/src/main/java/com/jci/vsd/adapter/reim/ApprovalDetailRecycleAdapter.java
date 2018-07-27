@@ -78,7 +78,6 @@ public class ApprovalDetailRecycleAdapter extends RecyclerView.Adapter<ApprovalD
             } else {
                 holder.tvFee.setText(bean.getAmount());
                 holder.tvExplain.setText(bean.getRemark());
-                holder.tvDate.setText(bean.getDetail());
                 holder.tvType.setText(bean.getName());
                 holder.rlItem.setTag(position);
                 holder.ivPic.setTag(position);

@@ -93,6 +93,7 @@ public class LoginActivity extends BaseActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+      //  checkCBScert();
         context = LoginActivity.this;
         btnSure = (Button) findViewById(R.id.btn_sure);
         MySpEdit.getInstance().setAppEmv(true);
@@ -256,13 +257,7 @@ public class LoginActivity extends BaseActivity {
             //先去申请证书
             SimpleToast.ToastMessage("请先申请个人证书！");
             toActivity(RegisterCertActivity.class);
-        } else {
-            // 去登录
-            checkData();
-
-
         }
-
     }
 
     private void checkData() {
@@ -288,7 +283,7 @@ public class LoginActivity extends BaseActivity {
 
 
         //  test
-       // toActivity(MainActivity.class);
+        // toActivity(MainActivity.class);
 
     }
 
