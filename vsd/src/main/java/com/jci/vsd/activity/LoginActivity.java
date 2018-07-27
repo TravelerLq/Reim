@@ -284,11 +284,11 @@ public class LoginActivity extends BaseActivity {
         // login
         //  accountStr = "15252466554";
 
-        //  login(accountStr, pswStr, "1");
+        login(accountStr, pswStr, "1");
 
 
         //  test
-        toActivity(MainActivity.class);
+       // toActivity(MainActivity.class);
 
     }
 

@@ -22,6 +22,7 @@ import com.jci.vsd.activity.MainActivity;
 import com.jci.vsd.adapter.TimeLineAdapter;
 import com.jci.vsd.adapter.reim.ApprovalDetailRecycleAdapter;
 import com.jci.vsd.bean.reim.ApprovalAllDetailBean;
+import com.jci.vsd.bean.reim.WaitApprovalDetailAllBean;
 import com.jci.vsd.bean.reim.WaitApprovalDetailBean;
 import com.jci.vsd.constant.MySpEdit;
 import com.jci.vsd.network.control.ReimControl;
@@ -98,7 +99,7 @@ public class MyApprovalProcessActivity extends BaseActivity {
         initRecyApproval();
         // initTimeLine();
         int id = Integer.valueOf(getIntent().getStringExtra("id"));
-
+        id = 48;
         getData(id);
         getpic(id);
 
@@ -348,16 +349,23 @@ public class MyApprovalProcessActivity extends BaseActivity {
 
 
     private void getData(int id) {
-        Observable<List<WaitApprovalDetailBean>> observable = new ReimControl().getWaitApprovalDetail(id);
-        CommonDialogObserver<List<WaitApprovalDetailBean>> observer = new CommonDialogObserver<List<WaitApprovalDetailBean>>(this) {
+        Observable<WaitApprovalDetailAllBean> observable = new ReimControl().getWaitApprovalDetail(id);
+        CommonDialogObserver<WaitApprovalDetailAllBean> observer = new CommonDialogObserver<WaitApprovalDetailAllBean>(this) {
             @Override
-            public void onNext(List<WaitApprovalDetailBean> list) {
-                super.onNext(list);
-                SimpleToast.toastMessage("获取成功", Toast.LENGTH_SHORT);
-                if (list != null) {
-                    approvalReimbeanList.clear();
-                    approvalReimbeanList.addAll(list);
-                    adapter.notifyDataSetChanged();
+            public void onNext(WaitApprovalDetailAllBean bean) {
+                super.onNext(bean);
+
+                if (bean != null) {
+                    if (bean.getCosts().size() == 0) {
+                        SimpleToast.toastMessage("暂无数据", Toast.LENGTH_SHORT);
+
+                    } else {
+                        SimpleToast.toastMessage("获取成功", Toast.LENGTH_SHORT);
+                        approvalReimbeanList.clear();
+                        approvalReimbeanList.addAll(bean.getCosts());
+                        adapter.notifyDataSetChanged();
+
+                    }
 
                 }
             }

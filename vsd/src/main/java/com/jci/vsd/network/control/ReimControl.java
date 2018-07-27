@@ -11,6 +11,7 @@ import com.jci.vsd.bean.reim.IdsBean;
 import com.jci.vsd.bean.reim.ReimAddItemBean;
 import com.jci.vsd.bean.reim.ReimAddResponseBean;
 import com.jci.vsd.bean.reim.ReimDocSubmitBean;
+import com.jci.vsd.bean.reim.WaitApprovalDetailAllBean;
 import com.jci.vsd.bean.reim.WaitApprovalDetailBean;
 import com.jci.vsd.constant.AppConstant;
 import com.jci.vsd.exception.IApiException;
@@ -223,7 +224,7 @@ public class ReimControl extends BaseControl {
     }
 
     //get 获取待审批详情数据
-    public Observable<List<WaitApprovalDetailBean>> getWaitApprovalDetail(int id) {
+    public Observable<WaitApprovalDetailAllBean> getWaitApprovalDetail(int id) {
 
         Retrofit retrofit = builderRetrofitWithHeader();
         Map<String, Object> paramMap = new HashMap<>();
@@ -231,9 +232,9 @@ public class ReimControl extends BaseControl {
 
         ReimApi api = retrofit.create(ReimApi.class);
         Observable<Response<String>> observable = api.getWaitApprovalDetail(paramMap);
-        return observable.map(new Function<Response<String>, List<WaitApprovalDetailBean>>() {
+        return observable.map(new Function<Response<String>, WaitApprovalDetailAllBean>() {
             @Override
-            public List<WaitApprovalDetailBean> apply(Response<String> stringResponse) throws Exception {
+            public WaitApprovalDetailAllBean apply(Response<String> stringResponse) throws Exception {
                 String responseStr = stringResponse.body();
                 int codeHttp = stringResponse.code();
                 if (codeHttp == 401) {
@@ -242,11 +243,8 @@ public class ReimControl extends BaseControl {
                 JSONObject jsonObject = JSON.parseObject(responseStr);
                 int code = jsonObject.getIntValue(AppConstant.JSON_CODE);
                 if (code == 200) {
-                    JSONObject jsonData = JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA));
-                    List<WaitApprovalDetailBean> list = JSON.parseArray(jsonData.getString("costs"), WaitApprovalDetailBean.class);
-                    if (list != null) {
-                        return list;
-                    }
+                    WaitApprovalDetailAllBean bean = JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA),WaitApprovalDetailAllBean.class);
+                    return  bean;
 
                 }
                 throw new IApiException("待审批详情", jsonObject.getString(AppConstant.JSON_MESSAGE));
