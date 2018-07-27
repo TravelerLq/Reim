@@ -130,6 +130,23 @@ public class BaseFragment extends RxFragment {
 
     }
 
+
+
+
+    /**
+     * 跳转页面
+     *
+     * @param clz 跳转到扫描的类
+     * @param <T>
+     */
+    protected <T> void toActivityWithId(Fragment fragment, Class<T> clz,int id) {
+
+        Intent intent = new Intent(getActivity(), clz);
+        intent.putExtra("id",id);
+        startActivity(intent);
+
+    }
+
     @Override
     public void onDetach() {
         super.onDetach();

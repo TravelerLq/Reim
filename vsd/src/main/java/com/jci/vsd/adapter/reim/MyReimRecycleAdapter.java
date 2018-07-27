@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jci.vsd.R;
+import com.jci.vsd.bean.reim.MyReimDetailBean;
 import com.jci.vsd.bean.reim.WaitApprovalDetailBean;
 import com.jci.vsd.utils.Loger;
 
@@ -24,17 +25,17 @@ import java.util.List;
 
 /**
  * Created by liqing on 18/3/20.
- * 添加报销 －记一笔的Adapter
+ *
  */
 
-public class ApprovalDetailRecycleAdapter extends RecyclerView.Adapter<ApprovalDetailRecycleAdapter.MyViewHolder> {
+public class MyReimRecycleAdapter extends RecyclerView.Adapter<MyReimRecycleAdapter.MyViewHolder> {
 
     private Context context;
-    private List<WaitApprovalDetailBean> list;
+    private List<MyReimDetailBean> list;
     private LayoutInflater inflater;
     private List<Bitmap> listBitmap = new ArrayList<>();
 
-    public ApprovalDetailRecycleAdapter(Context context, List<WaitApprovalDetailBean> list) {
+    public MyReimRecycleAdapter(Context context, List<MyReimDetailBean> list) {
         this.context = context;
         this.list = list;
         this.inflater = LayoutInflater.from(this.context);
@@ -46,17 +47,16 @@ public class ApprovalDetailRecycleAdapter extends RecyclerView.Adapter<ApprovalD
     }
 
     public static interface OnItemClickListener {
-          void OnItemClick(View view, int pos);
+        //  void OnItemClick(View view, int pos);
         void onPicCLick(View view, int pos);
-
     }
 
     //    public static interface OnItemClickListener {
 //        void OnItemClick(View view, int pos);
 //    }
-    public ApprovalDetailRecycleAdapter.OnItemClickListener listener;
+    public MyReimRecycleAdapter.OnItemClickListener listener;
 
-    public void setOnItemClickListener(ApprovalDetailRecycleAdapter.OnItemClickListener listener) {
+    public void setOnItemClickListener(MyReimRecycleAdapter.OnItemClickListener listener) {
         this.listener = listener;
     }
 
@@ -72,29 +72,21 @@ public class ApprovalDetailRecycleAdapter extends RecyclerView.Adapter<ApprovalD
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        final WaitApprovalDetailBean bean = list.get(position);
+        final MyReimDetailBean bean = list.get(position);
         if (bean != null) {
             if (holder.tvExplain == null) {
                 Log.e("holder.tvTitle", "null");
             } else {
-                holder.tvFee.setText(bean.getAmount());
-                holder.tvExplain.setText(bean.getRemark());
-                holder.tvType.setText(bean.getName());
-                holder.rlItem.setTag(position);
-                holder.ivPic.setTag(position);
+//                holder.tvFee.setText(bean.getAmount());
+//                holder.tvExplain.setText(bean.getRemark());
+//                holder.tvType.setText(bean.getName());
+//                holder.rlItem.setTag(position);
+//                holder.ivPic.setTag(position);
                 if (listBitmap.size() == 0) {
                     Loger.e("listmap.size()==000");
                 } else {
                     holder.ivPic.setImageBitmap(listBitmap.get(position));
                 }
-                holder.rlItem.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (listener != null) {
-                            listener.OnItemClick(view, (int) view.getTag());
-                        }
-                    }
-                });
 
 
                 holder.ivPic.setOnClickListener(new View.OnClickListener() {

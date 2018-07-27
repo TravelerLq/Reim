@@ -28,7 +28,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.jci.vsd.R;
 import com.jci.vsd.activity.enterprise.RegisterCompanyActivity;
-import com.jci.vsd.adapter.PageAdapter;
+
 import com.jci.vsd.application.VsdApplication;
 import com.jci.vsd.bean.download.CheckUpdateResponse;
 import com.jci.vsd.bean.enterprise.EnterpriseBean;
@@ -39,8 +39,7 @@ import com.jci.vsd.constant.MySpEdit;
 import com.jci.vsd.fragment.EnterpriseHomeFragment;
 import com.jci.vsd.fragment.dialog.RxStyleDialogFragment;
 import com.jci.vsd.fragment.dialog.UpdateAppDialog;
-import com.jci.vsd.fragment.login.LoginFragment;
-import com.jci.vsd.fragment.login.RegisterFragment;
+
 import com.jci.vsd.network.control.DownloadAppControl;
 import com.jci.vsd.network.control.LoginApiControl;
 import com.jci.vsd.observer.CommonDialogObserver;

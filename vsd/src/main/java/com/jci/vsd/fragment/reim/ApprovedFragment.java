@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,16 +23,26 @@ import com.jci.vsd.SlideRecycleview.ViewHolder;
 import com.jci.vsd.activity.Reim.MyReimApprovalDetailActivity;
 import com.jci.vsd.bean.reim.ApprovalBean;
 import com.jci.vsd.fragment.main.BaseFragment;
+import com.jci.vsd.network.control.ReimControl;
+import com.jci.vsd.observer.CommonDialogObserver;
+import com.jci.vsd.observer.DialogObserverHolder;
+import com.jci.vsd.observer.RxHelper;
+import com.jci.vsd.view.widget.SimpleToast;
+
+import org.reactivestreams.Subscription;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by liqing on 18/6/28.
  * 已审批fragment
  */
 
-public class ApprovedFragment extends BaseFragment {
+public class ApprovedFragment extends BaseFragment implements DialogObserverHolder {
 
     private Context context;
 
@@ -41,6 +52,7 @@ public class ApprovedFragment extends BaseFragment {
     private LinearLayoutManager mLayoutManager;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView mRecyclerView;
+    private int type = 2;
 
 
     @Nullable
@@ -64,23 +76,32 @@ public class ApprovedFragment extends BaseFragment {
             }
         });
 
-        initDatas();
+        getData(type);
+        //initDatas();
 
         mAdapter = new CommonAdapter<ApprovalBean>(context, mData, R.layout.item_approving_swipe) {
             @Override
             public void convert(final ViewHolder holder, ApprovalBean approvalBean) {
                 ((SwipeMenuLayout) holder.itemView).setIos(true).setLeftSwipe(true);
                 TextView tv = (TextView) holder.getView(R.id.tv_money);
+                TextView tvName = (TextView) holder.getView(R.id.tv_name);
+                TextView tvTime = (TextView) holder.getView(R.id.tv_expense_time);
+                TextView tvNum = (TextView) holder.getView(R.id.tv_expense_num);
+                TextView tvApprovalResult = (TextView) holder.getView(R.id.tv_department);
                 tv.setText(approvalBean.getTotal());
+                tvName.setText(approvalBean.getAppl());
+                tvTime.setText(approvalBean.getDate());
+                tvNum.setText(approvalBean.getAnnex());
+                //  tvApprovalResult.setText(approvalBean.get);
 
                 holder.setOnClickListener(R.id.btnDelete, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         int pos = holder.getLayoutPosition();
                         if (pos >= 0 && pos < mDatas.size()) {
-                            Toast.makeText(getContext(), "删除:" + pos, Toast.LENGTH_SHORT).show();
-                            mDatas.remove(pos);
-                            mAdapter.notifyItemRemoved(pos);//推荐用这个
+
+                            delete(mDatas.get(pos).getId(), pos);
+
                             //如果删除时，不使用mAdapter.notifyItemRemoved(pos)，则删除没有动画效果，
                             //且如果想让侧滑菜单同时关闭，需要同时调用 ((SwipeMenuLayout) holder.itemView).quickClose();
                             //mAdapter.notifyDataSetChanged();
@@ -92,8 +113,9 @@ public class ApprovedFragment extends BaseFragment {
                 (holder).setOnClickListener(R.id.content, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        int pos = holder.getLayoutPosition();
 //                       getActivity(). toActivity(MyReimApprovalDetailActivity.class);
-                        toActivity(ApprovedFragment.this, MyReimApprovalDetailActivity.class);
+                        toActivityWithId(ApprovedFragment.this, MyReimApprovalDetailActivity.class, mData.get(pos).getId());
                         //  Toast.makeText(mContext, "onClick:" + mDatas.get(holder.getAdapterPosition()).name, Toast.LENGTH_SHORT).show();
                         Log.d("TAG", "onClick() called with: v = [" + v + "]");
                     }
@@ -143,5 +165,79 @@ public class ApprovedFragment extends BaseFragment {
         }
     }
 
+    private void getData(int type) {
+        Observable<List<ApprovalBean>> observable = new ReimControl().getMyReimData(type);
+        CommonDialogObserver<List<ApprovalBean>> observer = new CommonDialogObserver<List<ApprovalBean>>(this) {
+            @Override
+            public void onNext(List<ApprovalBean> list) {
+                super.onNext(list);
+                SimpleToast.toastMessage("数据获取成功", Toast.LENGTH_SHORT);
+                if (list != null) {
+                    mData.clear();
+                    mData.addAll(list);
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
 
+            @Override
+            public void onError(Throwable t) {
+                super.onError(t);
+            }
+        };
+        RxHelper.bindOnUI(observable, observer);
+
+    }
+
+    private void delete(int id, final int pos) {
+
+
+        Observable<Boolean> observable = new ReimControl().deleteMyReim(id);
+        CommonDialogObserver<Boolean> observer = new CommonDialogObserver<Boolean>(this) {
+            @Override
+            public void onNext(Boolean isSuccess) {
+                super.onNext(isSuccess);
+                SimpleToast.toastMessage("删除成功", Toast.LENGTH_SHORT);
+                mData.remove(pos);
+                mAdapter.notifyItemRemoved(pos);//推荐用这个
+                getData(type);
+
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                super.onError(t);
+                if (t.getMessage().equals("401")) {
+                    SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_SHORT);
+
+                }
+
+
+            }
+
+
+        };
+        RxHelper.bindOnUI(observable, observer);
+
+    }
+
+
+    @Override
+    public void addDisposable(Disposable disposable) {
+
+    }
+
+    @Override
+    public void addSubscription(Subscription subscription) {
+
+    }
+
+    @Override
+    public void removeDisposable(Disposable disposable) {
+
+    }
+
+    @Override
+    public FragmentManager getSupportFragmentManager() {
+        return getActivity().getSupportFragmentManager();
+    }
 }

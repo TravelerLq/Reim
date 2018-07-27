@@ -5,6 +5,7 @@
     android:background="@color/bg_recycle"
     android:orientation="vertical"
     android:paddingBottom="@dimen/dimen_5"
+    android:id="@+id/ll_approval_detail_item"
     android:paddingRight="@dimen/dimen_10">
 
     <RelativeLayout

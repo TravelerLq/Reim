@@ -102,6 +102,11 @@
             android:name=".activity.Reim.MyReimApprovalDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+
+        <activity
+            android:name=".activity.Reim.WaitApprovalPicActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
         <activity
             android:name=".activity.Reim.MyApprovalRecyActivity"
             android:screenOrientation="portrait"

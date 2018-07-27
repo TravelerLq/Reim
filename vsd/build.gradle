@@ -112,14 +112,8 @@ dependencies {
     compile 'com.jph.takephoto:takephoto_library:4.0.3'
     compile 'com.android.support:recyclerview-v7:25.+'
     //图片加载
-    compile 'com.squareup.picasso:picasso:2.5.2'
-//
-    //  compile 'com.github.bumptech.glide:glide:4.1.1'
-//recycleview 侧滑删除
-    //  compile 'com.yanzhenjie:recyclerview-swipe:1.1.4'
+    // compile 'com.squareup.picasso:picasso:2.5.2'
 
-    //load more
-    // implementation rootProject.ext.dependencies["paginate"]
 
     compile 'com.github.markomilos:paginate:0.5.1'
 
@@ -139,6 +133,9 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:4.1.1'
     //    // Reservoir
     compile 'com.anupcowkur:reservoir:2.1'
+    // //用于处理图片的缩放
+    compile 'com.github.chrisbanes:PhotoView:2.0.0'
+
 //slide recycleview
 
     //  compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.1'

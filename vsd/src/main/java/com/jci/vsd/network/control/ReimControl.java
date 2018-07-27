@@ -8,6 +8,7 @@ import com.jci.vsd.activity.Reim.SubmitApprovalBean;
 import com.jci.vsd.bean.enterprise.BudgetBean;
 import com.jci.vsd.bean.reim.ApprovalBean;
 import com.jci.vsd.bean.reim.IdsBean;
+import com.jci.vsd.bean.reim.MyReimDetailBean;
 import com.jci.vsd.bean.reim.ReimAddItemBean;
 import com.jci.vsd.bean.reim.ReimAddResponseBean;
 import com.jci.vsd.bean.reim.ReimDocSubmitBean;
@@ -243,8 +244,8 @@ public class ReimControl extends BaseControl {
                 JSONObject jsonObject = JSON.parseObject(responseStr);
                 int code = jsonObject.getIntValue(AppConstant.JSON_CODE);
                 if (code == 200) {
-                    WaitApprovalDetailAllBean bean = JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA),WaitApprovalDetailAllBean.class);
-                    return  bean;
+                    WaitApprovalDetailAllBean bean = JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA), WaitApprovalDetailAllBean.class);
+                    return bean;
 
                 }
                 throw new IApiException("待审批详情", jsonObject.getString(AppConstant.JSON_MESSAGE));
@@ -312,7 +313,7 @@ public class ReimControl extends BaseControl {
                 JSONObject jsonObject = JSON.parseObject(responseStr);
                 int code = jsonObject.getIntValue(AppConstant.JSON_CODE);
                 if (code == 200) {
-                  return true;
+                    return true;
 
 
                 }
@@ -326,13 +327,84 @@ public class ReimControl extends BaseControl {
     }
 
 
-    //删除预算
+    //我的报销－－－
 
-    public Observable<Boolean> deleteBudget(BudgetBean bean) {
+    //我的报销单
+
+    public Observable<List<ApprovalBean>> getMyReimData(int type) {
+
+        Retrofit retrofit = builderRetrofitWithHeader();
+        ReimApi api = retrofit.create(ReimApi.class);
+        Observable<Response<String>> observable = api.getWaitApprovalData();
+        return observable.map(new Function<Response<String>, List<ApprovalBean>>() {
+            @Override
+            public List<ApprovalBean> apply(Response<String> stringResponse) throws Exception {
+                String responseStr = stringResponse.body();
+                int codeHttp = stringResponse.code();
+                if (codeHttp == 401) {
+                    throw new IApiException("401", "401");
+                }
+                JSONObject jsonObject = JSON.parseObject(responseStr);
+                int code = jsonObject.getIntValue(AppConstant.JSON_CODE);
+                if (code == 200) {
+                    JSONObject jsonData = JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA));
+                    List<ApprovalBean> list = JSON.parseArray(jsonData.getString("forms"), ApprovalBean.class);
+                    if (list != null) {
+                        return list;
+                    }
+
+                }
+                throw new IApiException("提交报销单", jsonObject.getString(AppConstant.JSON_MESSAGE));
+
+
+            }
+
+
+        });
+    }
+
+
+    //获取我的报销单详情
+    public Observable<MyReimDetailBean> getMyReimDetail(int type, int id) {
+
+        Retrofit retrofit = builderRetrofitWithHeader();
+        ReimApi api = retrofit.create(ReimApi.class);
+        Observable<Response<String>> observable = api.getWaitApprovalData();
+        return observable.map(new Function<Response<String>, MyReimDetailBean>() {
+            @Override
+            public MyReimDetailBean apply(Response<String> stringResponse) throws Exception {
+                String responseStr = stringResponse.body();
+                int codeHttp = stringResponse.code();
+                if (codeHttp == 401) {
+                    throw new IApiException("401", "401");
+                }
+                JSONObject jsonObject = JSON.parseObject(responseStr);
+                int code = jsonObject.getIntValue(AppConstant.JSON_CODE);
+                if (code == 200) {
+                    JSONObject jsonData = JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA));
+//                    List<ApprovalBean> list = JSON.parseArray(jsonData.getString("forms"), ApprovalBean.class);
+//                    if (list != null) {
+//                        return list;
+//                    }
+                    return null;
+
+                }
+                throw new IApiException("提交报销单", jsonObject.getString(AppConstant.JSON_MESSAGE));
+
+
+            }
+
+
+        });
+    }
+
+    //删除报销
+
+    public Observable<Boolean> deleteMyReim(int id) {
         Retrofit retrofit = builderJsonRetrofit();
-//        Map<String, Object> paramMap = new HashMap<>();
-//        paramMap.put("id", membersBean.getId());
-        String paramStr = JSON.toJSONString(bean);
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("id", id);
+        String paramStr = JSON.toJSONString(paramMap);
         BudgetApi api = retrofit.create(BudgetApi.class);
         Observable<Response<String>> observable = api.deleteBudgetItem(paramStr);
         return observable.map(new Function<Response<String>, Boolean>() {
@@ -348,7 +420,7 @@ public class ReimControl extends BaseControl {
                 if (code == 200) {
                     return true;
                 }
-                throw new IApiException("删除预算（部门）", jsonObject.getString(AppConstant.JSON_MESSAGE));
+                throw new IApiException("删除（部门）", jsonObject.getString(AppConstant.JSON_MESSAGE));
 
 
             }

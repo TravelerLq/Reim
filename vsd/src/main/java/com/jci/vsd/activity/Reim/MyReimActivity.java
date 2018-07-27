@@ -15,7 +15,7 @@ import butterknife.BindView;
 
 /**
  * Created by liqing on 18/6/28.
- * 我的报销
+ * 我的报销UI 有审批中＋已经审批 2个Tab (2 fragment)
  */
 
 public class MyReimActivity extends BaseActivity {

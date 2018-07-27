@@ -47,6 +47,7 @@ import cn.unitid.spark.cm.sdk.data.response.DataProcessResponse;
 import cn.unitid.spark.cm.sdk.exception.CmSdkException;
 import cn.unitid.spark.cm.sdk.listener.ProcessListener;
 import io.reactivex.Observable;
+import me.iwf.photopicker.PhotoPreview;
 
 /**
  * Created by liqing on 18/6/28.
@@ -90,6 +91,7 @@ public class MyApprovalProcessActivity extends BaseActivity {
     private String approvalResult;
     private Bitmap bitmap;
     private File file;
+    private List<String> selectPic;
 
 
     @Override
@@ -108,8 +110,8 @@ public class MyApprovalProcessActivity extends BaseActivity {
         int id = Integer.valueOf(getIntent().getStringExtra("id"));
         Loger.e("---approval id" + id);
 //        id = 48;
-        getData(id);
-        //  getpic(id);
+          getData(id);
+          getpic(id);
 
     }
 
@@ -120,7 +122,15 @@ public class MyApprovalProcessActivity extends BaseActivity {
         rlApprovalDetail.setAdapter(adapter);
         adapter.setOnItemClickListener(new ApprovalDetailRecycleAdapter.OnItemClickListener() {
             @Override
+            public void OnItemClick(View view, int pos) {
+                toAtivityWithParams(WaitApprovalPicActivity.class,approvalReimbeanList.get(pos));
+            }
+
+            @Override
             public void onPicCLick(View view, int pos) {
+                // 详情
+
+
                 //选中的图片集合
 //                String picPath = BitmapUtil.saveBitmapToSDCard(bitmaps.get(pos), System.currentTimeMillis() + ".jpg");
 //                Loger.e("bitmap-- i=" + pos + " save to Pic" + picPath);
@@ -215,7 +225,12 @@ public class MyApprovalProcessActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.iv_reim_pic:
                 //查看大图的报销单据照片
-
+                selectPic = new ArrayList<>();
+                selectPic.add(picPath);
+                PhotoPreview.builder()
+                        .setPhotos((ArrayList) selectPic)
+                        .setShowDeleteButton(false)
+                        .start(MyApprovalProcessActivity.this, PhotoPreview.REQUEST_CODE);
                 break;
             case R.id.tv_approval_pass:
                 //通过，先去签名数据

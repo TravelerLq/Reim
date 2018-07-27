@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
+
 import com.jci.vsd.fragment.login.LoginFragment;
 import com.jci.vsd.fragment.login.RegisterFragment;
 

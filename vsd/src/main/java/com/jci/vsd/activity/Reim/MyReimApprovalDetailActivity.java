@@ -1,6 +1,7 @@
 package com.jci.vsd.activity.Reim;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,23 +10,34 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jci.vsd.R;
 import com.jci.vsd.activity.BaseActivity;
 import com.jci.vsd.adapter.TimeLineAdapter;
 import com.jci.vsd.adapter.reim.ApprovalDetailRecycleAdapter;
+import com.jci.vsd.adapter.reim.MyReimRecycleAdapter;
 import com.jci.vsd.bean.reim.ApprovalAllDetailBean;
+import com.jci.vsd.bean.reim.MyReimDetailBean;
+import com.jci.vsd.bean.reim.WaitApprovalDetailAllBean;
 import com.jci.vsd.fragment.reim.ApprovedFragment;
 import com.jci.vsd.fragment.reim.ApprovingFragment;
+import com.jci.vsd.network.control.ReimControl;
+import com.jci.vsd.observer.CommonDialogObserver;
+import com.jci.vsd.observer.RxHelper;
 import com.jci.vsd.utils.BitmapUtil;
+import com.jci.vsd.utils.FileUtils;
 import com.jci.vsd.utils.Loger;
+import com.jci.vsd.utils.StrTobaseUtil;
 import com.jci.vsd.view.widget.DividerItemDecorationOld;
+import com.jci.vsd.view.widget.SimpleToast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
 import me.iwf.photopicker.PhotoPreview;
 
 /**
@@ -41,16 +53,17 @@ public class MyReimApprovalDetailActivity extends BaseActivity {
     @BindView(R.id.iv_reim_pic)
     ImageView ivReimPic;
     private Context context;
-    private ApprovalDetailRecycleAdapter adapter;
+    private MyReimRecycleAdapter adapter;
     private LinearLayoutManager layoutReimManager;
     private LinearLayoutManager layoutTimeManager;
 
     private ArrayList<HashMap<String, Object>> timeLineItem;
 
-    private List<ApprovalAllDetailBean.SingleReimVoAppArrayListBean> approvalReimbeanList;
+    private List<MyReimDetailBean> approvalReimbeanList;
 
     private List<ApprovalAllDetailBean.ApprovalProcessVoAppArrayListBean> approvalProcessbeanList;
     private TimeLineAdapter timeLineAdapter;
+    private int id;
 
 
     @Override
@@ -66,15 +79,17 @@ public class MyReimApprovalDetailActivity extends BaseActivity {
         timeLineItem = new ArrayList<>();
         initRecyApproval();
         initTimeLine();
+        id = Integer.valueOf(getIntent().getStringExtra("id"));
+        getData(id);
 
     }
 
 
     private void initRecyApproval() {
         rlApprovalDetail.setLayoutManager(layoutReimManager);
-       // adapter = new ApprovalDetailRecycleAdapter(context, approvalReimbeanList);
+        adapter = new MyReimRecycleAdapter(context, approvalReimbeanList);
         rlApprovalDetail.setAdapter(adapter);
-        adapter.setOnItemClickListener(new ApprovalDetailRecycleAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new MyReimRecycleAdapter.OnItemClickListener() {
             @Override
             public void onPicCLick(View view, int pos) {
                 //选中的图片集合
@@ -179,5 +194,30 @@ public class MyReimApprovalDetailActivity extends BaseActivity {
                 break;
         }
     }
+
+
+    private void getData(int id) {
+        Observable<WaitApprovalDetailAllBean> observable = new ReimControl().getWaitApprovalDetail(id);
+        CommonDialogObserver<WaitApprovalDetailAllBean> observer = new CommonDialogObserver<WaitApprovalDetailAllBean>(this) {
+            @Override
+            public void onNext(WaitApprovalDetailAllBean bean) {
+                super.onNext(bean);
+
+                if (bean != null) {
+                    //   SimpleToast.toastMessage("成功");
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                super.onError(t);
+            }
+        };
+        RxHelper.bindOnUIActivityLifeCycle(observable, observer, MyReimApprovalDetailActivity.this);
+
+
+    }
+
 
 }

@@ -25,6 +25,9 @@ import com.jci.vsd.utils.Loger;
 import com.jci.vsd.utils.StrTobaseUtil;
 import com.jci.vsd.view.widget.SimpleToast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import cn.unitid.spark.cm.sdk.business.SignatureP1Service;
 import cn.unitid.spark.cm.sdk.common.DataProcessType;
@@ -32,6 +35,7 @@ import cn.unitid.spark.cm.sdk.data.response.DataProcessResponse;
 import cn.unitid.spark.cm.sdk.exception.CmSdkException;
 import cn.unitid.spark.cm.sdk.listener.ProcessListener;
 import io.reactivex.Observable;
+import me.iwf.photopicker.PhotoPreview;
 
 /**
  * Created by liqing on 18/6/28.
@@ -49,6 +53,7 @@ public class ReimDocSubmitActivtiy extends BaseActivity {
     private String cert;
     private String sign;
     private int id;
+    private List<String> selectPic;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,6 +113,13 @@ public class ReimDocSubmitActivtiy extends BaseActivity {
                 break;
             //提交单据 （先签名添加，成功后－再提交）
             case R.id.iv_reim_doc:
+
+                selectPic = new ArrayList<>();
+                selectPic.add(picPath);
+                PhotoPreview.builder()
+                        .setPhotos((ArrayList) selectPic)
+                        .setShowDeleteButton(false)
+                        .start(ReimDocSubmitActivtiy.this, PhotoPreview.REQUEST_CODE);
                 //查看单据大图
                 break;
             default:
