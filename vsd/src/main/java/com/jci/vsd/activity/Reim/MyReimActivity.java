@@ -45,7 +45,6 @@ public class MyReimActivity extends BaseActivity {
         tvApproved.setOnClickListener(this);
 
     }
-
     @Override
     public void onClick(View view) {
         super.onClick(view);
