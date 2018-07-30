@@ -348,7 +348,7 @@ public class RegisterCompanyActivity extends BaseActivity {
         requestBean.setLegal(legal);
         requestBean.setLegalIdNumber(legalId);
         requestBean.setPhone(tel);
-        requestBean.setQuota(Integer.valueOf(reimLimit));
+        requestBean.setQuota(Double.valueOf(reimLimit));
         requestBean.setTaxId(taxNo);
 
 
@@ -364,18 +364,22 @@ public class RegisterCompanyActivity extends BaseActivity {
 
     private void toRegisterCompany(final EnterpriseRequestBean enterpriseRequestBean) {
 
+
         Observable<EnterpriseResponseBean> observable = new EnterpriseControl().registerEnterprise(enterpriseRequestBean);
         CommonDialogObserver<EnterpriseResponseBean> observer = new CommonDialogObserver<EnterpriseResponseBean>(this) {
             @Override
             public void onNext(EnterpriseResponseBean responseBean) {
                 super.onNext(responseBean);
-                //保存 公司信息
-                EnterpriseData.saveEnterprise(requestBean);
+                //保存 公司信息(wc 这里后台只返回了 id)
+                //EnterpriseData.saveEnterprise(requestBean);
                 String status = responseBean.getStatus();
                 if (status.equals("200")) {
                     SimpleToast.toastMessage("公司创建成功", Toast.LENGTH_LONG);
 
                     companyId = responseBean.getCid();
+                    enterpriseRequestBean.setId(companyId);
+                    EnterpriseData.saveEnterprise(enterpriseRequestBean);
+
                 }
 
                 if (status.equals("20005")) {
@@ -389,11 +393,13 @@ public class RegisterCompanyActivity extends BaseActivity {
             @Override
             public void onError(Throwable t) {
                 super.onError(t);
-                if (t.getMessage().equals("401"))
-
+                if (t.getMessage().equals("401")){
                     SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_LONG);
-                exit();
-                toActivity(LoginActivity.class);
+                    exit();
+                    toActivity(LoginActivity.class);
+
+                }
+
 
             }
         };

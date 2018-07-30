@@ -29,7 +29,7 @@ public class UserItemHolder extends BaseHolder<UserBean> implements View.OnClick
     @Override
     public void setData(UserBean data, int pos) {
 
-        tvName.setText(data.getLogin());
+        tvName.setText(data.getPhone());
         tvName.setOnClickListener(this);
         imageView.setOnClickListener(this);
 

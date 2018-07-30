@@ -17,6 +17,7 @@ import com.jci.vsd.bean.enterprise.EnterpriseRequestBean;
 import com.jci.vsd.bean.enterprise.EnterpriseResponseBean;
 import com.jci.vsd.constant.AppConstant;
 import com.jci.vsd.constant.MySpEdit;
+import com.jci.vsd.data.EnterpriseData;
 import com.jci.vsd.network.control.EnterpriseControl;
 import com.jci.vsd.observer.CommonDialogObserver;
 import com.jci.vsd.observer.RxHelper;
@@ -370,7 +371,11 @@ public class FoundationActivity extends BaseActivity {
                 super.onNext(responseBean);
                 String status = responseBean.getStatus();
                 if (status.equals("200")) {
+                    //创建成功后，保存公司信息
+                    requestBean.setId(responseBean.getCid());
+                    EnterpriseData.saveEnterprise(requestBean);
                     SimpleToast.toastMessage("公司创建成功", Toast.LENGTH_LONG);
+
                     companyId = responseBean.getCid();
                     prefs.setCompanyId(companyId);
                     if (intentType.equals("new_login")) {

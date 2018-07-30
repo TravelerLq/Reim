@@ -64,7 +64,7 @@ public class RecAdapter extends RecyclerView.Adapter<RecAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        holder.tv.setText(mData.get(position).getLogin());
+        holder.tv.setText(mData.get(position).getPhone());
         holder.tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

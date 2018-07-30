@@ -139,7 +139,7 @@ public class MembsersManageActivity extends BaseActivity {
 //                    Loger.e("---node--");
                     if (node.getChildrenNodes().size() == 0) {
                         // showDialog();
-                        SimpleToast.toastMessage("node－－", Toast.LENGTH_SHORT);
+                      //  SimpleToast.toastMessage("node－－", Toast.LENGTH_SHORT);
                     }
 
                     adapter.setCurrentPosition(position, node.isExpand());
@@ -153,12 +153,16 @@ public class MembsersManageActivity extends BaseActivity {
             adapter.setTreeNodeLongClickListener(new TreeMenuBaseAdapter.OnTreeNodeLongClickListener() {
                 @Override
                 public void onNodeLongClick(Node node, int position) {
+                    //是个子节点
                     if (node.getChildrenNodes().size() == 0) {
                         selectOperateBean = mData.get(position);
-                        showDialog();
-                        SimpleToast.toastMessage("nodeLongClick－－", Toast.LENGTH_SHORT);
 
-                        Loger.e("nodeLongClick--pos");
+                        Loger.e("--selectPersonName"+selectOperateBean.getName()+
+                                "selectId"+selectOperateBean.getId());
+                        showDialog();
+                      //  SimpleToast.toastMessage("nodeLongClick－－", Toast.LENGTH_SHORT);
+
+                        Loger.e("nodeLongClick--pos"+position);
                         deletePos = position;
 
 //                        mData.remove(5);
@@ -170,7 +174,7 @@ public class MembsersManageActivity extends BaseActivity {
 
 
                         for (int i = 0; i < mData.size(); i++) {
-                            Loger.e(" mData.remove--" + mData.get(i).getName());
+                            Loger.e(" mData.--" + mData.get(i).getName());
                         }
 
                     }
@@ -263,8 +267,11 @@ public class MembsersManageActivity extends BaseActivity {
                         //
                         Loger.e("choose-whitch--" + which);
                         AjustMembersBean ajustMembersBean = new AjustMembersBean();
+
                         ajustMembersBean.setDpt(Integer.valueOf(departmentList.get(which).getId()));
                         ajustMembersBean.setId(Integer.valueOf(selectOperateBean.getId()));
+                        Loger.e("dptId="+departmentList.get(which).getId() );
+                        Loger.e("ajustPersonid="+selectOperateBean.getId() );
                         ajust(ajustMembersBean);
                         dialog.dismiss();
 

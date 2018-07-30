@@ -61,7 +61,8 @@ public class RegisterCertActivity extends BaseActivity {
         setContentView(R.layout.activity_register_cert);
 
         llCert.getBackground().setAlpha(100);//0~255透明度值
-        initTestData();
+      //  initTestData();
+        initTestData2();
         initRegistCert();
         initViewEvent();
 
@@ -72,6 +73,17 @@ public class RegisterCertActivity extends BaseActivity {
         edtIdNo.setText("320322199007171428");
         edtTel.setText("15951882547");
         edtPin.setText("1234");
+    }
+
+
+    private void initTestData2() {
+        //  edtAccount.setText("屠正松");
+        edtPin.setText("123456");
+        edtName.setText("张睿");
+        edtIdNo.setText("321027199409053017");
+        edtTel.setText("15951882511");
+//        em.setText("2319345023@qq.com");
+
     }
 
     private void initRegistCert() {

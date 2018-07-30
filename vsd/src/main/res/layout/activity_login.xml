@@ -69,7 +69,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="145"
                     android:gravity="center"
-                    android:text="用户名" />
+                    android:text="手机号" />
 
                 <EditText
                     android:id="@+id/edt_acount"
@@ -78,7 +78,7 @@
                     android:layout_weight="566"
                     android:background="@drawable/bg_regtangle_grey_xml"
                     android:paddingLeft="@dimen/dimen_5"
-                    android:hint="@string/hint_login_account" />
+                    android:hint="@string/tel_input" />
             </LinearLayout>
 
             <LinearLayout
@@ -102,6 +102,7 @@
                     android:layout_weight="566"
                     android:background="@drawable/bg_regtangle_grey_xml"
                     android:paddingLeft="@dimen/dimen_5"
+                    android:inputType="textPassword"
                     android:hint="@string/hint_login_password" />
             </LinearLayout>
 

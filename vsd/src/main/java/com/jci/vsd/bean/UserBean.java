@@ -6,38 +6,45 @@ package com.jci.vsd.bean;
 
 public class UserBean {
 
-    private final int id;
-    private final String login;
-    private final String avatar_url;
+    private int id;
+    private String phone;
+    private String password;
+    private String type;
 
-    public UserBean(int id, String login, String avatar_url) {
-        this.id = id;
-        this.login = login;
-        this.avatar_url = avatar_url;
+    public String getType() {
+        return type;
     }
 
-    public String getAvatarUrl() {
-        if (avatar_url.isEmpty()) return avatar_url;
-        return avatar_url.split("\\?")[0];
+    public void setType(String type) {
+        this.type = type;
     }
-
 
     public int getId() {
         return id;
     }
 
-    public String getLogin() {
-        return login;
+    public void setId(int id) {
+        this.id = id;
     }
 
-//    @Override
-//    public String toString() {
-//        return "id -> " + id + " login -> " + login;
-//    }
+    public String getPhone() {
+        return phone;
+    }
 
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     @Override
     public String toString() {
-        return ""+id +""+login;
+        return "" + id + "" + phone;
     }
 }

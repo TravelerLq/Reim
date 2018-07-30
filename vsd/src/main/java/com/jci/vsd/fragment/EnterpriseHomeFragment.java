@@ -27,12 +27,14 @@ import com.jci.vsd.activity.enterprise.DepartmentManageActivity;
 import com.jci.vsd.activity.enterprise.MembsersManageActivity;
 import com.jci.vsd.activity.enterprise.ProducerManageActivity;
 import com.jci.vsd.adapter.enterprise.CompanySpinnerAdapter;
+import com.jci.vsd.bean.UserBean;
 import com.jci.vsd.bean.enterprise.EnterpriseBean;
 import com.jci.vsd.bean.enterprise.EnterpriseRequestBean;
 import com.jci.vsd.bean.enterprise.GetEnterInfoBean;
 import com.jci.vsd.bean.enterprise.RequestCodeBean;
 import com.jci.vsd.constant.AppConstant;
 import com.jci.vsd.data.EnterpriseData;
+import com.jci.vsd.data.UserData;
 import com.jci.vsd.fragment.main.BaseFragment;
 import com.jci.vsd.network.control.EnterpriseControl;
 import com.jci.vsd.network.control.FillcodeApiControl;
@@ -70,20 +72,42 @@ public class EnterpriseHomeFragment extends BaseFragment implements View.OnClick
     private List<KeyValueBean> spinnerList;
     private Context mContext;
     private GetEnterInfoBean.CosBean SelectCosBean;
+    String type;
+    private View inflate;
+    private View inflate1;
+    private String companyName ="南京御安神物联网科技有限公司";
+    private String companyId;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_enterprise_home, container, false);
-        llMembersManage = (LinearLayout) view.findViewById(R.id.ll_members_manage);
-        llDepartmentManage = (LinearLayout) view.findViewById(R.id.ll_department_manage);
-        llBudgetManage = (LinearLayout) view.findViewById(R.id.ll_budget_manage);
-        llProducerManage = (LinearLayout) view.findViewById(R.id.ll_producer_manage);
-        llEnterpriseUpdate = (LinearLayout) view.findViewById(R.id.ll_enterprise_update);
-        llEnterpeiseAdd = (LinearLayout) view.findViewById(R.id.ll_add_enterprise);
-        tvGet = (TextView) view.findViewById(R.id.tv_get_code);
-        tvCode = (TextView) view.findViewById(R.id.tv_get_code_content);
-        spinnerCompanyName = (Spinner) view.findViewById(R.id.sp_company_name);
+        UserBean userBean = UserData.getUserInfo();
+        if (userBean != null) {
+            type = userBean.getType();
+            if (type.equals("1")) {
+                inflate = inflater.inflate(R.layout.fragment_enterprise_home, container, false);
+            } else if (type.equals("2")) {
+                inflate = inflater.inflate(R.layout.fragment_enterprise_home_depart_leader, container, false);
+            }
+        }
+        EnterpriseRequestBean enterpriseBean = EnterpriseData.getEnterpriseBean();
+        if (enterpriseBean != null) {
+            companyName = enterpriseBean.getName();
+
+
+        }
+
+
+        // View inflate = inflater.inflate(R.layout.fragment_enterprise_home, container, false);
+        llMembersManage = (LinearLayout) inflate.findViewById(R.id.ll_members_manage);
+        llDepartmentManage = (LinearLayout) inflate.findViewById(R.id.ll_department_manage);
+        llBudgetManage = (LinearLayout) inflate.findViewById(R.id.ll_budget_manage);
+        llProducerManage = (LinearLayout) inflate.findViewById(R.id.ll_producer_manage);
+        llEnterpriseUpdate = (LinearLayout) inflate.findViewById(R.id.ll_enterprise_update);
+        llEnterpeiseAdd = (LinearLayout) inflate.findViewById(R.id.ll_add_enterprise);
+        tvGet = (TextView) inflate.findViewById(R.id.tv_get_code);
+        tvCode = (TextView) inflate.findViewById(R.id.tv_get_code_content);
+        spinnerCompanyName = (Spinner) inflate.findViewById(R.id.sp_company_name);
         llMembersManage.setOnClickListener(this);
         llDepartmentManage.setOnClickListener(this);
         llBudgetManage.setOnClickListener(this);
@@ -92,7 +116,7 @@ public class EnterpriseHomeFragment extends BaseFragment implements View.OnClick
         llEnterpeiseAdd.setOnClickListener(this);
         tvGet.setOnClickListener(this);
 
-        return view;
+        return inflate;
     }
 
     @Override
@@ -100,11 +124,11 @@ public class EnterpriseHomeFragment extends BaseFragment implements View.OnClick
         super.onViewCreated(view, savedInstanceState);
         mContext = EnterpriseHomeFragment.this.getActivity();
         spinnerList = new ArrayList<>();
+        spinnerList.add(new KeyValueBean("0", companyName));
 
 //        spinnerList.add(0, new KeyValueBean("1,", "company1"));
 //        spinnerList.add(1, new KeyValueBean("2,", "company2"));
 //        spinnerList.add(2, new KeyValueBean("3,", "company3"));
-
 
         initSpinner(spinnerCompanyName, spinnerList, 0);
         //  getEnterpriseinfo();
@@ -176,7 +200,7 @@ public class EnterpriseHomeFragment extends BaseFragment implements View.OnClick
                 // 将所选mySpinner 的值带入myTextView 中
                 Loger.e("---spiner-select-pos=" + pos);
                 spinnerSelectPos = pos;
-                SelectCosBean = EnterpriseData.getEnterpriseList().get(pos);
+              //  SelectCosBean = EnterpriseData.getEnterpriseList().get(pos);
 
             }
 

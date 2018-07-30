@@ -111,6 +111,55 @@ public class LoginApiControl extends BaseControl {
 
     }
 
+    public Observable<LoginResponseBean> loginResponseWithHttps(String name, String psw) {
+       // Retrofit retrofit = builderJsonRetrofit();
+        Retrofit retrofit = builderJsonRetrofitWithHttps();
+
+        Map<String, String> parmsMap = new HashMap<>();
+        parmsMap.put("phone", name);
+        parmsMap.put("password", psw);
+        // String json = JSONObject.toJSONString(requestBean);
+        String jsonRequestStr = JSONObject.toJSONString(parmsMap);
+
+        //  parmsMap.put("type",loginRequestbean.getType());
+        LoginApi loginApi = retrofit.create(LoginApi.class);
+        Observable<Response<String>> observable = loginApi.loginResponse(jsonRequestStr);
+        return observable.map(new Function<Response<String>, LoginResponseBean>() {
+            @Override
+            public LoginResponseBean apply(Response<String> stringResponse) throws Exception {
+                Headers headers = stringResponse.headers();
+                String authStr = headers.get("Authorization");
+                Loger.e("after login-authStr" + authStr);
+                MySpEdit.getInstance().setAuthor(authStr);
+
+                Loger.e("stringResponse.body=" + stringResponse.body());
+                JSONObject jsonObject = JSON.parseObject(stringResponse.body());
+                LoginResponseBean loginResponseBean;
+                if (jsonObject.getIntValue(AppConstant.JSON_CODE) == 200) {
+
+                    loginResponseBean = JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA), LoginResponseBean.class);
+                    if (loginResponseBean == null) {
+                        loginResponseBean = new LoginResponseBean();
+                    }
+                    loginResponseBean.setStatus("200");
+
+//                    List<HomeAuthorityBean> authorityBeanList = JSON.parseArray(dataObj.getString("Authority"), HomeAuthorityBean.class);
+//                    loginResponseBean.setList(authorityBeanList);
+                    return loginResponseBean;
+                }
+                if (jsonObject.getIntValue(AppConstant.JSON_CODE) == 20005) {
+                    loginResponseBean = new LoginResponseBean();
+                    loginResponseBean.setStatus("201");
+                    return loginResponseBean;
+                }
+
+                throw new IApiException("登陆", jsonObject.getString(AppConstant.JSON_MESSAGE));
+
+            }
+        });
+
+    }
+
 
     public Observable<Boolean> bindCard(BindCardRequestBean bindCardRequestBean) {
         SharedPreferences prefs;

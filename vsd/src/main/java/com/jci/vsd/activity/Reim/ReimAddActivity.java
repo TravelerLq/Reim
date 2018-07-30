@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -44,6 +46,7 @@ import com.jci.vsd.utils.FileToBase64Util;
 import com.jci.vsd.utils.FileUtils;
 import com.jci.vsd.utils.Loger;
 import com.jci.vsd.utils.ScreenUtil;
+import com.jci.vsd.utils.TimePickerUtils;
 import com.jci.vsd.utils.Utils;
 import com.jci.vsd.view.widget.CountEditText;
 import com.jci.vsd.view.widget.SimpleToast;
@@ -74,6 +77,9 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 /**
  * Created by liqing on 18/6/26.
  * 添加报销项目
@@ -88,15 +94,24 @@ public class ReimAddActivity extends BaseActivity {
     ExpandPopTabView expandPopTabView;
 
     @BindView(R.id.edt_start_time)
-    EditText edtStartTime;
+    TextView edtStartTime;
 
     @BindView(R.id.edt_end_time)
-    EditText edtEndTime;
+    TextView edtEndTime;
+
+    @BindView(R.id.tv_date)
+    TextView tvDate;
 
     @BindView(R.id.edt_start_location)
     EditText edtStartLocation;
     @BindView(R.id.edt_end_location)
     EditText edtEndLocation;
+    @BindView(R.id.edt_single_location)
+    EditText edtSingleLocation;
+    //client
+
+    @BindView(R.id.edt_treat_client)
+    EditText edtClient;
 
     @BindView(R.id.iv_reim_pic)
     ImageView ivReimPic;
@@ -114,6 +129,48 @@ public class ReimAddActivity extends BaseActivity {
     @BindView(R.id.tv_money)
     TextView tvReimType;
 
+    @BindView(R.id.rl_start_end_time)
+    LinearLayout rlStartAndEndTime;
+    @BindView(R.id.rl_time)
+    LinearLayout rlTime;
+
+
+    @BindView(R.id.rl_start_and_end_location)
+    LinearLayout rlStartEndLocation;
+    @BindView(R.id.rl_location)
+    LinearLayout rlLocation;
+    @BindView(R.id.rl_client)
+    LinearLayout rlClinet;
+
+    @BindView(R.id.etContent)
+    EditText edtContent;
+
+    //餐费标准
+    @BindView(R.id.rl_meal_standard)
+    LinearLayout rlMealStandard;
+    @BindView(R.id.edt_meal_standard)
+    EditText edtMealStandard;
+
+    //车牌号
+    @BindView(R.id.rl_vehicle_no)
+    LinearLayout rlVehicleNo;
+    @BindView(R.id.edt_vehicle_no)
+    EditText edtVehiclNo;
+
+    //行驶公里数
+    @BindView(R.id.rl_drive_mile)
+    LinearLayout rlDriveMile;
+    @BindView(R.id.edt_drive_mile)
+    EditText edtDriveMile;
+
+
+    //事由
+    @BindView(R.id.rl_reason)
+    LinearLayout rlReason;
+    @BindView(R.id.edt_reason)
+    EditText edtReason;
+
+
     //expandapoTab
     private PopTwoListView popTwoListView;
     private List<KeyValueBean> parentsList = new ArrayList<>();
@@ -127,10 +184,12 @@ public class ReimAddActivity extends BaseActivity {
     private List<CatBean> catBeanList = new ArrayList<>();
     //科目三
     private List<KeyValueBean> thirdList = new ArrayList<>();
-    private int categoryId;
+    private int categoryId = 2;
     private int itemId;
     private String cert;
     private String signKey;
+    private String categoryName;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -139,10 +198,11 @@ public class ReimAddActivity extends BaseActivity {
         context = ReimAddActivity.this;
         initViewEvent();
         initTesData();
-
         catBeanList = ReimCategoryData.getCategoryList();
+        Loger.e("catBeanList----" + catBeanList.size());
         if (catBeanList == null || catBeanList.size() == 0) {
-            getJsonData();
+            Loger.e("catBeanNull----");
+            new Thread(MyThread).start();
         } else {
             CatBean catBean = null;
             parentsList.clear();
@@ -153,9 +213,7 @@ public class ReimAddActivity extends BaseActivity {
                 // parentsList.add(new KeyValueBean(object.getExpenseCategoryId(), object.getExpenseCategoryName()));
                 parentsList.add(new KeyValueBean(String.valueOf(catBeanList.get(i).getCat()), catBean.getCname()));
 
-
             }
-
             initExpandaTabView();
         }
     }
@@ -172,10 +230,8 @@ public class ReimAddActivity extends BaseActivity {
 
 
     private void initExpandaTabView() {
-
         //数据初始化
         setSecondMenuData();
-
     }
 
 
@@ -297,17 +353,30 @@ public class ReimAddActivity extends BaseActivity {
             public void getValue(String showText, String parentKey, String childrenKey) {
                 Log.e("----", "三级－－ :" + showText +
                         " ,parentKey :" + parentKey + " ,childrenKey :" + childrenKey);
-                itemId = Integer.valueOf(childrenKey);
-                tvReimType.setText(showText);
 
+                //没有三级科目
+                if (childrenKey.equals("-1")) {
+                    Loger.e("---integer.(-1)=" + Integer.valueOf("-1"));
+                    itemId = Integer.valueOf("-1");
+                    Loger.e("");
 
+                } else {
+                    itemId = Integer.valueOf(childrenKey);
+                    tvReimType.setText(showText);
+                }
+
+                reimTypeLayout(categoryId, itemId);
             }
 
             @Override
             public void getParentValue(int position, String showText, String key) {
                 Log.e("－－－－", "二级－－－－ :" + showText + " ,二级key :" + key);
                 categoryId = Integer.valueOf(key);
+                categoryName = showText;
+                tvReimType.setText(showText);
+
                 getItemdata(position);
+
             }
 
         });
@@ -365,6 +434,13 @@ public class ReimAddActivity extends BaseActivity {
         // llReimType.setOnClickListener(this);
         ivReimPic.setOnClickListener(this);
         btnAdd.setOnClickListener(this);
+        // backBtn.setOnClickListener(this);
+        llReimType.setOnClickListener(this);
+        edtStartTime.setOnClickListener(this);
+        edtEndTime.setOnClickListener(this);
+
+        tvDate.setOnClickListener(this);
+
         backBtn.setOnClickListener(this);
         titleTxt.setText(getResources().getString(R.string.add_reim_item));
 
@@ -388,9 +464,22 @@ public class ReimAddActivity extends BaseActivity {
                 }
                 // toActivity(AddExpenseItemActivtity.this, ExpenseTypeActivity.class);
                 break;
-            case R.id.rl_pick_date:
-                Toast.makeText(context, "为当前时间，不可修改！", Toast.LENGTH_SHORT).show();
-                // TimePickerUtils.getInstance().onYearMonthDayPicker(AddExpenseItemActivtity.this, tvDate);
+
+            case R.id.edt_start_time:
+
+                // Toast.makeText(context, "为当前时间，不可修改！", Toast.LENGTH_SHORT).show();
+                TimePickerUtils.getInstance().onYearMonthDayPickerText(ReimAddActivity.this, edtStartTime);
+                break;
+            case R.id.edt_end_time:
+
+                // Toast.makeText(context, "为当前时间，不可修改！", Toast.LENGTH_SHORT).show();
+                TimePickerUtils.getInstance().onYearMonthDayPickerText(ReimAddActivity.this, edtEndTime);
+                break;
+
+            case R.id.tv_date:
+
+                // Toast.makeText(context, "为当前时间，不可修改！", Toast.LENGTH_SHORT).show();
+                TimePickerUtils.getInstance().onYearMonthDayPickerText(ReimAddActivity.this, edtStartTime);
                 break;
             case R.id.iv_reim_pic:
                 takePics();
@@ -416,14 +505,18 @@ public class ReimAddActivity extends BaseActivity {
 
 
     private void checkData() {
-
+        ReimAddItemBean bean = new ReimAddItemBean();
         String edtMoneyStr = edtMoney.getText().toString();
 //        expenseTypeStr = tv.getText().toString();
+        String dateStr = tvDate.getText().toString();
         String startTimeStr = edtStartTime.getText().toString().trim();
         String endTimeStr = edtEndTime.getText().toString().trim();
         String startLocationStr = edtStartLocation.getText().toString().trim();
         String endLocationStr = edtEndLocation.getText().toString().trim();
-        String remarkStr = edtCount.getText().toString().trim();
+        String remarkStr = edtContent.getText().toString().trim();
+        String loaction = edtSingleLocation.getText().toString().trim();
+
+        String client = edtClient.getText().toString();
 
 
         if (TextUtils.isEmpty(edtMoneyStr)) {
@@ -431,46 +524,115 @@ public class ReimAddActivity extends BaseActivity {
             return;
         }
 
-        if (TextUtils.isEmpty(remarkStr)) {
-            Toast.makeText(this, "说明不可为空", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(tvReimType.getText().toString())) {
+            Toast.makeText(this, "请选择报销类别", Toast.LENGTH_SHORT).show();
             return;
         }
-//        if (TextUtils.isEmpty(expenseTypeStr)) {
-//            Toast.makeText(this, "请选择类别", Toast.LENGTH_SHORT).show();
+
+        if (TextUtils.isEmpty(remarkStr)) {
+            Toast.makeText(this, "明细不可为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (rlStartEndLocation.getVisibility() == VISIBLE) {
+            if (TextUtils.isEmpty(startTimeStr)) {
+                Toast.makeText(this, "开始时间不可为空", Toast.LENGTH_SHORT).show();
+                return;
+            } else {
+                bean.setStart(startTimeStr);
+            }
+        }
+//        // 判断日期是否为空
+//        if (edtStartTime.getVisibility() == View.VISIBLE && TextUtils.isEmpty(startTimeStr)) {
+//            Toast.makeText(this, "开始时间不可为空", Toast.LENGTH_SHORT).show();
 //            return;
 //        }
-        // 判断照片是否为空
+        if (rlStartEndLocation.getVisibility() == VISIBLE) {
+            if (TextUtils.isEmpty(endTimeStr)) {
+                Toast.makeText(this, "结束时间不可为空", Toast.LENGTH_SHORT).show();
+                return;
+            } else {
+                bean.setStart(endTimeStr);
+            }
+        }
+
+//        if (edtEndTime.getVisibility() == View.VISIBLE && TextUtils.isEmpty(startTimeStr)) {
+//            Toast.makeText(this, "结束时间不可为空", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+        //只有时间时候
+        if (rlTime.getVisibility() == VISIBLE) {
+            if (TextUtils.isEmpty(dateStr)) {
+                Toast.makeText(this, "日期不可以为空", Toast.LENGTH_SHORT).show();
+                return;
+            } else {
+                bean.setStart(dateStr);
+            }
+        }
+
+        // 判断是否为空
+
+        if (rlStartEndLocation.getVisibility() == VISIBLE) {
+            if (TextUtils.isEmpty(startLocationStr)) {
+                Toast.makeText(this, "开始地点不可以为空", Toast.LENGTH_SHORT).show();
+                return;
+            } else {
+                bean.setBp(startLocationStr);
+            }
+        }
+//end location
+        if (rlStartEndLocation.getVisibility() == VISIBLE) {
+            if (TextUtils.isEmpty(endLocationStr)) {
+                Toast.makeText(this, "结束地点不可为空", Toast.LENGTH_SHORT).show();
+                return;
+            } else {
+                bean.setDst(endLocationStr);
+            }
+        }
+//        if (edtStartLocation.getVisibility() == View.VISIBLE && TextUtils.isEmpty(startLocationStr)) {
+//            Toast.makeText(this, "开始地点不可以为空", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//        // 判断是否为空
+//        if (edtEndLocation.getVisibility() == View.VISIBLE && TextUtils.isEmpty(endLocationStr)) {
+//            Toast.makeText(this, "结束地点不可为空", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+
+        // 判断是否为空
+        if (rlLocation.getVisibility() == VISIBLE) {
+            if (TextUtils.isEmpty(loaction)) {
+                Toast.makeText(this, "地点不可为空", Toast.LENGTH_SHORT).show();
+                return;
+            } else {
+                bean.setBp(loaction);
+            }
+        }
+//        if (edtSingleLocation.getVisibility() == View.VISIBLE && TextUtils.isEmpty(endLocationStr)) {
+//            Toast.makeText(this, "地点不可为空", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+
+        // client
+        if (rlClinet.getVisibility() == VISIBLE) {
+            if (TextUtils.isEmpty(client)) {
+                Toast.makeText(this, "招待客户不可以为空", Toast.LENGTH_SHORT).show();
+                return;
+            } else {
+                bean.setClient(client);
+            }
+        }
+
+
         if (selectedPhotos.size() == 0) {
-            Toast.makeText(this, "票据照片必选", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "票据原件不可以为空", Toast.LENGTH_SHORT).show();
             return;
         }
-        // 判断日期是否为空
-        if (TextUtils.isEmpty(startTimeStr)) {
-            Toast.makeText(this, "开始时间不可为空", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // 判断日期是否为空
-        if (TextUtils.isEmpty(startLocationStr)) {
-            Toast.makeText(this, "开始地点不可以为空", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        // 判断日期是否为空
-        if (TextUtils.isEmpty(endLocationStr)) {
-            Toast.makeText(this, "结束地点不可为空", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
 
         Date startTime = DateUtils.strToDate(startTimeStr);
         Date endTime = DateUtils.strToDate(endTimeStr);
         //新增报销项目
 
-//        amount = Double.parseDouble(edtFeeStr);
-//
-//        submitExpenseItem();
-
-        ReimAddItemBean bean = new ReimAddItemBean();
         bean.setAmount(edtMoneyStr);
         bean.setStart(startTimeStr);
         bean.setEnd(endTimeStr);
@@ -495,27 +657,6 @@ public class ReimAddActivity extends BaseActivity {
 
     }
 
-//    protected void warningDialog(String message) {
-//        new AlertDialog.Builder(ReimAddActivity.this)
-//                .setTitle(getResources().getString(R.string.notice))
-//                .setMessage(message)
-//                .setPositiveButton(getResources().getString(R.string.sure), new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        //清空之前扫描的料单数据
-////                        VsdApplication.getInstance().getWaitStoreMaterialBeanList().clear();
-//                        finish();
-//
-//                    }
-//                })
-//                .setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//
-//                    }
-//                })
-//                .create().show();
-//    }
 
     @Override
     protected void onDestroy() {
@@ -597,6 +738,37 @@ public class ReimAddActivity extends BaseActivity {
         //开启线程
         thread.start();
 
+        initExpandaTabView();
+    }
+
+    private void getJsonReimTypeData() {
+
+        catBeanList = new ArrayList<>();
+        // firstList = new ArrayList<>();
+        //  showProgress();
+
+
+        String json = "";
+
+
+        try {
+            json = ConvertUtils.toString(getAssets().open("data.json"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        catBeanList.addAll(JSON.parseArray(json, CatBean.class));
+        ReimCategoryData.saveCategoryList(catBeanList);
+        CatBean catBean = null;
+        parentsList.clear();
+        for (int i = 0; i < catBeanList.size(); i++) {
+            catBean = catBeanList.get(i);
+
+            //firstList.add(catBeanList.get(i).getCname());
+            // parentsList.add(new KeyValueBean(object.getExpenseCategoryId(), object.getExpenseCategoryName()));
+
+            parentsList.add(new KeyValueBean(String.valueOf(catBeanList.get(i).getCat()), catBean.getCname()));
+        }
 
     }
 
@@ -624,6 +796,10 @@ public class ReimAddActivity extends BaseActivity {
             }
 
         }
+
+        if (thirdList.size() == 0) {
+            thirdList.add(new KeyValueBean("-1", "无三级科目"));
+        }
         if (popTwoListView == null) {
             popTwoListView = new PopTwoListView(this);
         }
@@ -632,7 +808,147 @@ public class ReimAddActivity extends BaseActivity {
     }
 
 
-    // pic load
+    //去加载Reim
+
+    Handler handle = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 1) {
+                initExpandaTabView();
+            }
+
+
+        }
+
+    };
+
+    Runnable MyThread = new Runnable() {
+        @Override
+        public void run() {
+            getJsonReimTypeData();
+            handle.sendEmptyMessage(1);
+        }
+    };
+
+//    } {
+//
+//        @Override
+//        public void run() {
+//            // 耗时操作
+//            getJsonReimTypeData();
+//
+//            Message msg = new Message();
+//
+//            handle.sendMessage(msg);
+//            super.run();
+//        }
+
+
+    // 根据CatId +ItemId 来决定显示布局
+
+    public void reimTypeLayout(int catId, int itemId) {
+
+        Loger.e("reimTypeLayout--" + catId + "--itemID--" + itemId);
+        //默认 1.日期 ＋始终点
+        Boolean hasTime = true;
+        Boolean hasLocation = true;
+        Boolean singleTime = false, singleLocation = false, hasClinet = false;
+        Boolean hasReason = false;
+
+
+        if (catId == 2 && itemId == 2) {
+            //招待费 －打车费 ：CatId =2,ItemId=2 招待客户：住宿时间、地点
+            singleTime = false;
+            singleLocation = false;
+            hasClinet = true;
+           hasReason=false;
+        }
+
+        if (catId == 8 && itemId == 2) {
+            //交通费 －打车费 ：CatId =2,ItemId=2 时间、地点
+            singleTime = false;
+            singleLocation = false;
+            hasClinet = false;
+            hasReason=true;
+        }
+
+        if (catId == 4 && itemId == 21) {
+            //办公费费  ：CatId =4,ItemId=21 时间、地点 明细
+
+            singleLocation = true;
+            singleTime = true;
+            hasClinet = false;
+            hasReason=false;
+        }
+        if (catId == 24 && itemId == -1) {
+            //误餐费 时间
+            hasTime = true;
+            hasLocation = false;
+            singleTime = true;
+            hasReason=true;
+            hasClinet=false;
+        }
+        if(catId==11){
+            //
+            rlVehicleNo.setVisibility(VISIBLE);
+
+            if(itemId==11){
+                //11 11 加油票
+                hasTime = true;
+                singleTime = true;
+                hasLocation=false;
+                hasReason=false;
+                rlDriveMile.setVisibility(VISIBLE);
+            }
+            if(itemId==15){
+                //停车费
+                hasReason=true;
+                hasLocation=true;
+                singleLocation=true;
+                hasTime=true;
+                singleTime=true;
+                hasClinet=false;
+            }
+            if(itemId==16){
+                //车辆维修费
+                hasReason=true;
+                hasLocation=false;
+                singleLocation=true;
+                hasTime=true;
+                singleTime=true;
+                hasClinet=false;
+                rlDriveMile.setVisibility(VISIBLE);
+            }
+
+        }else {
+            rlVehicleNo.setVisibility(GONE);
+        }
+
+        if (hasTime) {
+            rlTime.setVisibility(singleTime ? VISIBLE : GONE);
+            rlStartAndEndTime.setVisibility((singleTime ? View.GONE : VISIBLE));
+
+        } else {
+            rlTime.setVisibility(GONE);
+            rlStartAndEndTime.setVisibility(GONE);
+        }
+        if (hasLocation) {
+
+            rlLocation.setVisibility(singleLocation ? VISIBLE : GONE);
+            rlStartEndLocation.setVisibility((singleLocation ? View.GONE : VISIBLE));
+
+        } else {
+            rlLocation.setVisibility(GONE);
+            rlStartEndLocation.setVisibility(GONE);
+        }
+
+        rlReason.setVisibility(hasReason ? VISIBLE : GONE);
+        rlClinet.setVisibility(hasClinet ? VISIBLE : GONE);
+
+
+    }
 
 
 }

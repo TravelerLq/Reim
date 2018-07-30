@@ -30,12 +30,14 @@ import com.jci.vsd.R;
 import com.jci.vsd.activity.enterprise.RegisterCompanyActivity;
 
 import com.jci.vsd.application.VsdApplication;
+import com.jci.vsd.bean.UserBean;
 import com.jci.vsd.bean.download.CheckUpdateResponse;
 import com.jci.vsd.bean.enterprise.EnterpriseBean;
 import com.jci.vsd.bean.login.LoginResponseBean;
 import com.jci.vsd.bean.register.RegisterRequestBean;
 import com.jci.vsd.constant.AppConstant;
 import com.jci.vsd.constant.MySpEdit;
+import com.jci.vsd.data.UserData;
 import com.jci.vsd.fragment.EnterpriseHomeFragment;
 import com.jci.vsd.fragment.dialog.RxStyleDialogFragment;
 import com.jci.vsd.fragment.dialog.UpdateAppDialog;
@@ -93,20 +95,28 @@ public class LoginActivity extends BaseActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        //  checkCBScert();
+        checkCBScert();
         context = LoginActivity.this;
         btnSure = (Button) findViewById(R.id.btn_sure);
         MySpEdit.getInstance().setAppEmv(true);
         prefs = MySpEdit.getInstance();
         tvRegister.setText(Html.fromHtml(getResources().getString(R.string.str_register, 1, "", "去注册")));
         initViewEvent();
-        initTestData();
+        // initTestData();
         //检查更新
-        checkUpdateApp();
+        //  checkUpdateApp();
         intentType = getIntent().getStringExtra("type");
         Loger.e("logih-getIntenttype" + intentType);
-        edtAccount.setText(prefs.getUser());
-        edtPsw.setText(prefs.getPsw());
+        if (UserData.getUserInfo() != null) {
+            String userAccount = UserData.getUserInfo().getPhone();
+            String userPsw = UserData.getUserInfo().getPassword();
+            if (userAccount != null && userPsw != null) {
+                edtAccount.setText(userAccount);
+                edtPsw.setText(userPsw);
+            }
+
+        }
+
 
 //        RegisterRequestBean registerRequestBean = (RegisterRequestBean) getIntent().
 //                getSerializableExtra(AppConstant.SERIAL_KEY);
@@ -133,7 +143,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        initTestData();
+       // initTestData();
     }
 
     /**
@@ -145,8 +155,8 @@ public class LoginActivity extends BaseActivity {
         //测试header
         // Observable<LoginResponseBean> observable = new LoginApiControl().loginNew(userName, pwd);
 
-        //测试header response
-        Observable<LoginResponseBean> observable = new LoginApiControl().loginResponse(userName, pwd);
+        //测试header response loginResponse
+        Observable<LoginResponseBean> observable = new LoginApiControl().loginResponseWithHttps(userName, pwd);
 
         CommonDialogObserver<LoginResponseBean> observer = new CommonDialogObserver<LoginResponseBean>(this) {
 
@@ -156,13 +166,26 @@ public class LoginActivity extends BaseActivity {
                 Loger.i("===login====" + new Gson().toJson(responseBean));
                 VsdApplication.getInstance().setLoginResponseBean(responseBean);
                 String status = responseBean.getStatus();
+
                 if (status.equals("200")) {
                     SimpleToast.toastMessage("登录成功", Toast.LENGTH_LONG);
                     //
+                    int userId = Integer.valueOf(responseBean.getId());
                     prefs.setUser(responseBean.getId());
+
+                    UserBean userBean = new UserBean();
+                    userBean.setPassword(pwd);
+                    userBean.setPhone(userName);
+                    userBean.setId(userId);
+                    userBean.setType(responseBean.getRole());
+                    Loger.e("--responseBean.getRole()" + responseBean.getRole());
+                    UserData.saveUser(userBean);
+
 
                     if (!TextUtils.isEmpty(intentType) && intentType.equals("boss")) {
                         //
+
+                        UserData.saveUser(userBean);
                         toActivity(RegisterCompanyActivity.class);
                     } else {
                         toActivity(MainActivity.class);
@@ -276,14 +299,14 @@ public class LoginActivity extends BaseActivity {
             return;
         }
 
-        // login
+        //login
         //  accountStr = "15252466554";
 
-        //    login(accountStr, pswStr, "1");
+        login(accountStr, pswStr, "1");
 
 
-        //  test
-        toActivity(MainActivity.class);
+        //  test 权限管理
+        // toActivity(MainActivity.class);
 
     }
 
@@ -353,7 +376,10 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onNext(CheckUpdateResponse checkUpdateResponse) {
                 super.onNext(checkUpdateResponse);
-                updateShowDialog(checkUpdateResponse.getUrl(), checkUpdateResponse.getLast());
+                //http://1192.168.31.109:8080/shuidao/notoken/downapk
+                String apkUrl = "http://192.168.31.109:8080/shuidao/notoken/downapk";
+                //  updateShowDialog(checkUpdateResponse.getUrl(), checkUpdateResponse.getLast());
+                updateShowDialog(apkUrl, checkUpdateResponse.getLast());
                 // downLoadApp(checkUpdateResponse.getUrl());
             }
         };

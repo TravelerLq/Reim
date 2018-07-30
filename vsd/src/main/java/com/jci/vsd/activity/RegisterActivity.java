@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -17,9 +18,12 @@ import com.google.gson.reflect.TypeToken;
 import com.jci.vsd.R;
 import com.jci.vsd.activity.enterprise.RegisterCompanyActivity;
 import com.jci.vsd.adapter.RecAdapter;
+import com.jci.vsd.bean.UserBean;
 import com.jci.vsd.bean.register.RegisterRequestBean;
 import com.jci.vsd.bean.register.RegisterResponseBean;
+import com.jci.vsd.constant.AppConstant;
 import com.jci.vsd.constant.MySpEdit;
+import com.jci.vsd.data.UserData;
 import com.jci.vsd.network.control.RegisterControl;
 import com.jci.vsd.observer.CommonDialogObserver;
 import com.jci.vsd.observer.RxHelper;
@@ -51,9 +55,6 @@ import io.reactivex.Observable;
 
 public class RegisterActivity extends BaseActivity {
 
-    @BindView(R.id.button_back)
-    ImageButton backBtn;
-
     @BindView(R.id.edt_acount)
     EditText edtAccount;
     @BindView(R.id.edt_real_name)
@@ -71,6 +72,12 @@ public class RegisterActivity extends BaseActivity {
     @BindView(R.id.edt_emil)
     EditText edtEmail;
 
+    //back title
+    @BindView(R.id.button_back)
+    ImageButton backBtn;
+    @BindView(R.id.textview_title)
+    TextView titleTxt;
+
     private boolean agree = false;
     private OnlineClient onlineClient;
     private String vcode;
@@ -83,6 +90,8 @@ public class RegisterActivity extends BaseActivity {
     private String email;
     private MySpEdit prefs;
     private String intentType;
+    //创建公司
+    private int type=2;
 
 
     @Override
@@ -91,10 +100,16 @@ public class RegisterActivity extends BaseActivity {
         setContentView(R.layout.activity_register);
         prefs = MySpEdit.getInstance();
         initViewEvent();
-        intentType = getIntent().getStringExtra("type");
+        intentType = getIntent().getStringExtra(AppConstant.KEY_TYPE);
         Loger.e("--registertype---" + intentType);
+        if (intentType.equals("boss")) {
+            type=2;
+        }else if(intentType.equals("3")){
+            //填写邀请码进来的员工；
+            type=3;
+        }
 
-
+        initTestData1();
         onlineClient = new OnlineClient(CertServiceUrl.baseUrl, CertServiceUrl.appKey, CertServiceUrl.appSecret);
         //  sharedPreferencesUtil = new SharedPreferencesUtil(RegisterActivity.this);
         SparkApplication.init(getApplication());
@@ -122,6 +137,9 @@ public class RegisterActivity extends BaseActivity {
     @Override
     protected void initViewEvent() {
         btnRegister.setOnClickListener(this);
+        backBtn.setOnClickListener(this);
+        titleTxt.setText(getResources().getString(R.string.register));
+
     }
 
     @Override
@@ -132,7 +150,7 @@ public class RegisterActivity extends BaseActivity {
             if (agree) {
                 // toActivity(MainActivity.class);
                 Loger.e("--register--click");
-                initTestData1();
+                //initTestData1();
                 checkData();
             } else {
                 Toast.makeText(RegisterActivity.this,
@@ -324,6 +342,7 @@ public class RegisterActivity extends BaseActivity {
         requestBean.setPhone(tel);
         requestBean.setEmail(email);
         requestBean.setPassword(psw);
+//        requestBean.setType(type);
 
         Observable<RegisterResponseBean> observable = new RegisterControl()
                 .register(requestBean);
@@ -336,6 +355,15 @@ public class RegisterActivity extends BaseActivity {
                     Loger.e("--uid=" + registerResponseBean.getUid());
 
                     SimpleToast.toastMessage(" 注册成功", Toast.LENGTH_LONG);
+
+//                    UserBean userBean = new UserBean();
+//                    userBean.setPassword(psw);
+//                    userBean.setPhone(tel);
+//                    UserData.saveUser(userBean);
+                    Loger.e("--responseBean.getRole()" +type);
+
+
+
 //                    if (intentType.equals("boss")) {
 //
 //                        toActivityWithType(LoginActivity.class, intentType);
@@ -344,9 +372,14 @@ public class RegisterActivity extends BaseActivity {
 //                    }
 
                 }
-                if (status.equals("201")) {
+                //(code == 20005 -- 201
+                if (status.equals("205")) {
                     SimpleToast.toastMessage(" 帐号已存在,去登录", Toast.LENGTH_LONG);
 
+                }
+                //
+                if(status.equals("206")){
+                    SimpleToast.toastMessage(" 手机号已注册,去登录", Toast.LENGTH_LONG);
                 }
 
                 prefs.setUser(tel);

@@ -438,6 +438,7 @@
         <item>外商投资企业</item>
         　
     </string-array>
+
     <string name="reim_item">报销项</string>
     <string name="my_reim_detail">报销单审批详情</string>
     <string name="my_reim_list">我的报销单</string>
@@ -457,6 +458,12 @@
     <string name="producer_manage">审批流程管理</string>
     <string name="register_company">注册公司</string>
     <string name="company_update">公司更新</string>
-
+    <string name="select_date">请选择日期</string>
+    <string name="select_loaction">请填写地点</string>
+    <string name="select_client">请填写招待客户</string>
+    <string name="vehicle_no">请填写车牌号</string>
+    <string name="drive_mile">请填写行驶公里数</string>
+    <string name="reason">请填写事由</string>
+    <string name="meal_standard">请填写餐费标准</string>
 
 </resources>

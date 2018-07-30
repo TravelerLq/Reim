@@ -95,7 +95,7 @@
                 android:layout_height="10dp"
                 android:background="#EFEFEF"
                 android:orientation="horizontal"></LinearLayout>
-
+            <!--generete share code-->
 
             <LinearLayout
                 android:id="@+id/ll_help"

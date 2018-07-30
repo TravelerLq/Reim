@@ -107,7 +107,7 @@ public class UsersActivity extends BaseActivity {
                     public void run() {
                         Log.e("---refresh", "--");
 
-                        mData.add(0, new UserBean(0, "refreshNew---", "hh"));
+                    //    mData.add(0, new UserBean(0, "refreshNew---", "hh"));
                         adapter.notifyDataSetChanged();
                         swipeRefreshLayout.setRefreshing(false);
                     }
@@ -165,7 +165,7 @@ public class UsersActivity extends BaseActivity {
     public void initTestData() {
         UserBean userBean;
         for (int i = 0; i < 5; i++) {
-            userBean = new UserBean(i, "name" + i, "urlIMag" + i);
+           userBean = new UserBean();
             mData.add(i, userBean);
         }
     }

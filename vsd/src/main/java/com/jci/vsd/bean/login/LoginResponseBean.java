@@ -26,6 +26,18 @@ public class LoginResponseBean extends BaseBean {
     private String CreateUser;
     private String UserType;
 
+    //1=boss 2=部门领导 3=员工
+    private String role;
+
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     private List<HomeAuthorityBean> list;
 
 

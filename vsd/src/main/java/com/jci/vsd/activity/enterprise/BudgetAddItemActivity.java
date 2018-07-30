@@ -36,6 +36,7 @@ import butterknife.BindView;
 import cn.addapp.pickers.entity.Province;
 import cn.addapp.pickers.listeners.OnItemPickListener;
 import cn.addapp.pickers.listeners.OnMoreItemPickListener;
+import cn.addapp.pickers.listeners.OnMoreWheelListener;
 import cn.addapp.pickers.listeners.OnSingleWheelListener;
 import cn.addapp.pickers.picker.LinkagePicker;
 import cn.addapp.pickers.picker.SinglePicker;
@@ -176,6 +177,9 @@ public class BudgetAddItemActivity extends BaseActivity {
         String name = tvDepartmentName.getText().toString();
         String budget = edtBudgetInput.getText().toString();
         Double budgetDouble = Double.valueOf(budget);
+        Double parseDouble=Double.parseDouble(budget);
+        Loger.e("--budDouble.valueOf"+budgetDouble);
+        Loger.e("--budDouble.parseDou"+parseDouble);
 
         String category = tvBudgetCategory.getText().toString();
         if (TextUtils.isEmpty(budget)) {
@@ -209,15 +213,15 @@ public class BudgetAddItemActivity extends BaseActivity {
             //addBudget Bydepartment
             AddBudgetItemBean addBudgetItemBean = new AddBudgetItemBean();
 
-
-            if (itemId != 0) {
+//itemId !=-1,代表有itemId(既有三级科目，又有二级科目)
+            if (itemId !=-1) {
                 //更新科目三
-
                 addBudgetItemBean.setCat(itemId);
                 addBudgetItemBean.setType("3");
-                addBudgetItemBean.setIquota(budgetDouble);
+                addBudgetItemBean.setIquota(parseDouble);
                 addBudgetItem(addBudgetItemBean);
             } else {
+                //itemId ==-1,代表没有itemId(没有三级科目，只有二级科目)
                 // 更科目二
                 addBudgetItemBean.setType("2");
                 addBudgetItemBean.setCat(categoryId);
@@ -379,6 +383,7 @@ public class BudgetAddItemActivity extends BaseActivity {
 
             @Override
             public List<String> provideFirstData() {
+                Loger.e("---provideFirstData" );
 //                ArrayList<String> firstList = new ArrayList<>();
 //                firstList.add("管理费1");
 //                firstList.add("管理费2");
@@ -387,6 +392,7 @@ public class BudgetAddItemActivity extends BaseActivity {
 
             @Override
             public List<String> provideSecondData(int firstIndex) {
+                Loger.e("---provideSecondData" );
 //                //二级下面的KeyValueBean
                 ArrayList<String> secondList = new ArrayList<>();
                 CatBean catBean = catBeanList.get(firstIndex);
@@ -396,12 +402,18 @@ public class BudgetAddItemActivity extends BaseActivity {
 //                secondList.addAll(catBean.getItems());
                 categoryId = catBean.getCat();
                 Loger.e("---categoryId" + categoryId);
+                if (itemsBeanList.size() > 0) {
+                    for (int i = 0; i < itemsBeanList.size(); i++) {
+                        String itemName = itemsBeanList.get(i).getIname();
+                        Loger.e("--itemName--" + itemName);
+                        secondList.add(itemName);
+                    }
+                } else {
+                    secondList.add("暂无数据");
 
-                for (int i = 0; i < itemsBeanList.size(); i++) {
-                    String itemName = itemsBeanList.get(i).getIname();
-                    Loger.e("--itemName--" + itemName);
-                    secondList.add(itemName);
+
                 }
+
                 return secondList;
             }
 
@@ -434,8 +446,38 @@ public class BudgetAddItemActivity extends BaseActivity {
             @Override
             public void onItemPicked(String first, String second, String third) {
                 Loger.e(first + "-" + second + "-" + third);
-                view.setText("" + first + second);
+                if (itemId == -1) {
+                    //只有2级
+                    view.setText("" + first);
+                } else {
+                    view.setText("" + second);
+                }
 
+
+            }
+        })
+        ;
+        picker.setOnMoreWheelListener(new OnMoreWheelListener() {
+            @Override
+            public void onFirstWheeled(int i, String s) {
+                Loger.e("--onFirstWheeled=" + i + " s=" + s);
+            }
+
+            @Override
+            public void onSecondWheeled(int i, String s) {
+                Loger.e("--onSecondWheeled=" + i + " s=" + s );
+                if(itemsBeanList.size()>0){
+                    itemId = itemsBeanList.get(i).getId();
+                }else {
+                    itemId = -1;
+                }
+                Loger.e("itemId="+itemId);
+
+
+            }
+
+            @Override
+            public void onThirdWheeled(int i, String s) {
 
             }
         });

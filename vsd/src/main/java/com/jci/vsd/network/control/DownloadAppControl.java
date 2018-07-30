@@ -69,7 +69,8 @@ public class DownloadAppControl extends BaseControl {
     }
 
     public Observable<CheckUpdateResponse> getNewAppVersion(){
-        String version = Utils.getVersionCode();
+        //String version = Utils.getVersionCode();
+        String version = "0.9.8";
         Retrofit retrofit = builderRetrofitWithHeader();
         DownloadApi downloadApi = retrofit.create(DownloadApi.class);
         Map<String,String> map = new HashMap<>();
@@ -80,7 +81,7 @@ public class DownloadAppControl extends BaseControl {
             public CheckUpdateResponse apply(@NonNull String s) throws Exception {
                 Loger.i("getNewAppVersion = "+s);
                 JSONObject jsonObject = JSON.parseObject(s);
-                if("200".equals(jsonObject.getString(AppConstant.JSON_STATUS))){
+                if(200==jsonObject.getIntValue(AppConstant.JSON_CODE)){
                     JSONObject jsonData=JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA));
                     CheckUpdateResponse checkUpdateResponse = JSON.parseObject(jsonData.getString("ver"),CheckUpdateResponse.class);
                     return checkUpdateResponse;

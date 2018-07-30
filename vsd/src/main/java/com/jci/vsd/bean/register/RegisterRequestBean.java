@@ -22,6 +22,16 @@ public class RegisterRequestBean extends BaseBean {
     private String idNumber;
     private String realname;
     private String email;
+//   private int type;
+   //加入公司是1
+
+//    public int getType() {
+//        return type;
+//    }
+//
+//    public void setType(int type) {
+//        this.type = type;
+//    }
 
     public String getPhone() {
         return phone;

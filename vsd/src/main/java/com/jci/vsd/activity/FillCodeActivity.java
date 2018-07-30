@@ -67,7 +67,7 @@ public class FillCodeActivity extends BaseActivity {
                 super.onNext(s);
                 if (s.equals("200")) {
                     SimpleToast.toastMessage("加入公司成功", Toast.LENGTH_LONG);
-                    toActivity(RegisterActivity.class);
+                    toActivityWithType(RegisterActivity.class,"3");
                     finish();
                     //去注册申请
                 } else if (s.equals("50002")) {

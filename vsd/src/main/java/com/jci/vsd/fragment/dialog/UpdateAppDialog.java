@@ -54,6 +54,7 @@ public class UpdateAppDialog extends DialogFragment implements View.OnClickListe
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //url + version
         downloadUrl = getArguments().getString(AppConstant.SERIAL_KEY);
         versionCode = getArguments().getString(AppConstant.INT_KEY);
     }

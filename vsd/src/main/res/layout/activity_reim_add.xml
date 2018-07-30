@@ -14,15 +14,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/gray_EFEFEF"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:layout_marginRight="@dimen/dimen_5"
                 android:layout_marginTop="@dimen/dimen_10"
-                android:padding="@dimen/dimen_10"
-                android:orientation="vertical">
+                android:background="@color/gray_EFEFEF"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_10">
+
                 <LinearLayout style="@style/reim_item_linear">
 
                     <ImageView
@@ -36,7 +38,6 @@
                         android:hint="请填写报销金额"
                         android:inputType="number|numberDecimal" />
                 </LinearLayout>
-
 
 
                 <LinearLayout
@@ -81,12 +82,11 @@
                 </LinearLayout>
 
 
-
-
+                <!--startTime  -endTime-->
                 <LinearLayout
-                    android:id="@+id/rl_pick_date"
+                    android:id="@+id/rl_start_end_time"
                     style="@style/reim_item_linear"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/iv_time"
@@ -98,13 +98,13 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <EditText
+                        <TextView
                             android:id="@+id/edt_start_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bg_regtangle_grey_xml"
-                            android:hint="开始时间"
                             android:padding="@dimen/dimen_10"
+                            android:text="开始时间"
                             android:textSize="@dimen/text_size_small" />
 
                         <TextView
@@ -113,12 +113,12 @@
                             android:layout_height="wrap_content"
                             android:layout_alignBaseline="@+id/edt_start_time"
                             android:layout_alignBottom="@+id/edt_start_time"
-                            android:layout_toEndOf="@+id/edt_start_time"
-                           android:layout_marginLeft="@dimen/dimen_5"
+                            android:layout_marginLeft="@dimen/dimen_5"
                             android:layout_marginRight="@dimen/dimen_5"
+                            android:layout_toEndOf="@+id/edt_start_time"
                             android:text="---" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/edt_end_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -126,18 +126,41 @@
                             android:layout_alignBottom="@+id/edt_start_time"
                             android:layout_toEndOf="@+id/textView3"
                             android:background="@drawable/bg_regtangle_grey_xml"
-                            android:hint="结束时间"
                             android:padding="@dimen/dimen_10"
+                            android:text="结束时间"
                             android:textSize="@dimen/text_size_small" />
                     </LinearLayout>
 
 
                 </LinearLayout>
 
+                <!--time-->
                 <LinearLayout
-                    android:id="@+id/rl_location"
+                    android:id="@+id/rl_time"
                     style="@style/reim_item_linear"
-                    android:layout_marginBottom="@dimen/dimen_20"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:id="@+id/time"
+                        style="@style/enterprise_home_iv"
+                        android:src="@drawable/ic_add_time" />
+
+                    <TextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_regtangle_grey_xml"
+                        android:padding="@dimen/dimen_10"
+                        android:text="@string/select_date"
+                        android:textSize="@dimen/text_size_small" />
+
+
+                </LinearLayout>
+
+                <!--startLocation -endLocation-->
+                <LinearLayout
+                    android:id="@+id/rl_start_and_end_location"
+                    style="@style/reim_item_linear"
                     android:visibility="visible">
 
                     <ImageView
@@ -163,9 +186,9 @@
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/edt_start_location"
                         android:layout_alignBottom="@+id/edt_start_location"
-                        android:layout_toEndOf="@+id/edt_start_location"
                         android:layout_marginLeft="@dimen/dimen_5"
                         android:layout_marginRight="@dimen/dimen_5"
+                        android:layout_toEndOf="@+id/edt_start_location"
                         android:text="---" />
 
                     <EditText
@@ -183,16 +206,159 @@
 
 
                 </LinearLayout>
+                <!--Location-->
+                <LinearLayout
+                    android:id="@+id/rl_location"
+                    style="@style/reim_item_linear"
+                    android:visibility="gone">
+
+                    <ImageView
+
+                        style="@style/enterprise_home_iv"
+                        android:src="@drawable/ic_add_location" />
+
+                    <EditText
+                        android:id="@+id/edt_single_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/iv_location"
+                        android:background="@drawable/bg_regtangle_grey_xml"
+                        android:hint="@string/select_loaction"
+                        android:padding="@dimen/dimen_10"
+                        android:textSize="@dimen/text_size_small" />
+
+
+                </LinearLayout>
+                <!--client treatment-->
+                <LinearLayout
+                android:id="@+id/rl_client"
+                style="@style/reim_item_linear"
+                android:visibility="gone">
+
+                <ImageView
+
+                    style="@style/enterprise_home_iv"
+                    android:src="@drawable/ic_client" />
+
+                <EditText
+                    android:id="@+id/edt_treat_client"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/iv_location"
+                    android:background="@drawable/bg_regtangle_grey_xml"
+                    android:hint="@string/select_client"
+                    android:padding="@dimen/dimen_10"
+                    android:textSize="@dimen/text_size_small" />
+
+
             </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/rl_meal_standard"
+                    style="@style/reim_item_linear"
+                    android:visibility="gone">
+
+                    <ImageView
+
+                        style="@style/enterprise_home_iv"
+                        android:src="@drawable/ic_fee_standard" />
+
+                    <EditText
+                        android:id="@+id/edt_meal_standard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/iv_location"
+                        android:background="@drawable/bg_regtangle_grey_xml"
+                        android:hint="@string/meal_standard"
+                        android:padding="@dimen/dimen_10"
+                        android:textSize="@dimen/text_size_small" />
 
 
+                </LinearLayout>
+
+                <!--vehicle no-->
+                <LinearLayout
+                    android:id="@+id/rl_vehicle_no"
+                    style="@style/reim_item_linear"
+                    android:visibility="gone">
+
+                    <ImageView
+
+                        style="@style/enterprise_home_iv"
+                        android:src="@drawable/ic_vehicle_no" />
+
+                    <EditText
+                        android:id="@+id/edt_vehicle_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/iv_location"
+                        android:background="@drawable/bg_regtangle_grey_xml"
+                        android:hint="@string/vehicle_no"
+                        android:padding="@dimen/dimen_10"
+                        android:textSize="@dimen/text_size_small" />
+
+
+                </LinearLayout>
+                <!--drive mile-->
+                <LinearLayout
+                    android:id="@+id/rl_drive_mile"
+                    style="@style/reim_item_linear"
+                    android:visibility="gone">
+
+                    <ImageView
+
+                        style="@style/enterprise_home_iv"
+                        android:src="@drawable/ic_drive_mile" />
+
+                    <EditText
+                        android:id="@+id/edt_drive_mile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/iv_location"
+                        android:background="@drawable/bg_regtangle_grey_xml"
+                        android:hint="@string/drive_mile"
+                        android:padding="@dimen/dimen_10"
+                        android:textSize="@dimen/text_size_small" />
+
+
+                </LinearLayout>
+
+                <!--reason-->
+                <LinearLayout
+                    android:id="@+id/rl_reason"
+                    style="@style/reim_item_linear"
+                    android:visibility="visible">
+
+                    <ImageView
+
+                        style="@style/enterprise_home_iv"
+                        android:src="@drawable/ic_reason" />
+
+                    <EditText
+                        android:id="@+id/edt_reason"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@+id/iv_location"
+                        android:background="@drawable/bg_regtangle_grey_xml"
+                        android:hint="@string/reason"
+                        android:padding="@dimen/dimen_10"
+                        android:textSize="@dimen/text_size_small" />
+
+
+                </LinearLayout>
+            </LinearLayout>
 
 
             <LinearLayout
                 style="@style/reim_item_linear"
-                android:orientation="horizontal"
                 android:layout_marginTop="@dimen/dimen_5"
+                android:orientation="horizontal"
                 android:paddingLeft="@dimen/dimen_20">
 
                 <TextView
@@ -206,8 +372,8 @@
                     android:layout_width="@dimen/dimen_100"
                     android:layout_height="@dimen/dimen_60"
                     android:layout_marginStart="23dp"
-                    android:scaleType="center"
                     android:background="@drawable/bg_red_rectangle"
+                    android:scaleType="center"
                     android:src="@drawable/ic_add_take_pic" />
 
             </LinearLayout>
@@ -237,9 +403,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginEnd="15dp"
                     android:layout_toStartOf="@+id/edt_count"
-                    android:text="说明" />
+                    android:text="明细备注" />
 
 
                 <com.jci.vsd.view.widget.CountEditText

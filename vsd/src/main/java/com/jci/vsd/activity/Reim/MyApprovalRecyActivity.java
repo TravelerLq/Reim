@@ -54,8 +54,6 @@ public class MyApprovalRecyActivity extends BaseActivity {
         // initTestData();
         getData();
         initRecycleView();
-
-
     }
 
     private void getData() {

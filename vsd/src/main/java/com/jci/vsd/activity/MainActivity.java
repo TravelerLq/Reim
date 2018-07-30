@@ -19,9 +19,18 @@ import com.jci.vsd.R;
 import com.jci.vsd.activity.Reim.ReimHomeActivity;
 import com.jci.vsd.activity.UserInfo.UserInfoActivity;
 import com.jci.vsd.adapter.PageAdapter;
+import com.jci.vsd.bean.UserBean;
+import com.jci.vsd.bean.download.CheckUpdateResponse;
+import com.jci.vsd.constant.AppConstant;
+import com.jci.vsd.data.UserData;
 import com.jci.vsd.fragment.EnterpriseHomeFragment;
 import com.jci.vsd.fragment.HelpFragment;
 import com.jci.vsd.fragment.HomeFragment;
+import com.jci.vsd.fragment.dialog.UpdateAppDialog;
+import com.jci.vsd.network.control.DownloadAppControl;
+import com.jci.vsd.observer.DefaultObserver;
+import com.jci.vsd.observer.RxHelper;
+import com.jci.vsd.utils.Loger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +38,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.leibnik.wechatradiobar.WeChatRadioGroup;
+import io.reactivex.Observable;
 
 public class MainActivity extends BaseActivity {
 
@@ -44,14 +54,29 @@ public class MainActivity extends BaseActivity {
     TextView tvHeader;
     @BindView(R.id.textview_title)
     TextView tvTitle;
+    private String type;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        UserBean userBean = UserData.getUserInfo();
+        if (userBean != null) {
+            type = userBean.getType();
+            Loger.e("---");
+            if (type.equals("1")||type.equals("2")) {
+                //boss or部门领导
+                setContentView(R.layout.activity_main);
+            } else {
+                //员工
+                setContentView(R.layout.activity_main_employee);
+            }
+        }
+
+
         ButterKnife.bind(this);
         tvTitle.setText(getResources().getString(R.string.home_title));
+        // checkUpdateApp();
         List<Fragment> list = new ArrayList<Fragment>();
         list.add(new HomeFragment());
         list.add(new HelpFragment());
@@ -63,16 +88,54 @@ public class MainActivity extends BaseActivity {
         initViewEvent();
         buttonBack.setVisibility(View.GONE);
         tvHeader.setVisibility(View.VISIBLE);
-    //    checkAuthority();
+        //    checkAuthority();
 
     }
-
 
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         //getSupportFragmentManager().putFragment(outState, "mContent", mContent);
+    }
+
+    private void checkUpdateApp() {
+        Observable<CheckUpdateResponse> checkUpdateResponseObservable = new DownloadAppControl().getNewAppVersion();
+        DefaultObserver<CheckUpdateResponse> checkUpdateResponseCommonDialogObserver = new DefaultObserver<CheckUpdateResponse>() {
+            @Override
+            protected void showProgress() {
+
+            }
+
+            @Override
+            protected void dismissProgress() {
+
+            }
+
+            @Override
+            public void onNext(CheckUpdateResponse checkUpdateResponse) {
+                super.onNext(checkUpdateResponse);
+                //http://1192.168.31.109:8080/shuidao/notoken/downapk
+                //  String apkUrl="http://192.168.31.109:8080/shuidao/notoken/downapk";
+                updateShowDialog(checkUpdateResponse.getUrl(), checkUpdateResponse.getLast());
+                // updateShowDialog(apkUrl, checkUpdateResponse.getLast());
+                // downLoadApp(checkUpdateResponse.getUrl());
+            }
+        };
+        RxHelper.bindOnUIActivityLifeCycle(checkUpdateResponseObservable, checkUpdateResponseCommonDialogObserver, MainActivity.this);
+    }
+
+    private void updateShowDialog(String url, String version) {
+        try {
+            UpdateAppDialog dialog = new UpdateAppDialog();
+            Bundle bundle = new Bundle();
+            bundle.putString(AppConstant.SERIAL_KEY, url);
+            bundle.putString(AppConstant.INT_KEY, version);
+            dialog.setArguments(bundle);
+            dialog.show(getSupportFragmentManager(), "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -109,7 +172,29 @@ public class MainActivity extends BaseActivity {
         super.onNewIntent(intent);
     }
 
+    private void checkAuthority() {
 
 
+        if (PermissionsUtil.hasPermission(MainActivity.this, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE)) {
 
+
+        } else {
+            PermissionsUtil.requestPermission((BaseActivity) this.getApplicationContext(), new PermissionListener() {
+                @Override
+                public void permissionGranted(@NonNull String[] permission) {
+                    Log.e("--", "permissionGranted: 用户授予了访问外部存储的权限");
+
+                }
+
+                @Override
+                public void permissionDenied(@NonNull String[] permission) {
+                    Log.e("--", "permissionDenied: 用户拒绝了访问外部存储的申请");
+                    // needPermissionTips();
+
+                }
+            }, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE});
+        }
+    }
 }

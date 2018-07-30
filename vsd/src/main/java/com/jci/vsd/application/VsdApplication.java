@@ -84,37 +84,12 @@ public class VsdApplication extends Application {
 //                : LeakCanary.install(VsdApplication.this);
         initReservoir();
 
-        checkAuthority();
+       // checkAuthority();
 
     }
 
 
-    private void checkAuthority() {
 
-
-
-        if (PermissionsUtil.hasPermission(this.getApplicationContext(), Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE)) {
-
-
-        } else {
-            PermissionsUtil.requestPermission((BaseActivity)this.getApplicationContext(), new PermissionListener() {
-                @Override
-                public void permissionGranted(@NonNull String[] permission) {
-                    Log.e("--", "permissionGranted: 用户授予了访问外部存储的权限");
-
-                }
-
-                @Override
-                public void permissionDenied(@NonNull String[] permission) {
-                    Log.e("--", "permissionDenied: 用户拒绝了访问外部存储的申请");
-                    // needPermissionTips();
-
-                }
-            }, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE});
-        }
-    }
 
     public static VsdApplication getInstance() {
         return globalVar;
