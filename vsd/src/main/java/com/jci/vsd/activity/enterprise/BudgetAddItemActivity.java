@@ -410,7 +410,6 @@ public class BudgetAddItemActivity extends BaseActivity {
                     }
                 } else {
                     secondList.add("暂无数据");
-
                 }
 
                 return secondList;
