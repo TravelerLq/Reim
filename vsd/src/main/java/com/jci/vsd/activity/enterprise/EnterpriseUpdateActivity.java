@@ -160,11 +160,10 @@ public class EnterpriseUpdateActivity extends BaseActivity {
             edtFounderId.setText(bean.getLegalIdNumber());
             //公司报销限额还有？
             edtReim.setText(bean.getQuota() + "");
-
         }
 //        //公司性质
 //
-//
+
 //        //所得税征收方式
 //        initSpinner(adapter_income_tax, spIncomeTaxWay, incomeTaxList, 1);
 //        //开票方式
