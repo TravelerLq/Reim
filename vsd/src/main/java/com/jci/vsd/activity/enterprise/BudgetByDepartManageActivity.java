@@ -71,23 +71,17 @@ public class BudgetByDepartManageActivity extends BaseActivity {
         initViewEvent();
         context = BudgetByDepartManageActivity.this;
         rightFucTxt.setVisibility(View.VISIBLE);
+        mDatas=new ArrayList<>();
        //   tvTitle.setText("预算管理（按部门划分）");
         // type=1
         getData(type);
-        intData();
+
         initRecycleView();
         initViewEvent();
 
     }
 
 
-    private void intData() {
-        mDatas = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            // mDatas.add(new BudgetBean("部门" + i, i * 10 + i));
-        }
-
-    }
 
     @Override
     protected void initViewEvent() {
@@ -117,8 +111,7 @@ public class BudgetByDepartManageActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         Loger.e(TAG + "-----onResume");
-        //
-        getData(type);
+
     }
 
     private void initRecycleView() {
@@ -226,6 +219,9 @@ public class BudgetByDepartManageActivity extends BaseActivity {
             @Override
             public void onNext(List<BudgetBean> budgetBeans) {
                 super.onNext(budgetBeans);
+               if(budgetBeans.size()==0){
+                   SimpleToast.toastMessage("暂无数据", Toast.LENGTH_SHORT);
+               }
                 mDatas.clear();
                 mDatas.addAll(budgetBeans);
                 mAdapter.notifyDataSetChanged();
@@ -239,7 +235,7 @@ public class BudgetByDepartManageActivity extends BaseActivity {
                     exit();
                     toActivity(LoginActivity.class);
                 } else {
-                    // SimpleToast.toastMessage(t.toString(), Toast.LENGTH_LONG);
+                     SimpleToast.toastMessage(t.toString(), Toast.LENGTH_SHORT);
                 }
             }
         };

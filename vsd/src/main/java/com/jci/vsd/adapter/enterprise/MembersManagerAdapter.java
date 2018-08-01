@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jci.vsd.R;
+import com.jci.vsd.utils.Loger;
 import com.jci.vsd.utils.ScreenUtil;
 import com.jci.vsd.view.widget.treelist.TreeMenuBaseAdapter;
 import com.jci.vsd.view.widget.treelist.TreeMenuUtils;
@@ -43,7 +44,7 @@ public class MembersManagerAdapter<T> extends TreeMenuBaseAdapter<T> {
         this.isExpand = isExpand;
     }
 
-    
+
     private LinearLayout.LayoutParams getParams(int margin) {
         int itemHeight = ScreenUtil.dip2px(40);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, itemHeight);
@@ -65,6 +66,17 @@ public class MembersManagerAdapter<T> extends TreeMenuBaseAdapter<T> {
         //left
         holder.tvMemberName.setPadding(node.getNodeLevel() * 50, 0, 0, 0);
         TreeMenuUtils.setNodeIcon(node);
+//        Loger.e("node.name" + node.getNodeName());
+//        Loger.e("node.leader" + node.getLeader());
+//        Loger.e("node.pid" + node.getParentID());
+        if (node.getLeader() != null && node.getLeader()) {
+            holder.tvCompanyRole.setVisibility(View.VISIBLE);
+
+        } else {
+            holder.tvCompanyRole.setVisibility(View.GONE);
+        }
+
+
         if (mCurrentPos == position) {
             //当前item被选中
             holder.rlMembers.setLayoutParams(getParams(0)); //让item 变长，出现悬浮效果
@@ -79,15 +91,13 @@ public class MembersManagerAdapter<T> extends TreeMenuBaseAdapter<T> {
         }
 
 
-//         if(node.isRootNode()){
-//            holder.tvMemberName.setText(node.getTextSize());
-//         }else if(node.getChildrenNodes().size()>0){
-//
-//         }
         holder.tvMemberName.setText(node.getNodeName());
 
+
         if (node.getIcon() == -1) {
+            // 不是部门，有role
             holder.icon.setVisibility(View.GONE);
+
         } else {
             holder.icon.setVisibility(View.VISIBLE);
             holder.icon.setImageResource(node.getIcon());
@@ -105,6 +115,8 @@ public class MembersManagerAdapter<T> extends TreeMenuBaseAdapter<T> {
         RelativeLayout rlMembers;
         @BindView(R.id.iv_icon)
         ImageView icon;
+        @BindView(R.id.tv_company_role)
+        TextView tvCompanyRole;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);

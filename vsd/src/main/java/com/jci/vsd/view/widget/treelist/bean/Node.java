@@ -77,10 +77,32 @@ public class Node {
      * 当前节点的坐标
 
      */
+
     private String lat;
     private String lng;
     private String combatequipmentname;//单兵名字
     private String equipmentid;//视频设备编号
+
+    /**
+     *MembersBean节点
+     */
+    private Boolean leader;
+    private String status;
+
+    public Boolean getLeader() {
+        return leader;
+    }
+
+    public void setLeader(Boolean leader) {
+        this.leader = leader;
+    }
+
+    public Node (String id, String pid, String name,Boolean leader) {
+        mNodeID = id;
+        mParentID = pid;
+        mNodeName = name;
+        this.leader=leader;
+    }
 
 
     public Node (String id, String pid, String name) {
@@ -88,6 +110,7 @@ public class Node {
         mParentID = pid;
         mNodeName = name;
     }
+
     //实例化node带gps位置
     public Node (String id, String pid, String name, String lat, String lng) {
         mNodeID = id;

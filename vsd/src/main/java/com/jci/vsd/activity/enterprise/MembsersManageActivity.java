@@ -85,7 +85,7 @@ public class MembsersManageActivity extends BaseActivity {
         departmentList = new ArrayList<>();
         // initTestData();
         initViewEvent();
-        loadData();
+        // loadData();
 //        lvMembers.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 //            @Override
 //            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -93,7 +93,7 @@ public class MembsersManageActivity extends BaseActivity {
 //                return true;
 //            }
 //        });
-        //loadData();
+        loadData();
 
 
     }
@@ -139,7 +139,7 @@ public class MembsersManageActivity extends BaseActivity {
 //                    Loger.e("---node--");
                     if (node.getChildrenNodes().size() == 0) {
                         // showDialog();
-                      //  SimpleToast.toastMessage("node－－", Toast.LENGTH_SHORT);
+                        //  SimpleToast.toastMessage("node－－", Toast.LENGTH_SHORT);
                     }
 
                     adapter.setCurrentPosition(position, node.isExpand());
@@ -156,14 +156,24 @@ public class MembsersManageActivity extends BaseActivity {
                     //是个子节点
                     if (node.getChildrenNodes().size() == 0) {
                         selectOperateBean = mData.get(position);
-
-                        Loger.e("--selectPersonName"+selectOperateBean.getName()+
-                                "selectId"+selectOperateBean.getId());
+                        Loger.e("--selectPersonName" + selectOperateBean.getName() +
+                                "selectId" + selectOperateBean.getId());
                         showDialog();
-                      //  SimpleToast.toastMessage("nodeLongClick－－", Toast.LENGTH_SHORT);
 
-                        Loger.e("nodeLongClick--pos"+position);
+                        Loger.e("nodeLongClick--pos" + position);
                         deletePos = position;
+
+                        for (int i = 0; i < departmentList.size(); i++) {
+                            if (departmentList.get(i).getId().equals(selectOperateBean.getPid())) {
+                                departmentList.remove(i);
+                            }
+                        }
+                        items = new String[departmentList.size()];
+
+                        for (int i = 0; i < departmentList.size(); i++) {
+                            items[i] = departmentList.get(i).getName();
+                        }
+
 
 //                        mData.remove(5);
 //
@@ -209,16 +219,6 @@ public class MembsersManageActivity extends BaseActivity {
 //                toActivityWithType(DepartmentManageActivity.class,
 //                        AppConstant.VALUE_AJUST, REQUEST_CODE_DEPARTMENT, true);
                 //调整部门，就直接用listDiaog ,带有选择的那种
-                for (int i = 0; i < departmentList.size(); i++) {
-                    if (departmentList.get(i).getId().equals(selectOperateBean.getPid())) {
-                        departmentList.remove(i);
-                    }
-                }
-                items = new String[departmentList.size()];
-
-                for (int i = 0; i < departmentList.size(); i++) {
-                    items[i] = departmentList.get(i).getName();
-                }
 
 
                 showSingleChoiceDialog();
@@ -270,8 +270,8 @@ public class MembsersManageActivity extends BaseActivity {
 
                         ajustMembersBean.setDpt(Integer.valueOf(departmentList.get(which).getId()));
                         ajustMembersBean.setId(Integer.valueOf(selectOperateBean.getId()));
-                        Loger.e("dptId="+departmentList.get(which).getId() );
-                        Loger.e("ajustPersonid="+selectOperateBean.getId() );
+                        Loger.e("dptId=" + departmentList.get(which).getId());
+                        Loger.e("ajustPersonid=" + selectOperateBean.getId());
                         ajust(ajustMembersBean);
                         dialog.dismiss();
 
@@ -301,6 +301,28 @@ public class MembsersManageActivity extends BaseActivity {
 //        mData.add(new MembersBean("5", "2", "孙田"));
 //        mData.add(new MembersBean("6", "2", "Jsec"));
 //        mData.add(new MembersBean("7", "2", "Lotey"));
+        MembersBean dpt1 = new MembersBean();
+        dpt1.setPid("0");
+        dpt1.setId("1");
+        dpt1.setName("总经理办公室");
+        // dpt1.setLeader(false);
+        mData.add(dpt1);
+
+        MembersBean dpt2 = new MembersBean();
+        dpt2.setPid("1");
+        dpt2.setId("11");
+        dpt2.setName("jess");
+        dpt2.setLeader(true);
+        mData.add(dpt2);
+
+        MembersBean dpt3 = new MembersBean();
+        dpt3.setPid("1");
+        dpt3.setId("12");
+        dpt3.setName("cherry");
+        dpt3.setLeader(false);
+        mData.add(dpt3);
+
+        initTreeMemberAdapter();
 
     }
 
@@ -313,14 +335,17 @@ public class MembsersManageActivity extends BaseActivity {
             public void onNext(List<MembersBean> beanList) {
                 super.onNext(beanList);
                 mData.clear();
-                mData.addAll(beanList);
-                initTreeMemberAdapter();
-
-                for (int i = 0; i < mData.size(); i++) {
-                    if (mData.get(i).getPid().equals("0")) {
-                        departmentList.add(mData.get(i));
+                departmentList.clear();
+                for (int i = 0; i < beanList.size(); i++) {
+                    if (beanList.get(i).getPid().equals("0")) {
+                        //加入部门集合
+                        departmentList.add(beanList.get(i));
+                        beanList.get(i).setLeader(false);
                     }
                 }
+                mData.addAll(beanList);
+
+                initTreeMemberAdapter();
 
 
             }
@@ -378,7 +403,7 @@ public class MembsersManageActivity extends BaseActivity {
             public void onError(Throwable t) {
                 super.onError(t);
 
-                if (t.getMessage().equals("401")){
+                if (t.getMessage().equals("401")) {
                     SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_SHORT);
                     exit();
                     toActivity(LoginActivity.class);

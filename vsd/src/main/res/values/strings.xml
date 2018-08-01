@@ -454,6 +454,7 @@
     <string name="department_manage">部门管理</string>
     <string name="members_manage">成员管理</string>
     <string name="new_depart">新建部门</string>
+    <string name="edit_depart">编辑部门</string>
     <string name="producer_add">新增审批流程</string>
     <string name="producer_manage">审批流程管理</string>
     <string name="register_company">注册公司</string>
@@ -465,5 +466,7 @@
     <string name="drive_mile">请填写行驶公里数</string>
     <string name="reason">请填写事由</string>
     <string name="meal_standard">请填写餐费标准</string>
+
+    <string name="producer_manager_tilte">审核流程管理</string>
 
 </resources>

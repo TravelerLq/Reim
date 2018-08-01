@@ -3,6 +3,7 @@ package com.jci.vsd.view.widget.treelist;
 
 import com.jci.vsd.R;
 import com.jci.vsd.bean.SingleVideoBean;
+import com.jci.vsd.bean.enterprise.MembersBean;
 import com.jci.vsd.utils.Loger;
 import com.jci.vsd.view.widget.treelist.bean.Node;
 import com.jci.vsd.view.widget.treelist.bean.TreeNodeCombatequipmentname;
@@ -10,6 +11,7 @@ import com.jci.vsd.view.widget.treelist.bean.TreeNodeEquipID;
 import com.jci.vsd.view.widget.treelist.bean.TreeNodeID;
 import com.jci.vsd.view.widget.treelist.bean.TreeNodeLat;
 import com.jci.vsd.view.widget.treelist.bean.TreeNodeLng;
+import com.jci.vsd.view.widget.treelist.bean.TreeNodeManager;
 import com.jci.vsd.view.widget.treelist.bean.TreeNodeName;
 import com.jci.vsd.view.widget.treelist.bean.TreeNodePID;
 
@@ -59,7 +61,11 @@ public class TreeMenuUtils {
         T classType = data.get(0);
         if (classType instanceof SingleVideoBean) {//如果以后有其他类型，也添加在这里判断
             data2Node = convertDataToNodeSingelVideo(data);
-        } else {
+        } else if(classType instanceof MembersBean){
+            Loger.e("--");
+            data2Node = convertDataToNodeMembersBean(data);
+        }
+        else {
             data2Node = convertData2Node(data);
         }
         //List<Node> data2Node = convertDataToNodeWithGps (data);
@@ -245,6 +251,89 @@ public class TreeMenuUtils {
         return nodes;
     }
 
+    /**
+     * 将数据转化为树的节点，人员管理模块
+     *
+     * @param data
+     * @param <T>
+     * @return
+     */
+    private static <T> List<Node> convertDataToNodeMembersBean(List<T> data) throws IllegalAccessException {
+        List<Node> nodes = new ArrayList<>();
+        Node node;
+
+        for (T t : data) {
+            String id = null;
+            String pid = null;
+            String name = null;
+            String status = null;//
+            Boolean leader = null;
+//            String lat = null;//
+//            String lng = null;//
+            Class<? extends Object> clazz = t.getClass();
+            Field[] declaredFields = clazz.getDeclaredFields();
+            for (Field f : declaredFields) {
+                if (f.getAnnotation(TreeNodeID.class) != null) {
+                    f.setAccessible(true);
+                    id = (String) f.get(t);
+                }
+                if (f.getAnnotation(TreeNodePID.class) != null) {
+                    f.setAccessible(true);
+                    pid = (String) f.get(t);
+                }
+                if (f.getAnnotation(TreeNodeName.class) != null) {
+                    f.setAccessible(true);
+                    name = (String) f.get(t);
+                }
+
+                if (f.getAnnotation(TreeNodeManager.class) != null) {
+                    f.setAccessible(true);
+                    leader = (Boolean) f.get(t);
+
+                }
+//
+//                if (f.getAnnotation(TreeNodeLat.class) != null) {
+//                    f.setAccessible(true);
+//                    lat = (String) f.get(t);
+//                }
+//                if (f.getAnnotation(TreeNodeLng.class) != null) {
+//                    f.setAccessible(true);
+//                    lng = (String) f.get(t);
+//                }
+
+                if (id != null && pid != null && name != null) {
+                    break;
+                }
+            }
+            node = new Node(id, pid, name, leader);
+            nodes.add(node);
+        }
+
+        /**
+         * 设置Node间，父子关系;让每两个节点都比较一次，即可设置其中的关系
+         */
+        int size = nodes.size();
+        for (int i = 0; i < size; i++) {
+            Node n = nodes.get(i);
+            for (int j = i + 1; j < size; j++) {
+                Node m = nodes.get(j);
+                if (n.getNodeID().equals(m.getParentID())) {
+                    n.getChildrenNodes().add(m);
+                    m.setParentNode(n);
+                } else if (n.getParentID().equals(m.getNodeID())) {
+                    n.setParentNode(m);
+                    m.getChildrenNodes().add(n);
+                }
+            }
+        }
+
+        for (Node n : nodes) {
+            setNodeIcon(n);
+        }
+        return nodes;
+    }
+
+
 
     /**
      * 设置节点的图标
@@ -266,5 +355,27 @@ public class TreeMenuUtils {
             node.setIcon(-1);
         }
     }
+
+
+    /**
+     * 设置节点的是否是主观
+     *
+     * @param node 当前的节点
+     */
+//    public static void setRoleName(Node node) {
+////        Loger.e("--child"+node.getChildrenNodes().size());
+////        Loger.e("--isExpand"+node.isExpand());
+//
+//        if (node.getChildrenNodes().size() == 0&&node.getManager()) {
+//
+//
+//            node.setManager(true);
+//        } else if (node.getChildrenNodes().size() > 0 && !node.isExpand()) {
+//            node.setIcon(R.drawable.es_listview_coll);
+//        } else {
+//            // Loger.e("--node.setIcon (-1)");
+//            node.setIcon(-1);
+//        }
+//    }
 
 }

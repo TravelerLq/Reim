@@ -300,11 +300,12 @@ public class BudgetAddItemActivity extends BaseActivity {
                 super.onNext(aBoolean);
                 if (aBoolean) {
                     SimpleToast.toastMessage("新增成功", Toast.LENGTH_SHORT);
-                    if (addType.equals("1")) {
-                        toActivity(BudgetByDepartManageActivity.class);
-                    } else {
-                        toActivity(BudgetByCategoryManageActivity.class);
-                    }
+//                    if (addType.equals("1")) {
+//                        toActivity(BudgetByDepartManageActivity.class);
+//                        finish();
+//                    } else {
+//                        toActivity(BudgetByCategoryManageActivity.class);
+//                    }
 
                     finish();
                 }

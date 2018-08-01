@@ -55,9 +55,6 @@ public class BudgetManageControl extends BaseControl {
                 if (jsonObject.getIntValue(AppConstant.JSON_CODE) == 200) {
                     JSONObject dataObj = jsonObject.getJSONObject(AppConstant.JSON_DATA);
                     List<BudgetBean> beanList = JSON.parseArray(dataObj.getString("vos"), BudgetBean.class);
-
-//                    List<HomeAuthorityBean> authorityBeanList = JSON.parseArray(dataObj.getString("Authority"), HomeAuthorityBean.class);
-//                    loginResponseBean.setList(authorityBeanList);
                     return beanList;
                 }
 

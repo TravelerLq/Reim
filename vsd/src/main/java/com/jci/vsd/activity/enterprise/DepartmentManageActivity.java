@@ -155,8 +155,10 @@ public class DepartmentManageActivity extends BaseActivity {
                     public void onClick(View v) {
                         int pos = holder.getLayoutPosition();
                         if (pos >= 0 && pos < mDatas.size()) {
-                            Toast.makeText(context, "编辑:" + pos, Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(context, "编辑:" + pos, Toast.LENGTH_SHORT).show();
                             DepartmentBean editBean = mDatas.get(pos);
+                            //type=1:编辑
+                            editBean.setType("1");
                             toAtivityWithParams(NewDeparmentActivity.class, editBean);
                         }
                     }
@@ -238,7 +240,7 @@ public class DepartmentManageActivity extends BaseActivity {
                     exit();
                     toActivity(LoginActivity.class);
                 } else {
-                    // SimpleToast.toastMessage(t.toString(), Toast.LENGTH_LONG);
+                     SimpleToast.toastMessage(t.toString(), Toast.LENGTH_SHORT);
                 }
 
 

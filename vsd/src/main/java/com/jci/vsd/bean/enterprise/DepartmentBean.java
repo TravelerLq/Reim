@@ -25,6 +25,15 @@ public class DepartmentBean extends BaseBean {
     private String name;
     private int id;
     private String permname;
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public int getLeader() {
         return leader;

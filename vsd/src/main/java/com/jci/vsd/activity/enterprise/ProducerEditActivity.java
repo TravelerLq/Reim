@@ -96,19 +96,23 @@ public class ProducerEditActivity extends BaseActivity {
             fath = bean.getFath();
             String dptName;
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < bean.getCoverdpts().size(); i++) {
-                sb.append(bean.getCoverdpts().get(i).getName());
-                depts.add(bean.getCoverdpts().get(i).getDpt());
+            if (bean.getCoverdpts() != null && bean.getCoverdpts().size() > 0) {
+                for (int i = 0; i < bean.getCoverdpts().size(); i++) {
+                    sb.append(bean.getCoverdpts().get(i).getName());
+                    depts.add(bean.getCoverdpts().get(i).getDpt());
 
+                }
+                String str = sb.toString();
+                tvProducerDepart.setText(str);
+            } else {
+                tvProducerDepart.setText("");
             }
-            String str = sb.toString();
 
-            tvProducerDepart.setText(str);
             //tvProducerOrder.setText("wwe");
             tvProducerOrder.setText(bean.getSort() + "");
             tvProducerPerson.setText(bean.getCheckername());
         }
-        stringAppend();
+        //stringAppend();
 
     }
 
@@ -119,7 +123,7 @@ public class ProducerEditActivity extends BaseActivity {
 
         StringBuilder sb = new StringBuilder();
         start = System.currentTimeMillis();
-        for (int i = 0; i < 100000; i++)
+        for (int i = 0; i < 10; i++)
             sb.append("a");
         str = sb.toString();
         end = System.currentTimeMillis();
@@ -147,7 +151,7 @@ public class ProducerEditActivity extends BaseActivity {
                 break;
             case R.id.tv_producer_department:
                 //deparment
-                if (listApprover.size() == 0) {
+                if (listDeparts.size() == 0) {
                     SimpleToast.toastMessage("暂无可配置部门", Toast.LENGTH_SHORT);
                 } else {
                     showMultiChoiceDialog();
@@ -160,7 +164,7 @@ public class ProducerEditActivity extends BaseActivity {
                 break;
             case R.id.tv_producer_person:
                 Loger.e("click--tv_producer_person");
-                if (listDeparts.size() == 0) {
+                if (listApprover.size() == 0) {
                     SimpleToast.toastMessage("暂无可配置人员", Toast.LENGTH_SHORT);
                 } else {
                     showSingleChoiceDialog();

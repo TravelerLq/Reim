@@ -89,6 +89,8 @@ ProducerAddActivity extends BaseActivity {
     private int selectProducerId;
     private List<ProducerSettingInfoBean.ChkpntsBean> producersList = new ArrayList<>();
     List<ProducerSettingInfoBean.ChkpntsBean.FathsBean> fathsBeans = new ArrayList<>();
+    private String selectDepartName = "";
+    private Boolean isSet;
 
 
     @Override
@@ -141,7 +143,12 @@ ProducerAddActivity extends BaseActivity {
         super.onClick(view);
         switch (view.getId()) {
             case R.id.tv_sure:
-                checkData();
+                if (isSet) {
+                    checkData();
+                } else {
+                    SimpleToast.toastMessage("暂不可配置流程", Toast.LENGTH_SHORT);
+                }
+
                 break;
             case R.id.tv_producer_department:
                 //deparment
@@ -154,10 +161,17 @@ ProducerAddActivity extends BaseActivity {
 
                 break;
             case R.id.tv_producer_order:
-                Loger.e("click--tv_producer_level");
-//                SimpleToast.toastMessage("审批序号不可以修改", Toast.LENGTH_SHORT);
-                //  onLinkagePicker(tvProducerOrder, 2);
-                onLinkagePicker(tvProducerOrder, 3);
+                // sort =2: 最低可配置审批流程2
+                if (sort == 2) {
+                    List<String> list = new ArrayList<>();
+                    list.add("2");
+                    selectProducerId = 2;
+                    parentProducerId = 1;
+                    TimePickerUtils.getInstance().onListPicker(ProducerAddActivity.this, list, tvProducerOrder);
+                } else {
+                    onLinkagePicker(tvProducerOrder, 3);
+                }
+
                 break;
             case R.id.tv_producer_person:
                 Loger.e("click--tv_producer_person");
@@ -174,19 +188,9 @@ ProducerAddActivity extends BaseActivity {
         }
     }
 
-
-    //省级 、地级
-
-
-
     public void onLinkagePicker(final TextView view, final int i) {
 
         final LinkagePicker.DataProvider provider = new LinkagePicker.DataProvider() {
-
-//            @Override
-//            public boolean isOnlyTwo() {
-//                return true;
-//            }
 
             @Override
             public boolean isOnlyTwo() {
@@ -195,8 +199,9 @@ ProducerAddActivity extends BaseActivity {
 
             @Override
             public List<String> provideFirstData() {
-
+                Loger.e("---provideFirstData--");
                 firstList.clear();
+                Loger.e("sort--" + sort);
                 if (sort == 4) {
                     firstList.add("2");
                     firstList.add("3");
@@ -205,6 +210,8 @@ ProducerAddActivity extends BaseActivity {
                     firstList.add("2");
                     firstList.add("3");
 
+                } else {
+                    firstList.add("2");
                 }
 
                 return firstList;
@@ -220,7 +227,7 @@ ProducerAddActivity extends BaseActivity {
                 List<String> secondList = new ArrayList<>();
                 //sort =3
                 selectProducerId = Integer.valueOf(firstList.get(firstIndex));
-                Loger.e("--sort-"+selectProducerId);
+                Loger.e("--sort-" + selectProducerId);
                 if (firstIndex == 1) {
                     fathsBeans = producersList.get(0).getFaths();
                     for (int j = 0; j < fathsBeans.size(); j++) {
@@ -233,50 +240,6 @@ ProducerAddActivity extends BaseActivity {
                         secondList.add(fathsBeans.get(j).getName());
                     }
                 }
-
-
-//                if (firstIndex == 0) {
-//                    for (int i = 0; i < 3; i++) {
-//                        //  Loger.e("--itemName--" + itemName);
-//                        secondList.add("2-" + i);
-//
-//                    }
-//
-//                } else {
-//                    for (int i = 0; i < 3; i++) {
-//                        //  Loger.e("--itemName--" + itemName);
-//                        secondList.add("3-" + i);
-//
-//                    }
-//                }
-//                end = System.currentTimeMillis();
-//                Loger.e("provideSecondData--"  + "end-start=" + (end - start));
-//
-
-                //sort 最低配置时的sort
-//
-//                int wheelSort = Integer.valueOf(firstList.get(firstIndex));
-//                Loger.e("---wheelSort--"+wheelSort);
-//                selectProducerId = wheelSort;
-//
-//                for (int i = 0; i < producersList.size(); i++) {
-//                    int sort = producersList.get(i).getSort();
-//                    if (sort == (wheelSort - 1)) {
-//                        fathsBeans.clear();
-//                        if (producersList.get(i).getFaths() != null && producersList.get(i).getFaths().size() > 0) {
-//                            fathsBeans = producersList.get(i).getFaths();
-//                            for (int j = 0; j < fathsBeans.size(); j++) {
-//                                secondList.add(fathsBeans.get(j).getName());
-//                            }
-//                        }
-//
-//                    }
-//                    break;
-//
-//                }
-//
-
-                //    Loger.e("--sselec -1-name" + producerBeans.get(0).getName());
 
                 end = System.currentTimeMillis();
                 Loger.e("provideSecondData--" + "end-start=" + (end - start));
@@ -302,9 +265,9 @@ ProducerAddActivity extends BaseActivity {
             }
 
         };
+
         LinkagePicker picker = new LinkagePicker(this, provider);
         picker.setCanLoop(true);
-//        picker.setLabel("科目二", "科目三");
         picker.setSelectedIndex(0, 0);
         //picker.setSelectedItem("12", "9");
         picker.setOnMoreItemPickListener(new OnMoreItemPickListener<String>() {
@@ -312,12 +275,6 @@ ProducerAddActivity extends BaseActivity {
             @Override
             public void onItemPicked(String first, String second, String third) {
                 Loger.e(first + "-" + second + "-" + third);
-                //  parentProducerId = Integer.valueOf(first);
-
-//                int  selectParentProducerId =
-                // selectProducerId = Integer.valueOf(second);
-//                Loger.e("---itemSelectId--" + first + "secondIndex--" + second);
-
                 for (int i = 0; i < fathsBeans.size(); i++) {
                     if (fathsBeans.get(i).getName().equals(second)) {
                         parentProducerId = fathsBeans.get(i).getId();
@@ -325,45 +282,16 @@ ProducerAddActivity extends BaseActivity {
                     }
 
                 }
-                view.setText("" + first + second);
+                view.setText("" + first);
 
 
             }
 
-        });
-        picker.setOnMoreWheelListener(new OnMoreWheelListener() {
-            @Override
-            public void onFirstWheeled(int i, String s) {
-                Loger.e("==onFirstWheeled" + i);
-            }
-
-            @Override
-            public void onSecondWheeled(int i, String s) {
-                Loger.e("==second" + i);
-            }
-
-            @Override
-            public void onThirdWheeled(int i, String s) {
-
-            }
         });
 
         picker.show();
     }
 
-    private void selectPerson() {
-
-        startActivityForResult(new Intent(this, MembsersSelectActivity.class), REQUEST_PERSON);
-    }
-
-    private void selectLevel() {
-
-        Resources res = getResources();
-        String[] status = res.getStringArray(R.array.approval_no);
-        List<String> allStatus = Arrays.asList(status);
-        TimePickerUtils.getInstance().onListDataPicker(this, allStatus, tvProducerOrder);
-
-    }
 
     private void checkData() {
         String name = edtProducerName.getText().toString();
@@ -393,14 +321,7 @@ ProducerAddActivity extends BaseActivity {
 
             return;
         }
-        //获取producer选择的ID
-        //test
-
-        selectApproverId = 28;
-//sort=3
-        //  parentProducerId = 3;
-//fatherID=3
-        //  selectProducerId = 3;
+        //   selectApproverId = 28;
 
         ProducerAddBean producerBean = new ProducerAddBean();
 //        producerBean.set
@@ -410,11 +331,7 @@ ProducerAddActivity extends BaseActivity {
         producerBean.setSort(selectProducerId);
         producerBean.setChecker(selectApproverId);
         producerBean.setDpts(selectDepsId);
-
         addProducerItem(producerBean);
-//        toActivity(ProducerManageActivity.class);
-//        this.finish();
-
     }
 
     @Override
@@ -455,16 +372,22 @@ ProducerAddActivity extends BaseActivity {
     }
 
     private void getProducerSettingInfo() {
+
         Observable<ProducerSettingInfoBean> observable = new ProducerManageControl().getProducerSettingInfo();
         CommonDialogObserver<ProducerSettingInfoBean> observer = new CommonDialogObserver<ProducerSettingInfoBean>(this) {
             @Override
             public void onNext(ProducerSettingInfoBean bean) {
                 super.onNext(bean);
-                SimpleToast.toastMessage("流程可配置信息获取成功", Toast.LENGTH_SHORT);
-                sort = bean.getSort();
+                Boolean hasDpts = false;
+                Boolean hasProducer = false;
+                Boolean hasApprovals = false;
+                // SimpleToast.toastMessage("流程可配置信息获取成功", Toast.LENGTH_SHORT);
+                sort = bean.getSortavl();
+                //sort =2，只要配置boss下面一级。
 
+                //可选择的审核部门
                 if (bean.getAvldpts() != null && bean.getAvldpts().size() > 0) {
-                    //可选择的审核部门
+                    hasDpts = true;
                     //setting department
                     listDeparts.clear();
                     listDeparts.addAll(bean.getAvldpts());
@@ -478,19 +401,18 @@ ProducerAddActivity extends BaseActivity {
                     }
 
                 }
+                //可选择的审批流程
                 if (bean.getChkpnts() != null && bean.getChkpnts().size() > 0) {
+                    hasProducer = true;
                     producersList.clear();
                     producersList.addAll(bean.getChkpnts());
                 }
 
-
+                //可选择的审核人
                 if (bean.getAvlusers() != null && bean.getAvlusers().size() > 0) {
-                    //可选择的审核人
-
+                    hasApprovals = true;
                     listApprover.clear();
                     listApprover.addAll(bean.getAvlusers());
-                    //赋值给 approver items
-
                     itemsApprovers = new String[listApprover.size()];
                     for (int i = 0; i < listApprover.size(); i++) {
                         itemsApprovers[i] = listApprover.get(i).getName();
@@ -499,6 +421,13 @@ ProducerAddActivity extends BaseActivity {
                     }
                 }
 
+                if (hasDpts && hasProducer && hasApprovals) {
+                    SimpleToast.toastMessage("流程可配置信息获取成功", Toast.LENGTH_SHORT);
+                    isSet = true;
+                } else {
+                    SimpleToast.toastMessage("可配置信息不完整，暂不可添加", Toast.LENGTH_SHORT);
+                    isSet = false;
+                }
 
             }
 
@@ -550,18 +479,25 @@ ProducerAddActivity extends BaseActivity {
     private void showMultiChoiceDialog() {
 
         selectDepsId.clear();
+        selectDepartName = "";
         AlertDialog dialog = new AlertDialog.Builder(this).setTitle("多选对话框")
                 .setNegativeButton("取消", null).setPositiveButton("确定", null)
                 .setMultiChoiceItems(itemsDeparts, null, new DialogInterface.OnMultiChoiceClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        Loger.e("multi chocie--which" + which);
-                        ProducerAddBean producerAddBean = new ProducerAddBean();
-                        tvProducerDepart.setText(itemsDeparts[which]);
-                        selectDepsId.add(listDeparts.get(which).getDpt());
+                        Loger.e("multi chocie--which" + which + "isCheck" + isChecked);
+                        if (isChecked) {
+                            selectDepartName = itemsDeparts[which] + "&" + selectDepartName;
+                            tvProducerDepart.setText(selectDepartName);
+                            selectDepsId.add(listDeparts.get(which).getDpt());
+
+                        }
+
 
                     }
+
+
                 }).create();
         dialog.show();
 

@@ -27,6 +27,7 @@
         android:id="@+id/btn_sure"
         style="@style/btn_sure"
         android:layout_alignParentBottom="true"
+        android:visibility="gone"
         android:text="确定" />
 
 

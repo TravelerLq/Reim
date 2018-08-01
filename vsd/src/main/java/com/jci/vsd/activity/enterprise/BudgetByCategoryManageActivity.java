@@ -70,13 +70,14 @@ public class BudgetByCategoryManageActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_budget_manage);
+        mDatas = new ArrayList<>();
         initViewEvent();
         context = BudgetByCategoryManageActivity.this;
         rightFucTxt.setVisibility(View.VISIBLE);
        //  tvTitle.setText("预算管理（报销科目划分）");
         // type=1
         getData(type);
-        intData();
+//        intData();
         initRecycleView();
         initViewEvent();
 
@@ -232,6 +233,11 @@ public class BudgetByCategoryManageActivity extends BaseActivity {
             @Override
             public void onNext(List<BudgetBean> budgetBeans) {
                 super.onNext(budgetBeans);
+
+                if(budgetBeans.size()==0){
+                    SimpleToast.toastMessage("暂无数据", Toast.LENGTH_SHORT);
+                }
+
                 mDatas.clear();
                 mDatas.addAll(budgetBeans);
                 mAdapter.notifyDataSetChanged();

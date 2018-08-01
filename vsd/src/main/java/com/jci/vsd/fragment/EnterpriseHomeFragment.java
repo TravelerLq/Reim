@@ -22,8 +22,8 @@ import com.jci.vsd.activity.BaseActivity;
 import com.jci.vsd.activity.FoundationActivity;
 import com.jci.vsd.activity.LoginActivity;
 import com.jci.vsd.activity.enterprise.BudgetChooseActivity;
-import com.jci.vsd.activity.enterprise.BudgetManageActivity;
 import com.jci.vsd.activity.enterprise.DepartmentManageActivity;
+import com.jci.vsd.activity.enterprise.EnterpriseUpdateActivity;
 import com.jci.vsd.activity.enterprise.MembsersManageActivity;
 import com.jci.vsd.activity.enterprise.ProducerManageActivity;
 import com.jci.vsd.adapter.enterprise.CompanySpinnerAdapter;
@@ -93,8 +93,6 @@ public class EnterpriseHomeFragment extends BaseFragment implements View.OnClick
         EnterpriseRequestBean enterpriseBean = EnterpriseData.getEnterpriseBean();
         if (enterpriseBean != null) {
             companyName = enterpriseBean.getName();
-
-
         }
 
 
@@ -232,9 +230,10 @@ public class EnterpriseHomeFragment extends BaseFragment implements View.OnClick
 
             case R.id.ll_enterprise_update:
                 //更新公司信息
-                EnterpriseBean bean = new EnterpriseBean();
-                bean.setIntentType(AppConstant.UPDATE);
-                toAtivityWithParams(EnterpriseHomeFragment.this, FoundationActivity.class, bean);
+//                EnterpriseBean bean = new EnterpriseBean();
+//                bean.setIntentType(AppConstant.UPDATE);
+//                toAtivityWithParams(EnterpriseHomeFragment.this, FoundationActivity.class, bean);
+                toActivity(EnterpriseHomeFragment.this,EnterpriseUpdateActivity.class);
                 break;
             case R.id.ll_add_enterprise:
                 //新建公司信息

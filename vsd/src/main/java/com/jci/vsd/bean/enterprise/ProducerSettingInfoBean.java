@@ -18,20 +18,20 @@ public class ProducerSettingInfoBean extends BaseBean {
          * avldpts : [{"name":"财务部","dpt":120}]
          */
 
-        private int sort;
+        private int sortavl;
         private List<AvlusersBean> avlusers;
         private List<ChkpntsBean> chkpnts;
         private List<AvldptsBean> avldpts;
 
-        public int getSort() {
-            return sort;
-        }
+    public int getSortavl() {
+        return sortavl;
+    }
 
-        public void setSort(int sort) {
-            this.sort = sort;
-        }
+    public void setSortavl(int sortavl) {
+        this.sortavl = sortavl;
+    }
 
-        public List<AvlusersBean> getAvlusers() {
+    public List<AvlusersBean> getAvlusers() {
             return avlusers;
         }
 

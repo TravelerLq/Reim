@@ -136,6 +136,12 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
 
         <activity
+            android:name=".activity.enterprise.EnterpriseUpdateActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+
+
+        <activity
             android:name=".activity.enterprise.UpdateCompanyActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
@@ -160,10 +166,6 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
         <activity
             android:name=".activity.enterprise.MembsersSelectActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
-        <activity
-            android:name=".activity.enterprise.BudgetManageActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
 

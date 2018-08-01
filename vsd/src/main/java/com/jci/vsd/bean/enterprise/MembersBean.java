@@ -3,6 +3,7 @@ package com.jci.vsd.bean.enterprise;
 
 import com.jci.vsd.bean.BaseBean;
 import com.jci.vsd.view.widget.treelist.bean.TreeNodeID;
+import com.jci.vsd.view.widget.treelist.bean.TreeNodeManager;
 import com.jci.vsd.view.widget.treelist.bean.TreeNodeName;
 import com.jci.vsd.view.widget.treelist.bean.TreeNodePID;
 
@@ -21,6 +22,16 @@ public class MembersBean extends BaseBean {
     private String name;
 
     private String status;
+    @TreeNodeManager
+    Boolean leader;
+
+    public Boolean getLeader() {
+        return leader;
+    }
+
+    public void setLeader(Boolean leader) {
+        this.leader = leader;
+    }
 
     public String getStatus() {
         return status;

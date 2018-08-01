@@ -30,14 +30,15 @@
             android:text="张三" />
 
 
-        <ImageView
-            android:id="@+id/ic_select_icon"
+        <TextView
+            android:id="@+id/tv_company_role"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dimen_20"
-            android:visibility="gone"
-            android:src="@drawable/ic_neek" />
+            android:visibility="visible"
+            android:text="部门主管"
+            />
     </RelativeLayout>
 </LinearLayout>

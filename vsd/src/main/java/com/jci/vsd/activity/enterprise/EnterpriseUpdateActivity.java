@@ -7,20 +7,20 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jci.vsd.R;
 import com.jci.vsd.activity.BaseActivity;
 import com.jci.vsd.activity.LoginActivity;
+import com.jci.vsd.activity.RegisterActivity;
 import com.jci.vsd.bean.enterprise.EnterpriseBean;
 import com.jci.vsd.bean.enterprise.EnterpriseRequestBean;
 import com.jci.vsd.bean.enterprise.EnterpriseResponseBean;
 import com.jci.vsd.constant.AppConstant;
 import com.jci.vsd.constant.MySpEdit;
+import com.jci.vsd.data.EnterpriseData;
 import com.jci.vsd.network.control.EnterpriseControl;
 import com.jci.vsd.observer.CommonDialogObserver;
 import com.jci.vsd.observer.RxHelper;
@@ -36,14 +36,10 @@ import io.reactivex.Observable;
 
 /**
  * Created by liqing on 18/6/26.
- * 更新公司信息 (EnterpriseUpdateActivity)
+ * 更新公司信息(EnterpriseUpdateActivity)
  */
 
-public class UpdateCompanyActivity extends BaseActivity {
-    @BindView(R.id.button_back)
-    ImageButton backBtn;
-    @BindView(R.id.textview_title)
-    TextView titleTxt;
+public class EnterpriseUpdateActivity extends BaseActivity {
 
     @BindView(R.id.edt_company_name)
     EditText edtCompanyName;
@@ -83,7 +79,10 @@ public class UpdateCompanyActivity extends BaseActivity {
     @BindView(R.id.ll_sure)
     LinearLayout llSure;
 
+    @BindView(R.id.ll_frame)
+    LinearLayout llFrame;
 
+    private MySpEdit prefs;
     //公司性质
     private List<String> companyTypeList = new ArrayList<>();
     private ArrayAdapter<String> adapter_company_type;
@@ -99,37 +98,110 @@ public class UpdateCompanyActivity extends BaseActivity {
     //开票方式
     private List<String> invoicingList = new ArrayList<>();
     private ArrayAdapter<String> adapter_invoicing;
-    private int companySelect = 1;
-    private EnterpriseBean enterpriseBean;
+//    private int companySelect = 1;
 
-    private MySpEdit prefs;
+    private EnterpriseBean enterpriseBean;
     private int companyId;
+    private String intentType;
+    private String userId;
+//    private int vatWaySelect;
+//    private int incomeTaxSelect;
+//    private int invocingSelect;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_company);
-        companyId = prefs.getCompanyId();
+        setContentView(R.layout.activity_foundation);
+        prefs = MySpEdit.getInstance();
+        llFrame.setVisibility(View.GONE);
+        userId = prefs.getUser();
         initViewEvent();
         initSpinnerData();
-        //公司性质
-        initSpCompanyType();
-        //增值税征收方式
-        initSpinner(adapter_vat_way, spVatWay, vatWayList, 1);
-        //所得税征收方式
-        initSpinner(adapter_income_tax, spIncomeTaxWay, incomeTaxList, 1);
-        //开票方式
-        initSpinner(adapter_invoicing, spInvoicingWay, invoicingList, 1);
-        // loadData();
+        EnterpriseRequestBean bean = EnterpriseData.getEnterpriseBean();
+
+        if (bean != null) {
+            edtCompanyName.setText(bean.getName());
+            //税号
+            edtTaxtNo.setText(bean.getTaxId());
+            //公司性质
+            int companySelect = selectPos(companyTypeList, bean.getNature());
+            initSpinner(adapter_company_type, spCompanyType, companyTypeList, companySelect);
+            //增值税方式
+            int vatWaySelect = selectPos(companyTypeList, bean.getVatColl());
+            initSpinner(adapter_vat_way, spVatWay, vatWayList, vatWaySelect);
+            //所得税征收方式
+            int incomeTaxSelect = selectPos(companyTypeList, bean.getIncomeTaxColl());
+            initSpinner(adapter_income_tax, spIncomeTaxWay, incomeTaxList, incomeTaxSelect);
+            //开票方式
+            int invocingSelect = selectPos(incomeTaxList, bean.getInvoice());
+            initSpinner(adapter_income_tax, spIncomeTaxWay, invoicingList, invocingSelect);
+            /**
+             * name : 南京御安神物联网科技有限公司
+             * nature : 有限责任公司
+             * vatColl : 一般纳税人
+             * incomeTaxColl : 查账征收
+             * taxId : 9132010530261362XN
+             * bank : 农行华荣支行
+             * bankAcct : 10100101040010592
+             * address : 南京玄武区玄武大道699-10号5幢
+             * phone : 025-83377373
+             * invoice : 自开
+             * legal : 时辉
+             * legalIdNumber : 321028197505222615
+             * quota : 1000000.0
+             * creator : 2
+             */
+            edtOpenBank.setText(bean.getBank());
+            edtBankAccount.setText(bean.getBankAcct());
+            edtCompanyAddress.setText(bean.getAddress());
+            edtCompanyTel.setText(bean.getPhone());
+            edtFounder.setText(bean.getLegal());
+            edtFounderId.setText(bean.getLegalIdNumber());
+            //公司报销限额还有？
+            edtReim.setText(bean.getQuota() + "");
+
+        }
+//        //公司性质
+//
+//
+//        //所得税征收方式
+//        initSpinner(adapter_income_tax, spIncomeTaxWay, incomeTaxList, 1);
+//        //开票方式
+//        initSpinner(adapter_invoicing, spInvoicingWay, invoicingList, 1);
 
     }
 
 
+    private void arrayToList(int resId, List<String> list) {
+        Resources res = getResources();
+        //  String[] status = res.getStringArray(R.array.approval_no);
+        String[] status = res.getStringArray(resId);
+        list = Arrays.asList(status);
+    }
+
+    //查询spinner选中Pos,然后才可以initSpinner
+    private int selectPos(List<String> stringList, String str) {
+        int selectPos = 0;
+        for (int i = 0; i < stringList.size(); i++) {
+            if (str.equals(stringList.get(i))) {
+                selectPos = i;
+                break;
+            }
+        }
+        Loger.e("--selectPos" + selectPos);
+        return selectPos;
+    }
 
     private void initSpinnerData() {
         //公司性质
+//        companyTypeList.add("--请选择--");
+//        companyTypeList.add("有限责任公司");
+//        companyTypeList.add("个人商户");
+        arrayToList(R.array.company_type, companyTypeList);
+
         Resources res = getResources();
+        //  String[] status = res.getStringArray(R.array.approval_no);
         String[] status = getResources().getStringArray(R.array.company_type);
         companyTypeList.clear();
         companyTypeList.addAll(Arrays.asList(status));
@@ -175,7 +247,7 @@ public class UpdateCompanyActivity extends BaseActivity {
                 //myTextView.setText("Nothing");
             }
         });
-        spCompanyType.setSelection(companySelect);
+        //   spCompanyType.setSelection(companySelect);
 
     }
 
@@ -209,9 +281,6 @@ public class UpdateCompanyActivity extends BaseActivity {
     @Override
     protected void initViewEvent() {
         llSure.setOnClickListener(this);
-
-        backBtn.setOnClickListener(this);
-        titleTxt.setText(getResources().getString(R.string.company_update));
     }
 
     private void initTestData() {
@@ -253,12 +322,10 @@ public class UpdateCompanyActivity extends BaseActivity {
         if (TextUtils.isEmpty(companyName)) {
             SimpleToast.toastMessage("请填写公司名称", Toast.LENGTH_LONG);
             return;
-        }
-//        else if (TextUtils.isEmpty(taxNo)) {
-//            SimpleToast.toastMessage("请填写税号", Toast.LENGTH_LONG);
-//            return;
-//        }
-        else if (companyType.equals("--请选择--")) {
+        } else if (TextUtils.isEmpty(taxNo)) {
+            SimpleToast.toastMessage("请填写税号", Toast.LENGTH_LONG);
+            return;
+        } else if (companyType.equals("--请选择--")) {
             SimpleToast.toastMessage("请选择公司性质", Toast.LENGTH_LONG);
             //   ToastUtil.showToast(EnterpriseUpdateActivity.this, "请选择公司性质", Toast.LENGTH_LONG);
             return;
@@ -302,50 +369,33 @@ public class UpdateCompanyActivity extends BaseActivity {
             SimpleToast.toastMessage("请填写报销限额", Toast.LENGTH_LONG);
             return;
         }
-//        {"name":"南京御安神物联网科技有限公司",
-//                "nature":"有限责任公司",
-//                "vatColl":"一般纳税人",      －－－ 增值税增收方式
-//                "incomeTaxColl":"查账征收",
-//                "taxId":"9132010530261362XN",
-//                "bank":"农行华荣支行",
-//                "bankAcct":"10100101040010592",
-//                "address":"南京玄武区玄武大道699-10号5幢",
-//                "phone":"025-83377373",
-//                "invoice":"自开",
-//                "legal":"时辉",
-//                "legalIdNumber":"321028197505222615",
-//                "quota":1000000.00,
-//                "creator":2
-//        }
+
         EnterpriseRequestBean requestBean = new
                 EnterpriseRequestBean();
-
-        requestBean.setId(companyId);
         requestBean.setName(companyName);
         requestBean.setNature(companyType);
         requestBean.setVatColl(vatWay);
         requestBean.setAddress(address);
         requestBean.setBank(openBank);
         requestBean.setBankAcct(bankAccount);
-//        requestBean.setCreator(2);
+        //
+        //  requestBean.setCreator(Integer.valueOf(userId));
+        requestBean.setCreator(2);
         requestBean.setIncomeTaxColl(incomeTaxWay);
         requestBean.setInvoice(invoicingWay);
         requestBean.setLegal(legal);
         requestBean.setLegalIdNumber(legalId);
         requestBean.setPhone(tel);
         requestBean.setQuota(Integer.valueOf(reimLimit));
-//        requestBean.setTaxId(taxNo);
-
-        updateCompany(requestBean);
-
+        requestBean.setTaxId(taxNo);
+        if (intentType.equals(AppConstant.UPDATE)) {
+            //updateCompany(requestBean);
+        }
+        toRegisterCompany(requestBean);
+        //  toActivity(RegisterActivity.class);
     }
 
-    private void loadData(int companyId){
-
-
-    }
-
-    private void updateCompany(final EnterpriseRequestBean requestBean) {
+    private void toRegisterCompany(final EnterpriseRequestBean requestBean) {
 
         Observable<EnterpriseResponseBean> observable = new EnterpriseControl().registerEnterprise(requestBean);
         CommonDialogObserver<EnterpriseResponseBean> observer = new CommonDialogObserver<EnterpriseResponseBean>(this) {
@@ -354,12 +404,21 @@ public class UpdateCompanyActivity extends BaseActivity {
                 super.onNext(responseBean);
                 String status = responseBean.getStatus();
                 if (status.equals("200")) {
-                    SimpleToast.toastMessage("成功", Toast.LENGTH_LONG);
+                    //创建成功后，保存公司信息
+                    requestBean.setId(responseBean.getCid());
+                    EnterpriseData.saveEnterprise(requestBean);
+                    SimpleToast.toastMessage("公司创建成功", Toast.LENGTH_LONG);
 
+                    companyId = responseBean.getCid();
+                    prefs.setCompanyId(companyId);
+                    if (intentType.equals("new_login")) {
+                        toActivity(RegisterActivity.class);
+                    }
+                    finish();
                 }
 
-                if (status.equals("2001")) {
-                    SimpleToast.toastMessage("失败", Toast.LENGTH_LONG);
+                if (status.equals("20005")) {
+                    SimpleToast.toastMessage("公司已经存在", Toast.LENGTH_LONG);
 
                 }
             }
@@ -376,7 +435,7 @@ public class UpdateCompanyActivity extends BaseActivity {
             }
         };
 
-        RxHelper.bindOnUIActivityLifeCycle(observable, observer, UpdateCompanyActivity.this);
+        RxHelper.bindOnUIActivityLifeCycle(observable, observer, EnterpriseUpdateActivity.this);
 
     }
 

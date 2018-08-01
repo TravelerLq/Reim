@@ -59,12 +59,13 @@ public class ProducerManageActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_producer_manage);
+        mDatas = new ArrayList<>();
         initViewEvent();
         context = ProducerManageActivity.this;
         rightFucTxt.setVisibility(View.VISIBLE);
         getData();
         //test
-        intData();
+      //  intData();
         initRecycleView();
     }
 
@@ -131,6 +132,7 @@ public class ProducerManageActivity extends BaseActivity {
                         if (pos >= 0 && pos < mDatas.size()) {
 
                             delete(mDatas.get(pos).getId(), pos);
+                            ((SwipeMenuLayout) holder.itemView).quickClose();
                             //  Toast.makeText(context, "删除:" + pos, Toast.LENGTH_SHORT).show();
 //                            mDatas.remove(pos);
 //                            mAdapter.notifyItemRemoved(pos);//推荐用这个
@@ -144,9 +146,8 @@ public class ProducerManageActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         int pos = holder.getLayoutPosition();
-//
-                        //   toAtivityWithParams(EditBudgetItemActivity.class, mDatas.get(pos));
                         toAtivityWithParams(ProducerEditActivity.class, mDatas.get(pos));
+                        ((SwipeMenuLayout) holder.itemView).quickClose();
 
                     }
                 });
@@ -189,7 +190,7 @@ public class ProducerManageActivity extends BaseActivity {
     protected void initViewEvent() {
         rightFucTxt.setOnClickListener(this);
         backBtn.setOnClickListener(this);
-        titleTxt.setText(getResources().getString(R.string.revenue_has_done));
+        titleTxt.setText(getResources().getString(R.string.producer_manager_tilte));
     }
 
     @Override
@@ -220,7 +221,6 @@ public class ProducerManageActivity extends BaseActivity {
                     mDatas.clear();
                     mDatas.addAll(beanList);
                     mAdapter.notifyDataSetChanged();
-
                 }
 
             }
@@ -233,7 +233,7 @@ public class ProducerManageActivity extends BaseActivity {
                     exit();
                     toActivity(LoginActivity.class);
                 } else {
-                    // SimpleToast.toastMessage(t.toString(), Toast.LENGTH_LONG);
+                     SimpleToast.toastMessage(t.toString(), Toast.LENGTH_SHORT);
                 }
 
 

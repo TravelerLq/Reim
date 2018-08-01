@@ -65,6 +65,7 @@ public class NewDeparmentActivity extends BaseActivity {
     private int reimCatedgoryId;
     private DepartmentBean editBean;
 
+
     @BindView(R.id.button_back)
     ImageButton backBtn;
     @BindView(R.id.textview_title)
@@ -85,6 +86,9 @@ public class NewDeparmentActivity extends BaseActivity {
         editBean = (DepartmentBean) getIntent().
                 getSerializableExtra(AppConstant.SERIAL_KEY);
         if (editBean != null) {
+            if (editBean.getType().equals("1")) {
+                titleTxt.setText(getResources().getString(R.string.edit_depart));
+            }
             edtDepartName.setText(editBean.getName());
             tvReimAuthority.setText(editBean.getPermname());
             tvDepartLeader.setText(editBean.getLname());
@@ -146,6 +150,7 @@ public class NewDeparmentActivity extends BaseActivity {
                 break;
             case R.id.tv_reim_authority:
                 Loger.e("----authority--");
+
                 selectAuthority();
                 break;
             case R.id.tv_depart_leader:
@@ -174,6 +179,10 @@ public class NewDeparmentActivity extends BaseActivity {
 
 
     private void selectAuthority() {
+        if (listReimCategory.size() == 0) {
+            SimpleToast.toastMessage("报销科目获取失败,不可进行此操作", Toast.LENGTH_SHORT);
+            return;
+        }
 
         TimePickerUtils.getInstance().onListBeanPicker(NewDeparmentActivity.this,
                 listReimCategory, allStatus, tvReimAuthority);
@@ -211,7 +220,6 @@ public class NewDeparmentActivity extends BaseActivity {
 //                "perm":1,
 //                "leader":24
 //        }
-        selectLeaderId = 24;
 
 
         requestBean = new DepartmentBean();
@@ -240,9 +248,8 @@ public class NewDeparmentActivity extends BaseActivity {
             public void onNext(Boolean aBoolean) {
                 super.onNext(aBoolean);
                 if (aBoolean) {
-                    SimpleToast.toastMessage("添加部门成功", Toast.LENGTH_SHORT);
+                    SimpleToast.toastMessage("成功", Toast.LENGTH_SHORT);
                     finish();
-                    toActivity(DepartmentManageActivity.class);
                 }
             }
 
@@ -268,7 +275,9 @@ public class NewDeparmentActivity extends BaseActivity {
             public void onNext(Boolean aBoolean) {
                 super.onNext(aBoolean);
                 if (aBoolean) {
-                    SimpleToast.toastMessage("成功", Toast.LENGTH_LONG);
+                    SimpleToast.toastMessage("成功", Toast.LENGTH_SHORT);
+                    finish();
+
                 }
             }
 
@@ -276,7 +285,7 @@ public class NewDeparmentActivity extends BaseActivity {
             public void onError(Throwable t) {
                 super.onError(t);
                 if (t.getMessage().equals("401")) {
-                    SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_LONG);
+                    SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_SHORT);
                     exit();
                     toActivity(LoginActivity.class);
                 }
@@ -297,6 +306,7 @@ public class NewDeparmentActivity extends BaseActivity {
             tvDepartLeader.setText(userBean.getName());
             selectLeaderId = Integer.valueOf(userBean.getId());
 
+
         }
     }
 
@@ -306,7 +316,7 @@ public class NewDeparmentActivity extends BaseActivity {
         tvReimAuthority.setOnClickListener(this);
         tvAdd.setOnClickListener(this);
         backBtn.setOnClickListener(this);
-        titleTxt.setText(getResources().getString(R.string.new_depart));
+
     }
 
     @Override
