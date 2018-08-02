@@ -18,6 +18,15 @@ public class ReimAddResponseBean extends BaseBean {
     private String bytes;
     private String name;
     private int id;
+    private String uri;
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
 
     public String getBytes() {
         return bytes;

@@ -99,8 +99,8 @@ public class ReimAddActivity extends BaseActivity {
     @BindView(R.id.edt_end_time)
     TextView edtEndTime;
 
-    @BindView(R.id.tv_date)
-    TextView tvDate;
+    @BindView(R.id.tv_single_time)
+    TextView tvSingleTime;
 
     @BindView(R.id.edt_start_location)
     EditText edtStartLocation;
@@ -199,23 +199,36 @@ public class ReimAddActivity extends BaseActivity {
         initViewEvent();
         initTesData();
         catBeanList = ReimCategoryData.getCategoryList();
-        Loger.e("catBeanList----" + catBeanList.size());
-        if (catBeanList == null || catBeanList.size() == 0) {
-            Loger.e("catBeanNull----");
-            new Thread(MyThread).start();
-        } else {
-            CatBean catBean = null;
-            parentsList.clear();
-            for (int i = 0; i < catBeanList.size(); i++) {
-                catBean = catBeanList.get(i);
-
-                //firstList.add(catBeanList.get(i).getCname());
-                // parentsList.add(new KeyValueBean(object.getExpenseCategoryId(), object.getExpenseCategoryName()));
-                parentsList.add(new KeyValueBean(String.valueOf(catBeanList.get(i).getCat()), catBean.getCname()));
-
-            }
-            initExpandaTabView();
-        }
+        new Thread(MyThread).start();
+//        if (catBeanList != null) {
+//            //从保存的文件里获取
+//            if (catBeanList.size() > 0) {
+//                CatBean catBean = null;
+//                parentsList.clear();
+//                for (int i = 0; i < catBeanList.size(); i++) {
+//                    catBean = catBeanList.get(i);
+//
+//                    //firstList.add(catBeanList.get(i).getCname());
+//                    // parentsList.add(new KeyValueBean(object.getExpenseCategoryId(), object.getExpenseCategoryName()));
+//                    parentsList.add(new KeyValueBean(String.valueOf(catBeanList.get(i).getCat()), catBean.getCname()));
+//
+//                }
+//            }
+//        } else {
+//
+//            new Thread(MyThread).start();
+////            CatBean catBean = null;
+////            parentsList.clear();
+////            for (int i = 0; i < catBeanList.size(); i++) {
+////                catBean = catBeanList.get(i);
+////
+////                //firstList.add(catBeanList.get(i).getCname());
+////                // parentsList.add(new KeyValueBean(object.getExpenseCategoryId(), object.getExpenseCategoryName()));
+////                parentsList.add(new KeyValueBean(String.valueOf(catBeanList.get(i).getCat()), catBean.getCname()));
+////
+////            }
+////            initExpandaTabView();
+//        }
     }
 
 
@@ -255,8 +268,16 @@ public class ReimAddActivity extends BaseActivity {
                 selectedPhotos.addAll(photos);
             }
             path = selectedPhotos.get(0);
+            String hashFile = null;
+            try {
+                hashFile = FileUtils.getMD5Checksum(path);
+                signVerifyP1(hashFile);
+                Loger.e("--outFile.length()--" +hashFile);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             Loger.e("path--" + (new File(selectedPhotos.get(0)).length()));
-            uri = Uri.fromFile(new File(selectedPhotos.get(0)));
+
 //            //图片压缩：
 //            Glide.with(ReimAddActivity.this)
 //                    .load(uri)
@@ -265,22 +286,22 @@ public class ReimAddActivity extends BaseActivity {
 
 
 //
-            File outFile = CompressUtil.compressImage(path,
-                    ScreenUtil.getInstance().getDisplayWidth(),
-                    ScreenUtil.getInstance().getDisplayWidth());
-            Loger.e("--outFile.length()--" + outFile.length());
+//            File outFile = CompressUtil.compressImage(path,
+//                    ScreenUtil.getInstance().getDisplayWidth(),
+//                    ScreenUtil.getInstance().getDisplayWidth());
+//            Loger.e("--outFile.length()--" + outFile.length());
 
-            try {
+//            try {
+////
+//                String base64CodePic = FileToBase64Util.encodeBase64File(outFile.getPath());
+//                String hashFilCompress = FileUtils.getMD5Checksum(outFile.getPath());
+//                Loger.e("--hashFilCompress--" + hashFile);
 //
-                String base64CodePic = FileToBase64Util.encodeBase64File(outFile.getPath());
-                String hashFile = FileUtils.getMD5Checksum(outFile.getPath());
-                Loger.e("--hashFile--" + hashFile);
-
-                signVerifyP1(hashFile);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+//                signVerifyP1(hashFile);
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
         }
 
     }
@@ -309,6 +330,7 @@ public class ReimAddActivity extends BaseActivity {
                     //获得就是签名证书
                     Log.e("cert", "= " + certificate);
                     //  spu.setCert(certificate);
+                    uri = Uri.fromFile(new File(selectedPhotos.get(0)));
                     Glide.with(ReimAddActivity.this)
                             .load(uri)
                             .thumbnail(0.1f)
@@ -355,9 +377,9 @@ public class ReimAddActivity extends BaseActivity {
                         " ,parentKey :" + parentKey + " ,childrenKey :" + childrenKey);
 
                 //没有三级科目
-                if (childrenKey.equals("-1")) {
-                    Loger.e("---integer.(-1)=" + Integer.valueOf("-1"));
-                    itemId = Integer.valueOf("-1");
+                if (childrenKey.equals("0")) {
+                    Loger.e("---integer.(-1)=" + Integer.valueOf("0"));
+                    itemId = Integer.valueOf("0");
                     Loger.e("");
 
                 } else {
@@ -439,7 +461,7 @@ public class ReimAddActivity extends BaseActivity {
         edtStartTime.setOnClickListener(this);
         edtEndTime.setOnClickListener(this);
 
-        tvDate.setOnClickListener(this);
+        tvSingleTime.setOnClickListener(this);
 
         backBtn.setOnClickListener(this);
         titleTxt.setText(getResources().getString(R.string.add_reim_item));
@@ -465,6 +487,13 @@ public class ReimAddActivity extends BaseActivity {
                 // toActivity(AddExpenseItemActivtity.this, ExpenseTypeActivity.class);
                 break;
 
+
+            case R.id.tv_single_time:
+
+                // Toast.makeText(context, "为当前时间，不可修改！", Toast.LENGTH_SHORT).show();
+                TimePickerUtils.getInstance().onYearMonthDayPickerText(ReimAddActivity.this, tvSingleTime);
+                break;
+
             case R.id.edt_start_time:
 
                 // Toast.makeText(context, "为当前时间，不可修改！", Toast.LENGTH_SHORT).show();
@@ -476,11 +505,12 @@ public class ReimAddActivity extends BaseActivity {
                 TimePickerUtils.getInstance().onYearMonthDayPickerText(ReimAddActivity.this, edtEndTime);
                 break;
 
-            case R.id.tv_date:
+//            case R.id.tv_single_time:
+//
+//                // Toast.makeText(context, "为当前时间，不可修改！", Toast.LENGTH_SHORT).show();
+//                TimePickerUtils.getInstance().onYearMonthDayPickerText(ReimAddActivity.this, edtStartTime);
+//                break;
 
-                // Toast.makeText(context, "为当前时间，不可修改！", Toast.LENGTH_SHORT).show();
-                TimePickerUtils.getInstance().onYearMonthDayPickerText(ReimAddActivity.this, edtStartTime);
-                break;
             case R.id.iv_reim_pic:
                 takePics();
                 break;
@@ -503,12 +533,17 @@ public class ReimAddActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Loger.e("----reimAddActi--onresume---");
+    }
 
     private void checkData() {
         ReimAddItemBean bean = new ReimAddItemBean();
         String edtMoneyStr = edtMoney.getText().toString();
 //        expenseTypeStr = tv.getText().toString();
-        String dateStr = tvDate.getText().toString();
+        String dateStr = tvSingleTime.getText().toString();
         String startTimeStr = edtStartTime.getText().toString().trim();
         String endTimeStr = edtEndTime.getText().toString().trim();
         String startLocationStr = edtStartLocation.getText().toString().trim();
@@ -641,6 +676,7 @@ public class ReimAddActivity extends BaseActivity {
         bean.setRemark(remarkStr);
         bean.setCat(String.valueOf(categoryId));
         bean.setItem(String.valueOf(itemId));
+
         bean.setCer(cert);
         bean.setSign(signKey);
 
@@ -687,7 +723,7 @@ public class ReimAddActivity extends BaseActivity {
                     ReimAddData.saveReimAddItemBean(bean);
                     //  toAcW(ReimRecycActivity.class);
                     toAtivityWithParamsAndBean(ReimRecycActivity.class, bean, AppConstant.KEY_REIM_ITEM);
-                    finish();
+
                 }
             }
         };
@@ -742,15 +778,8 @@ public class ReimAddActivity extends BaseActivity {
     }
 
     private void getJsonReimTypeData() {
-
         catBeanList = new ArrayList<>();
-        // firstList = new ArrayList<>();
-        //  showProgress();
-
-
         String json = "";
-
-
         try {
             json = ConvertUtils.toString(getAssets().open("data.json"));
         } catch (IOException e) {
@@ -763,26 +792,12 @@ public class ReimAddActivity extends BaseActivity {
         parentsList.clear();
         for (int i = 0; i < catBeanList.size(); i++) {
             catBean = catBeanList.get(i);
-
-            //firstList.add(catBeanList.get(i).getCname());
-            // parentsList.add(new KeyValueBean(object.getExpenseCategoryId(), object.getExpenseCategoryName()));
-
             parentsList.add(new KeyValueBean(String.valueOf(catBeanList.get(i).getCat()), catBean.getCname()));
         }
 
     }
 
     private void getItemdata(int pos) {
-//        for (int i = 0; i < thirdExpenseCategoryList.size(); i++) {
-//            //   Loger.e("thirdExpenseCategoryList-name" + thirdExpenseCategoryList.get(i).getExpenseItemName());
-//            if (thirdExpenseCategoryList.get(i).getExpenseItemId() != null) {
-//                ExpenseThirdTypeBean bean = thirdExpenseCategoryList.get(i);
-//                KeyValueBean keyValueBean = new KeyValueBean(bean.getExpenseItemId().toString(), bean.getExpenseItemName());
-//                thirdList.add(keyValueBean);
-//            }
-//
-//
-//        }
         thirdList.clear();
         List<CatBean.ItemsBean> itemsBeanList = catBeanList.get(pos).getItems();
         CatBean.ItemsBean itemsBean = null;
@@ -798,7 +813,7 @@ public class ReimAddActivity extends BaseActivity {
         }
 
         if (thirdList.size() == 0) {
-            thirdList.add(new KeyValueBean("-1", "无三级科目"));
+            thirdList.add(new KeyValueBean("0", "无三级科目"));
         }
         if (popTwoListView == null) {
             popTwoListView = new PopTwoListView(this);
@@ -808,7 +823,7 @@ public class ReimAddActivity extends BaseActivity {
     }
 
 
-    //去加载Reim
+    //去加载Reim报销科目类别
 
     Handler handle = new Handler() {
 
@@ -832,19 +847,6 @@ public class ReimAddActivity extends BaseActivity {
         }
     };
 
-//    } {
-//
-//        @Override
-//        public void run() {
-//            // 耗时操作
-//            getJsonReimTypeData();
-//
-//            Message msg = new Message();
-//
-//            handle.sendMessage(msg);
-//            super.run();
-//        }
-
 
     // 根据CatId +ItemId 来决定显示布局
 
@@ -863,7 +865,7 @@ public class ReimAddActivity extends BaseActivity {
             singleTime = false;
             singleLocation = false;
             hasClinet = true;
-           hasReason=false;
+            hasReason = false;
         }
 
         if (catId == 8 && itemId == 2) {
@@ -871,7 +873,7 @@ public class ReimAddActivity extends BaseActivity {
             singleTime = false;
             singleLocation = false;
             hasClinet = false;
-            hasReason=true;
+            hasReason = true;
         }
 
         if (catId == 4 && itemId == 21) {
@@ -880,49 +882,49 @@ public class ReimAddActivity extends BaseActivity {
             singleLocation = true;
             singleTime = true;
             hasClinet = false;
-            hasReason=false;
+            hasReason = false;
         }
         if (catId == 24 && itemId == -1) {
             //误餐费 时间
             hasTime = true;
             hasLocation = false;
             singleTime = true;
-            hasReason=true;
-            hasClinet=false;
+            hasReason = true;
+            hasClinet = false;
         }
-        if(catId==11){
+        if (catId == 11) {
             //
             rlVehicleNo.setVisibility(VISIBLE);
 
-            if(itemId==11){
+            if (itemId == 11) {
                 //11 11 加油票
                 hasTime = true;
                 singleTime = true;
-                hasLocation=false;
-                hasReason=false;
+                hasLocation = false;
+                hasReason = false;
                 rlDriveMile.setVisibility(VISIBLE);
             }
-            if(itemId==15){
+            if (itemId == 15) {
                 //停车费
-                hasReason=true;
-                hasLocation=true;
-                singleLocation=true;
-                hasTime=true;
-                singleTime=true;
-                hasClinet=false;
+                hasReason = true;
+                hasLocation = true;
+                singleLocation = true;
+                hasTime = true;
+                singleTime = true;
+                hasClinet = false;
             }
-            if(itemId==16){
+            if (itemId == 16) {
                 //车辆维修费
-                hasReason=true;
-                hasLocation=false;
-                singleLocation=true;
-                hasTime=true;
-                singleTime=true;
-                hasClinet=false;
+                hasReason = true;
+                hasLocation = false;
+                singleLocation = true;
+                hasTime = true;
+                singleTime = true;
+                hasClinet = false;
                 rlDriveMile.setVisibility(VISIBLE);
             }
 
-        }else {
+        } else {
             rlVehicleNo.setVisibility(GONE);
         }
 

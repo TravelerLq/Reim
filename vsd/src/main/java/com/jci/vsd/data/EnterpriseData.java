@@ -69,4 +69,13 @@ public class EnterpriseData {
         return list;
     }
 
+
+    public static void removeEnterpriseList() {
+        try {
+            Reservoir.delete(AppConstant.KEY_ENTERPRISE_LIST);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

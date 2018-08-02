@@ -25,4 +25,9 @@ public interface DownloadApi {
     @Streaming
     @GET
     Observable<ResponseBody> download1(@Url String url);//直接使用网址下载
+
+
+    @Streaming
+    @GET
+    Observable<ResponseBody> downloadFile(@Url String url);//直接使用网址下载
 }

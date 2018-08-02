@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.jci.vsd.R;
+import com.jci.vsd.activity.Reim.TestDownPic;
 import com.jci.vsd.activity.enterprise.RegisterCompanyActivity;
 
 import com.jci.vsd.application.VsdApplication;
@@ -143,7 +144,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-       // initTestData();
+        // initTestData();
     }
 
     /**
@@ -168,7 +169,7 @@ public class LoginActivity extends BaseActivity {
                 String status = responseBean.getStatus();
 
                 if (status.equals("200")) {
-                    SimpleToast.toastMessage("登录成功", Toast.LENGTH_LONG);
+                    SimpleToast.toastMessage("登录成功", Toast.LENGTH_SHORT);
                     //
                     int userId = Integer.valueOf(responseBean.getId());
                     prefs.setUser(responseBean.getId());
@@ -189,10 +190,11 @@ public class LoginActivity extends BaseActivity {
                         toActivity(RegisterCompanyActivity.class);
                     } else {
                         toActivity(MainActivity.class);
+                        //  toActivity(TestDownPic.class);
                         // toActivity(ReserviorTestActivity.class);
                     }
                 } else if (status.equals("201")) {
-                    SimpleToast.toastMessage("登录201", Toast.LENGTH_LONG);
+                    SimpleToast.toastMessage("登录201", Toast.LENGTH_SHORT);
                 }
 
                 finish();
@@ -201,7 +203,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onError(Throwable t) {
                 super.onError(t);
-                SimpleToast.toastMessage(t.getMessage(), Toast.LENGTH_LONG);
+                SimpleToast.toastMessage(t.getMessage(), Toast.LENGTH_SHORT);
             }
         };
 

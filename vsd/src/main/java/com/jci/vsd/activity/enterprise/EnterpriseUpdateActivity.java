@@ -124,18 +124,20 @@ public class EnterpriseUpdateActivity extends BaseActivity {
             edtCompanyName.setText(bean.getName());
             //税号
             edtTaxtNo.setText(bean.getTaxId());
+            edtTaxtNo.setFocusable(false);
+            edtTaxtNo.setFocusableInTouchMode(false);
             //公司性质
             int companySelect = selectPos(companyTypeList, bean.getNature());
             initSpinner(adapter_company_type, spCompanyType, companyTypeList, companySelect);
             //增值税方式
-            int vatWaySelect = selectPos(companyTypeList, bean.getVatColl());
+            int vatWaySelect = selectPos(vatWayList, bean.getVatColl());
             initSpinner(adapter_vat_way, spVatWay, vatWayList, vatWaySelect);
             //所得税征收方式
-            int incomeTaxSelect = selectPos(companyTypeList, bean.getIncomeTaxColl());
+            int incomeTaxSelect = selectPos(incomeTaxList, bean.getIncomeTaxColl());
             initSpinner(adapter_income_tax, spIncomeTaxWay, incomeTaxList, incomeTaxSelect);
             //开票方式
-            int invocingSelect = selectPos(incomeTaxList, bean.getInvoice());
-            initSpinner(adapter_income_tax, spIncomeTaxWay, invoicingList, invocingSelect);
+            int invocingSelect = selectPos(invoicingList, bean.getInvoice());
+            initSpinner(adapter_invoicing, spInvoicingWay, invoicingList, invocingSelect);
             /**
              * name : 南京御安神物联网科技有限公司
              * nature : 有限责任公司
@@ -158,8 +160,10 @@ public class EnterpriseUpdateActivity extends BaseActivity {
             edtCompanyTel.setText(bean.getPhone());
             edtFounder.setText(bean.getLegal());
             edtFounderId.setText(bean.getLegalIdNumber());
-            //公司报销限额还有？
-            edtReim.setText(bean.getQuota() + "");
+            //公司报销限额还有？ ==无
+//            edtReim.setText(bean.getQuota() + "");
+        } else {
+            Loger.e("---updateCompanybean is null");
         }
 //        //公司性质
 //
@@ -194,11 +198,7 @@ public class EnterpriseUpdateActivity extends BaseActivity {
 
     private void initSpinnerData() {
         //公司性质
-//        companyTypeList.add("--请选择--");
-//        companyTypeList.add("有限责任公司");
-//        companyTypeList.add("个人商户");
         arrayToList(R.array.company_type, companyTypeList);
-
         Resources res = getResources();
         //  String[] status = res.getStringArray(R.array.approval_no);
         String[] status = getResources().getStringArray(R.array.company_type);
@@ -221,32 +221,6 @@ public class EnterpriseUpdateActivity extends BaseActivity {
         invoicingList.add("增值税专用发票");
         invoicingList.add("增值税电子发票");
 
-
-    }
-
-    private void initSpCompanyType() {
-
-        //1.为下拉列表定义一个数组适配器，这个数组适配器就用到里前面定义的list。装的都是list所添加的内容
-        adapter_company_type = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, companyTypeList);//样式为原安卓里面有的android.R.layout.simple_spinner_item，让这个数组适配器装list内容。
-        //2.为适配器设置下拉菜单样式。adapter.setDropDownViewResource
-        adapter_company_type.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //3.以上声明完毕后，建立适配器,有关于sipnner这个控件的建立。用到myspinner
-        spCompanyType.setAdapter(adapter_company_type);
-        //4.为下拉列表设置各种点击事件，以响应菜单中的文本item被选中了，用setOnItemSelectedListener
-        spCompanyType.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {//选择item的选择点击监听事件
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                       int arg2, long arg3) {
-                // TODO Auto-generated method stub
-                // 将所选mySpinner 的值带入myTextView 中
-                //myTextView.setText("您选择的是：" + xflxadapter.getItem(arg2));//文本说明
-            }
-
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
-                //myTextView.setText("Nothing");
-            }
-        });
-        //   spCompanyType.setSelection(companySelect);
 
     }
 
@@ -363,11 +337,12 @@ public class EnterpriseUpdateActivity extends BaseActivity {
 
             SimpleToast.toastMessage("请填写法人证件号码", Toast.LENGTH_LONG);
             return;
-        } else if (TextUtils.isEmpty(reimLimit)) {
-
-            SimpleToast.toastMessage("请填写报销限额", Toast.LENGTH_LONG);
-            return;
         }
+//        } else if (TextUtils.isEmpty(reimLimit)) {
+//
+//            SimpleToast.toastMessage("请填写报销限额", Toast.LENGTH_LONG);
+//            return;
+//        }
 
         EnterpriseRequestBean requestBean = new
                 EnterpriseRequestBean();
@@ -385,51 +360,42 @@ public class EnterpriseUpdateActivity extends BaseActivity {
         requestBean.setLegal(legal);
         requestBean.setLegalIdNumber(legalId);
         requestBean.setPhone(tel);
-        requestBean.setQuota(Integer.valueOf(reimLimit));
+      //  requestBean.setQuota(Integer.valueOf(reimLimit));
         requestBean.setTaxId(taxNo);
-        if (intentType.equals(AppConstant.UPDATE)) {
-            //updateCompany(requestBean);
-        }
+
         toRegisterCompany(requestBean);
         //  toActivity(RegisterActivity.class);
     }
 
     private void toRegisterCompany(final EnterpriseRequestBean requestBean) {
 
-        Observable<EnterpriseResponseBean> observable = new EnterpriseControl().registerEnterprise(requestBean);
-        CommonDialogObserver<EnterpriseResponseBean> observer = new CommonDialogObserver<EnterpriseResponseBean>(this) {
+        Observable<Boolean> observable = new EnterpriseControl().updateEnterprise(requestBean);
+        CommonDialogObserver<Boolean> observer = new CommonDialogObserver<Boolean>(this) {
             @Override
-            public void onNext(EnterpriseResponseBean responseBean) {
-                super.onNext(responseBean);
-                String status = responseBean.getStatus();
-                if (status.equals("200")) {
-                    //创建成功后，保存公司信息
-                    requestBean.setId(responseBean.getCid());
-                    EnterpriseData.saveEnterprise(requestBean);
-                    SimpleToast.toastMessage("公司创建成功", Toast.LENGTH_LONG);
+            public void onNext(Boolean aBoolean) {
+                super.onNext(aBoolean);
 
-                    companyId = responseBean.getCid();
-                    prefs.setCompanyId(companyId);
-                    if (intentType.equals("new_login")) {
-                        toActivity(RegisterActivity.class);
-                    }
+                if (aBoolean) {
+                    //创建成功后，保存公司信息
+                    SimpleToast.toastMessage("公司信息更新成功", Toast.LENGTH_LONG);
+                    EnterpriseData.saveEnterprise(requestBean);
                     finish();
                 }
 
-                if (status.equals("20005")) {
-                    SimpleToast.toastMessage("公司已经存在", Toast.LENGTH_LONG);
-
-                }
             }
 
             @Override
             public void onError(Throwable t) {
                 super.onError(t);
-                if (t.getMessage().equals("401"))
+                if (t.getMessage().equals("401")){
+                    SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_SHORT);
+                    exit();
+                    toActivity(LoginActivity.class);
+                }else {
+                    SimpleToast.toastMessage(t.getMessage(), Toast.LENGTH_SHORT);
+                }
 
-                    SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_LONG);
-                exit();
-                toActivity(LoginActivity.class);
+
 
             }
         };

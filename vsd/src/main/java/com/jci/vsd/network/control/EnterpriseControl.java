@@ -61,8 +61,33 @@ public class EnterpriseControl extends BaseControl {
 
         Retrofit retrofit = builderJsonRetrofit();
         Map<String, String> paramsMap = new HashMap<>();
+//        {"name":"南京御安神物联网科技有限公司",
+//                "nature":"有限责任公司",
+//                "vatColl":"一般纳税人",
+//                "incomeTaxColl":"查账征收",
+//                "taxId":"9132010530261362XN",
+//                "bank":"农行华荣支行",
+//                "bankAcct":"10100101040010592",
+//                "address":"南京玄武区玄武大道699-10号5幢",
+//                "phone":"025-83377373",
+//                "invoice":"自开",
+//                "legal":"时辉",
+//                "legalIdNumber":"321028197505222615"
+//        }
+        paramsMap.put("name",requestBean.getName());
+        paramsMap.put("nature", requestBean.getNature());
+        paramsMap.put("vatColl",requestBean.getVatColl());
+        paramsMap.put("incomeTaxColl", requestBean.getIncomeTaxColl());
+        paramsMap.put("taxId", requestBean.getTaxId());
+        paramsMap.put("bank",requestBean.getBank());
+        paramsMap.put("bankAcct",requestBean.getBankAcct());
         paramsMap.put("address", requestBean.getAddress());
-        final String jsonString = JSON.toJSONString(requestBean);
+
+        paramsMap.put("phone",requestBean.getPhone());
+        paramsMap.put("invoice",requestBean.getInvoice());
+        paramsMap.put("legal", requestBean.getLegal());
+        paramsMap.put("legalIdNumber", requestBean.getLegalIdNumber());
+        final String jsonString = JSON.toJSONString(paramsMap);
         //  final String jsonString=JSON.toJSONString(paramsMap);
         System.out.println("jsonString:" + jsonString);
 
@@ -134,42 +159,45 @@ public class EnterpriseControl extends BaseControl {
 
     //更新公司信息
 
-    public Observable<EnterpriseResponseBean> updateEnterprise(final EnterpriseRequestBean requestBean) {
+    public Observable<Boolean> updateEnterprise(final EnterpriseRequestBean requestBean) {
 
         Retrofit retrofit = builderJsonRetrofit();
-        final String jsonString = JSON.toJSONString(requestBean);
+        Map<String, String> paramsMap = new HashMap<>();
+        paramsMap.put("name",requestBean.getName());
+        paramsMap.put("nature", requestBean.getNature());
+        paramsMap.put("vatColl",requestBean.getVatColl());
+        paramsMap.put("incomeTaxColl", requestBean.getIncomeTaxColl());
+        paramsMap.put("taxId", requestBean.getTaxId());
+        paramsMap.put("bank",requestBean.getBank());
+        paramsMap.put("bankAcct",requestBean.getBankAcct());
+        paramsMap.put("address", requestBean.getAddress());
+        paramsMap.put("phone",requestBean.getPhone());
+        paramsMap.put("invoice",requestBean.getInvoice());
+        paramsMap.put("legal", requestBean.getLegal());
+        paramsMap.put("legalIdNumber", requestBean.getLegalIdNumber());
+        final String jsonString = JSON.toJSONString(paramsMap);
+        //  final String jsonString=JSON.toJSONString(paramsMap);
         System.out.println("jsonString:" + jsonString);
         EnterpriseApi api = retrofit.create(EnterpriseApi.class);
         Observable<Response<String>> observable = api.updateEnterprise(jsonString);
 
-        return observable.map(new Function<Response<String>, EnterpriseResponseBean>() {
+        return observable.map(new Function<Response<String>, Boolean>() {
             @Override
-            public EnterpriseResponseBean apply(Response<String> stringResponse) throws Exception {
+            public Boolean apply(Response<String> stringResponse) throws Exception {
                 Headers headers = stringResponse.headers();
                 String authStr = headers.get("Authorization");
                 int codeHttp = stringResponse.code();
-                codeHttp = 401;
                 if (codeHttp == 401) {
                     throw new IApiException("401", "401");
                 }
-                Loger.e("header-authStr---" + authStr);
 
                 Loger.e("stringResponse.body=" + stringResponse.body());
                 JSONObject jsonObject = JSON.parseObject(stringResponse.body());
                 EnterpriseResponseBean responseBean;
                 if (jsonObject.getIntValue(AppConstant.JSON_CODE) == 200) {
+                    return true;
+                }
 
-                    //  JSONObject dataObj = jsonObject.getJSONObject(AppConstant.JSON_DATA);
-                    responseBean = JSON.parseObject(jsonObject
-                            .getString(AppConstant.JSON_DATA), EnterpriseResponseBean.class);
-                    responseBean.setStatus("200");
-                    return responseBean;
-                }
-                if (jsonObject.getIntValue(AppConstant.JSON_CODE) == 50001) {
-                    responseBean = new EnterpriseResponseBean();
-                    responseBean.setStatus("2001");
-                    return responseBean;
-                }
 
                 throw new IApiException("--", jsonObject.getString(AppConstant.JSON_MESSAGE));
 
@@ -186,7 +214,6 @@ public class EnterpriseControl extends BaseControl {
 //        System.out.println("jsonString:" + jsonString);
         EnterpriseApi api = retrofit.create(EnterpriseApi.class);
         Observable<Response<String>> observable = api.getEnterpriseInfo();
-
         return observable.map(new Function<Response<String>, GetEnterInfoBean>() {
             @Override
             public GetEnterInfoBean apply(Response<String> stringResponse) throws Exception {
@@ -196,8 +223,6 @@ public class EnterpriseControl extends BaseControl {
                 if (codeHttp == 401) {
                     throw new IApiException("401", "401");
                 }
-                Loger.e("header-authStr" + authStr);
-                MySpEdit.getInstance().setAuthor(authStr);
 
                 Loger.e("stringResponse.body=" + stringResponse.body());
                 JSONObject jsonObject = JSON.parseObject(stringResponse.body());

@@ -363,7 +363,6 @@ public class RegisterActivity extends BaseActivity {
                     Loger.e("--responseBean.getRole()" +type);
 
 
-
 //                    if (intentType.equals("boss")) {
 //
 //                        toActivityWithType(LoginActivity.class, intentType);
@@ -380,6 +379,14 @@ public class RegisterActivity extends BaseActivity {
                 //
                 if(status.equals("206")){
                     SimpleToast.toastMessage(" 手机号已注册,去登录", Toast.LENGTH_LONG);
+                }
+
+                if(status.equals("207")){
+                    SimpleToast.toastMessage(" 身份证号码已注册,去登录", Toast.LENGTH_LONG);
+                }
+
+                if(status.equals("208")){
+                    SimpleToast.toastMessage("账户已注册,去登录", Toast.LENGTH_LONG);
                 }
 
                 prefs.setUser(tel);

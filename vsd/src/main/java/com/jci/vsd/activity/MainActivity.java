@@ -76,7 +76,7 @@ public class MainActivity extends BaseActivity {
 
         ButterKnife.bind(this);
         tvTitle.setText(getResources().getString(R.string.home_title));
-        // checkUpdateApp();
+         //checkUpdateApp();
         List<Fragment> list = new ArrayList<Fragment>();
         list.add(new HomeFragment());
         list.add(new HelpFragment());

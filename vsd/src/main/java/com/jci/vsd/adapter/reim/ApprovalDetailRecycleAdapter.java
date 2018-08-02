@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jci.vsd.R;
+import com.jci.vsd.bean.reim.MyReimDetailBean;
 import com.jci.vsd.bean.reim.WaitApprovalDetailBean;
 import com.jci.vsd.utils.Loger;
 
@@ -30,11 +31,11 @@ import java.util.List;
 public class ApprovalDetailRecycleAdapter extends RecyclerView.Adapter<ApprovalDetailRecycleAdapter.MyViewHolder> {
 
     private Context context;
-    private List<WaitApprovalDetailBean> list;
+    private List<MyReimDetailBean.CostsBean> list;
     private LayoutInflater inflater;
     private List<Bitmap> listBitmap = new ArrayList<>();
 
-    public ApprovalDetailRecycleAdapter(Context context, List<WaitApprovalDetailBean> list) {
+    public ApprovalDetailRecycleAdapter(Context context, List<MyReimDetailBean.CostsBean> list) {
         this.context = context;
         this.list = list;
         this.inflater = LayoutInflater.from(this.context);
@@ -72,12 +73,12 @@ public class ApprovalDetailRecycleAdapter extends RecyclerView.Adapter<ApprovalD
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        final WaitApprovalDetailBean bean = list.get(position);
+        final MyReimDetailBean.CostsBean bean = list.get(position);
         if (bean != null) {
             if (holder.tvExplain == null) {
                 Log.e("holder.tvTitle", "null");
             } else {
-                holder.tvFee.setText(bean.getAmount());
+                holder.tvFee.setText(bean.getAmount()+"");
                 holder.tvExplain.setText(bean.getRemark());
                 holder.tvType.setText(bean.getName());
                 holder.rlItem.setTag(position);

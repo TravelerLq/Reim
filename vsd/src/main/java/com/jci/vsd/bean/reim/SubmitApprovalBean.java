@@ -19,6 +19,7 @@ public class SubmitApprovalBean extends BaseBean {
     private String flag;
     private String sign;
     private String cer;
+    private String reason;
 
     public int getId() {
         return id;
@@ -50,5 +51,13 @@ public class SubmitApprovalBean extends BaseBean {
 
     public void setCer(String cer) {
         this.cer = cer;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 }

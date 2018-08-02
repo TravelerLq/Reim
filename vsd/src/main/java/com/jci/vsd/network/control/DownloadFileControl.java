@@ -12,7 +12,6 @@ import com.jci.vsd.constant.AppConstant;
 import com.jci.vsd.exception.IApiException;
 import com.jci.vsd.network.api.DownloadApi;
 import com.jci.vsd.utils.Loger;
-import com.jci.vsd.utils.Utils;
 import com.jci.vsd.view.widget.SimpleToast;
 
 import java.util.HashMap;
@@ -31,16 +30,17 @@ import rx.schedulers.Schedulers;
  * Created by Administrator on 2017/11/20 0020.
  */
 
-public class DownloadAppControl extends BaseControl {
+public class DownloadFileControl extends BaseControl {
 
-    public rx.Observable<ResponseBody> downloadApp1(String url){
+    public rx.Observable<ResponseBody> downloadReimFile(String url){
         Retrofit retrofit = buildDownloadRetrofit();
         DownloadApi downloadApi = retrofit.create(DownloadApi.class);
         return  downloadApi.download1(url);
     }
 
-    public void downloadApp(Context context, String url, final FileCallBack<ResponseBody> callBack){
-        Loger.i("DownloadAppControl");
+
+    public void downloadFile(Context context, String url, final FileCallBack<ResponseBody> callBack){
+        Loger.i("DownloadFileControl");
         Retrofit retrofit = buildDownloadRetrofit();
         DownloadApi downloadApi = retrofit.create(DownloadApi.class);
         downloadApi.download(url)
@@ -67,38 +67,6 @@ public class DownloadAppControl extends BaseControl {
                 }).observeOn(AndroidSchedulers.mainThread()) //在主线程中更新ui
                 .subscribe(new FileSubscriber<ResponseBody>(VsdApplication.getInstance(),callBack));
     }
-
-
-    public void downloadFile(Context context, String url, final FileCallBack<ResponseBody> callBack){
-        Loger.i("DownloadAppControl");
-        Retrofit retrofit = buildDownloadRetrofit();
-        DownloadApi downloadApi = retrofit.create(DownloadApi.class);
-        downloadApi.download(url)
-                .subscribeOn(Schedulers.io())//请求网络 在调度者的io线程
-                .observeOn(Schedulers.io()) //指定线程保存文件
-                .doOnNext(new Action1<ResponseBody>() {
-                    @Override
-                    public void call(ResponseBody body) {
-                        Loger.i("downloadFile = =downloadApp"+Thread.currentThread().getId());
-                        try {
-                            callBack.saveFile(body);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            callBack.onError(e);
-                        }
-                    }
-                }) .observeOn(AndroidSchedulers.mainThread()) //指定线程保存文件
-                .doOnError(new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        Loger.i("downlaodFile...error..."+Thread.currentThread().getId());
-                        SimpleToast.ToastMessage("下载接口异常");
-                    }
-                }).observeOn(AndroidSchedulers.mainThread()) //在主线程中更新ui
-                .subscribe(new FileSubscriber<ResponseBody>(VsdApplication.getInstance(),callBack));
-    }
-
-
 
     public Observable<CheckUpdateResponse> getNewAppVersion(){
         //String version = Utils.getVersionCode();

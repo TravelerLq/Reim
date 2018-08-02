@@ -112,8 +112,8 @@ public class LoginApiControl extends BaseControl {
     }
 
     public Observable<LoginResponseBean> loginResponseWithHttps(String name, String psw) {
-       // Retrofit retrofit = builderJsonRetrofit();
-        Retrofit retrofit = builderJsonRetrofitWithHttps();
+        Retrofit retrofit = builderJsonRetrofit();
+        //  Retrofit retrofit = builderJsonRetrofitWithHttps();
 
         Map<String, String> parmsMap = new HashMap<>();
         parmsMap.put("phone", name);
@@ -129,7 +129,7 @@ public class LoginApiControl extends BaseControl {
             public LoginResponseBean apply(Response<String> stringResponse) throws Exception {
                 Headers headers = stringResponse.headers();
                 String authStr = headers.get("Authorization");
-                Loger.e("after login-authStr" + authStr);
+                Loger.e("login-get_authStr" + authStr);
                 MySpEdit.getInstance().setAuthor(authStr);
 
                 Loger.e("stringResponse.body=" + stringResponse.body());

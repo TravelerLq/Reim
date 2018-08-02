@@ -75,12 +75,13 @@ public class EnterpriseHomeFragment extends BaseFragment implements View.OnClick
     String type;
     private View inflate;
     private View inflate1;
-    private String companyName ="南京御安神物联网科技有限公司";
+    private String companyName = "南京御安神物联网科技有限公司";
     private String companyId;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         UserBean userBean = UserData.getUserInfo();
         if (userBean != null) {
             type = userBean.getType();
@@ -123,19 +124,23 @@ public class EnterpriseHomeFragment extends BaseFragment implements View.OnClick
         mContext = EnterpriseHomeFragment.this.getActivity();
         spinnerList = new ArrayList<>();
         spinnerList.add(new KeyValueBean("0", companyName));
-
-//        spinnerList.add(0, new KeyValueBean("1,", "company1"));
-//        spinnerList.add(1, new KeyValueBean("2,", "company2"));
-//        spinnerList.add(2, new KeyValueBean("3,", "company3"));
-
         initSpinner(spinnerCompanyName, spinnerList, 0);
-        //  getEnterpriseinfo();
+        Loger.e("----onViewCreated");
+        getEnterpriseinfo();
 
 
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Loger.e("----onResume");
+    }
+
+    //获取所有的公司
     private void getEnterpriseinfo() {
-        EnterpriseRequestBean enterpriseRequestBean = EnterpriseData.getEnterpriseBean();
+
         Observable<GetEnterInfoBean> observable = new EnterpriseControl().getEnterpeiseInfo();
         CommonDialogObserver<GetEnterInfoBean> observer = new CommonDialogObserver<GetEnterInfoBean>(this) {
 
@@ -144,7 +149,8 @@ public class EnterpriseHomeFragment extends BaseFragment implements View.OnClick
                 super.onNext(getEnterInfoBean);
                 String status = getEnterInfoBean.getStatus();
                 if (status.equals("200")) {
-                    SimpleToast.toastMessage("成功", Toast.LENGTH_LONG);
+                    //SimpleToast.toastMessage("成功", Toast.LENGTH_SHORT);
+
                     List<GetEnterInfoBean.CosBean> listCompany = getEnterInfoBean.getCos();
                     EnterpriseData.saveEnterpriseList(listCompany);
                     //保存公司信息
@@ -176,7 +182,7 @@ public class EnterpriseHomeFragment extends BaseFragment implements View.OnClick
         RxHelper.bindOnUI(observable, observer);
     }
 
-    private void initSpinner(Spinner spinner, List<KeyValueBean> listData, int select) {
+    private void initSpinner(final Spinner spinner, List<KeyValueBean> listData, int select) {
 
 
 //        //1.为下拉列表定义一个数组适配器，这个数组适配器就用到里前面定义的list。装的都是list所添加的内容
@@ -198,7 +204,7 @@ public class EnterpriseHomeFragment extends BaseFragment implements View.OnClick
                 // 将所选mySpinner 的值带入myTextView 中
                 Loger.e("---spiner-select-pos=" + pos);
                 spinnerSelectPos = pos;
-              //  SelectCosBean = EnterpriseData.getEnterpriseList().get(pos);
+                //  SelectCosBean = EnterpriseData.getEnterpriseList().get(pos);
 
             }
 
@@ -233,7 +239,7 @@ public class EnterpriseHomeFragment extends BaseFragment implements View.OnClick
 //                EnterpriseBean bean = new EnterpriseBean();
 //                bean.setIntentType(AppConstant.UPDATE);
 //                toAtivityWithParams(EnterpriseHomeFragment.this, FoundationActivity.class, bean);
-                toActivity(EnterpriseHomeFragment.this,EnterpriseUpdateActivity.class);
+                toActivity(EnterpriseHomeFragment.this, EnterpriseUpdateActivity.class);
                 break;
             case R.id.ll_add_enterprise:
                 //新建公司信息

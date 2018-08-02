@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -113,7 +114,7 @@ public class ReimRecycActivity extends BaseActivity {
         btnReimGenetate.setOnClickListener(this);
 
         backBtn.setOnClickListener(this);
-        titleTxt.setText(getResources().getString(R.string.revenue_has_done));
+        titleTxt.setText(getResources().getString(R.string.add_reim_form));
     }
 
     @Override
@@ -149,12 +150,14 @@ public class ReimRecycActivity extends BaseActivity {
                 super.onNext(reimAddResponseBean);
                 SimpleToast.toastMessage("提交成功，正在为您生成报销单。。。", Toast.LENGTH_SHORT);
                 if (reimAddResponseBean != null) {
+                    String id = reimAddResponseBean.getId() + "";
 
                     Thread closeActivity = new Thread(new Runnable() {
                         @Override
                         public void run() {
                             try {
                                 Thread.sleep(3000);
+                                Loger.e("---sleep 3000--");
                                 // Do some stuff
                             } catch (Exception e) {
                                 e.getLocalizedMessage();
@@ -162,8 +165,16 @@ public class ReimRecycActivity extends BaseActivity {
                         }
                     });
                     closeActivity.start();
-                    finish();
+                    Loger.e("---reimRecycleToActivity--");
                     toAtivityWithParams(ReimDocSubmitActivtiy.class, reimAddResponseBean);
+                    finish();
+                    Loger.e("---finish --");
+//                    toAtivityWithParams(ReimDocSubmitActivtiy.class, reimAddResponseBean);
+//
+//                    if(!TextUtils.isEmpty(id)){
+//                        toActivityWithType(ReimDocSubmitActivtiy.class,id);
+//                    }
+
                 }
             }
 
@@ -172,7 +183,7 @@ public class ReimRecycActivity extends BaseActivity {
                 super.onError(t);
             }
         };
-        RxHelper.bindOnUIActivityLifeCycle(observable,observer,ReimRecycActivity.this);
+        RxHelper.bindOnUIActivityLifeCycle(observable, observer, ReimRecycActivity.this);
 
     }
 
@@ -225,7 +236,10 @@ public class ReimRecycActivity extends BaseActivity {
                         if (pos >= 0 && pos < mDatas.size()) {
                             Toast.makeText(ReimRecycActivity.this, "删除:" + pos, Toast.LENGTH_SHORT).show();
                             mDatas.remove(pos);
+                            ReimAddData.removeReimList();
+                            ReimAddData.saveReimItemList(mDatas);
                             mAdapter.notifyItemRemoved(pos);//推荐用这个
+
                             //如果删除时，不使用mAdapter.notifyItemRemoved(pos)，则删除没有动画效果，
                             //且如果想让侧滑菜单同时关闭，需要同时调用 ((SwipeMenuLayout) holder.itemView).quickClose();
                             //mAdapter.notifyDataSetChanged();

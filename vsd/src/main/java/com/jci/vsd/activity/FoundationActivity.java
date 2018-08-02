@@ -331,11 +331,12 @@ public class FoundationActivity extends BaseActivity {
 
             SimpleToast.toastMessage("请填写法人证件号码", Toast.LENGTH_LONG);
             return;
-        } else if (TextUtils.isEmpty(reimLimit)) {
-
-            SimpleToast.toastMessage("请填写报销限额", Toast.LENGTH_LONG);
-            return;
         }
+//        else if (TextUtils.isEmpty(reimLimit)) {
+//
+//            SimpleToast.toastMessage("请填写报销限额", Toast.LENGTH_LONG);
+//            return;
+//        }
 
         EnterpriseRequestBean requestBean = new
                 EnterpriseRequestBean();
@@ -393,11 +394,15 @@ public class FoundationActivity extends BaseActivity {
             @Override
             public void onError(Throwable t) {
                 super.onError(t);
-                if (t.getMessage().equals("401"))
-
+                if (t.getMessage().equals("401")){
                     SimpleToast.toastMessage("登录超时，请重新登录", Toast.LENGTH_LONG);
-                exit();
-                toActivity(LoginActivity.class);
+                    exit();
+                    toActivity(LoginActivity.class);
+                }else {
+                    SimpleToast.toastMessage(t.getMessage(), Toast.LENGTH_LONG);
+                }
+
+
 
             }
         };

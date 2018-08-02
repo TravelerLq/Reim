@@ -466,7 +466,7 @@
     <string name="drive_mile">请填写行驶公里数</string>
     <string name="reason">请填写事由</string>
     <string name="meal_standard">请填写餐费标准</string>
-
     <string name="producer_manager_tilte">审核流程管理</string>
+    <string name="add_reim_form">已提交的报销单</string>
 
 </resources>

@@ -88,7 +88,60 @@ public abstract class FileCallBack<T> {
                 if (is != null) is.close();
                 if (fos != null) fos.close();
             } catch (IOException e) {
-                Log.e("saveFile", e.getMessage());
+                Loger.e("saveFile"+e.getMessage());
+            }
+        }
+    }
+
+    public void saveFileStream(ResponseBody body) throws Exception {
+        InputStream is = null;
+        byte[] buf = new byte[2048];
+        int len;
+
+        FileOutputStream fos = null;
+        try {
+            is = body.byteStream();
+            File dir = new File(destFileDir);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            File file = new File(dir, destFileName);
+            if (file.exists())
+                file.delete();
+            fos = new FileOutputStream(file);
+            while ((len = is.read(buf)) != -1) {
+                fos.write(buf, 0, len);
+            }
+            fos.flush();
+            unsubscribe();
+            //onCompleted();
+        } catch (FileNotFoundException e) {
+            Loger.i("FileNotFoundException = ");
+            e.printStackTrace();
+            isDownloadError = true;
+            throw new IApiException("dkkd", "没有发现下载文件");
+        } catch (SocketException e) {
+            Loger.i("FileNotFoundException = ");
+            e.printStackTrace();
+            isDownloadError = true;
+            throw new IApiException("dkkd", "网络超时");
+        } catch (IOException e) {
+            e.printStackTrace();
+            Loger.i("IOException = ");
+            isDownloadError = true;
+            throw new IApiException("dkkd", "网络读取异常");
+        } catch (Exception e) {
+            Loger.i("Exception = ");
+            e.printStackTrace();
+            isDownloadError = true;
+            throw new IApiException("dkkd", "下载失败");
+
+        } finally {
+            try {
+                if (is != null) is.close();
+                if (fos != null) fos.close();
+            } catch (IOException e) {
+                Loger.e("saveFile"+e.getMessage());
             }
         }
     }

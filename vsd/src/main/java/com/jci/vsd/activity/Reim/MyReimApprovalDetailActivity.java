@@ -66,7 +66,7 @@ public class MyReimApprovalDetailActivity extends BaseActivity {
     private int id;
     private String picPath;
     private List<String> selectPic;
-
+    private String reason="";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

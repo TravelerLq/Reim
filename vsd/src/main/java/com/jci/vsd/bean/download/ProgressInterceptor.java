@@ -18,4 +18,5 @@ public class ProgressInterceptor implements Interceptor {
                 .body(new ProgressResponseBody(originalResponse.body()))
                 .build();
     }
+
 }

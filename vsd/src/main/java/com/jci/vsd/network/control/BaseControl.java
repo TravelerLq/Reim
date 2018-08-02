@@ -27,6 +27,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import cn.com.syan.spark.client.sdk.service.AppCaRootService;
 import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -245,7 +246,7 @@ public class BaseControl {
                     }
                 });//设置写入超时时间
         //     .addInterceptor(loggingInterceptor);
-         //ssl
+        //ssl
 
         OkHttpClient client = builder.build();
 
@@ -271,7 +272,43 @@ public class BaseControl {
                 .build();
         Retrofit retrofit = new Retrofit.Builder()
                 .client(client)
-                .baseUrl("http://10.0.2.2:8080/")
+                .baseUrl(AppConstant.BASE_URL)
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        return retrofit;
+    }
+
+    //下载文件以及图片
+    protected Retrofit buildDownloadWithTokenRetrofit() {
+        final String requestAuth = MySpEdit.getInstance().getAuthor();
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder()
+
+                .connectTimeout(SOCKET_TIMEOUT, TimeUnit.SECONDS)
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+
+                        Request request = chain.request()
+                                .newBuilder()
+                                .addHeader("Content-Type", "application/json")
+                                .addHeader("User-Agent", "ios6s")
+                                // .addHeader("Authorization", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHQiOjE1Mjc3MzY3MzA0MjYsInVpZCI6IjE1MiIsImlhdCI6MTUyNzczNjY3MDQyNn0.Yb6SyjzKCixg2CIVYt7VtAnMsFcB_hDmzalHmxjO0cI")
+                                .addHeader("Authorization", requestAuth)
+                                .addHeader("Version1", "1")
+                                .build();
+
+
+                        return chain.proceed(request);
+                    }
+                })
+                .build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(client)
+                .baseUrl(AppConstant.BASE_URL)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

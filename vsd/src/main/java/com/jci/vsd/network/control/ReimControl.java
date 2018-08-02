@@ -189,11 +189,12 @@ public class ReimControl extends BaseControl {
         });
     }
 
-
+    //待审批报销单
     public Observable<List<ApprovalBean>> getWaitApprovalData() {
 
         Retrofit retrofit = builderJsonRetrofit();
-
+        Map<String, Object> paramsMap = new HashMap<>();
+//        paramsMap.put("type", type);
         ReimApi api = retrofit.create(ReimApi.class);
         Observable<Response<String>> observable = api.getWaitApprovalData();
         return observable.map(new Function<Response<String>, List<ApprovalBean>>() {
@@ -328,13 +329,15 @@ public class ReimControl extends BaseControl {
 
     //我的报销－－－
 
-    //我的报销单
+    //获取我的报销单列表
 
     public Observable<List<ApprovalBean>> getMyReimData(int type) {
 
         Retrofit retrofit = builderRetrofitWithHeader();
         ReimApi api = retrofit.create(ReimApi.class);
-        Observable<Response<String>> observable = api.getWaitApprovalData();
+        Map<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("type", type);
+        Observable<Response<String>> observable = api.getMyReims(paramsMap);
         return observable.map(new Function<Response<String>, List<ApprovalBean>>() {
             @Override
             public List<ApprovalBean> apply(Response<String> stringResponse) throws Exception {
@@ -364,7 +367,7 @@ public class ReimControl extends BaseControl {
 
 
     //获取我的报销 －报销单审批详情
-    public Observable<MyReimDetailBean> getMyReimDetail( int id) {
+    public Observable<MyReimDetailBean> getMyReimDetail(int id) {
 
         Retrofit retrofit = builderRetrofitWithHeader();
         Map<String, Object> paramMap = new HashMap<>();
@@ -383,7 +386,7 @@ public class ReimControl extends BaseControl {
                 JSONObject jsonObject = JSON.parseObject(responseStr);
                 int code = jsonObject.getIntValue(AppConstant.JSON_CODE);
                 if (code == 200) {
-                    MyReimDetailBean bean = JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA),MyReimDetailBean.class);
+                    MyReimDetailBean bean = JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA), MyReimDetailBean.class);
 //                    List<ApprovalBean> list = JSON.parseArray(jsonData.getString("forms"), ApprovalBean.class);
 //                    if (list != null) {
 //                        return list;

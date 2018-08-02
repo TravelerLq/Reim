@@ -29,6 +29,7 @@ import com.jci.vsd.bean.reim.WaitApprovalDetailBean;
 import com.jci.vsd.network.control.ReimControl;
 import com.jci.vsd.observer.CommonDialogObserver;
 import com.jci.vsd.observer.RxHelper;
+import com.jci.vsd.utils.BitmapUtil;
 import com.jci.vsd.utils.FileUtils;
 import com.jci.vsd.utils.Loger;
 import com.jci.vsd.utils.StrTobaseUtil;
@@ -50,7 +51,7 @@ import me.iwf.photopicker.PhotoPreview;
 
 /**
  * Created by liqing on 18/6/28.
- * 我的报销 -审批详情
+ * 我的审批 -审批详情
  */
 
 public class MyApprovalProcessActivity extends BaseActivity {
@@ -76,14 +77,9 @@ public class MyApprovalProcessActivity extends BaseActivity {
     private Context context;
     private ApprovalDetailRecycleAdapter adapter;
     private LinearLayoutManager layoutReimManager;
-    private LinearLayoutManager layoutTimeManager;
 
-    private ArrayList<HashMap<String, Object>> timeLineItem;
 
-    private List<WaitApprovalDetailBean> approvalReimbeanList;
-
-    private List<ApprovalAllDetailBean.ApprovalProcessVoAppArrayListBean> approvalProcessbeanList;
-    private TimeLineAdapter timeLineAdapter;
+    private List<MyReimDetailBean.CostsBean> approvalReimbeanList;
     private String reason;
     private boolean approveResultId;
     private int level = 0;
@@ -108,17 +104,12 @@ public class MyApprovalProcessActivity extends BaseActivity {
         titleTxt.setText(getResources().getString(R.string.my_approval_detail));
         initViewEvent();
         layoutReimManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-        layoutTimeManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        // layoutTimeManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         approvalReimbeanList = new ArrayList<>();
-        approvalProcessbeanList = new ArrayList<>();
-        timeLineItem = new ArrayList<>();
         initRecyApproval();
-        // initTimeLine();
-        int id = Integer.valueOf(getIntent().getStringExtra("id"));
+        id = Integer.valueOf(getIntent().getStringExtra("id"));
         Loger.e("---approval id" + id);
-//        id = 48;
         getData(id);
-        getpic(id);
 
     }
 
@@ -244,22 +235,15 @@ public class MyApprovalProcessActivity extends BaseActivity {
                 //通过，先去签名数据
                 approvalResult = "true";
                 try {
-//                    picPath = file.getPath();
+                    if (!TextUtils.isEmpty(hashFile)) {
+                        signVerifyP1(hashFile, approvalResult);
+                    }
 
-                    // signVerifyP1(hashFile, approvalResult);
-                    SubmitApprovalBean bean = new SubmitApprovalBean();
-                    bean.setCer(cert);
-                    bean.setSign(sign);
-                    bean.setFlag(approvalResult);
-//                    id = 48;
-                    bean.setId(id);
-                    submitApproval(bean);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 Loger.e("--hashFile--" + hashFile);
-                //  signVerifyP1(hashFile);
-                // submit();
 
                 break;
             case R.id.tv_approval_unpass:
@@ -301,8 +285,6 @@ public class MyApprovalProcessActivity extends BaseActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("请填写不通过理由");
-
-// Set up the input
         final EditText input = new EditText(this);
 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -323,8 +305,11 @@ public class MyApprovalProcessActivity extends BaseActivity {
                 }
 
                 try {
-                    hashFile = FileUtils.getMD5Checksum(picPath);
-                    signVerifyP1(hashFile, approvalResult);
+                    if (TextUtils.isEmpty(hashFile)) {
+                        signVerifyP1(hashFile, approvalResult);
+                    }
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -346,11 +331,7 @@ public class MyApprovalProcessActivity extends BaseActivity {
 
     //签名验证
     private void signVerifyP1(final String base64Code1, final String isPass) {
-//        pdu.showpd();
-
         String plantext = base64Code1;
-
-
         MyApprovalProcessActivity.this.getIntent().putExtra("data", plantext);
         MyApprovalProcessActivity.this.getIntent().putExtra("type", DataProcessType.SIGNATURE_P1.name());
         SignatureP1Service signatureP1Service = new SignatureP1Service(MyApprovalProcessActivity.this, "1234", new ProcessListener<DataProcessResponse>() {
@@ -373,10 +354,11 @@ public class MyApprovalProcessActivity extends BaseActivity {
                     bean.setSign(sign);
                     bean.setFlag(isPass);
 //                    id = 48;
+                    Loger.e("--pass Id" + id);
                     bean.setId(id);
+                    bean.setReason(reason);
                     submitApproval(bean);
-                    //去提交单据
-                    // submitSignJsonstring();
+
                 } else {
 //                    if (pdu.getMypDialog().isShowing()) {
 //                        pdu.dismisspd();
@@ -405,34 +387,35 @@ public class MyApprovalProcessActivity extends BaseActivity {
 
                 if (bean != null) {
 
-//                    if (bean.getCosts().size() == 0) {
-//                        SimpleToast.toastMessage("暂无数据", Toast.LENGTH_SHORT);
-//
-//                    } else {
-//                        SimpleToast.toastMessage("获取成功", Toast.LENGTH_SHORT);
-//
-//                        String base64Code = bean.getBytes();
-//                        String reimPicName = bean.getName();
-//                        bitmap = StrTobaseUtil.base64ToBitmap(base64Code);
-//                        // file = BitmapUtil.saveBitmapToSDCardFile(bitmap, reimPicName + ".jpg");
-//                        // file = BitmapUtil.saveBitmapToSDCardFile(bitmap, reimPicName );
-//
-//                        picPath = BitmapUtil.saveBitmapToSDCard(bitmap, System.currentTimeMillis() + ".jpg");
-//                        Loger.e("---picPath" + picPath);
-//                        //  picPath = BitmapUtil.saveBitmapToSDCard(bitmap, reimPicName + ".jpg");
-//                        ivReimPic.setImageBitmap(bitmap);
-//                        try {
-//                            hashFile = FileUtils.getMD5Checksum(picPath);
-//                            Loger.e("--hashFile--" + hashFile);
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//
-//                        approvalReimbeanList.clear();
-//                        approvalReimbeanList.addAll(bean.getCosts());
-//                        adapter.notifyDataSetChanged();
-//
-//                    }
+                    if (bean.getCosts().size() == 0) {
+                        SimpleToast.toastMessage("暂无数据", Toast.LENGTH_SHORT);
+
+                    } else {
+                        SimpleToast.toastMessage("获取成功", Toast.LENGTH_SHORT);
+
+                        String base64Code = bean.getBytes();
+                        String reimPicName = bean.getName();
+                        bitmap = StrTobaseUtil.base64ToBitmap(base64Code);
+                        // file = BitmapUtil.saveBitmapToSDCardFile(bitmap, reimPicName + ".jpg");
+                        // file = BitmapUtil.saveBitmapToSDCardFile(bitmap, reimPicName );
+
+                        picPath = BitmapUtil.saveBitmapToSDCard(bitmap, System.currentTimeMillis() + ".jpg");
+                        Loger.e("---picPath" + picPath);
+                        //  picPath = BitmapUtil.saveBitmapToSDCard(bitmap, reimPicName + ".jpg");
+                        ivReimPic.setImageBitmap(bitmap);
+                        try {
+                            hashFile = FileUtils.getMD5Checksum(picPath);
+                            Loger.e("--hashFile--" + hashFile);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        approvalReimbeanList.clear();
+                        approvalReimbeanList.addAll(bean.getCosts());
+                        adapter.notifyDataSetChanged();
+
+
+                    }
 
                 }
             }

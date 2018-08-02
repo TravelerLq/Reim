@@ -43,6 +43,8 @@ import io.reactivex.disposables.Disposable;
 /**
  * Created by liqing on 18/6/28.
  * 审批中fragment type = 1
+ * type = 1 表示查询我的正在被审批的报销单
+ * type = 2 表示查询我的已经审批完成（包括通过和驳回）的报销单
  */
 
 public class ApprovingFragment extends BaseFragment implements DialogObserverHolder {

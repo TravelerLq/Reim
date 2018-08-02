@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,14 +14,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.jci.vsd.R;
 import com.jci.vsd.activity.BaseActivity;
 import com.jci.vsd.activity.MainActivity;
+import com.jci.vsd.application.VsdApplication;
+import com.jci.vsd.bean.download.FileCallBack;
+import com.jci.vsd.bean.download.FileSubscriber;
 import com.jci.vsd.bean.reim.ReimAddResponseBean;
 import com.jci.vsd.bean.reim.ReimDocSubmitBean;
 import com.jci.vsd.constant.AppConstant;
 import com.jci.vsd.constant.MySpEdit;
 import com.jci.vsd.data.ReimAddData;
+import com.jci.vsd.network.control.DownloadFileControl;
 import com.jci.vsd.network.control.ReimControl;
 import com.jci.vsd.observer.CommonDialogObserver;
 import com.jci.vsd.observer.RxHelper;
@@ -27,8 +34,10 @@ import com.jci.vsd.utils.BitmapUtil;
 import com.jci.vsd.utils.FileUtils;
 import com.jci.vsd.utils.Loger;
 import com.jci.vsd.utils.StrTobaseUtil;
+import com.jci.vsd.utils.Utils;
 import com.jci.vsd.view.widget.SimpleToast;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +49,13 @@ import cn.unitid.spark.cm.sdk.exception.CmSdkException;
 import cn.unitid.spark.cm.sdk.listener.ProcessListener;
 import io.reactivex.Observable;
 import me.iwf.photopicker.PhotoPreview;
+import okhttp3.ResponseBody;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
+
+import static com.jci.vsd.constant.AppConstant.BASE__DOWN_URL;
 
 /**
  * Created by liqing on 18/6/28.
@@ -62,40 +78,41 @@ public class ReimDocSubmitActivtiy extends BaseActivity {
     private String picPath;
     private String cert;
     private String sign;
-    private int id;
     private List<String> selectPic;
+    private int id;
+    String hashFileReim = null;
+
+    //下载图片
+
+    private String fileName = ".png";
+    private static final String fileStoreDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+    Subscription subscription;
+    private String url;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reim_submit);
         initViewEvent();
-        ReimAddResponseBean getIntentBean = (ReimAddResponseBean) getIntent().getExtras().getSerializable(AppConstant.SERIAL_KEY);
-        if (getIntentBean != null) {
-            id = getIntentBean.getId();
-            base64Code = getIntentBean.getBytes();
-            Bitmap bitmap = StrTobaseUtil.base64ToBitmap(base64Code);
-            //bitmap to png
 
-            picPath = BitmapUtil.saveBitmapToSDCard(bitmap, System.currentTimeMillis() + ".jpg");
-            ivReimDoc.setImageBitmap(bitmap);
-
-            Loger.e("bitmap--save to Pic" + picPath);
-//            originalBoxPicList.clear();
-//            originalBoxPicList.add(0, picPath);
-
-
-//                    方式一.  Drawable drawable=new BitmapDrawable(Bitmap);
-//                    Glide.with(mContext).load(drawable).into(ivImage);
-            //2.
-//                    byte[] decodedString = Base64.decode(person_object.getPhoto(),Base64.NO_WRAP);
-//                    InputStream inputStream  = new ByteArrayInputStream(decodedString);
-//                    Bitmap bitmap  = BitmapFactory.decodeStream(inputStream);
-//                    user_image.setImageBitmap(bitmap);
-            // ivPicTest.setImageBitmap(bitmap);
-            // ivReimDoc.setImageBitmap(bitmap);
-//                    Drawable drawable = new BitmapDrawable(
+        ReimAddResponseBean intentBean = (ReimAddResponseBean) getIntent().getExtras()
+                .getSerializable(AppConstant.SERIAL_KEY);
+        if (intentBean != null) {
+            id = intentBean.getId();
+            url = intentBean.getUri();
+            url = url + AppConstant.BASE_URL;
+            downLoadPic(fileName, url);
         }
+//        String idStr = getIntent().getStringExtra(AppConstant.KEY_TYPE);
+//        if (!TextUtils.isEmpty(idStr)) {
+//            id = Integer.valueOf(idStr);
+//
+//            url = BASE__DOWN_URL + idStr;
+//        }
+//        Loger.e("formId" + id);
+//        fileName = System.currentTimeMillis() + ".png";
+//        url = AppConstant.BASE_URL;
+
 
     }
 
@@ -113,14 +130,17 @@ public class ReimDocSubmitActivtiy extends BaseActivity {
         switch (view.getId()) {
             case R.id.btn_reim_submit:
 
-                String hashFile = null;
                 try {
-                    hashFile = FileUtils.getMD5Checksum(picPath);
-                    signVerifyP1(hashFile);
+
+                    if (!TextUtils.isEmpty(hashFileReim)) {
+                        //  signVerifyP1(hashFile);
+                        signVerifyP1(hashFileReim);
+                    }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                Loger.e("--hashFile--" + hashFile);
+                Loger.e("--hashFileReim--" + hashFileReim);
 //                signVerifyP1(hashFile);
                 break;
             //提交单据 （先签名添加，成功后－再提交）
@@ -142,6 +162,81 @@ public class ReimDocSubmitActivtiy extends BaseActivity {
 
 
         }
+    }
+
+
+    //获取报销单图片
+    public void downLoadPic(final String fileName, String url) {
+        final FileCallBack<ResponseBody> callBack = new FileCallBack<ResponseBody>(fileStoreDir, fileName) {
+
+            @Override
+            public void onSuccess(final ResponseBody responseBody) {
+                String path = fileStoreDir + "/" + fileName;
+                Glide.with(ReimDocSubmitActivtiy.this)
+                        .load(path)
+                        .into(ivReimDoc);
+                Loger.e("--downLoad--success +path=" + path);
+                try {
+                    hashFileReim = FileUtils.getMD5Checksum(path);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Loger.e("--hashReim" + hashFileReim);
+
+            }
+
+            @Override
+            public void progress(long progress, long total) {
+                int progressIndex = (int) (progress * 100 / total);
+                Loger.i("progress = " + progress + "," + total + "," + Thread.currentThread().getId() + "," + progressIndex);
+//                updateProgressBar.setProgress(progressIndex);
+            }
+
+            @Override
+            public void onStart() {
+                showProgress();
+            }
+
+            @Override
+            public void onCompleted() {
+                //updateProgressBar.setVisibility(View.INVISIBLE);
+                dimissProgress();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                Loger.e("FileCallback--onError" + e.getMessage());
+                dimissProgress();
+                SimpleToast.toastMessage(e.getMessage(), Toast.LENGTH_SHORT);
+//                updateProgressBar.setVisibility(View.INVISIBLE);
+//                sureBtn.setEnabled(true);
+//                cancelBtn.setEnabled(true);
+            }
+        };
+        rx.Observable<ResponseBody> obserable = new DownloadFileControl().downloadReimFile(url);
+        subscription = obserable.subscribeOn(Schedulers.io())//请求网络 在调度者的io线程
+                .observeOn(Schedulers.io()) //指定线程保存文件
+                .doOnNext(new Action1<ResponseBody>() {
+                    @Override
+                    public void call(ResponseBody body) {
+                        try {
+                            callBack.saveFile(body);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            callBack.onError(e);
+                            Utils.doException(e);
+                        }
+                    }
+                }).observeOn(AndroidSchedulers.mainThread()) //指定线程保存文件
+                .doOnError(new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        Utils.doException(throwable);
+                    }
+                }).observeOn(AndroidSchedulers.mainThread()) //在主线程中更新ui
+                .subscribe(new FileSubscriber<ResponseBody>(VsdApplication.getInstance(), callBack));//在主线程中更新ui
+        //new DownloadAppControl().downloadApp(getActivity(),url,callBack);
     }
 
     //签名验证
@@ -172,6 +267,7 @@ public class ReimDocSubmitActivtiy extends BaseActivity {
                     bean.setCer(cert);
                     bean.setSign(sign);
                     bean.setId(id);
+                    Loger.e("---id" + id);
                     submitReimDoc(bean);
                     //去提交单据
                     // submitSignJsonstring();
@@ -192,6 +288,7 @@ public class ReimDocSubmitActivtiy extends BaseActivity {
             }
         });
     }
+
 
     private void submitReimDoc(ReimDocSubmitBean bean) {
         Observable<ReimAddResponseBean> observable = new ReimControl().submitReimDoc(bean);

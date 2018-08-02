@@ -63,6 +63,19 @@ public class RegisterControl extends BaseControl {
                     responseBean.setStatus("206");
                     return responseBean;
                 }
+                if (code == 20007) {
+                    // responseBean=  JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA), RegisterResponseBean.class);
+                    responseBean= new RegisterResponseBean();
+                    responseBean.setStatus("207");
+                    return responseBean;
+                }
+
+                if (code == 20008) {
+                    // responseBean=  JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA), RegisterResponseBean.class);
+                    responseBean= new RegisterResponseBean();
+                    responseBean.setStatus("208");
+                    return responseBean;
+                }
                 throw new IApiException("注册", jsonObject.getString(AppConstant.JSON_MESSAGE));
             }
         });

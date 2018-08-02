@@ -110,6 +110,10 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
 
         <activity
+            android:name=".activity.Reim.TestDownPic"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+        <activity
             android:name=".activity.Reim.MyReimActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
@@ -141,10 +145,6 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
 
 
-        <activity
-            android:name=".activity.enterprise.UpdateCompanyActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
 
         <activity
             android:name=".activity.enterprise.MembsersManageActivity"

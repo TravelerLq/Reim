@@ -56,7 +56,7 @@ public class MyReimDetailBean extends BaseBean {
             this.scheds = scheds;
         }
 
-        public static class CostsBean {
+        public static class CostsBean extends BaseBean {
             /**
              * amount : 110
              * name : 公交（管理部门交通费属下）

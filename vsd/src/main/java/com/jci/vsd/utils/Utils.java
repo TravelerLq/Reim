@@ -81,7 +81,7 @@ public class Utils {
 
 
     public static void doException(Throwable t) {
-        Loger.i("doException = "+t.getClass().getSimpleName());
+        Loger.i("UtilsdoException = "+t.getClass().getSimpleName());
         if (t instanceof IApiException) {
             SimpleToast.ToastMessage(((IApiException) t).getErrorMsg());
             return;
