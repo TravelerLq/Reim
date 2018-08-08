@@ -60,7 +60,6 @@ public class ContractAddActivtiy extends BaseActivity {
 
     private static final int REQUEST_CODE_TAKE_PIC = 1121;
     private ImageCaptureManager captureManager;
-
     private ArrayList<String> selectedPhotos;
     private ArrayList<String> photos;
     private String path;
