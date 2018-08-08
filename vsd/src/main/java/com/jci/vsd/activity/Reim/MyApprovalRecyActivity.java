@@ -42,6 +42,7 @@ public class MyApprovalRecyActivity extends BaseActivity {
     private MyApprovalRecycleAdapter adapter;
     private List<ApprovalBean> beanList;
     private Context context;
+    boolean isOnCeate = false;
 
 
     @Override
@@ -52,7 +53,8 @@ public class MyApprovalRecyActivity extends BaseActivity {
         beanList = new ArrayList<>();
         tvTitle.setText("待审批事项");
         // initTestData();
-        getData();
+
+//        getData();
         initRecycleView();
     }
 
@@ -62,11 +64,16 @@ public class MyApprovalRecyActivity extends BaseActivity {
             @Override
             public void onNext(List<ApprovalBean> list) {
                 super.onNext(list);
-                SimpleToast.toastMessage("数据获取成功", Toast.LENGTH_SHORT);
-                if (list != null) {
-                    beanList.clear();
-                    beanList.addAll(list);
-                    adapter.notifyDataSetChanged();
+                beanList.clear();
+                beanList.addAll(list);
+                adapter.notifyDataSetChanged();
+//                SimpleToast.toastMessage("数据获取成功", Toast.LENGTH_SHORT);
+                if (list.size() == 0) {
+                    SimpleToast.toastMessage("暂无数据", Toast.LENGTH_SHORT);
+
+                } else {
+                    SimpleToast.toastMessage("数据获取成功", Toast.LENGTH_SHORT);
+
                 }
             }
 
@@ -125,5 +132,13 @@ public class MyApprovalRecyActivity extends BaseActivity {
     @Override
     protected void initViewEvent() {
         backBtn.setOnClickListener(this);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Loger.e("--myApprovalRecycle-onResume");
+        getData();
     }
 }

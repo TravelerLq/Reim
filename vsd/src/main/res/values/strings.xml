@@ -388,6 +388,7 @@
     <string name="str_register"><Data><![CDATA[还没有帐号？<font color="#ff0000">%3$s</font>]]></Data></string>
     <string name="agreement">已阅读并同意注册协议</string>
     <string name="login_out_time">登录超时，请重新登录</string>
+    <string name="register_title">注册</string>
 
 
     <string name="home_title">主页</string>
@@ -468,5 +469,7 @@
     <string name="meal_standard">请填写餐费标准</string>
     <string name="producer_manager_tilte">审核流程管理</string>
     <string name="add_reim_form">已提交的报销单</string>
+    <string name="days">天数</string>
+    <string name="my_reim_approval_detail">审批详情</string>
 
 </resources>

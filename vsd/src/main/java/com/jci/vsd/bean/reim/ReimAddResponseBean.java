@@ -19,6 +19,15 @@ public class ReimAddResponseBean extends BaseBean {
     private String name;
     private int id;
     private String uri;
+    private  String url;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public String getUri() {
         return uri;

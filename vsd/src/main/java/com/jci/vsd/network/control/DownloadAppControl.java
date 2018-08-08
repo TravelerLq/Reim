@@ -101,12 +101,15 @@ public class DownloadAppControl extends BaseControl {
 
 
     public Observable<CheckUpdateResponse> getNewAppVersion(){
-        //String version = Utils.getVersionCode();
-        String version = "0.9.8";
+       String version = Utils.getVersionCode();
+       String versionName = Utils.getVersionName();
+       Loger.e("---version "+version +"versionName"+versionName);
+
+       //  String version = "0.9.8";
         Retrofit retrofit = builderRetrofitWithHeader();
         DownloadApi downloadApi = retrofit.create(DownloadApi.class);
         Map<String,String> map = new HashMap<>();
-        map.put("version",version);
+        map.put("version",versionName);
         Observable<String> observable = downloadApi.checkUpdate(map);
         return observable.map(new Function<String, CheckUpdateResponse>() {
             @Override

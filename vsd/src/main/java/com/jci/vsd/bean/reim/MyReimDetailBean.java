@@ -21,7 +21,17 @@ public class MyReimDetailBean extends BaseBean {
 
         private String bytes;
         private String name;
-        private List<CostsBean> costs;
+        private String url;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    private List<CostsBean> costs;
         private List<SchedsBean> scheds;
 
         public String getBytes() {
@@ -112,7 +122,7 @@ public class MyReimDetailBean extends BaseBean {
             }
         }
 
-        public static class SchedsBean {
+        public static class SchedsBean extends BaseBean {
             /**
              * result : true
              * name : 更新测试

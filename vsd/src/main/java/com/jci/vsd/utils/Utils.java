@@ -71,6 +71,28 @@ public class Utils {
         return String.valueOf(version);
     }
 
+
+//    /**
+//     * 获取软件版本号
+//     *
+//     * @return 当前应用的版本号
+//     */
+//    public static String getVersionName(Context context) {
+//        String versionName;
+//        try {
+//            PackageManager manager = context.getPackageManager();
+//            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+////            version1 = info.versionCode;//build
+//            versionName = info.versionName;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            versionName = "N/A";
+//        }
+//        return versionName;
+//    }
+
+
+
     public static String stringBuilder(String s) {
         StringBuilder stringBuilder = new StringBuilder(",");
 

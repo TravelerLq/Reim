@@ -45,9 +45,13 @@ public class TestDownPic extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_layout);
-        http://192.168.31.109:8080/shuidao/web/static/pngforms/0e0d12244f1c4f6dae6ae0bcdb33e187.png
+        //  http://192.168.31.109:8080/shuidao/web/static/pngforms/0e0d12244f1c4f6dae6ae0bcdb33e187.png
         url = "http://192.168.31.109:8080/shuidao/notoken/downapk";
-        url = "http://192.168.31.109:8080/shuidao/web/static/pngforms/ece2bea0934a45ffb6ffc965d7de3cae.png";
+        //url = "http://192.168.31.109:8080/shuidao/web/static/pngforms/ece2bea0934a45ffb6ffc965d7de3cae.png";
+        url="http://192.168.31.109:8080/shuidao/static/pngforms/0e0d12244f1c4f6dae6ae0bcdb33e187.png";
+
+        //服务器
+        url="https://cs.royalsecurity.cn/shuidao/static/pngforms/0e0d12244f1c4f6dae6ae0bcdb33e187.png";
 //        url="http://pic41.nipic.com/20140509/4746986_145156378323_2.jpg";
 //        url="http://img.my.csdn.net/uploads/201402/24/1393242467_3999.jpg";
         fileName = System.currentTimeMillis() + ".png";
@@ -101,7 +105,7 @@ public class TestDownPic extends BaseActivity {
             public void progress(long progress, long total) {
                 int progressIndex = (int) (progress * 100 / total);
                 Loger.e("progress = " + progress + "/" + total + "," + Thread.currentThread().getId() + "," + progressIndex);
-            //    updateProgressBar.setProgress(progressIndex);
+                //    updateProgressBar.setProgress(progressIndex);
             }
 
             @Override
@@ -111,27 +115,33 @@ public class TestDownPic extends BaseActivity {
 
             @Override
             public void onCompleted() {
+                Loger.e("--testPic--onCompleted");
                 //updateProgressBar.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onError(Throwable e) {
                 e.printStackTrace();
-                Loger.e("--hashReim--onError");
+                Loger.e("--hashReim--onError" + e.getMessage());
 //                updateProgressBar.setVisibility(View.INVISIBLE);
 //                sureBtn.setEnabled(true);
 //                cancelBtn.setEnabled(true);
             }
         };
-        rx.Observable<ResponseBody> obserable = new DownloadFileControl().downloadReimFile(url);
-        subscription = obserable.subscribeOn(Schedulers.io())//请求网络 在调度者的io线程
+        //rx.Observable<ResponseBody> obserable = new DownloadFileControl().downloadReimFile(url);
+        rx.Observable<ResponseBody> obserable = new DownloadFileControl().downloadReimFileWithToken(url);
+        //   subscription = obserable.subscribeOn(Schedulers.io())//请求网络 在调度者的io线程
+        subscription = obserable.subscribeOn(Schedulers.io())
+
                 .observeOn(Schedulers.io()) //指定线程保存文件
                 .doOnNext(new Action1<ResponseBody>() {
                     @Override
                     public void call(ResponseBody body) {
                         try {
+                            Loger.e("---body.contentLength" + body.contentLength());
                             callBack.saveFile(body);
                         } catch (Exception e) {
+
                             e.printStackTrace();
                             callBack.onError(e);
                             Utils.doException(e);

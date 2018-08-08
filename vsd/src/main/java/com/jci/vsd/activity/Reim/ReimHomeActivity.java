@@ -87,7 +87,10 @@ public class ReimHomeActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.iv_add_expense:
                 Loger.e("----ivAdd--click");
-                toActivity(ReimAddActivity.class);
+               toActivity(ReimAddActivity.class);
+//
+             //   toActivity(ReimAddTypeActivity.class);
+
                 // getFormId();
 //                Intent it = new Intent(getActivity(), AddExpenseItemActivtity.class);
 //                // it.putExtra("type", "home");

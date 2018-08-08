@@ -194,6 +194,7 @@ public class ReimAddActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Loger.e("---ReimAddONCreate---");
         setContentView(R.layout.activity_reim_add);
         context = ReimAddActivity.this;
         initViewEvent();
@@ -272,7 +273,7 @@ public class ReimAddActivity extends BaseActivity {
             try {
                 hashFile = FileUtils.getMD5Checksum(path);
                 signVerifyP1(hashFile);
-                Loger.e("--outFile.length()--" +hashFile);
+                Loger.e("--hashFile--" + hashFile);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -308,10 +309,8 @@ public class ReimAddActivity extends BaseActivity {
 
     //签名验证
     private void signVerifyP1(final String base64Code1) {
-//        pdu.showpd();
 
         String plantext = base64Code1;
-//        base64Code = base64Code1;
 
         ReimAddActivity.this.getIntent().putExtra("data", plantext);
         ReimAddActivity.this.getIntent().putExtra("type", DataProcessType.SIGNATURE_P1.name());
@@ -342,7 +341,8 @@ public class ReimAddActivity extends BaseActivity {
 //                        pdu.dismisspd();
 //                    }
                     Loger.e("dataProcessResponse.getRet() !=0");
-                    Toast.makeText(ReimAddActivity.this, "图片签名失败" + dataProcessResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                    SimpleToast.toastMessage("图片签名失败,请重试" + dataProcessResponse.getMessage(), Toast.LENGTH_SHORT);
+                    // Toast.makeText(ReimAddActivity.this, "图片签名失败" + dataProcessResponse.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -351,7 +351,7 @@ public class ReimAddActivity extends BaseActivity {
 //                if (pdu.getMypDialog().isShowing()) {
 //                    pdu.dismisspd();
 //                }
-                SimpleToast.toastMessage("图片签名失败,请重试" + e.getMessage(), Toast.LENGTH_LONG);
+                SimpleToast.toastMessage("图片签名失败,请重试" + e.getMessage(), Toast.LENGTH_SHORT);
                 //Toast.makeText(AddExpenseItemActivtity.this, "图片签名失败" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -714,7 +714,8 @@ public class ReimAddActivity extends BaseActivity {
                 super.onNext(s);
                 Loger.e("subFile" + s);
                 JSONObject jsonObject = JSON.parseObject(s);
-                if (jsonObject.getIntValue(AppConstant.JSON_CODE) == 200) {
+                int code =jsonObject.getIntValue(AppConstant.JSON_CODE) ;
+                if (code == 200) {
                     SimpleToast.toastMessage("成功", Toast.LENGTH_SHORT);
                     JSONObject jsonData = JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA));
                     int id = jsonData.getIntValue("id");
@@ -724,6 +725,8 @@ public class ReimAddActivity extends BaseActivity {
                     //  toAcW(ReimRecycActivity.class);
                     toAtivityWithParamsAndBean(ReimRecycActivity.class, bean, AppConstant.KEY_REIM_ITEM);
 
+                }else if(code==70003){
+                    SimpleToast.toastMessage("验签失败，请重试", Toast.LENGTH_SHORT);
                 }
             }
         };

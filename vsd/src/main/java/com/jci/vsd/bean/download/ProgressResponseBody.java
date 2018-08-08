@@ -50,6 +50,7 @@ public class ProgressResponseBody extends ResponseBody {
                 long bytesRead = super.read(sink, byteCount);
                 bytesReaded += bytesRead == -1 ? 0 : bytesRead;
                 Loger.i("==source=="+Thread.currentThread().getId());
+                Loger.i("==byteCount=="+byteCount);
                //实时发送当前已读取(上传/下载)的字节
                 RxBus.getInstance().post(new FileLoadEvent(contentLength(), bytesReaded));
                 return bytesRead;

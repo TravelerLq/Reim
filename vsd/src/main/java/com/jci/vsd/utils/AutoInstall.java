@@ -53,21 +53,34 @@ public class AutoInstall {
      */
 
     public static void install(Context context) {
+        Loger.e("--install");
         // 核心是下面几句代码
+
+
         Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Uri uri;
-        //intent.setAction("android.intent.action.VIEW");
+        Loger.e("--install");
+        try {
+            String  hashFileReim = FileUtils.getMD5Checksum(mUrl);
+            Loger.e("--apkHashFile=="+hashFileReim);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
            uri= Uri.fromFile(new File(mUrl));
+           Loger.e("--autoInstall.apkurl--"+mUrl);
            // uri = Uri.fromFile(file);
         } else {
             uri = FileProvider.getUriForFile(context, context.getPackageName()
                     + ".provider", new File(mUrl));
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);////添加这一句表示对目标应用临时授权该Uri所代表的文件
         }
+       // intent.setAction("android.intent.action.VIEW");
         intent.addCategory("android.intent.category.DEFAULT");
         intent.setDataAndType(uri,
                 "application/vnd.android.package-archive");
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);////添加这一句表示对目标应用临时授权该Uri所代表的文件
+
         context.startActivity(intent);
     }
 

@@ -59,7 +59,8 @@ public abstract class FileCallBack<T> {
             while ((len = is.read(buf)) != -1) {
                 fos.write(buf, 0, len);
             }
-            fos.flush();
+
+                fos.flush();
             unsubscribe();
             //onCompleted();
         } catch (FileNotFoundException e) {

@@ -107,14 +107,16 @@ public class ApprovingFragment extends BaseFragment implements DialogObserverHol
                     @Override
                     public void onClick(View v) {
                         int pos = holder.getLayoutPosition();
+                        Loger.e("---delete pos="+pos);
                         if (pos >= 0 && pos < mDatas.size()) {
-                            Toast.makeText(getContext(), "删除:" + pos, Toast.LENGTH_SHORT).show();
-                            mDatas.remove(pos);
-                            mAdapter.notifyItemRemoved(pos);//推荐用这个
+                            delete(mData.get(pos).getId(), pos);
+                        //    Toast.makeText(getContext(), "删除:" + pos, Toast.LENGTH_SHORT).show();
+//                            mDatas.remove(pos);
+//                            mAdapter.notifyItemRemoved(pos);//推荐用这个
                             //如果删除时，不使用mAdapter.notifyItemRemoved(pos)，则删除没有动画效果，
                             //且如果想让侧滑菜单同时关闭，需要同时调用 ((SwipeMenuLayout) holder.itemView).quickClose();
                             //mAdapter.notifyDataSetChanged();
-                            delete(mData.get(pos).getId(), pos);
+
                         }
                     }
                 });
@@ -179,12 +181,18 @@ public class ApprovingFragment extends BaseFragment implements DialogObserverHol
             @Override
             public void onNext(List<ApprovalBean> list) {
                 super.onNext(list);
-                SimpleToast.toastMessage("数据获取成功", Toast.LENGTH_SHORT);
-                if (list != null) {
+                if (list.size() == 0) {
+                    SimpleToast.toastMessage("暂无数据", Toast.LENGTH_SHORT);
+
+                }else {
+                    SimpleToast.toastMessage("数据获取成功", Toast.LENGTH_SHORT);
+                }
+
+
+
                     mData.clear();
                     mData.addAll(list);
                     mAdapter.notifyDataSetChanged();
-                }
             }
 
             @Override

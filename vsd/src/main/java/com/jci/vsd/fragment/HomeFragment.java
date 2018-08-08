@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 
 import com.jci.vsd.R;
 import com.jci.vsd.activity.Reim.ReimAddActivity;
+import com.jci.vsd.activity.Reim.ReimAddTypeActivity;
 import com.jci.vsd.activity.Reim.ReimHomeActivity;
 import com.jci.vsd.activity.Reim.ReimRecycActivity;
 import com.jci.vsd.activity.contract.ContractManageRecycleActivity;
@@ -82,6 +83,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 toActivity(HomeFragment.this, RemotelyBillingRecycleActivity.class);
                 break;
             case R.id.rl_budget:
+                toActivity(HomeFragment.this,ReimAddTypeActivity.class);
                 break;
             default:
                 break;

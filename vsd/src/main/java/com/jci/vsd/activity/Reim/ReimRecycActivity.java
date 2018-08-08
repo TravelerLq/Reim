@@ -148,7 +148,7 @@ public class ReimRecycActivity extends BaseActivity {
             @Override
             public void onNext(ReimAddResponseBean reimAddResponseBean) {
                 super.onNext(reimAddResponseBean);
-                SimpleToast.toastMessage("提交成功，正在为您生成报销单。。。", Toast.LENGTH_SHORT);
+
                 if (reimAddResponseBean != null) {
                     String id = reimAddResponseBean.getId() + "";
 
@@ -157,6 +157,7 @@ public class ReimRecycActivity extends BaseActivity {
                         public void run() {
                             try {
                                 Thread.sleep(3000);
+                                SimpleToast.toastMessage("提交成功，正在为您生成报销单。。。", Toast.LENGTH_SHORT);
                                 Loger.e("---sleep 3000--");
                                 // Do some stuff
                             } catch (Exception e) {

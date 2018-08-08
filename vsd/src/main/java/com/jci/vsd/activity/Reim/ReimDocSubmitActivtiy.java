@@ -89,6 +89,8 @@ public class ReimDocSubmitActivtiy extends BaseActivity {
     Subscription subscription;
     private String url;
 
+    private String urlBase="https://cs.royalsecurity.cn/shuidao/static";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,8 +101,10 @@ public class ReimDocSubmitActivtiy extends BaseActivity {
                 .getSerializable(AppConstant.SERIAL_KEY);
         if (intentBean != null) {
             id = intentBean.getId();
-            url = intentBean.getUri();
-            url = url + AppConstant.BASE_URL;
+            url = intentBean.getUrl();
+//            url = urlBase+ url;
+            Loger.e("---url--"+url);
+             fileName= System.currentTimeMillis() + ".png";
             downLoadPic(fileName, url);
         }
 //        String idStr = getIntent().getStringExtra(AppConstant.KEY_TYPE);
@@ -171,13 +175,14 @@ public class ReimDocSubmitActivtiy extends BaseActivity {
 
             @Override
             public void onSuccess(final ResponseBody responseBody) {
-                String path = fileStoreDir + "/" + fileName;
+              picPath = fileStoreDir + "/" + fileName;
+
                 Glide.with(ReimDocSubmitActivtiy.this)
-                        .load(path)
+                        .load(picPath)
                         .into(ivReimDoc);
-                Loger.e("--downLoad--success +path=" + path);
+                Loger.e("--downLoad--success +path=" + picPath);
                 try {
-                    hashFileReim = FileUtils.getMD5Checksum(path);
+                    hashFileReim = FileUtils.getMD5Checksum(picPath);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -214,7 +219,8 @@ public class ReimDocSubmitActivtiy extends BaseActivity {
 //                cancelBtn.setEnabled(true);
             }
         };
-        rx.Observable<ResponseBody> obserable = new DownloadFileControl().downloadReimFile(url);
+        // rx.Observable<ResponseBody> obserable = new DownloadFileControl().downloadReimFile(url);
+        rx.Observable<ResponseBody> obserable =new DownloadFileControl().downloadReimFileWithToken(url);
         subscription = obserable.subscribeOn(Schedulers.io())//请求网络 在调度者的io线程
                 .observeOn(Schedulers.io()) //指定线程保存文件
                 .doOnNext(new Action1<ResponseBody>() {
@@ -317,7 +323,7 @@ public class ReimDocSubmitActivtiy extends BaseActivity {
 //                    });
 //                    closeActivity.start();
                     finish();
-                    toActivity(MainActivity.class);
+                    toActivity(ReimHomeActivity.class);
                 }
             }
 

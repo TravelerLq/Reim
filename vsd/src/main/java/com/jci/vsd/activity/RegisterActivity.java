@@ -91,7 +91,7 @@ public class RegisterActivity extends BaseActivity {
     private MySpEdit prefs;
     private String intentType;
     //创建公司
-    private int type=2;
+    private int type = 2;
 
 
     @Override
@@ -103,13 +103,13 @@ public class RegisterActivity extends BaseActivity {
         intentType = getIntent().getStringExtra(AppConstant.KEY_TYPE);
         Loger.e("--registertype---" + intentType);
         if (intentType.equals("boss")) {
-            type=2;
-        }else if(intentType.equals("3")){
+            type = 2;
+        } else if (intentType.equals("3")) {
             //填写邀请码进来的员工；
-            type=3;
+            type = 3;
         }
 
-        initTestData1();
+        // initTestData1();
         onlineClient = new OnlineClient(CertServiceUrl.baseUrl, CertServiceUrl.appKey, CertServiceUrl.appSecret);
         //  sharedPreferencesUtil = new SharedPreferencesUtil(RegisterActivity.this);
         SparkApplication.init(getApplication());
@@ -138,7 +138,7 @@ public class RegisterActivity extends BaseActivity {
     protected void initViewEvent() {
         btnRegister.setOnClickListener(this);
         backBtn.setOnClickListener(this);
-        titleTxt.setText(getResources().getString(R.string.register));
+        titleTxt.setText(getResources().getString(R.string.register_title));
 
     }
 
@@ -360,7 +360,7 @@ public class RegisterActivity extends BaseActivity {
 //                    userBean.setPassword(psw);
 //                    userBean.setPhone(tel);
 //                    UserData.saveUser(userBean);
-                    Loger.e("--responseBean.getRole()" +type);
+                    Loger.e("--responseBean.getRole()" + type);
 
 
 //                    if (intentType.equals("boss")) {
@@ -377,15 +377,15 @@ public class RegisterActivity extends BaseActivity {
 
                 }
                 //
-                if(status.equals("206")){
+                if (status.equals("206")) {
                     SimpleToast.toastMessage(" 手机号已注册,去登录", Toast.LENGTH_LONG);
                 }
 
-                if(status.equals("207")){
+                if (status.equals("207")) {
                     SimpleToast.toastMessage(" 身份证号码已注册,去登录", Toast.LENGTH_LONG);
                 }
 
-                if(status.equals("208")){
+                if (status.equals("208")) {
                     SimpleToast.toastMessage("账户已注册,去登录", Toast.LENGTH_LONG);
                 }
 

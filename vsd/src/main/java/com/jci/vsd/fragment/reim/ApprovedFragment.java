@@ -76,7 +76,7 @@ public class ApprovedFragment extends BaseFragment implements DialogObserverHold
             }
         });
 
-        getData(type);
+       // getData(type);
         //initDatas();
 
         mAdapter = new CommonAdapter<ApprovalBean>(context, mData, R.layout.item_approving_swipe) {
@@ -115,9 +115,9 @@ public class ApprovedFragment extends BaseFragment implements DialogObserverHold
                     public void onClick(View v) {
                         int pos = holder.getLayoutPosition();
 //
-                      toActivityWithId(ApprovedFragment.this, MyReimApprovalDetailActivity.class, String.valueOf(mData.get(pos).getId()));
+                        toActivityWithId(ApprovedFragment.this, MyReimApprovalDetailActivity.class, String.valueOf(mData.get(pos).getId()));
                         //  Toast.makeText(mContext, "onClick:" + mDatas.get(holder.getAdapterPosition()).name, Toast.LENGTH_SHORT).show();
-                       // toActivityWithData(context, ExpenseProcessDetailActvity.class, "approvalId", approvalId);
+                        // toActivityWithData(context, ExpenseProcessDetailActvity.class, "approvalId", approvalId);
                         Log.d("TAG", "onClick() called with: v = [" + v + "]");
                     }
                 });
@@ -166,18 +166,30 @@ public class ApprovedFragment extends BaseFragment implements DialogObserverHold
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getData(type);
+
+    }
+
     private void getData(int type) {
         Observable<List<ApprovalBean>> observable = new ReimControl().getMyReimData(type);
         CommonDialogObserver<List<ApprovalBean>> observer = new CommonDialogObserver<List<ApprovalBean>>(this) {
             @Override
             public void onNext(List<ApprovalBean> list) {
                 super.onNext(list);
-                SimpleToast.toastMessage("数据获取成功", Toast.LENGTH_SHORT);
-                if (list != null) {
-                    mData.clear();
-                    mData.addAll(list);
-                    mAdapter.notifyDataSetChanged();
+                if (list.size() == 0) {
+                    SimpleToast.toastMessage("暂无数据", Toast.LENGTH_SHORT);
+                }else {
+                    SimpleToast.toastMessage("数据获取成功", Toast.LENGTH_SHORT);
                 }
+
+
+                mData.clear();
+                mData.addAll(list);
+                mAdapter.notifyDataSetChanged();
+
             }
 
             @Override

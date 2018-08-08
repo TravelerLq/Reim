@@ -5,6 +5,7 @@ import android.util.Log;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.jci.vsd.application.VsdApplication;
 import com.jci.vsd.bean.download.ProgressInterceptor;
+import com.jci.vsd.bean.download.ProgressInterceptorFile;
 import com.jci.vsd.bean.download.ProgressResponseBody;
 import com.jci.vsd.bean.login.LoginResponseBean;
 import com.jci.vsd.constant.AppConstant;
@@ -158,7 +159,6 @@ public class BaseControl {
     }
 
     //Register an application interceptor by calling addInterceptor() on OkHttpClient.Builder
-
     protected Retrofit builderJsonRetrofit() {
         final String requestAuth = MySpEdit.getInstance().getAuthor();
         Loger.e("---RequestAuth---" + requestAuth);
@@ -264,11 +264,17 @@ public class BaseControl {
         return retrofit;
     }
 
+    //without token
 
     protected Retrofit buildDownloadRetrofit() {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder()
+
                 .connectTimeout(SOCKET_TIMEOUT, TimeUnit.SECONDS)
                 .addInterceptor(new ProgressInterceptor())
+                .addInterceptor(interceptor)
                 .build();
         Retrofit retrofit = new Retrofit.Builder()
                 .client(client)
@@ -281,30 +287,13 @@ public class BaseControl {
 
     //下载文件以及图片
     protected Retrofit buildDownloadWithTokenRetrofit() {
-        final String requestAuth = MySpEdit.getInstance().getAuthor();
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder()
-
                 .connectTimeout(SOCKET_TIMEOUT, TimeUnit.SECONDS)
-                .addInterceptor(new Interceptor() {
-                    @Override
-                    public Response intercept(Chain chain) throws IOException {
-
-                        Request request = chain.request()
-                                .newBuilder()
-                                .addHeader("Content-Type", "application/json")
-                                .addHeader("User-Agent", "ios6s")
-                                // .addHeader("Authorization", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHQiOjE1Mjc3MzY3MzA0MjYsInVpZCI6IjE1MiIsImlhdCI6MTUyNzczNjY3MDQyNn0.Yb6SyjzKCixg2CIVYt7VtAnMsFcB_hDmzalHmxjO0cI")
-                                .addHeader("Authorization", requestAuth)
-                                .addHeader("Version1", "1")
-                                .build();
-
-
-                        return chain.proceed(request);
-                    }
-                })
+                .addInterceptor(new ProgressInterceptorFile())
+                .addInterceptor(interceptor)
                 .build();
         Retrofit retrofit = new Retrofit.Builder()
                 .client(client)

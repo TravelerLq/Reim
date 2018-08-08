@@ -22,6 +22,7 @@ import com.jci.vsd.bean.download.FileSubscriber;
 import com.jci.vsd.constant.AppConstant;
 import com.jci.vsd.network.control.DownloadAppControl;
 import com.jci.vsd.utils.AutoInstall;
+import com.jci.vsd.utils.FileUtils;
 import com.jci.vsd.utils.Loger;
 import com.jci.vsd.utils.Utils;
 import com.jci.vsd.view.widget.SimpleToast;
@@ -45,7 +46,7 @@ public class UpdateAppDialog extends DialogFragment implements View.OnClickListe
     private Button cancelBtn;
     private String downloadUrl = "";
     private String versionCode = "";
-    private static final String fileName = "reim.apk";
+    private  final String fileName = "reim.apk";
     private static final String fileStoreDir = Environment.getExternalStorageDirectory().getAbsolutePath();
     private TextView newVersionMsgTxt,nowVersionMsgTxt;
     Subscription subscription;
@@ -99,6 +100,9 @@ public class UpdateAppDialog extends DialogFragment implements View.OnClickListe
 
 
     public void downLoadApp(String url) {
+        Loger.e("---downloadAppUrl=="+url);
+      //  fileName="vsd_"+Utils.getVersionName()+".apk";
+       // fileName=System.currentTimeMillis()+"vest.apk";
         final FileCallBack<ResponseBody> callBack = new FileCallBack<ResponseBody>(fileStoreDir, fileName) {
 
             @Override
@@ -106,8 +110,11 @@ public class UpdateAppDialog extends DialogFragment implements View.OnClickListe
                 sureBtn.setEnabled(true);
                 cancelBtn.setEnabled(true);
                 updateProgressBar.setVisibility(View.INVISIBLE);
+                Loger.e("---fileStoredir=--"+fileStoreDir
+                        + "/" + fileName);
                 AutoInstall.setUrl(fileStoreDir
                         + "/" + fileName);
+
                 AutoInstall.install(getActivity());
                 dismiss();
             }

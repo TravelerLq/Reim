@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/activity_title"></include>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:layout_marginRight="@dimen/dimen_5"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:background="@color/gray_EFEFEF"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_10">
+
+                <LinearLayout style="@style/reim_item_linear">
+
+                    <ImageView
+                        style="@style/enterprise_home_iv"
+                        android:src="@drawable/ic_reim_rmb" />
+
+                    <EditText
+                        android:id="@+id/edt_money"
+                        style="@style/reim_add_text"
+                        android:background="@null"
+                        android:hint="请填写报销金额"
+                        android:inputType="number|numberDecimal" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_reim_type"
+                    style="@style/reim_item_linear">
+
+                    <ImageView
+                        style="@style/enterprise_home_iv"
+                        android:src="@drawable/ic_add_type" />
+
+                    <TextView
+                        android:id="@+id/tv_money"
+                        style="@style/reim_add_text"
+                        android:layout_width="wrap_content"
+                        android:text="报销类型" />
+
+                    <RelativeLayout
+                        android:id="@+id/linearLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:orientation="horizontal">
+
+                        <com.warmtel.expandtab.ExpandPopTabView
+                            android:id="@+id/expandable_list_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/dimen_10"
+                            android:src="@drawable/ic_more" />
+
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <FrameLayout
+                    android:id="@+id/frame_reim_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/dimen_40">
+
+                </FrameLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/reim_item_linear"
+                android:layout_marginTop="@dimen/dimen_5"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen_20">
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="票据原件：" />
+
+                <ImageView
+                    android:id="@+id/iv_reim_pic"
+                    android:layout_width="@dimen/dimen_100"
+                    android:layout_height="@dimen/dimen_60"
+                    android:layout_marginStart="23dp"
+                    android:background="@drawable/bg_red_rectangle"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_add_take_pic" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_1"
+                android:background="@color/stock" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_120"
+                android:paddingLeft="@dimen/dimen_10">
+
+                <ImageView
+                    android:id="@+id/tv_detail"
+                    style="@style/enterprise_home_iv"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignTop="@+id/edt_count"
+                    android:layout_marginStart="11dp"
+                    android:layout_marginTop="9dp"
+                    android:src="@drawable/ic_add_detail" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toStartOf="@+id/edt_count"
+                    android:text="明细备注" />
+
+
+                <com.jci.vsd.view.widget.CountEditText
+                    android:id="@+id/edt_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginRight="@dimen/dimen_10"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_toRightOf="@+id/tv_detail"></com.jci.vsd.view.widget.CountEditText>
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_add"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50"
+                android:layout_marginLeft="@dimen/dimen_20"
+                android:layout_marginRight="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:background="@drawable/btn_red"
+                android:gravity="center"
+                android:text="@string/sure"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -105,7 +105,7 @@ public class LoginActivity extends BaseActivity {
         initViewEvent();
         // initTestData();
         //检查更新
-        //  checkUpdateApp();
+        //checkUpdateApp();
         intentType = getIntent().getStringExtra("type");
         Loger.e("logih-getIntenttype" + intentType);
         if (UserData.getUserInfo() != null) {
@@ -190,7 +190,7 @@ public class LoginActivity extends BaseActivity {
                         toActivity(RegisterCompanyActivity.class);
                     } else {
                         toActivity(MainActivity.class);
-                        //  toActivity(TestDownPic.class);
+                        // toActivity(TestDownPic.class);
                         // toActivity(ReserviorTestActivity.class);
                     }
                 } else if (status.equals("201")) {
@@ -278,7 +278,21 @@ public class LoginActivity extends BaseActivity {
 
         store = CBSCertificateStore.getInstance();
         certificateArrayList = store.getAllCertificateList();
+        String name = certificateArrayList.get(0).getName();
+        String getIssuer = certificateArrayList.get(0).getIssuer();
+
+        String id = certificateArrayList.get(0).getId();
+        String cetId = certificateArrayList.get(0).getEncCertId();
+        String oteht = certificateArrayList.get(0).getAlias();
+
+
+        Loger.e("--certificate--" + name + "--alias=" + oteht);
+
+        Loger.e("--certificate-id-" + id + "--cetId=" + cetId);
+        Loger.e("--getIssuer" + getIssuer);
+
         if (certificateArrayList.size() == 0) {
+
             //先去申请证书
             SimpleToast.ToastMessage("请先申请个人证书！");
             toActivity(RegisterCertActivity.class);
@@ -379,9 +393,13 @@ public class LoginActivity extends BaseActivity {
             public void onNext(CheckUpdateResponse checkUpdateResponse) {
                 super.onNext(checkUpdateResponse);
                 //http://1192.168.31.109:8080/shuidao/notoken/downapk
-                String apkUrl = "http://192.168.31.109:8080/shuidao/notoken/downapk";
+                if (checkUpdateResponse.isFlag()) {
+                    // 需要更新
+                    String apkUrl = AppConstant.BASE_URL + "shuidao/notoken/downapk";
+                    updateShowDialog(apkUrl, checkUpdateResponse.getLast());
+                }
                 //  updateShowDialog(checkUpdateResponse.getUrl(), checkUpdateResponse.getLast());
-                updateShowDialog(apkUrl, checkUpdateResponse.getLast());
+
                 // downLoadApp(checkUpdateResponse.getUrl());
             }
         };

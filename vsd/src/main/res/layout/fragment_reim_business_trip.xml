@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <!--startTime  -endTime-->
+    <LinearLayout
+        android:id="@+id/rl_start_end_time"
+        style="@style/reim_item_linear"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/iv_time"
+            style="@style/enterprise_home_iv"
+            android:src="@drawable/ic_add_time" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/edt_start_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_regtangle_grey_xml"
+                android:padding="@dimen/dimen_10"
+                android:text="开始时间"
+                android:textSize="@dimen/text_size_small" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/edt_start_time"
+                android:layout_alignBottom="@+id/edt_start_time"
+                android:layout_marginLeft="@dimen/dimen_5"
+                android:layout_marginRight="@dimen/dimen_5"
+                android:layout_toEndOf="@+id/edt_start_time"
+                android:text="---" />
+
+            <TextView
+                android:id="@+id/edt_end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/edt_start_time"
+                android:layout_alignBottom="@+id/edt_start_time"
+                android:layout_toEndOf="@+id/textView3"
+                android:background="@drawable/bg_regtangle_grey_xml"
+                android:padding="@dimen/dimen_10"
+                android:text="结束时间"
+                android:textSize="@dimen/text_size_small" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <!--time-->
+    <LinearLayout
+        android:id="@+id/rl_time"
+        style="@style/reim_item_linear"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/time"
+            style="@style/enterprise_home_iv"
+            android:src="@drawable/ic_add_time" />
+
+        <TextView
+            android:id="@+id/tv_single_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_regtangle_grey_xml"
+            android:padding="@dimen/dimen_10"
+            android:text="@string/select_date"
+            android:textSize="@dimen/text_size_small" />
+
+
+    </LinearLayout>
+
+
+    <!--Location-->
+    <LinearLayout
+        android:id="@+id/rl_location"
+        style="@style/reim_item_linear"
+        android:visibility="visible">
+
+        <ImageView
+
+            style="@style/enterprise_home_iv"
+            android:src="@drawable/ic_add_location" />
+
+        <EditText
+            android:id="@+id/edt_single_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/iv_location"
+            android:background="@drawable/bg_regtangle_grey_xml"
+            android:hint="@string/select_loaction"
+            android:padding="@dimen/dimen_10"
+            android:textSize="@dimen/text_size_small" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/rl_meal_standard"
+        style="@style/reim_item_linear"
+        android:visibility="visible">
+
+        <ImageView
+
+            style="@style/enterprise_home_iv"
+            android:src="@drawable/ic_fee_standard" />
+
+        <EditText
+            android:id="@+id/edt_meal_standard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/iv_location"
+            android:background="@drawable/bg_regtangle_grey_xml"
+            android:hint="@string/meal_standard"
+            android:padding="@dimen/dimen_10"
+            android:textSize="@dimen/text_size_small" />
+
+
+    </LinearLayout>
+
+<!--days-->
+    <LinearLayout
+        android:id="@+id/rl_days"
+        style="@style/reim_item_linear"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/iv_days"
+            style="@style/enterprise_home_iv"
+            android:src="@drawable/ic_add_time" />
+
+        <EditText
+            android:id="@+id/tv_days_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_regtangle_grey_xml"
+            android:padding="@dimen/dimen_10"
+            android:hint="@string/days"
+            android:textSize="@dimen/text_size_small" />
+
+
+    </LinearLayout>
+
+
+
+    <!--vehicle no-->
+    <LinearLayout
+        android:id="@+id/rl_vehicle_no"
+        style="@style/reim_item_linear"
+        android:visibility="gone">
+
+        <ImageView
+
+            style="@style/enterprise_home_iv"
+            android:src="@drawable/ic_vehicle_no" />
+
+        <EditText
+            android:id="@+id/edt_vehicle_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/iv_location"
+            android:background="@drawable/bg_regtangle_grey_xml"
+            android:hint="@string/vehicle_no"
+            android:padding="@dimen/dimen_10"
+            android:textSize="@dimen/text_size_small" />
+
+
+    </LinearLayout>
+    <!--drive mile-->
+    <LinearLayout
+        android:id="@+id/rl_drive_mile"
+        style="@style/reim_item_linear"
+        android:visibility="gone">
+
+        <ImageView
+
+            style="@style/enterprise_home_iv"
+            android:src="@drawable/ic_drive_mile" />
+
+        <EditText
+            android:id="@+id/edt_drive_mile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/iv_location"
+            android:background="@drawable/bg_regtangle_grey_xml"
+            android:hint="@string/drive_mile"
+            android:padding="@dimen/dimen_10"
+            android:textSize="@dimen/text_size_small" />
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

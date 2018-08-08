@@ -64,7 +64,7 @@ public class MainActivity extends BaseActivity {
         if (userBean != null) {
             type = userBean.getType();
             Loger.e("---");
-            if (type.equals("1")||type.equals("2")) {
+            if (type.equals("1") || type.equals("2")) {
                 //boss or部门领导
                 setContentView(R.layout.activity_main);
             } else {
@@ -76,7 +76,9 @@ public class MainActivity extends BaseActivity {
 
         ButterKnife.bind(this);
         tvTitle.setText(getResources().getString(R.string.home_title));
-         //checkUpdateApp();
+        //更新检测
+        checkUpdateApp();
+       // testDown();
         List<Fragment> list = new ArrayList<Fragment>();
         list.add(new HomeFragment());
         list.add(new HelpFragment());
@@ -88,8 +90,15 @@ public class MainActivity extends BaseActivity {
         initViewEvent();
         buttonBack.setVisibility(View.GONE);
         tvHeader.setVisibility(View.VISIBLE);
-        //    checkAuthority();
+        checkAuthority();
 
+    }
+
+    private void testDown() {
+        String apkUrl = "http://download.fir.im/v2/app/install/5818acbcca87a836f50014af?download_token=a01301d7f6f8f4957643c3fcfe5ba6ff";
+     // apkUrl = "http://192.168.31.109:8080/shuidao/notoken/downapk";
+       //apkUrl ="http:\\/\\/www.pgyer.com\\/app\\/installUpdate\\/3becc83ec489185cd5a9259ffc9bef6c?sig=nkhiTi3LmGR8cArX7Ab%2BkeXfxSjZxTsZybjWdwhdwBySiqSohOfV07%2BX5h9Upx4Z";
+        updateShowDialog(apkUrl, "1.3");
     }
 
 
@@ -115,11 +124,20 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onNext(CheckUpdateResponse checkUpdateResponse) {
                 super.onNext(checkUpdateResponse);
-                //http://1192.168.31.109:8080/shuidao/notoken/downapk
-                //  String apkUrl="http://192.168.31.109:8080/shuidao/notoken/downapk";
-                updateShowDialog(checkUpdateResponse.getUrl(), checkUpdateResponse.getLast());
-                // updateShowDialog(apkUrl, checkUpdateResponse.getLast());
-                // downLoadApp(checkUpdateResponse.getUrl());
+
+                if (checkUpdateResponse.isFlag()) {
+                    // 需要更新
+                    //  String apkUrl = AppConstant.BASE_URL+"shuidao/notoken/downapk";
+                    String apkUrl = checkUpdateResponse.getUrl();
+                    //apkUrl=  "http://download.fir.im/v2/app/install/5818acbcca87a836f50014af?download_token=a01301d7f6f8f4957643c3fcfe5ba6ff";
+                    // apkUrl=   "http:\\/\\/www.pgyer.com\\/app\\/installUpdate\\/3becc83ec489185cd5a9259ffc9bef6c?sig=nkhiTi3LmGR8cArX7Ab%2BkeXfxSjZxTsZybjWdwhdwBxZPminY8nLlmO%2B48W%2FYFIA";
+                    //  apkUrl= "http:\\/\\/www.pgyer.com\\/app\\/installUpdate\\/3becc83ec489185cd5a9259ffc9bef6c?sig=nkhiTi3LmGR8cArX7Ab%2BkeXfxSjZxTsZybjWdwhdwBwxwSphumXkpHvym1j7jCxc";
+                    //  apkUrl="http:\\/\\/www.pgyer.com\\/app\\/installUpdate\\/3becc83ec489185cd5a9259ffc9bef6c?sig=nkhiTi3LmGR8cArX7Ab%2BkeXfxSjZxTsZybjWdwhdwByP7C554zZA33sLt2byZLnb";
+                    updateShowDialog(apkUrl, checkUpdateResponse.getLast());
+                }
+//                updateShowDialog(checkUpdateResponse.getUrl(), checkUpdateResponse.getLast());
+//                // updateShowDialog(apkUrl, checkUpdateResponse.getLast());
+//                // downLoadApp(checkUpdateResponse.getUrl());
             }
         };
         RxHelper.bindOnUIActivityLifeCycle(checkUpdateResponseObservable, checkUpdateResponseCommonDialogObserver, MainActivity.this);
@@ -180,7 +198,7 @@ public class MainActivity extends BaseActivity {
 
 
         } else {
-            PermissionsUtil.requestPermission((BaseActivity) this.getApplicationContext(), new PermissionListener() {
+            PermissionsUtil.requestPermission(MainActivity.this, new PermissionListener() {
                 @Override
                 public void permissionGranted(@NonNull String[] permission) {
                     Log.e("--", "permissionGranted: 用户授予了访问外部存储的权限");

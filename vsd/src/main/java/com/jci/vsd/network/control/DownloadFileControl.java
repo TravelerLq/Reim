@@ -32,14 +32,20 @@ import rx.schedulers.Schedulers;
 
 public class DownloadFileControl extends BaseControl {
 
-    public rx.Observable<ResponseBody> downloadReimFile(String url){
+    public rx.Observable<ResponseBody> downloadReimFile(String url) {
         Retrofit retrofit = buildDownloadRetrofit();
         DownloadApi downloadApi = retrofit.create(DownloadApi.class);
-        return  downloadApi.download1(url);
+        return downloadApi.download1(url);
     }
 
 
-    public void downloadFile(Context context, String url, final FileCallBack<ResponseBody> callBack){
+    public rx.Observable<ResponseBody> downloadReimFileWithToken(String url) {
+        Retrofit retrofit = buildDownloadWithTokenRetrofit();
+        DownloadApi downloadApi = retrofit.create(DownloadApi.class);
+        return downloadApi.download1(url);
+    }
+
+    public void downloadFile(Context context, String url, final FileCallBack<ResponseBody> callBack) {
         Loger.i("DownloadFileControl");
         Retrofit retrofit = buildDownloadRetrofit();
         DownloadApi downloadApi = retrofit.create(DownloadApi.class);
@@ -49,7 +55,7 @@ public class DownloadFileControl extends BaseControl {
                 .doOnNext(new Action1<ResponseBody>() {
                     @Override
                     public void call(ResponseBody body) {
-                        Loger.i("downloadApp = =downloadApp"+Thread.currentThread().getId());
+                        Loger.i("downloadApp = =downloadApp" + Thread.currentThread().getId());
                         try {
                             callBack.saveFile(body);
                         } catch (Exception e) {
@@ -57,36 +63,36 @@ public class DownloadFileControl extends BaseControl {
                             callBack.onError(e);
                         }
                     }
-                }) .observeOn(AndroidSchedulers.mainThread()) //指定线程保存文件
+                }).observeOn(AndroidSchedulers.mainThread()) //指定线程保存文件
                 .doOnError(new Action1<Throwable>() {
                     @Override
-                        public void call(Throwable throwable) {
-                            Loger.i("eeeeeeeeeeeeeeee"+Thread.currentThread().getId());
-                            SimpleToast.ToastMessage("下载接口异常");
+                    public void call(Throwable throwable) {
+                        Loger.i("eeeeeeeeeeeeeeee" + Thread.currentThread().getId());
+                        SimpleToast.ToastMessage("下载接口异常");
                     }
                 }).observeOn(AndroidSchedulers.mainThread()) //在主线程中更新ui
-                .subscribe(new FileSubscriber<ResponseBody>(VsdApplication.getInstance(),callBack));
+                .subscribe(new FileSubscriber<ResponseBody>(VsdApplication.getInstance(), callBack));
     }
 
-    public Observable<CheckUpdateResponse> getNewAppVersion(){
+    public Observable<CheckUpdateResponse> getNewAppVersion() {
         //String version = Utils.getVersionCode();
         String version = "0.9.8";
         Retrofit retrofit = builderRetrofitWithHeader();
         DownloadApi downloadApi = retrofit.create(DownloadApi.class);
-        Map<String,String> map = new HashMap<>();
-        map.put("version",version);
+        Map<String, String> map = new HashMap<>();
+        map.put("version", version);
         Observable<String> observable = downloadApi.checkUpdate(map);
         return observable.map(new Function<String, CheckUpdateResponse>() {
             @Override
             public CheckUpdateResponse apply(@NonNull String s) throws Exception {
-                Loger.i("getNewAppVersion = "+s);
+                Loger.i("getNewAppVersion = " + s);
                 JSONObject jsonObject = JSON.parseObject(s);
-                if(200==jsonObject.getIntValue(AppConstant.JSON_CODE)){
-                    JSONObject jsonData=JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA));
-                    CheckUpdateResponse checkUpdateResponse = JSON.parseObject(jsonData.getString("ver"),CheckUpdateResponse.class);
+                if (200 == jsonObject.getIntValue(AppConstant.JSON_CODE)) {
+                    JSONObject jsonData = JSON.parseObject(jsonObject.getString(AppConstant.JSON_DATA));
+                    CheckUpdateResponse checkUpdateResponse = JSON.parseObject(jsonData.getString("ver"), CheckUpdateResponse.class);
                     return checkUpdateResponse;
                 }
-                throw new IApiException("获取更新版本信息",jsonObject.getString(AppConstant.JSON_MESSAGE));
+                throw new IApiException("获取更新版本信息", jsonObject.getString(AppConstant.JSON_MESSAGE));
             }
         });
     }

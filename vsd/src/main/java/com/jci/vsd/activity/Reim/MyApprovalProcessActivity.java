@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
@@ -17,15 +18,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.jci.vsd.R;
 import com.jci.vsd.activity.BaseActivity;
 import com.jci.vsd.adapter.TimeLineAdapter;
 import com.jci.vsd.adapter.reim.ApprovalDetailRecycleAdapter;
+import com.jci.vsd.application.VsdApplication;
+import com.jci.vsd.bean.download.FileCallBack;
+import com.jci.vsd.bean.download.FileSubscriber;
 import com.jci.vsd.bean.reim.ApprovalAllDetailBean;
 import com.jci.vsd.bean.reim.MyReimDetailBean;
 import com.jci.vsd.bean.reim.ReimPicBean;
 import com.jci.vsd.bean.reim.SubmitApprovalBean;
 import com.jci.vsd.bean.reim.WaitApprovalDetailBean;
+import com.jci.vsd.network.control.DownloadFileControl;
 import com.jci.vsd.network.control.ReimControl;
 import com.jci.vsd.observer.CommonDialogObserver;
 import com.jci.vsd.observer.RxHelper;
@@ -33,6 +39,7 @@ import com.jci.vsd.utils.BitmapUtil;
 import com.jci.vsd.utils.FileUtils;
 import com.jci.vsd.utils.Loger;
 import com.jci.vsd.utils.StrTobaseUtil;
+import com.jci.vsd.utils.Utils;
 import com.jci.vsd.view.widget.SimpleToast;
 
 import java.io.File;
@@ -48,6 +55,11 @@ import cn.unitid.spark.cm.sdk.exception.CmSdkException;
 import cn.unitid.spark.cm.sdk.listener.ProcessListener;
 import io.reactivex.Observable;
 import me.iwf.photopicker.PhotoPreview;
+import okhttp3.ResponseBody;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by liqing on 18/6/28.
@@ -80,20 +92,24 @@ public class MyApprovalProcessActivity extends BaseActivity {
 
 
     private List<MyReimDetailBean.CostsBean> approvalReimbeanList;
-    private String reason;
-    private boolean approveResultId;
-    private int level = 0;
+    private String reason = "";
+    //    private boolean approveResultId;
+//    private int level = 0;
     private String picPath;
     private String cert = "";
     private String sign = "";
     private int id;
-    private String reimBase64;
-    private String reimPicName;
-    private String hashFile;
+    //    private String reimBase64;
+//    private String reimPicName;
+//    private String hashFile;
     private String approvalResult;
-    private Bitmap bitmap;
-    private File file;
+    //    private Bitmap bitmap;
+//    private File file;
     private List<String> selectPic;
+    private String fileName = ".png";
+    private static final String fileStoreDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+    Subscription subscription;
+    private String hashFileReim;
 
 
     @Override
@@ -102,6 +118,7 @@ public class MyApprovalProcessActivity extends BaseActivity {
         setContentView(R.layout.activity_wait_approval_detail);
         context = MyApprovalProcessActivity.this;
         titleTxt.setText(getResources().getString(R.string.my_approval_detail));
+
         initViewEvent();
         layoutReimManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         // layoutTimeManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
@@ -235,15 +252,15 @@ public class MyApprovalProcessActivity extends BaseActivity {
                 //通过，先去签名数据
                 approvalResult = "true";
                 try {
-                    if (!TextUtils.isEmpty(hashFile)) {
-                        signVerifyP1(hashFile, approvalResult);
+                    if (!TextUtils.isEmpty(hashFileReim)) {
+                        signVerifyP1(hashFileReim, approvalResult);
                     }
 
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                Loger.e("--hashFile--" + hashFile);
+                Loger.e("--hashFileReim--" + hashFileReim);
 
                 break;
             case R.id.tv_approval_unpass:
@@ -305,15 +322,15 @@ public class MyApprovalProcessActivity extends BaseActivity {
                 }
 
                 try {
-                    if (TextUtils.isEmpty(hashFile)) {
-                        signVerifyP1(hashFile, approvalResult);
+                    if (!TextUtils.isEmpty(hashFileReim)) {
+                        signVerifyP1(hashFileReim, approvalResult);
                     }
 
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                Loger.e("--hashFile--" + hashFile);
+                Loger.e("--hashFileReim--" + hashFileReim);
 
 
             }
@@ -392,23 +409,29 @@ public class MyApprovalProcessActivity extends BaseActivity {
 
                     } else {
                         SimpleToast.toastMessage("获取成功", Toast.LENGTH_SHORT);
+                        String picUrl = bean.getUrl();
+                        String fileName = System.currentTimeMillis() + ".png";
 
-                        String base64Code = bean.getBytes();
-                        String reimPicName = bean.getName();
-                        bitmap = StrTobaseUtil.base64ToBitmap(base64Code);
-                        // file = BitmapUtil.saveBitmapToSDCardFile(bitmap, reimPicName + ".jpg");
-                        // file = BitmapUtil.saveBitmapToSDCardFile(bitmap, reimPicName );
+                        downLoadPic(fileName, picUrl);
 
-                        picPath = BitmapUtil.saveBitmapToSDCard(bitmap, System.currentTimeMillis() + ".jpg");
-                        Loger.e("---picPath" + picPath);
-                        //  picPath = BitmapUtil.saveBitmapToSDCard(bitmap, reimPicName + ".jpg");
-                        ivReimPic.setImageBitmap(bitmap);
-                        try {
-                            hashFile = FileUtils.getMD5Checksum(picPath);
-                            Loger.e("--hashFile--" + hashFile);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+//                        String base64Code = bean.getBytes();
+//                        String reimPicName = bean.getName();
+//                        bitmap = StrTobaseUtil.base64ToBitmap(base64Code);
+//                        // file = BitmapUtil.saveBitmapToSDCardFile(bitmap, reimPicName + ".jpg");
+//                        // file = BitmapUtil.saveBitmapToSDCardFile(bitmap, reimPicName );
+//
+//                        picPath = BitmapUtil.saveBitmapToSDCard(bitmap, System.currentTimeMillis() + ".jpg");
+//                        Loger.e("---picPath" + picPath);
+//                        //  picPath = BitmapUtil.saveBitmapToSDCard(bitmap, reimPicName + ".jpg");
+//                        ivReimPic.setImageBitmap(bitmap);
+
+
+//                        try {
+//                            hashFile = FileUtils.getMD5Checksum(picPath);
+//                            Loger.e("--hashFile--" + hashFile);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
 
                         approvalReimbeanList.clear();
                         approvalReimbeanList.addAll(bean.getCosts());
@@ -431,35 +454,82 @@ public class MyApprovalProcessActivity extends BaseActivity {
     }
 
 
-    private void getpic(int id) {
+    //获取报销单图片
+    public void downLoadPic(final String fileName, String url) {
+        final FileCallBack<ResponseBody> callBack = new FileCallBack<ResponseBody>(fileStoreDir, fileName) {
 
-        Observable<ReimPicBean> observable = new ReimControl().getReimPic(id);
-        CommonDialogObserver<ReimPicBean> observer = new CommonDialogObserver<ReimPicBean>(this) {
             @Override
-            public void onNext(ReimPicBean bean) {
-                super.onNext(bean);
-                SimpleToast.toastMessage("获取成功", Toast.LENGTH_SHORT);
-                if (bean != null) {
-                    String base64Code = bean.getBytes();
-                    String picName = bean.getName();
-                    Bitmap bitmap = StrTobaseUtil.base64ToBitmap(base64Code);
-                    //  picPath = BitmapUtil.saveBitmapToSDCard(bitmap, System.currentTimeMillis() + ".jpg");
-                    // picPath = BitmapUtil.saveBitmapToSDCard(bitmap, picName + ".jpg");
-                    ivReimPic.setImageBitmap(bitmap);
-
-
+            public void onSuccess(final ResponseBody responseBody) {
+                String path = fileStoreDir + "/" + fileName;
+                picPath=path;
+                Glide.with(MyApprovalProcessActivity.this)
+                        .load(path)
+                        .into(ivReimPic);
+                Loger.e("--downLoad--success +path=" + path);
+                try {
+                    hashFileReim = FileUtils.getMD5Checksum(path);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+                Loger.e("--hashFileReim" + hashFileReim);
+
             }
 
             @Override
-            public void onError(Throwable t) {
-                super.onError(t);
+            public void progress(long progress, long total) {
+                int progressIndex = (int) (progress * 100 / total);
+                Loger.i("progress = " + progress + "," + total + "," + Thread.currentThread().getId() + "," + progressIndex);
+//                updateProgressBar.setProgress(progressIndex);
+            }
+
+            @Override
+            public void onStart() {
+                showProgress();
+            }
+
+            @Override
+            public void onCompleted() {
+                //updateProgressBar.setVisibility(View.INVISIBLE);
+                dimissProgress();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+                Loger.e("FileCallback--onError" + e.getMessage());
+                dimissProgress();
+                SimpleToast.toastMessage(e.getMessage(), Toast.LENGTH_SHORT);
+//                updateProgressBar.setVisibility(View.INVISIBLE);
+//                sureBtn.setEnabled(true);
+//                cancelBtn.setEnabled(true);
             }
         };
-        RxHelper.bindOnUIActivityLifeCycle(observable, observer, MyApprovalProcessActivity.this);
-
-
+        // rx.Observable<ResponseBody> obserable = new DownloadFileControl().downloadReimFile(url);
+        rx.Observable<ResponseBody> obserable = new DownloadFileControl().downloadReimFileWithToken(url);
+        subscription = obserable.subscribeOn(Schedulers.io())//请求网络 在调度者的io线程
+                .observeOn(Schedulers.io()) //指定线程保存文件
+                .doOnNext(new Action1<ResponseBody>() {
+                    @Override
+                    public void call(ResponseBody body) {
+                        try {
+                            callBack.saveFile(body);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            callBack.onError(e);
+                            Utils.doException(e);
+                        }
+                    }
+                }).observeOn(AndroidSchedulers.mainThread()) //指定线程保存文件
+                .doOnError(new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        Utils.doException(throwable);
+                    }
+                }).observeOn(AndroidSchedulers.mainThread()) //在主线程中更新ui
+                .subscribe(new FileSubscriber<ResponseBody>(VsdApplication.getInstance(), callBack));//在主线程中更新ui
+        //new DownloadAppControl().downloadApp(getActivity(),url,callBack);
     }
+
 
     private void submitApproval(SubmitApprovalBean bean) {
 
@@ -469,7 +539,7 @@ public class MyApprovalProcessActivity extends BaseActivity {
             public void onNext(Boolean boo) {
                 super.onNext(boo);
                 SimpleToast.toastMessage("提交成功。", Toast.LENGTH_SHORT);
-                toActivity(MyApprovalRecyActivity.class);
+//                toActivity(MyApprovalRecyActivity.class);
                 finish();
 
             }
